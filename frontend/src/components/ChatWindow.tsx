@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { sendMessage } from "../services/api";
+import { sendMessage, getPmwebStatus, connectPmweb } from "../services/api";
 import type { ChatMessage } from "../types";
 import { MessageBubble } from "./MessageBubble";
 
@@ -15,11 +15,31 @@ export function ChatWindow() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string>();
+  const [pmwebConnected, setPmwebConnected] = useState(false);
+  const [pmwebConnecting, setPmwebConnecting] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    getPmwebStatus()
+      .then((s) => setPmwebConnected(s.connected))
+      .catch(() => {});
+  }, []);
+
+  const handleConnect = async () => {
+    setPmwebConnecting(true);
+    try {
+      await connectPmweb();
+      setPmwebConnected(true);
+    } catch {
+      alert("Failed to connect to PMWeb. Check credentials.");
+    } finally {
+      setPmwebConnecting(false);
+    }
+  };
 
   const handleSend = async (text?: string) => {
     const msg = text || input.trim();
@@ -70,14 +90,39 @@ export function ChatWindow() {
           padding: "16px 24px",
           borderBottom: "1px solid #e2e8f0",
           background: "#fff",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        <h1 style={{ margin: 0, fontSize: 20, color: "#1e293b" }}>
-          🏗️ PMWeb Automation Agent
-        </h1>
-        <p style={{ margin: "4px 0 0", fontSize: 13, color: "#64748b" }}>
-          Configure security, workflows, and forms through conversation
-        </p>
+        <div>
+          <h1 style={{ margin: 0, fontSize: 20, color: "#1e293b" }}>
+            PMWeb Automation Agent
+          </h1>
+          <p style={{ margin: "4px 0 0", fontSize: 13, color: "#64748b" }}>
+            Configure security, workflows, and forms through conversation
+          </p>
+        </div>
+        <button
+          onClick={handleConnect}
+          disabled={pmwebConnected || pmwebConnecting}
+          style={{
+            padding: "8px 16px",
+            borderRadius: 8,
+            border: pmwebConnected ? "1px solid #bbf7d0" : "1px solid #cbd5e1",
+            background: pmwebConnected ? "#f0fdf4" : "#fff",
+            color: pmwebConnected ? "#16a34a" : "#475569",
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: pmwebConnected ? "default" : "pointer",
+          }}
+        >
+          {pmwebConnected
+            ? "● PMWeb Connected"
+            : pmwebConnecting
+            ? "Connecting..."
+            : "Connect to PMWeb"}
+        </button>
       </div>
 
       {/* Messages */}

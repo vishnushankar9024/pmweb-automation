@@ -28,3 +28,24 @@ export async function checkHealth(): Promise<{
   const res = await fetch(`${API_BASE}/health`);
   return res.json();
 }
+
+export async function getPmwebStatus(): Promise<{
+  configured: boolean;
+  base_url: string | null;
+  connected: boolean;
+}> {
+  const res = await fetch(`${API_BASE}/api/pmweb/status`);
+  return res.json();
+}
+
+export async function connectPmweb(): Promise<{
+  status: string;
+  url?: string;
+}> {
+  const res = await fetch(`${API_BASE}/api/pmweb/connect`, { method: "POST" });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.detail || "Connection failed");
+  }
+  return res.json();
+}
