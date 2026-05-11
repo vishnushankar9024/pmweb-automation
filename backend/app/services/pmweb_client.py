@@ -1,8 +1,7 @@
-"""PMWeb client — abstracts interaction with PMWeb.
+"""PMWeb client — routes actions to the real PMWeb browser when connected.
 
-Currently runs in **mock mode** (all actions are simulated locally).
-When a real PMWeb instance is available, swap the implementation to use
-the PMWeb REST API or browser automation via Playwright.
+When the browser is connected, actions are performed VISUALLY in PMWeb.
+When disconnected, actions are stored in memory (mock/preview mode).
 """
 
 from __future__ import annotations
@@ -18,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class PMWebClient:
-    """Simulated PMWeb client that stores configuration in memory."""
+    """Routes PMWeb actions to the real browser or stores in memory."""
 
     def __init__(self) -> None:
         self._groups: dict[str, SecurityGroup] = {}
@@ -28,16 +27,47 @@ class PMWebClient:
         self._workflows: dict[str, WorkflowDefinition] = {}
         self._forms: dict[str, FormDefinition] = {}
 
+    def _get_browser(self):
+        """Get the connected browser instance if available."""
+        from app.api.pmweb import get_browser_if_connected
+
+        return get_browser_if_connected()
+
     def create_security_group(self, **kwargs: Any) -> dict[str, Any]:
         group = SecurityGroup(**kwargs)
+        browser = self._get_browser()
+
+        if browser:
+            result = browser.create_security_group(
+                group_name=group.group_id,
+                description=group.description,
+            )
+            if result["status"] == "created":
+                self._groups[group.group_id] = group
+            return result
+
         self._groups[group.group_id] = group
-        logger.info("Created security group: %s", group.group_id)
+        logger.info("Created security group (mock): %s", group.group_id)
         return {"status": "created", "group": group.model_dump()}
 
     def create_user(self, **kwargs: Any) -> dict[str, Any]:
         user = UserAccount(**kwargs)
+        browser = self._get_browser()
+
+        if browser:
+            result = browser.create_user(
+                user_id=user.username,
+                first_name=user.first_name,
+                last_name=user.last_name,
+                email=user.email,
+                group_name=user.groups[0] if user.groups else "Admin",
+            )
+            if result["status"] == "created":
+                self._users[user.username] = user
+            return result
+
         self._users[user.username] = user
-        logger.info("Created user: %s", user.username)
+        logger.info("Created user (mock): %s", user.username)
         return {"status": "created", "user": user.model_dump()}
 
     def set_password_policy(self, **kwargs: Any) -> dict[str, Any]:
@@ -83,7 +113,9 @@ class PMWebClient:
             },
         }
 
-    def execute_action(self, action_name: str, params: dict[str, Any]) -> dict[str, Any]:
+    def execute_action(
+        self, action_name: str, params: dict[str, Any]
+    ) -> dict[str, Any]:
         handler = getattr(self, action_name, None)
         if handler is None:
             return {"status": "error", "message": f"Unknown action: {action_name}"}

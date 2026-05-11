@@ -27,9 +27,16 @@ def get_browser() -> PMWebBrowser:
     return _browser
 
 
+def get_browser_if_connected() -> PMWebBrowser | None:
+    """Return the browser instance only if connected, else None."""
+    if _browser and _browser._logged_in:
+        return _browser
+    return None
+
+
 @router.post("/connect")
 async def connect_pmweb() -> dict:
-    """Connect to PMWeb and login."""
+    """Connect to PMWeb and login (opens a visible browser)."""
     browser = get_browser()
     result = browser.login()
     if result["status"] != "success":
@@ -45,29 +52,6 @@ async def pmweb_status() -> dict:
         "base_url": settings.pmweb_base_url or None,
         "connected": _browser is not None and _browser._logged_in,
     }
-
-
-@router.post("/navigate/{section}")
-async def navigate(section: str) -> dict:
-    """Navigate to a PMWeb section."""
-    browser = get_browser()
-    if section == "security":
-        return browser.navigate_to_security()
-    elif section == "forms":
-        return browser.navigate_to_forms()
-    elif section == "workflows":
-        return browser.navigate_to_workflows()
-    elif section == "tools":
-        return browser.navigate_to_tools()
-    else:
-        raise HTTPException(status_code=400, detail=f"Unknown section: {section}")
-
-
-@router.get("/page-info")
-async def page_info() -> dict:
-    """Get current page info."""
-    browser = get_browser()
-    return browser.get_page_info()
 
 
 @router.post("/disconnect")

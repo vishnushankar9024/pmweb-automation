@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     pmweb_base_url: str = ""
     pmweb_username: str = ""
     pmweb_password: str = ""
-    pmweb_headless: bool = True
+    pmweb_headless: bool = False
 
     cors_origins: list[str] = [
         "http://localhost:5173",
