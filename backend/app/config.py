@@ -9,9 +9,15 @@ class Settings(BaseSettings):
     openai_model: str = "gpt-4o"
 
     pmweb_base_url: str = ""
-    pmweb_api_key: str = ""
+    pmweb_username: str = ""
+    pmweb_password: str = ""
+    pmweb_headless: bool = True
 
-    cors_origins: list[str] = ["http://localhost:5173", "http://localhost:3000"]
+    cors_origins: list[str] = [
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://everyone-perth-sep-herbal.trycloudflare.com",
+    ]
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
