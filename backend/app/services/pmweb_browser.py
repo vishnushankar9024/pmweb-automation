@@ -1,7 +1,7 @@
 """PMWeb browser automation — performs real UI actions visible to the user.
 
-Uses Selenium in VISIBLE mode so the user can watch the agent
-navigate PMWeb and fill in forms in real-time.
+Uses Selenium to drive a VISIBLE Chrome browser that opens PMWeb,
+navigates to the correct page, fills in Kendo UI forms, and saves.
 """
 
 from __future__ import annotations
@@ -55,8 +55,11 @@ class PMWebBrowser:
             options.add_argument("--headless=new")
         return webdriver.Chrome(options=options)
 
+    # ------------------------------------------------------------------ #
+    #  Login
+    # ------------------------------------------------------------------ #
+
     def login(self) -> dict[str, Any]:
-        """Log into PMWeb visibly."""
         try:
             logger.info("Opening PMWeb login page...")
             self.driver.get(self.base_url)
@@ -87,10 +90,10 @@ class PMWebBrowser:
                 return {"status": "success", "url": self.driver.current_url}
 
             errors = self.driver.find_elements(By.CSS_SELECTOR, ".errorMsg")
-            err_texts = [e.text for e in errors if e.text]
             return {
                 "status": "error",
-                "message": "; ".join(err_texts) or "Login failed",
+                "message": "; ".join(e.text for e in errors if e.text)
+                or "Login failed",
             }
         except Exception as exc:
             logger.exception("Login failed")
@@ -102,8 +105,11 @@ class PMWebBrowser:
             if result["status"] != "success":
                 raise RuntimeError(f"Login failed: {result.get('message')}")
 
+    # ------------------------------------------------------------------ #
+    #  Navigation helpers
+    # ------------------------------------------------------------------ #
+
     def _go_to_security(self) -> None:
-        """Navigate to Security page and switch to the Angular iframe."""
         self._ensure_logged_in()
         self.driver.get(f"{self.base_url}/Security.aspx")
         time.sleep(3)
@@ -111,14 +117,9 @@ class PMWebBrowser:
             EC.presence_of_element_located((By.ID, "ctl00_CPH1_ngFrame"))
         )
         self.driver.switch_to.frame(iframe)
-        time.sleep(2)
-
-    def _switch_to_main(self) -> None:
-        """Switch back to the main content from iframe."""
-        self.driver.switch_to.default_content()
+        time.sleep(3)
 
     def _click_tab(self, tab_text: str) -> None:
-        """Click a tab by its text label inside the security iframe."""
         tabs = self.driver.find_elements(
             By.CSS_SELECTOR, "li.k-item.k-tabstrip-item"
         )
@@ -129,146 +130,219 @@ class PMWebBrowser:
                 return
         raise RuntimeError(f"Tab '{tab_text}' not found")
 
+    def _switch_to_main(self) -> None:
+        self.driver.switch_to.default_content()
+
+    def _click_save(self) -> None:
+        """Click the Save button in the toolbar."""
+        saves = self.driver.find_elements(
+            By.XPATH,
+            "//button[.//text()='Save'] | //span[text()='Save']/parent::button",
+        )
+        for s in saves:
+            if s.is_displayed():
+                s.click()
+                time.sleep(3)
+                return
+        logger.warning("Save button not found or not visible")
+
+    def _set_kendo_dropdown(self, dropdown_el, value: str) -> None:
+        """Select a value from a Kendo DropDownList."""
+        dropdown_el.click()
+        time.sleep(1)
+        items = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_all_elements_located(
+                (By.CSS_SELECTOR, "kendo-popup li, .k-list-item")
+            )
+        )
+        for item in items:
+            if item.text.strip().lower() == value.lower():
+                item.click()
+                time.sleep(0.5)
+                return
+        dropdown_el.send_keys(Keys.ESCAPE)
+        logger.warning("Dropdown option '%s' not found", value)
+
+    # ------------------------------------------------------------------ #
+    #  Security — Create Group
+    # ------------------------------------------------------------------ #
+
     def create_security_group(
-        self, group_name: str, description: str
+        self,
+        group_name: str,
+        description: str,
+        options: list[str] | None = None,
     ) -> dict[str, Any]:
-        """Create a new security group in PMWeb by filling the real UI."""
+        """Create a security group by filling the real PMWeb UI."""
         try:
             self._go_to_security()
-            time.sleep(1)
-
-            # Make sure Groups tab is active (it's default)
             self._click_tab("Groups")
             time.sleep(1)
 
-            # Click "New Group" button
-            new_group_btn = WebDriverWait(self.driver, 10).until(
+            # Click "New Group"
+            new_btn = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(
                     (By.XPATH, "//*[contains(text(),'New Group')]")
                 )
             )
-            new_group_btn.click()
+            new_btn.click()
             time.sleep(2)
 
-            # Find the Group name field (first text input after the toolbar)
-            # The Group* and Description* fields are Kendo TextBox inputs
-            inputs = self.driver.find_elements(
-                By.CSS_SELECTOR, "kendo-textbox input, input.k-input-inner"
+            # Fill Group name (first kendo-textbox)
+            textboxes = self.driver.find_elements(
+                By.CSS_SELECTOR, "kendo-textbox input.k-input-inner"
             )
-            logger.info("Found %d input fields", len(inputs))
+            if len(textboxes) < 2:
+                raise RuntimeError("Cannot find Group/Description fields")
 
-            # Group field is typically the first, Description the second
-            if len(inputs) >= 2:
-                group_input = inputs[0]
-                desc_input = inputs[1]
-            else:
-                raise RuntimeError("Could not find Group/Description fields")
+            textboxes[0].click()
+            textboxes[0].clear()
+            textboxes[0].send_keys(group_name)
+            time.sleep(0.3)
 
-            # Fill Group name
-            group_input.click()
-            group_input.clear()
-            group_input.send_keys(group_name)
-            time.sleep(0.5)
+            # Fill Description (second kendo-textbox)
+            textboxes[1].click()
+            textboxes[1].clear()
+            textboxes[1].send_keys(description)
+            time.sleep(0.3)
 
-            # Fill Description
-            desc_input.click()
-            desc_input.clear()
-            desc_input.send_keys(description)
-            time.sleep(0.5)
+            # Enable requested option checkboxes
+            if options:
+                self._set_group_options(options)
 
-            # Save — look for Save button or use Ctrl+S
-            save_btns = self.driver.find_elements(
-                By.XPATH,
-                "//*[contains(text(),'Save')]"
-                "| //button[contains(@class,'save')]"
-                "| //*[@title='Save']",
-            )
-            if save_btns:
-                save_btns[0].click()
-            else:
-                # Try Ctrl+S
-                group_input.send_keys(Keys.CONTROL, "s")
-            time.sleep(3)
+            # Save
+            self._click_save()
 
             self._switch_to_main()
             return {
                 "status": "created",
                 "group_name": group_name,
                 "description": description,
-                "message": f"Security group '{group_name}' created in PMWeb",
+                "options_enabled": options or [],
+                "message": (
+                    f"Security group '{group_name}' created in PMWeb"
+                ),
             }
         except Exception as exc:
             self._switch_to_main()
             logger.exception("Failed to create security group")
             return {"status": "error", "message": str(exc)}
 
+    def _set_group_options(self, options: list[str]) -> None:
+        """Enable specific option checkboxes in the Groups options grid."""
+        rows = self.driver.find_elements(
+            By.CSS_SELECTOR, "kendo-grid tr.k-table-row"
+        )
+        for row in rows:
+            cells = row.find_elements(By.CSS_SELECTOR, "td")
+            if len(cells) < 2:
+                continue
+            label = cells[1].text.strip() if len(cells) > 1 else ""
+            if label in options:
+                checkbox = cells[0].find_elements(
+                    By.CSS_SELECTOR, "input[type='checkbox']"
+                )
+                if checkbox and not checkbox[0].is_selected():
+                    checkbox[0].click()
+                    time.sleep(0.3)
+                    logger.info("Enabled option: %s", label)
+
+    # ------------------------------------------------------------------ #
+    #  Security — Create User
+    # ------------------------------------------------------------------ #
+
     def create_user(
         self,
         user_id: str,
         first_name: str,
-        last_name: str,
-        email: str,
-        group_name: str,
+        last_name: str = "",
+        email: str = "",
+        license_type: str = "Full",
+        named_license: str = "Named",
+        group_name: str = "Admin",
         password: str = "Welcome1!",
+        pmweb_admin: bool = False,
     ) -> dict[str, Any]:
-        """Create a new user in PMWeb by filling the Define Users form."""
+        """Create a user by filling the real PMWeb Define Users grid."""
         try:
             self._go_to_security()
-            time.sleep(1)
-
-            # Click Users tab
             self._click_tab("Users")
             time.sleep(2)
 
-            # Click New/Add user button
-            new_user_btns = self.driver.find_elements(
-                By.XPATH,
-                "//*[contains(text(),'New')]"
-                "| //*[contains(text(),'Add')]"
-                "| //button[contains(@title,'New')]"
-                "| //button[contains(@title,'Add')]",
+            # Click "New Line"
+            new_line = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//*[contains(text(),'New Line')]")
+                )
             )
-            for btn in new_user_btns:
-                if "new" in btn.text.lower() or "add" in btn.text.lower():
-                    btn.click()
-                    break
-            time.sleep(2)
+            new_line.click()
+            time.sleep(3)
 
-            # Fill in user fields — find by label association or order
-            inputs = self.driver.find_elements(
-                By.CSS_SELECTOR, "kendo-textbox input, input.k-input-inner"
+            # Find the editable row (the one with many visible inputs)
+            edit_row = self._find_edit_row()
+            if not edit_row:
+                raise RuntimeError("New user edit row not found")
+
+            cells = edit_row.find_elements(By.CSS_SELECTOR, "td")
+
+            # cell[3] = ID, cell[5] = First Name, cell[6] = Last Name
+            # cell[8] = License Type dropdown, cell[9] = Named License dropdown
+            # cell[10] = Group dropdown, cell[11] = Password
+            self._fill_cell_input(cells[3], user_id)
+            self._fill_cell_input(cells[5], first_name)
+            if last_name:
+                self._fill_cell_input(cells[6], last_name)
+
+            # License Type dropdown (cell[8])
+            lt_dd = cells[8].find_elements(
+                By.CSS_SELECTOR, "kendo-dropdownlist"
             )
-            logger.info("Found %d user inputs", len(inputs))
+            if lt_dd:
+                self._set_kendo_dropdown(lt_dd[0], license_type)
 
-            # The user form fields are in order based on PMWeb docs:
-            # ID, First Name, Last Name, Password, Email
-            # We'll fill them by finding labels
-            self._fill_field_by_label("ID", user_id)
-            self._fill_field_by_label("First Name", first_name)
-            self._fill_field_by_label("Last Name", last_name)
-            self._fill_field_by_label("Email", email)
-            self._fill_field_by_label("Password", password)
+            # Named License dropdown (cell[9])
+            nl_dd = cells[9].find_elements(
+                By.CSS_SELECTOR, "kendo-dropdownlist"
+            )
+            if nl_dd:
+                self._set_kendo_dropdown(nl_dd[0], named_license)
 
-            # Select group from dropdown
-            self._select_dropdown("Group", group_name)
+            # Group Name dropdown (cell[10])
+            grp_dd = cells[10].find_elements(
+                By.CSS_SELECTOR, "kendo-dropdownlist"
+            )
+            if grp_dd:
+                self._set_kendo_dropdown(grp_dd[0], group_name)
+
+            # Password (cell[11])
+            if password:
+                self._fill_cell_input(cells[11], password)
+
+            # PMWEB Admin checkbox (cell[12])
+            if pmweb_admin:
+                chk = cells[12].find_elements(
+                    By.CSS_SELECTOR, "input[type='checkbox']"
+                )
+                if chk and not chk[0].is_selected():
+                    chk[0].click()
+                    time.sleep(0.3)
+
+            # Email — find the email field (around cell[17])
+            if email:
+                self._fill_email_field(cells, email)
 
             # Save
-            save_btns = self.driver.find_elements(
-                By.XPATH,
-                "//*[contains(text(),'Save')]"
-                "| //button[contains(@class,'save')]",
-            )
-            if save_btns:
-                save_btns[0].click()
-            time.sleep(3)
+            self._click_save()
 
             self._switch_to_main()
             return {
                 "status": "created",
                 "user_id": user_id,
-                "name": f"{first_name} {last_name}",
+                "name": f"{first_name} {last_name}".strip(),
                 "email": email,
                 "group": group_name,
+                "license_type": license_type,
+                "named_license": named_license,
                 "message": (
                     f"User '{first_name} {last_name}' created in PMWeb"
                 ),
@@ -278,61 +352,67 @@ class PMWebBrowser:
             logger.exception("Failed to create user")
             return {"status": "error", "message": str(exc)}
 
-    def _fill_field_by_label(self, label: str, value: str) -> None:
-        """Find a field by its label text and fill it."""
-        try:
-            label_el = self.driver.find_element(
-                By.XPATH,
-                f"//*[contains(text(),'{label}')]"
-                f"/ancestor::*[1]//input"
-                f" | //*[contains(text(),'{label}')]"
-                f"/following::input[1]",
+    def _find_edit_row(self):
+        """Find the grid row that is in edit mode (has many visible inputs)."""
+        rows = self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr")
+        for row in rows:
+            inputs = row.find_elements(
+                By.CSS_SELECTOR,
+                "input:not([type='hidden']), kendo-dropdownlist",
             )
-            label_el.click()
-            label_el.clear()
-            label_el.send_keys(value)
-            time.sleep(0.3)
-        except Exception:
-            logger.warning("Could not find field for label '%s'", label)
+            visible = [i for i in inputs if i.is_displayed()]
+            if len(visible) > 5:
+                return row
+        return None
 
-    def _select_dropdown(self, label: str, value: str) -> None:
-        """Select a value from a Kendo dropdown by label."""
-        try:
-            dropdown = self.driver.find_element(
-                By.XPATH,
-                f"//*[contains(text(),'{label}')]"
-                f"/following::kendo-dropdownlist[1]"
-                f" | //*[contains(text(),'{label}')]"
-                f"/following::select[1]",
+    def _fill_cell_input(self, cell, value: str) -> None:
+        """Fill a text/password input inside a grid cell."""
+        inputs = cell.find_elements(
+            By.CSS_SELECTOR,
+            "input[type='text'], input[type='password'], "
+            "input.k-input-inner",
+        )
+        visible = [i for i in inputs if i.is_displayed()]
+        if visible:
+            visible[0].click()
+            visible[0].clear()
+            visible[0].send_keys(value)
+            time.sleep(0.3)
+
+    def _fill_email_field(self, cells: list, email: str) -> None:
+        """Find and fill the email field in the user row.
+
+        Email is a text input that comes after the password and checkboxes,
+        typically around cell index 17 or wherever we find an unfilled
+        text input past the checkbox region.
+        """
+        for cell in cells[14:]:
+            inputs = cell.find_elements(
+                By.CSS_SELECTOR, "input[type='text']"
             )
-            dropdown.click()
-            time.sleep(1)
-            option = WebDriverWait(self.driver, 5).until(
-                EC.element_to_be_clickable(
-                    (By.XPATH, f"//li[contains(text(),'{value}')]")
-                )
-            )
-            option.click()
-            time.sleep(0.5)
-        except Exception:
-            logger.warning(
-                "Could not select '%s' in dropdown '%s'", value, label
-            )
+            visible = [i for i in inputs if i.is_displayed()]
+            if visible and not visible[0].get_attribute("value"):
+                visible[0].click()
+                visible[0].clear()
+                visible[0].send_keys(email)
+                time.sleep(0.3)
+                return
+
+    # ------------------------------------------------------------------ #
+    #  Utility
+    # ------------------------------------------------------------------ #
 
     def get_page_info(self) -> dict[str, Any]:
-        """Get current page state."""
         return {
             "url": self.driver.current_url,
             "title": self.driver.title,
         }
 
     def take_screenshot(self, path: str = "/tmp/pmweb_screenshot.png") -> str:
-        """Take a screenshot."""
         self.driver.save_screenshot(path)
         return path
 
     def close(self) -> None:
-        """Close the browser."""
         if self._driver:
             self._driver.quit()
             self._driver = None
