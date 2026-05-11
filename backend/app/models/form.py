@@ -5,49 +5,55 @@ from enum import Enum
 from pydantic import BaseModel, Field
 
 
-class FieldType(str, Enum):
-    TEXT = "text"
-    NUMBER = "number"
-    CURRENCY = "currency"
-    DATE = "date"
-    DROPDOWN = "dropdown"
-    CHECKBOX = "checkbox"
-    TEXTAREA = "textarea"
-    ATTACHMENT = "attachment"
-    CALCULATED = "calculated"
+class FieldDataType(str, Enum):
+    TEXT = "Text"
+    NUMBER = "Number"
+    CURRENCY = "Currency"
+    DATE = "Date"
+    DROPDOWN = "Dropdown"
+    CHECKBOX = "Checkbox"
+    TEXTAREA = "Text Area"
+    ATTACHMENT = "Attachment"
 
 
-class FormField(BaseModel):
-    field_name: str
-    label: str
-    field_type: FieldType = FieldType.TEXT
+class CustomField(BaseModel):
+    label: str = Field(..., description="Required. Field label.")
+    data_type: FieldDataType = FieldDataType.TEXT
     is_required: bool = False
-    default_value: str | None = None
+    default_value: str = ""
     width_px: int = Field(200, ge=50, le=1000)
-    display_order: int = Field(1, ge=1)
-    dropdown_options: list[str] | None = Field(
-        None, description="Only for dropdown fields"
-    )
-    calculation_formula: str | None = Field(
-        None, description="Only for calculated fields"
-    )
+    dropdown_options: list[str] | None = None
 
 
 class FormPermission(BaseModel):
-    group_id: str
+    group_name: str
     can_view: bool = True
-    can_add: bool = False
     can_edit: bool = False
-    can_delete: bool = False
 
 
-class FormDefinition(BaseModel):
-    form_name: str
-    description: str = ""
-    category: str = Field("Custom", description="Form category in PMWeb")
-    fields: list[FormField] = Field(default_factory=list)
+class FormModule(str, Enum):
+    TOOLS = "Tools"
+    FORMS = "Forms"
+    COSTS = "Costs"
+    PLANS = "Plans"
+    ASSETS = "Assets"
+
+
+class ClassicForm(BaseModel):
+    """A PMWeb Classic Form Builder form."""
+
+    form_id: str = Field(
+        ..., description="Required. Alphanumeric form ID."
+    )
+    form_name: str = Field(..., description="Required. Form display name.")
+    module: FormModule = Field(
+        FormModule.TOOLS,
+        description="Module menu where the form resides",
+    )
+    use_with: str = Field(
+        "Both",
+        description="Initiatives, Projects, or Both",
+    )
+    custom_fields: list[CustomField] = Field(default_factory=list)
     permissions: list[FormPermission] = Field(default_factory=list)
-    enable_attachments: bool = True
-    enable_notes: bool = True
     enable_workflow: bool = False
-    workflow_name: str | None = None
