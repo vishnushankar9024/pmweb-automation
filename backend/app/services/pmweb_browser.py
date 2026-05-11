@@ -134,17 +134,25 @@ class PMWebBrowser:
         self.driver.switch_to.default_content()
 
     def _click_save(self) -> None:
-        """Click the Save button in the toolbar."""
-        saves = self.driver.find_elements(
-            By.XPATH,
-            "//button[.//text()='Save'] | //span[text()='Save']/parent::button",
-        )
-        for s in saves:
-            if s.is_displayed():
-                s.click()
-                time.sleep(3)
-                return
-        logger.warning("Save button not found or not visible")
+        """Click the Save button (kendo-button containing 'Save' span)."""
+        try:
+            save_span = self.driver.find_element(
+                By.XPATH,
+                "//span[contains(@class,'k-button-text') "
+                "and contains(text(),'Save')]",
+            )
+            save_btn = save_span.find_element(By.XPATH, "./..")
+            save_btn.click()
+            time.sleep(4)
+        except Exception:
+            logger.warning("Save button not found, trying alternative")
+            try:
+                self.driver.find_element(
+                    By.CSS_SELECTOR, "kendo-button.k-button-solid-primary"
+                ).click()
+                time.sleep(4)
+            except Exception:
+                logger.error("Could not find Save button")
 
     def _set_kendo_dropdown(self, dropdown_el, value: str) -> None:
         """Select a value from a Kendo DropDownList."""
