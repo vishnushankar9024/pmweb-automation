@@ -17,7 +17,10 @@
 
 ### Notes
 
-- The backend runs without `OPENAI_API_KEY` in fallback mode (returns guided topic-based responses instead of LLM-generated answers). Set the key as an env var or in `backend/.env` for full agent functionality.
-- The frontend dev server proxies nothing — it calls the backend directly at `http://localhost:8000`. The backend has CORS configured for `localhost:5173`.
-- The `pip` user-install path (`~/.local/bin`) must be on `PATH` for `uvicorn`, `pytest`, and `ruff` commands to work.
-- PMWeb client currently runs in mock mode (in-memory). All "created" resources live only for the session.
+- The backend runs without `OPENAI_API_KEY` in fallback mode (topic-based guided responses). Set the key in `backend/.env` for full LLM agent functionality.
+- The frontend dev server calls the backend directly at `http://localhost:8000`. Backend CORS is configured for `localhost:5173`.
+- `~/.local/bin` must be on `PATH` for `uvicorn`, `pytest`, and `ruff` to work.
+- PMWeb browser automation uses Selenium with Chrome (`--headless=new`). The Telerik ASP.NET controls in PMWeb do NOT work with Playwright headless — Selenium is required.
+- PMWeb credentials are configured via env vars: `PMWEB_BASE_URL`, `PMWEB_USERNAME`, `PMWEB_PASSWORD` (stored in `backend/.env`, git-ignored).
+- After connecting to PMWeb, the admin user's display name is "Bassam Samman" on the Demo database.
+- If login fails with "already logged in" alert, the automation accepts it automatically.
