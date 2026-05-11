@@ -62,3 +62,18 @@ async def disconnect() -> dict:
         _browser.close()
         _browser = None
     return {"status": "disconnected"}
+
+
+@router.get("/screenshot")
+async def screenshot():
+    """Return a live screenshot of the PMWeb browser as JPEG."""
+    import base64
+
+    if not _browser or not _browser._logged_in:
+        return {"image": None}
+    try:
+        png_bytes = _browser.driver.get_screenshot_as_png()
+        b64 = base64.b64encode(png_bytes).decode("ascii")
+        return {"image": f"data:image/png;base64,{b64}"}
+    except Exception:
+        return {"image": None}

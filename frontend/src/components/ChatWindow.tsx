@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { sendMessage, getPmwebStatus, connectPmweb } from "../services/api";
 import type { ChatMessage } from "../types";
 import { MessageBubble } from "./MessageBubble";
+import { PMWebViewer } from "./PMWebViewer";
 
 const SUGGESTIONS = [
   "Create security groups for a construction project",
@@ -64,7 +65,8 @@ export function ChatWindow() {
         ...prev,
         {
           role: "assistant",
-          content: "Sorry, I encountered an error. Please check that the backend is running.",
+          content:
+            "Sorry, I encountered an error. Please check that the backend is running.",
         },
       ]);
     } finally {
@@ -76,175 +78,210 @@ export function ChatWindow() {
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
         height: "100vh",
-        maxWidth: 800,
-        margin: "0 auto",
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       }}
     >
-      {/* Header */}
+      {/* Left: Chat Panel */}
       <div
         style={{
-          padding: "16px 24px",
-          borderBottom: "1px solid #e2e8f0",
-          background: "#fff",
+          width: pmwebConnected ? "40%" : "100%",
+          maxWidth: pmwebConnected ? undefined : 800,
+          margin: pmwebConnected ? undefined : "0 auto",
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          flexDirection: "column",
+          borderRight: pmwebConnected ? "1px solid #e2e8f0" : "none",
+          transition: "width 0.3s ease",
         }}
       >
-        <div>
-          <h1 style={{ margin: 0, fontSize: 20, color: "#1e293b" }}>
-            PMWeb Automation Agent
-          </h1>
-          <p style={{ margin: "4px 0 0", fontSize: 13, color: "#64748b" }}>
-            Configure security, workflows, and forms through conversation
-          </p>
-        </div>
-        <button
-          onClick={handleConnect}
-          disabled={pmwebConnected || pmwebConnecting}
+        {/* Header */}
+        <div
           style={{
-            padding: "8px 16px",
-            borderRadius: 8,
-            border: pmwebConnected ? "1px solid #bbf7d0" : "1px solid #cbd5e1",
-            background: pmwebConnected ? "#f0fdf4" : "#fff",
-            color: pmwebConnected ? "#16a34a" : "#475569",
-            fontSize: 13,
-            fontWeight: 500,
-            cursor: pmwebConnected ? "default" : "pointer",
+            padding: "12px 20px",
+            borderBottom: "1px solid #e2e8f0",
+            background: "#fff",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          {pmwebConnected
-            ? "● PMWeb Connected"
-            : pmwebConnecting
-            ? "Connecting..."
-            : "Connect to PMWeb"}
-        </button>
-      </div>
-
-      {/* Messages */}
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: 24,
-          background: "#fafbfc",
-        }}
-      >
-        {messages.length === 0 && (
-          <div style={{ textAlign: "center", paddingTop: 60 }}>
-            <h2 style={{ color: "#475569", fontSize: 18, marginBottom: 8 }}>
-              Welcome! How can I help you today?
-            </h2>
-            <p style={{ color: "#94a3b8", fontSize: 14, marginBottom: 24 }}>
-              Describe what you need and I'll configure PMWeb for you
+          <div>
+            <h1 style={{ margin: 0, fontSize: 18, color: "#1e293b" }}>
+              PMWeb Automation Agent
+            </h1>
+            <p style={{ margin: "2px 0 0", fontSize: 12, color: "#64748b" }}>
+              Chat to configure PMWeb — watch it happen live
             </p>
+          </div>
+          <button
+            onClick={handleConnect}
+            disabled={pmwebConnected || pmwebConnecting}
+            style={{
+              padding: "6px 14px",
+              borderRadius: 8,
+              border: pmwebConnected
+                ? "1px solid #bbf7d0"
+                : "1px solid #cbd5e1",
+              background: pmwebConnected ? "#f0fdf4" : "#fff",
+              color: pmwebConnected ? "#16a34a" : "#475569",
+              fontSize: 12,
+              fontWeight: 500,
+              cursor: pmwebConnected ? "default" : "pointer",
+            }}
+          >
+            {pmwebConnected
+              ? "● Connected"
+              : pmwebConnecting
+              ? "Connecting..."
+              : "Connect to PMWeb"}
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: 16,
+            background: "#fafbfc",
+          }}
+        >
+          {messages.length === 0 && (
+            <div style={{ textAlign: "center", paddingTop: 40 }}>
+              <h2
+                style={{ color: "#475569", fontSize: 16, marginBottom: 6 }}
+              >
+                Welcome! How can I help you today?
+              </h2>
+              <p
+                style={{ color: "#94a3b8", fontSize: 13, marginBottom: 20 }}
+              >
+                Describe what you need — I'll configure PMWeb for you
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 6,
+                  justifyContent: "center",
+                }}
+              >
+                {SUGGESTIONS.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => handleSend(s)}
+                    style={{
+                      padding: "6px 14px",
+                      borderRadius: 20,
+                      border: "1px solid #cbd5e1",
+                      background: "#fff",
+                      cursor: "pointer",
+                      fontSize: 12,
+                      color: "#475569",
+                      transition: "all 0.15s",
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.borderColor = "#2563eb";
+                      e.currentTarget.style.color = "#2563eb";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.borderColor = "#cbd5e1";
+                      e.currentTarget.style.color = "#475569";
+                    }}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {messages.map((msg, i) => (
+            <MessageBubble key={i} message={msg} />
+          ))}
+
+          {loading && (
             <div
               style={{
                 display: "flex",
-                flexWrap: "wrap",
-                gap: 8,
-                justifyContent: "center",
+                gap: 4,
+                padding: "8px 0",
+                alignItems: "center",
               }}
             >
-              {SUGGESTIONS.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => handleSend(s)}
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={i}
                   style={{
-                    padding: "8px 16px",
-                    borderRadius: 20,
-                    border: "1px solid #cbd5e1",
-                    background: "#fff",
-                    cursor: "pointer",
-                    fontSize: 13,
-                    color: "#475569",
-                    transition: "all 0.15s",
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    background: "#94a3b8",
+                    animation: `bounce 1.4s ease-in-out ${i * 0.16}s infinite both`,
                   }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.borderColor = "#2563eb";
-                    e.currentTarget.style.color = "#2563eb";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.borderColor = "#cbd5e1";
-                    e.currentTarget.style.color = "#475569";
-                  }}
-                >
-                  {s}
-                </button>
+                />
               ))}
+              <span
+                style={{ marginLeft: 8, fontSize: 12, color: "#94a3b8" }}
+              >
+                Working in PMWeb...
+              </span>
             </div>
-          </div>
-        )}
+          )}
+          <div ref={bottomRef} />
+        </div>
 
-        {messages.map((msg, i) => (
-          <MessageBubble key={i} message={msg} />
-        ))}
-
-        {loading && (
-          <div style={{ display: "flex", gap: 4, padding: "8px 0" }}>
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  background: "#94a3b8",
-                  animation: `bounce 1.4s ease-in-out ${i * 0.16}s infinite both`,
-                }}
-              />
-            ))}
-          </div>
-        )}
-        <div ref={bottomRef} />
-      </div>
-
-      {/* Input */}
-      <div
-        style={{
-          padding: "16px 24px",
-          borderTop: "1px solid #e2e8f0",
-          background: "#fff",
-          display: "flex",
-          gap: 12,
-        }}
-      >
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          placeholder="Describe what you want to configure in PMWeb..."
-          disabled={loading}
+        {/* Input */}
+        <div
           style={{
-            flex: 1,
-            padding: "10px 16px",
-            borderRadius: 8,
-            border: "1px solid #cbd5e1",
-            fontSize: 14,
-            outline: "none",
-          }}
-        />
-        <button
-          onClick={() => handleSend()}
-          disabled={loading || !input.trim()}
-          style={{
-            padding: "10px 24px",
-            borderRadius: 8,
-            border: "none",
-            background: loading || !input.trim() ? "#94a3b8" : "#2563eb",
-            color: "#fff",
-            fontSize: 14,
-            fontWeight: 600,
-            cursor: loading || !input.trim() ? "default" : "pointer",
+            padding: "12px 20px",
+            borderTop: "1px solid #e2e8f0",
+            background: "#fff",
+            display: "flex",
+            gap: 10,
           }}
         >
-          Send
-        </button>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            placeholder="Describe what you want to configure..."
+            disabled={loading}
+            style={{
+              flex: 1,
+              padding: "8px 14px",
+              borderRadius: 8,
+              border: "1px solid #cbd5e1",
+              fontSize: 13,
+              outline: "none",
+            }}
+          />
+          <button
+            onClick={() => handleSend()}
+            disabled={loading || !input.trim()}
+            style={{
+              padding: "8px 20px",
+              borderRadius: 8,
+              border: "none",
+              background:
+                loading || !input.trim() ? "#94a3b8" : "#2563eb",
+              color: "#fff",
+              fontSize: 13,
+              fontWeight: 600,
+              cursor:
+                loading || !input.trim() ? "default" : "pointer",
+            }}
+          >
+            Send
+          </button>
+        </div>
       </div>
+
+      {/* Right: Live PMWeb Browser View */}
+      {pmwebConnected && (
+        <PMWebViewer isLoading={loading} />
+      )}
 
       <style>{`
         @keyframes bounce {
