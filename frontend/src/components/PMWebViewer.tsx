@@ -21,7 +21,7 @@ export function PMWebViewer({ isLoading }: { isLoading: boolean }) {
 
     fetchScreenshot();
 
-    const rate = isLoading ? 1500 : 5000;
+    const rate = isLoading ? 1000 : 3000;
     intervalRef.current = window.setInterval(fetchScreenshot, rate);
 
     return () => {
