@@ -280,51 +280,44 @@ class PMWebBrowser:
             # Click "New Line"
             new_line = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable(
-                    (By.XPATH, "//*[contains(text(),'New Line')]")
+                    (By.XPATH, "//span[contains(text(),'New Line')]/..")
                 )
             )
             new_line.click()
             time.sleep(3)
 
-            # Find the editable row (the one with many visible inputs)
+            # Find the editable row
             edit_row = self._find_edit_row()
             if not edit_row:
                 raise RuntimeError("New user edit row not found")
 
             cells = edit_row.find_elements(By.CSS_SELECTOR, "td")
 
-            # cell[3] = ID, cell[5] = First Name, cell[6] = Last Name
-            # cell[8] = License Type dropdown, cell[9] = Named License dropdown
-            # cell[10] = Group dropdown, cell[11] = Password
+            # Field mapping (verified by inspection):
+            # cell[3]=ID, cell[5]=First Name, cell[6]=Last Name
+            # cell[8]=License Type dropdown, cell[9]=Named License dropdown
+            # cell[10]=Group dropdown, cell[11]=Password, cell[17]=Email
             self._fill_cell_input(cells[3], user_id)
             self._fill_cell_input(cells[5], first_name)
             if last_name:
                 self._fill_cell_input(cells[6], last_name)
 
             # License Type dropdown (cell[8])
-            lt_dd = cells[8].find_elements(
-                By.CSS_SELECTOR, "kendo-dropdownlist"
-            )
-            if lt_dd:
-                self._set_kendo_dropdown(lt_dd[0], license_type)
+            self._fill_cell_dropdown(cells[8], license_type)
 
             # Named License dropdown (cell[9])
-            nl_dd = cells[9].find_elements(
-                By.CSS_SELECTOR, "kendo-dropdownlist"
-            )
-            if nl_dd:
-                self._set_kendo_dropdown(nl_dd[0], named_license)
+            self._fill_cell_dropdown(cells[9], named_license)
 
             # Group Name dropdown (cell[10])
-            grp_dd = cells[10].find_elements(
-                By.CSS_SELECTOR, "kendo-dropdownlist"
-            )
-            if grp_dd:
-                self._set_kendo_dropdown(grp_dd[0], group_name)
+            self._fill_cell_dropdown(cells[10], group_name)
 
             # Password (cell[11])
             if password:
                 self._fill_cell_input(cells[11], password)
+
+            # Email (cell[17])
+            if email:
+                self._fill_cell_input(cells[17], email)
 
             # PMWEB Admin checkbox (cell[12])
             if pmweb_admin:
@@ -334,10 +327,6 @@ class PMWebBrowser:
                 if chk and not chk[0].is_selected():
                     chk[0].click()
                     time.sleep(0.3)
-
-            # Email — find the email field (around cell[17])
-            if email:
-                self._fill_email_field(cells, email)
 
             # Save
             self._click_save()
@@ -387,24 +376,12 @@ class PMWebBrowser:
             visible[0].send_keys(value)
             time.sleep(0.3)
 
-    def _fill_email_field(self, cells: list, email: str) -> None:
-        """Find and fill the email field in the user row.
-
-        Email is a text input that comes after the password and checkboxes,
-        typically around cell index 17 or wherever we find an unfilled
-        text input past the checkbox region.
-        """
-        for cell in cells[14:]:
-            inputs = cell.find_elements(
-                By.CSS_SELECTOR, "input[type='text']"
-            )
-            visible = [i for i in inputs if i.is_displayed()]
-            if visible and not visible[0].get_attribute("value"):
-                visible[0].click()
-                visible[0].clear()
-                visible[0].send_keys(email)
-                time.sleep(0.3)
-                return
+    def _fill_cell_dropdown(self, cell, value: str) -> None:
+        """Select a value from a Kendo dropdown within a grid cell."""
+        ddls = cell.find_elements(By.CSS_SELECTOR, "kendo-dropdownlist")
+        visible = [dd for dd in ddls if dd.is_displayed()]
+        if visible:
+            self._set_kendo_dropdown(visible[0], value)
 
     # ------------------------------------------------------------------ #
     #  Utility
