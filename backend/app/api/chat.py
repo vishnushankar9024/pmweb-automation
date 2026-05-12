@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException
 
-from app.agent.browser_agent import BrowserAgent
+from app.agent.browser_agent import HybridAgent
 from app.models.chat import ChatRequest, ChatResponse
 
 router = APIRouter(prefix="/api", tags=["chat"])
 
-agent = BrowserAgent()
+agent = HybridAgent()
 
 
 @router.post("/chat", response_model=ChatResponse)
