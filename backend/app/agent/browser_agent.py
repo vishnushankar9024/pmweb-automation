@@ -1,13 +1,11 @@
-"""Vision-based browser agent — sees the screen and acts like a human.
+"""Hybrid PMWeb agent — GPT-4o plans, Selenium executes.
 
-Takes screenshots, sends them to GPT-4o vision to understand the page,
-then executes browser actions (click, type, scroll, navigate) based on
-what it sees. Repeats until the task is complete.
+One LLM call per user message. Selenium reads the DOM and acts.
+No screenshots sent to OpenAI. noVNC handles the live view.
 """
 
 from __future__ import annotations
 
-import base64
 import json
 import logging
 import time
@@ -26,166 +24,72 @@ from app.config import settings
 
 logger = logging.getLogger(__name__)
 
-BROWSER_TOOLS = [
-    {
-        "type": "function",
-        "function": {
-            "name": "click",
-            "description": "Click at specific coordinates on the page",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "x": {"type": "integer", "description": "X coordinate"},
-                    "y": {"type": "integer", "description": "Y coordinate"},
-                },
-                "required": ["x", "y"],
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "type_text",
-            "description": "Type text at the current cursor position",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "text": {"type": "string", "description": "Text to type"},
-                    "clear_first": {
-                        "type": "boolean",
-                        "description": "Clear field before typing",
-                    },
-                },
-                "required": ["text"],
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "press_key",
-            "description": "Press a keyboard key (Enter, Tab, Escape, etc.)",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "key": {
-                        "type": "string",
-                        "description": "Key name: Enter, Tab, Escape, "
-                        "Backspace, Delete, ArrowDown, ArrowUp",
-                    },
-                },
-                "required": ["key"],
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "scroll",
-            "description": "Scroll the page up or down",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "direction": {
-                        "type": "string",
-                        "enum": ["up", "down"],
-                    },
-                    "amount": {
-                        "type": "integer",
-                        "description": "Pixels to scroll (default 300)",
-                    },
-                },
-                "required": ["direction"],
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "navigate",
-            "description": "Navigate to a URL",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "url": {"type": "string", "description": "URL to open"},
-                },
-                "required": ["url"],
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "wait",
-            "description": "Wait for the page to load",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "seconds": {
-                        "type": "integer",
-                        "description": "Seconds to wait (default 3)",
-                    },
-                },
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "done",
-            "description": "Task is complete. Call this when finished.",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "summary": {
-                        "type": "string",
-                        "description": "Summary of what was accomplished",
-                    },
-                },
-                "required": ["summary"],
-            },
-        },
-    },
-]
+PLANNER_PROMPT = """\
+You are a PMWeb automation planner. Given a user request, output a JSON \
+array of steps the browser should execute on PMWeb.
 
-SYSTEM_PROMPT = """\
-You are a PMWeb Automation Agent that controls a web browser to perform \
-tasks on PMWeb — a construction project management platform.
+## PMWeb Navigation
+- Home: /Home.aspx
+- Security: /Security.aspx (has iframe id="ctl00_CPH1_ngFrame" with Angular app)
+  - Tabs inside iframe: Groups, Users, User Access, etc.
+  - Groups tab: "New Group" button, kendo-textbox inputs for Group/Description
+  - Users tab: "New Line" button, grid row with cells for ID, Name, License, Group, etc.
+  - Save: click span with class "k-button-text" containing "Save", then click its parent
+- Adaptive Forms: /SearchDocument.aspx?O=302 (manager page)
+  - "New Record" opens /AdaptiveFormBuilder.aspx?id=0&ModuleId=8&PageId=371
+  - Inside iframe: SurveyJS Creator, "Add Field" buttons, span.sv-string-editor for labels
+  - Save: click hidden input[value="SaveTemplate"]
+- Workflows: left sidebar > Workflows module
+- Tools sidebar items: Plans, Forms, Costs, Schedules, Assets, Workflows, Portfolio, Tools
 
-You can see the current state of the browser via screenshots. Based on \
-what you see, decide what action to take next.
+## Available Step Types
+Each step is a JSON object with "action" and parameters:
 
-## PMWeb Application Info
-- URL: {base_url}
-- The app uses Kendo UI / Angular components
-- Security is under Tools > left sidebar click "Tools" then Security
-- Adaptive Forms are under Tools > Adaptive Forms
-- Workflows are under Workflows module in left sidebar
-- After login, you land on the Home page with Visual Workflow Inbox
-
-## Available Actions
-- click(x, y): Click at coordinates on the screen
-- type_text(text, clear_first): Type text (optionally clear field first)
-- press_key(key): Press Enter, Tab, Escape, Backspace, ArrowDown, etc.
-- scroll(direction, amount): Scroll up or down
-- navigate(url): Go to a URL
-- wait(seconds): Wait for page to load
-- done(summary): Call when the task is complete
+- {"action": "navigate", "url": "/Security.aspx"}
+- {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"}
+- {"action": "switch_to_main"}
+- {"action": "click_tab", "text": "Groups"}
+- {"action": "click_button", "text": "New Group"}
+- {"action": "fill_textbox", "index": 0, "value": "ENGINEERS"}
+- {"action": "fill_textbox", "index": 1, "value": "Engineering team"}
+- {"action": "check_option", "label": "Can Send Notifications"}
+- {"action": "click_save"}
+- {"action": "click_new_line"}
+- {"action": "fill_cell", "cell_index": 3, "value": "jdoe"}
+- {"action": "fill_cell_dropdown", "cell_index": 8, "value": "Full"}
+- {"action": "read_page_text"}
+- {"action": "read_groups"}
+- {"action": "read_users"}
+- {"action": "open_adaptive_form_builder"}
+- {"action": "set_form_title", "title": "My Form"}
+- {"action": "add_form_field", "label": "Field Name"}
+- {"action": "save_adaptive_form"}
+- {"action": "click_sidebar", "module": "Tools"}
+- {"action": "click_menu_item", "text": "Adaptive Forms"}
+- {"action": "wait", "seconds": 3}
 
 ## Rules
-- Look at the screenshot carefully before each action
-- Click on the exact coordinates of buttons, fields, menu items
-- After clicking a menu/dropdown, wait for it to open before clicking items
-- After filling a form, look for and click the Save button
-- If a dialog/alert appears, handle it (click OK, Accept, etc.)
-- Call done() when the task is finished
-- If something looks wrong, try a different approach
-- Be precise with coordinates — look at where elements are in the image
+- Always navigate first, then switch_to_iframe if needed
+- For Security: navigate to Security.aspx, switch_to_iframe, then act
+- After filling forms, always click_save
+- For reading data, use read_groups or read_users
+- For adaptive forms: open_adaptive_form_builder, set_form_title, add fields, save_adaptive_form
+- Return ONLY a JSON array of steps, nothing else
+
+## User Groups Cell Mapping (Users tab)
+- cell 3: User ID
+- cell 5: First Name
+- cell 6: Last Name
+- cell 8: License Type (dropdown: Full/Guest)
+- cell 9: Named License (dropdown: Named/Concurrent)
+- cell 10: Group (dropdown)
+- cell 11: Password
+- cell 17: Email
 """
 
 
-class BrowserAgent:
-    """Vision-based browser agent for PMWeb."""
+class HybridAgent:
+    """One GPT-4o call to plan, Selenium to execute."""
 
     def __init__(self) -> None:
         self._driver: webdriver.Chrome | None = None
@@ -225,10 +129,7 @@ class BrowserAgent:
             self.driver.find_element(By.ID, "btnLogin").click()
             time.sleep(3)
             try:
-                alert = WebDriverWait(self.driver, 5).until(
-                    EC.alert_is_present()
-                )
-                alert.accept()
+                WebDriverWait(self.driver, 5).until(EC.alert_is_present()).accept()
                 time.sleep(5)
             except Exception:
                 time.sleep(5)
@@ -239,171 +140,381 @@ class BrowserAgent:
         except Exception as exc:
             return {"status": "error", "message": str(exc)}
 
-    def take_screenshot_b64(self) -> str:
-        png = self.driver.get_screenshot_as_png()
-        return base64.b64encode(png).decode("ascii")
-
-    def execute_action(self, action: str, params: dict) -> str:
-        """Execute a browser action and return result."""
-        try:
-            if action == "click":
-                self.driver.execute_script(
-                    "document.elementFromPoint(arguments[0], arguments[1])"
-                    ".click()",
-                    params["x"],
-                    params["y"],
-                )
-                time.sleep(1)
-                return f"Clicked at ({params['x']}, {params['y']})"
-
-            elif action == "type_text":
-                if params.get("clear_first"):
-                    ActionChains(self.driver).key_down(
-                        Keys.CONTROL
-                    ).send_keys("a").key_up(Keys.CONTROL).perform()
-                    time.sleep(0.2)
-                ActionChains(self.driver).send_keys(
-                    params["text"]
-                ).perform()
-                time.sleep(0.5)
-                return f"Typed: {params['text']}"
-
-            elif action == "press_key":
-                key_map = {
-                    "Enter": Keys.ENTER,
-                    "Tab": Keys.TAB,
-                    "Escape": Keys.ESCAPE,
-                    "Backspace": Keys.BACKSPACE,
-                    "Delete": Keys.DELETE,
-                    "ArrowDown": Keys.ARROW_DOWN,
-                    "ArrowUp": Keys.ARROW_UP,
-                    "ArrowLeft": Keys.ARROW_LEFT,
-                    "ArrowRight": Keys.ARROW_RIGHT,
-                }
-                key = key_map.get(params["key"], params["key"])
-                ActionChains(self.driver).send_keys(key).perform()
-                time.sleep(0.5)
-                return f"Pressed: {params['key']}"
-
-            elif action == "scroll":
-                amount = params.get("amount", 300)
-                if params["direction"] == "down":
-                    self.driver.execute_script(
-                        f"window.scrollBy(0, {amount})"
-                    )
-                else:
-                    self.driver.execute_script(
-                        f"window.scrollBy(0, -{amount})"
-                    )
-                time.sleep(0.5)
-                return f"Scrolled {params['direction']} {amount}px"
-
-            elif action == "navigate":
-                self.driver.get(params["url"])
-                time.sleep(3)
-                return f"Navigated to {params['url']}"
-
-            elif action == "wait":
-                secs = params.get("seconds", 3)
-                time.sleep(secs)
-                return f"Waited {secs}s"
-
-            elif action == "done":
-                return f"DONE: {params['summary']}"
-
-            return f"Unknown action: {action}"
-        except Exception as exc:
-            return f"Error: {exc}"
-
     async def run_task(self, task: str) -> dict[str, Any]:
-        """Run a task by looking at the screen and acting step by step."""
         if not self._logged_in:
             r = self.login()
             if r["status"] != "success":
-                return {
-                    "reply": f"Cannot connect to PMWeb: {r.get('message')}",
-                    "actions": [],
-                }
+                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
 
-        messages = [
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT.format(
-                    base_url=settings.pmweb_base_url
-                ),
-            },
-            {"role": "user", "content": f"Task: {task}"},
-        ]
+        # Step 1: Ask GPT-4o to plan (ONE call, text only, no screenshots)
+        response = self.client.chat.completions.create(
+            model=settings.openai_model,
+            messages=[
+                {"role": "system", "content": PLANNER_PROMPT},
+                {"role": "user", "content": task},
+            ],
+            temperature=0,
+            max_tokens=2000,
+        )
 
-        actions_log = []
-        max_steps = 20
+        plan_text = response.choices[0].message.content or "[]"
 
-        for step in range(max_steps):
-            screenshot = self.take_screenshot_b64()
+        # Extract JSON from response
+        try:
+            start = plan_text.index("[")
+            end = plan_text.rindex("]") + 1
+            steps = json.loads(plan_text[start:end])
+        except (ValueError, json.JSONDecodeError):
+            return {"reply": plan_text, "actions": []}
 
-            messages.append({
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": (
-                            f"Step {step + 1}: Here is the current screen. "
-                            "What action should I take next?"
-                            if step > 0
-                            else "Here is the current PMWeb screen. "
-                            "Begin the task."
-                        ),
-                    },
-                    {
-                        "type": "image_url",
-                        "image_url": {
-                            "url": f"data:image/png;base64,{screenshot}",
-                            "detail": "high",
-                        },
-                    },
-                ],
-            })
-
-            response = self.client.chat.completions.create(
-                model=settings.openai_model,
-                messages=messages,
-                tools=BROWSER_TOOLS,
-                tool_choice="required",
-                max_tokens=1000,
+        # Step 2: Execute each step via Selenium
+        results = []
+        for i, step in enumerate(steps):
+            action = step.get("action", "")
+            logger.info(
+                "Step %d: %s %s", i + 1, action, {k: v for k, v in step.items() if k != "action"}
             )
+            try:
+                result = self._execute_step(step)
+                results.append({"step": i + 1, "action": action, "result": result})
+                logger.info("  -> %s", str(result)[:200])
+            except Exception as exc:
+                logger.exception("Step %d failed", i + 1)
+                results.append({"step": i + 1, "action": action, "error": str(exc)})
 
-            choice = response.choices[0]
+        # Step 3: Summarize results (ONE more call)
+        summary_response = self.client.chat.completions.create(
+            model=settings.openai_model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a PMWeb assistant. Summarize what was "
+                        "done based on the execution results. "
+                        "Be concise and helpful."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": (
+                        f"User asked: {task}\n\n"
+                        f"Execution results:\n"
+                        f"{json.dumps(results, indent=2, default=str)[:3000]}"
+                    ),
+                },
+            ],
+            max_tokens=500,
+        )
+        summary = summary_response.choices[0].message.content or "Task completed."
 
-            if not choice.message.tool_calls:
-                break
+        return {"reply": summary, "actions": results}
 
-            tc = choice.message.tool_calls[0]
-            fn = tc.function.name
-            args = json.loads(tc.function.arguments)
+    def _execute_step(self, step: dict) -> Any:
+        action = step["action"]
+        base = settings.pmweb_base_url.rstrip("/")
 
-            logger.info("Step %d: %s(%s)", step + 1, fn, args)
-            actions_log.append({"step": step + 1, "action": fn, "args": args})
+        if action == "navigate":
+            url = step["url"]
+            if url.startswith("/"):
+                url = base + url
+            self.driver.get(url)
+            time.sleep(3)
+            return "navigated"
 
-            if fn == "done":
-                return {
-                    "reply": args.get("summary", "Task completed"),
-                    "actions": actions_log,
-                }
+        elif action == "switch_to_iframe":
+            iframe = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.ID, step["id"]))
+            )
+            self.driver.switch_to.frame(iframe)
+            time.sleep(3)
+            return "switched to iframe"
 
-            result = self.execute_action(fn, args)
-            logger.info("  Result: %s", result)
+        elif action == "switch_to_main":
+            self.driver.switch_to.default_content()
+            return "switched to main"
 
-            messages.append(choice.message.model_dump())
-            messages.append({
-                "role": "tool",
-                "tool_call_id": tc.id,
-                "content": result,
-            })
+        elif action == "click_tab":
+            for tab in self.driver.find_elements(By.CSS_SELECTOR, "li.k-item.k-tabstrip-item"):
+                if step["text"].lower() in tab.text.lower():
+                    tab.click()
+                    time.sleep(2)
+                    return f"clicked tab: {step['text']}"
+            return f"tab not found: {step['text']}"
 
-        return {
-            "reply": "Task completed (reached step limit)",
-            "actions": actions_log,
-        }
+        elif action == "click_button":
+            btn = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, f"//*[contains(text(),'{step['text']}')]"))
+            )
+            btn.click()
+            time.sleep(2)
+            return f"clicked: {step['text']}"
+
+        elif action == "fill_textbox":
+            tbs = self.driver.find_elements(By.CSS_SELECTOR, "kendo-textbox input.k-input-inner")
+            idx = step.get("index", 0)
+            if idx < len(tbs):
+                tbs[idx].click()
+                tbs[idx].clear()
+                tbs[idx].send_keys(step["value"])
+                time.sleep(0.3)
+                return f"filled textbox[{idx}]: {step['value']}"
+            return f"textbox[{idx}] not found"
+
+        elif action == "check_option":
+            rows = self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row")
+            for row in rows:
+                cells = row.find_elements(By.CSS_SELECTOR, "td")
+                if len(cells) >= 2 and step["label"] in cells[1].text:
+                    chk = cells[0].find_elements(By.CSS_SELECTOR, "input[type='checkbox']")
+                    if chk and not chk[0].is_selected():
+                        self.driver.execute_script("arguments[0].click()", chk[0])
+                        time.sleep(0.3)
+                        return f"checked: {step['label']}"
+                    return f"already checked: {step['label']}"
+            return f"option not found: {step['label']}"
+
+        elif action == "click_save":
+            spans = self.driver.find_elements(
+                By.XPATH, "//span[contains(@class,'k-button-text') and contains(text(),'Save')]"
+            )
+            for s in spans:
+                if s.is_displayed():
+                    s.find_element(By.XPATH, "./..").click()
+                    time.sleep(4)
+                    return "saved"
+            return "save button not found"
+
+        elif action == "click_new_line":
+            btn = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "//span[contains(text(),'New Line')]/.."))
+            )
+            btn.click()
+            time.sleep(3)
+            return "new line added"
+
+        elif action == "fill_cell":
+            row = self._find_edit_row()
+            if not row:
+                return "no edit row found"
+            cells = row.find_elements(By.CSS_SELECTOR, "td")
+            idx = step["cell_index"]
+            if idx < len(cells):
+                for inp in cells[idx].find_elements(
+                    By.CSS_SELECTOR, "input[type='text'], input[type='password']"
+                ):
+                    if inp.is_displayed():
+                        inp.click()
+                        inp.clear()
+                        inp.send_keys(step["value"])
+                        time.sleep(0.3)
+                        return f"filled cell[{idx}]: {step['value']}"
+            return f"cell[{idx}] not fillable"
+
+        elif action == "fill_cell_dropdown":
+            row = self._find_edit_row()
+            if not row:
+                return "no edit row found"
+            cells = row.find_elements(By.CSS_SELECTOR, "td")
+            idx = step["cell_index"]
+            if idx < len(cells):
+                dds = cells[idx].find_elements(By.CSS_SELECTOR, "kendo-dropdownlist")
+                for dd in dds:
+                    if dd.is_displayed():
+                        dd.click()
+                        time.sleep(1)
+                        items = WebDriverWait(self.driver, 5).until(
+                            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "kendo-popup li"))
+                        )
+                        for item in items:
+                            if item.text.strip().lower() == step["value"].lower():
+                                item.click()
+                                time.sleep(0.5)
+                                return f"selected {step['value']} in cell[{idx}]"
+                        dd.send_keys(Keys.ESCAPE)
+                        return f"option '{step['value']}' not found in cell[{idx}]"
+            return f"cell[{idx}] no dropdown"
+
+        elif action == "read_page_text":
+            text = self.driver.find_element(By.TAG_NAME, "body").text
+            return text[:3000]
+
+        elif action == "read_groups":
+            body = self.driver.find_element(By.TAG_NAME, "body").text
+            lines = body.split("\n")
+            skip = {
+                "Default Group",
+                "Guest Users",
+                "Adaptive Form Administrator",
+                "Can change Due Date in Procurement",
+                "Can Copy Project",
+                "Can Edit WBS In Program",
+                "Can Edit WBS In Project",
+                "Can Execute Move",
+                "Can Lock/Unlock Schedules",
+                "Can Make Vendors Active/Inactive",
+                "Can Make Locations Active/Inactive",
+                "Can Make Projects Active/Inactive",
+                "Can Send Notifications",
+                "Custom Form Administrator",
+                "Document Manager Administrator",
+                "Events Administrator",
+                "Lease Administrator",
+                "PMWeb Report Administrator",
+                "Procurement Administrator",
+                "Report Manager Administrator",
+                "Assets",
+                "Costs",
+                "Forms",
+                "Plans",
+                "Portfolio",
+                "Schedules",
+                "Tools",
+                "Workflows",
+                "View: Filtered",
+                "Duplicate",
+                "Delete",
+                "New Group",
+                "Group*",
+                "Description*",
+                "Option",
+                "Logged into: All Levels",
+                "Need Help?",
+                "Security",
+                "Manage your group and user security settings",
+                "Licenses",
+                "Save",
+                "Cancel",
+                "aS",
+            }
+            groups = []
+            for line in lines:
+                s = line.strip()
+                if not s or len(s) > 50 or s in skip or s.isdigit():
+                    continue
+                if any(
+                    s.startswith(p)
+                    for p in [
+                        "Groups",
+                        "Users",
+                        "User Access",
+                        "Conditional",
+                        "Activity",
+                        "Password",
+                        "External",
+                    ]
+                ):
+                    continue
+                if len(s) >= 2:
+                    groups.append(s)
+            return {"groups": groups}
+
+        elif action == "read_users":
+            rows = self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row")
+            users = []
+            for row in rows[:30]:
+                cells = row.find_elements(By.CSS_SELECTOR, "td")
+                if len(cells) >= 8:
+                    texts = [c.text.strip() for c in cells[:8]]
+                    if texts[1]:
+                        users.append(
+                            {
+                                "id": texts[1],
+                                "name": f"{texts[3]} {texts[4]}".strip(),
+                                "group": texts[7] if len(texts) > 7 else "",
+                            }
+                        )
+            return {"users": users}
+
+        elif action == "open_adaptive_form_builder":
+            self.driver.switch_to.default_content()
+            self.driver.get(f"{base}/AdaptiveFormBuilder.aspx?id=0&ModuleId=8&PageId=371")
+            time.sleep(8)
+            iframe = WebDriverWait(self.driver, 15).until(
+                EC.presence_of_element_located((By.ID, "ctl00_CPH1_ngFrame"))
+            )
+            self.driver.switch_to.frame(iframe)
+            time.sleep(5)
+            return "form builder opened"
+
+        elif action == "set_form_title":
+            title_el = self.driver.find_element(
+                By.XPATH,
+                "//span[contains(@class,'sv-string-editor') and text()='Default Adaptive Form']",
+            )
+            title_el.click()
+            time.sleep(0.3)
+            ActionChains(self.driver).key_down(Keys.CONTROL).send_keys("a").key_up(
+                Keys.CONTROL
+            ).perform()
+            ActionChains(self.driver).send_keys(step["title"]).perform()
+            self.driver.find_element(By.TAG_NAME, "body").click()
+            time.sleep(1)
+            return f"title set: {step['title']}"
+
+        elif action == "add_form_field":
+            add_btns = self.driver.find_elements(By.XPATH, "//span[contains(text(),'Add Field')]")
+            visible = [b for b in add_btns if b.is_displayed()]
+            if visible:
+                visible[-1].click()
+                time.sleep(2)
+            for fl in reversed(self.driver.find_elements(By.CSS_SELECTOR, "span.sv-string-editor")):
+                if fl.text.startswith("field") and fl.is_displayed():
+                    fl.click()
+                    time.sleep(0.3)
+                    ActionChains(self.driver).key_down(Keys.CONTROL).send_keys("a").key_up(
+                        Keys.CONTROL
+                    ).perform()
+                    ActionChains(self.driver).send_keys(step["label"]).perform()
+                    self.driver.find_element(By.TAG_NAME, "body").click()
+                    time.sleep(0.5)
+                    return f"added field: {step['label']}"
+            return "could not add field"
+
+        elif action == "save_adaptive_form":
+            btn = self.driver.find_element(By.CSS_SELECTOR, "input[value='SaveTemplate']")
+            self.driver.execute_script("arguments[0].click()", btn)
+            time.sleep(8)
+            self.driver.switch_to.default_content()
+            url = self.driver.current_url
+            import re
+
+            m = re.search(r"[Ii]d=(\d+)", url)
+            form_id = int(m.group(1)) if m else None
+            return f"saved as ID={form_id}"
+
+        elif action == "click_sidebar":
+            self.driver.switch_to.default_content()
+            items = self.driver.find_elements(By.XPATH, f"//span[text()='{step['module']}']")
+            for item in items:
+                if item.is_displayed():
+                    item.click()
+                    time.sleep(2)
+                    return f"clicked sidebar: {step['module']}"
+            return f"sidebar item not found: {step['module']}"
+
+        elif action == "click_menu_item":
+            items = self.driver.find_elements(By.XPATH, f"//span[text()='{step['text']}']")
+            for item in items:
+                if item.is_displayed():
+                    item.click()
+                    time.sleep(3)
+                    return f"clicked menu: {step['text']}"
+            return f"menu item not found: {step['text']}"
+
+        elif action == "wait":
+            time.sleep(step.get("seconds", 3))
+            return "waited"
+
+        return f"unknown action: {action}"
+
+    def _find_edit_row(self):
+        for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
+            inputs = row.find_elements(
+                By.CSS_SELECTOR, "input:not([type='hidden']), kendo-dropdownlist"
+            )
+            if sum(1 for i in inputs if i.is_displayed()) > 5:
+                return row
+        return None
 
     def close(self) -> None:
         if self._driver:
