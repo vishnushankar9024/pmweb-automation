@@ -39,15 +39,31 @@ array of steps the browser should execute on PMWeb.
   - "New Record" opens /AdaptiveFormBuilder.aspx?id=0&ModuleId=8&PageId=371
   - Inside iframe: SurveyJS Creator, "Add Field" buttons, span.sv-string-editor for labels
   - Save: click hidden input[value="SaveTemplate"]
-- Workflows: left sidebar > Workflows module
-- Tools sidebar items: Plans, Forms, Costs, Schedules, Assets, Workflows, Portfolio, Tools
+- Workflows/BPM: /Workflow.aspx (NO iframe, direct ASP.NET page)
+  - Tabs: Roles, Business Processes (BPM), Defaults, APM Rules
+  - BPM tab has: Select Template dropdown, BPM ID* textbox, Template Name*
+  - ASP.NET control IDs for BPM:
+    - Template dropdown: ctl00_CPH1_ucBusinessProcesses_ddlTemplate_Input
+    - BPM ID: ctl00_CPH1_ucBusinessProcesses_txtTemplateId
+    - Template Name: ctl00_CPH1_ucBusinessProcesses_txtTemplateName
+    - Associate With: ctl00_CPH1_ucBusinessProcesses_ddlAssociate_Input
+    - Save button has tooltip "Save (Alt+s)"
+    - "USE VISUAL DESIGNER" button opens the visual workflow designer
+  - Roles list on the right side for assigning to workflow steps
+- Tools sidebar: Plans, Forms, Costs, Schedules, Assets, Workflows, Portfolio, Tools
 
 ## Available Step Types
 Each step is a JSON object with "action" and parameters:
 
+### Navigation
 - {"action": "navigate", "url": "/Security.aspx"}
 - {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"}
 - {"action": "switch_to_main"}
+- {"action": "click_sidebar", "module": "Tools"}
+- {"action": "click_menu_item", "text": "Adaptive Forms"}
+- {"action": "wait", "seconds": 3}
+
+### Security (inside iframe)
 - {"action": "click_tab", "text": "Groups"}
 - {"action": "click_button", "text": "New Group"}
 - {"action": "fill_textbox", "index": 0, "value": "ENGINEERS"}
@@ -57,16 +73,28 @@ Each step is a JSON object with "action" and parameters:
 - {"action": "click_new_line"}
 - {"action": "fill_cell", "cell_index": 3, "value": "jdoe"}
 - {"action": "fill_cell_dropdown", "cell_index": 8, "value": "Full"}
-- {"action": "read_page_text"}
 - {"action": "read_groups"}
 - {"action": "read_users"}
+
+### Workflows/BPM (NO iframe, direct page)
+- {"action": "navigate", "url": "/Workflow.aspx"}
+- {"action": "click_bpm_tab"}
+- {"action": "create_new_bpm", "bpm_id": "100", "name": "RFI Approval"}
+- {"action": "set_bpm_associate", "record_type": "RFI"}
+- {"action": "open_visual_designer"}
+- {"action": "save_bpm"}
+- {"action": "read_page_text"}
+
+### Adaptive Forms (iframe)
 - {"action": "open_adaptive_form_builder"}
 - {"action": "set_form_title", "title": "My Form"}
 - {"action": "add_form_field", "label": "Field Name"}
 - {"action": "save_adaptive_form"}
-- {"action": "click_sidebar", "module": "Tools"}
-- {"action": "click_menu_item", "text": "Adaptive Forms"}
-- {"action": "wait", "seconds": 3}
+
+### General
+- {"action": "read_page_text"}
+- {"action": "fill_by_id", "element_id": "someId", "value": "text"}
+- {"action": "click_by_id", "element_id": "someId"}
 
 ## Rules
 - Always navigate first, then switch_to_iframe if needed
@@ -500,6 +528,98 @@ class HybridAgent:
                     time.sleep(3)
                     return f"clicked menu: {step['text']}"
             return f"menu item not found: {step['text']}"
+
+        elif action == "click_bpm_tab":
+            bpm_tab = self.driver.find_element(
+                By.XPATH,
+                "//span[contains(text(),'Business Processes')]",
+            )
+            bpm_tab.click()
+            time.sleep(3)
+            return "clicked BPM tab"
+
+        elif action == "create_new_bpm":
+            bpm_id_field = self.driver.find_element(
+                By.ID,
+                "ctl00_CPH1_ucBusinessProcesses_txtTemplateId",
+            )
+            bpm_id_field.clear()
+            bpm_id_field.send_keys(step["bpm_id"])
+            time.sleep(0.3)
+            name_field = self.driver.find_element(
+                By.ID,
+                "ctl00_CPH1_ucBusinessProcesses_txtTemplateName",
+            )
+            name_field.clear()
+            name_field.send_keys(step["name"])
+            time.sleep(0.3)
+            return f"set BPM ID={step['bpm_id']}, name={step['name']}"
+
+        elif action == "set_bpm_associate":
+            # Telerik RadComboBox - click the dropdown arrow first
+            dd = self.driver.find_element(
+                By.ID,
+                "ctl00_CPH1_ucBusinessProcesses_ddlAssociate",
+            )
+            arrow = dd.find_elements(
+                By.CSS_SELECTOR, ".rcbActionButton, .rcbArrowCell a"
+            )
+            if arrow:
+                arrow[0].click()
+            else:
+                dd.click()
+            time.sleep(1)
+            # Find and click the item in the dropdown list
+            items = self.driver.find_elements(
+                By.CSS_SELECTOR,
+                ".rcbList li, .rcbItem, .rcbCheckBox",
+            )
+            for item in items:
+                txt = item.text.strip()
+                if step["record_type"].lower() in txt.lower():
+                    item.click()
+                    time.sleep(0.5)
+                    return f"associated with: {txt}"
+            return f"record type not found: {step['record_type']}"
+
+        elif action == "open_visual_designer":
+            vd_btn = self.driver.find_element(
+                By.XPATH,
+                "//*[contains(text(),'USE VISUAL DESIGNER')]",
+            )
+            vd_btn.click()
+            time.sleep(3)
+            return "opened visual designer"
+
+        elif action == "save_bpm":
+            save_btns = self.driver.find_elements(
+                By.XPATH,
+                "//*[contains(@title,'Save')]"
+                " | //a[contains(@title,'Save')]",
+            )
+            for btn in save_btns:
+                if btn.is_displayed():
+                    btn.click()
+                    time.sleep(3)
+                    return "BPM saved"
+            self.driver.find_element(
+                By.TAG_NAME, "body"
+            ).send_keys(Keys.ALT, "s")
+            time.sleep(3)
+            return "BPM saved via Alt+S"
+
+        elif action == "fill_by_id":
+            el = self.driver.find_element(By.ID, step["element_id"])
+            el.clear()
+            el.send_keys(step["value"])
+            time.sleep(0.3)
+            return f"filled #{step['element_id']}: {step['value']}"
+
+        elif action == "click_by_id":
+            el = self.driver.find_element(By.ID, step["element_id"])
+            el.click()
+            time.sleep(1)
+            return f"clicked #{step['element_id']}"
 
         elif action == "wait":
             time.sleep(step.get("seconds", 3))
