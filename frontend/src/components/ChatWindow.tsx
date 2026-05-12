@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { sendMessage, getPmwebStatus, connectPmweb } from "../services/api";
+import { getPmwebStatus, connectPmweb } from "../services/api";
 import type { ChatMessage } from "../types";
 import { MessageBubble } from "./MessageBubble";
 
