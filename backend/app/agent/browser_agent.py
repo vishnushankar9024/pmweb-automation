@@ -122,6 +122,7 @@ Permissions: View, Create, Edit, Delete, Full Control
 - {"action": "save_adaptive_form"}
 
 ### General
+- {"action": "direct_reply", "message": "whats up! How can I help with PMWeb?"}
 - {"action": "read_page_text"}
 - {"action": "fill_by_id", "element_id": "someId", "value": "text"}
 - {"action": "click_by_id", "element_id": "someId"}
@@ -130,6 +131,9 @@ Permissions: View, Create, Edit, Delete, Full Control
 "input_id": "someId_Input", "value": "Option"}
 
 ## Rules
+- If the user only greets you or makes small talk without requesting a PMWeb \
+automation, return one direct_reply step and do not navigate. For "hi", the \
+message must start with "whats up".
 - Always navigate first, then switch_to_iframe if needed
 - For Security: navigate to Security.aspx, switch_to_iframe, then act
 - After filling forms, always click_save
@@ -231,8 +235,18 @@ class HybridAgent:
             )
         return self._run_task_impl(full_task)
 
+    def _direct_reply_for_task(self, task: str) -> str | None:
+        normalized = " ".join(task.strip().lower().split())
+        if normalized in {"hi", "hello", "hey", "hiya", "yo"}:
+            return "whats up! How can I help with PMWeb?"
+        return None
+
     def _run_task_impl(self, task: str) -> dict[str, Any]:
         self._stop_requested = False
+
+        direct_reply = self._direct_reply_for_task(task)
+        if direct_reply is not None:
+            return {"reply": direct_reply, "actions": []}
 
         if not self._logged_in:
             r = self.login()
@@ -324,6 +338,15 @@ class HybridAgent:
                 "actions": results,
             }
 
+        if not has_errors:
+            direct_messages = [
+                step.get("message")
+                for step in steps
+                if step.get("action") == "direct_reply" and step.get("message")
+            ]
+            if direct_messages:
+                return {"reply": direct_messages[-1], "actions": results}
+
         # Step 3: Summarize results
         summary_response = self.client.chat.completions.create(
             model=settings.openai_model,
@@ -354,6 +377,9 @@ class HybridAgent:
     def _execute_step(self, step: dict) -> Any:
         action = step["action"]
         base = settings.pmweb_base_url.rstrip("/")
+
+        if action == "direct_reply":
+            return {"message": step["message"]}
 
         if action == "navigate":
             url = step["url"]
