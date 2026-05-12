@@ -1,0 +1,7 @@
+{
+  "feedback_id": "test-automation-check",
+  "prompt": "List all security groups",
+  "expected": "Should show group names in a clean list",
+  "actual": "Shows raw JSON instead of formatted list",
+  "timestamp": "20260512195813"
+}
