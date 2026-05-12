@@ -1,128 +1,60 @@
-"""Persistent session store — keeps conversation state across restarts.
-
-Uses a simple JSON-file backend so sessions survive server restarts without
-requiring a database.  In production, swap :class:`FileSessionStore` for a
-Redis/Postgres implementation behind the same :class:`SessionStore` protocol.
-"""
+"""Chat session storage in MongoDB."""
 
 from __future__ import annotations
 
-import json
-import logging
-import os
-import time
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Protocol
+from datetime import datetime, timezone
+from typing import Any
 
-logger = logging.getLogger(__name__)
+from pymongo import MongoClient
 
-DEFAULT_DATA_DIR = os.environ.get("SESSION_DATA_DIR", "/tmp/pmweb_sessions")
-MAX_SESSIONS = 200
-SESSION_TTL_SECONDS = 60 * 60 * 24 * 7  # 7 days
+MONGO_URI = "mongodb+srv://pmwebxadmin:sa_admin2025@cluster0.oddu5r6.mongodb.net/"
+DB_NAME = "pmweb-automation"
 
 
-@dataclass
-class Session:
-    """In-memory representation of a conversation session."""
+class SessionStore:
+    def __init__(self, mongo_uri: str = MONGO_URI) -> None:
+        self._client = MongoClient(mongo_uri)
+        self._db = self._client[DB_NAME]
+        self._sessions = self._db["chat_sessions"]
 
-    session_id: str
-    messages: list[dict[str, Any]] = field(default_factory=list)
-    metadata: dict[str, Any] = field(default_factory=dict)
-    created_at: float = field(default_factory=time.time)
-    updated_at: float = field(default_factory=time.time)
-
-    def to_dict(self) -> dict[str, Any]:
-        return {
-            "session_id": self.session_id,
-            "messages": self.messages,
-            "metadata": self.metadata,
-            "created_at": self.created_at,
-            "updated_at": self.updated_at,
+    def create_session(self, title: str = "New Chat") -> dict[str, Any]:
+        doc = {
+            "title": title,
+            "messages": [],
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc),
         }
+        result = self._sessions.insert_one(doc)
+        doc["_id"] = str(result.inserted_id)
+        return self._serialize(doc)
 
-    @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "Session":
-        return cls(
-            session_id=data["session_id"],
-            messages=data.get("messages", []),
-            metadata=data.get("metadata", {}),
-            created_at=data.get("created_at", time.time()),
-            updated_at=data.get("updated_at", time.time()),
+    def list_sessions(self) -> list[dict[str, Any]]:
+        sessions = self._sessions.find({}, {"messages": 0}).sort("updated_at", -1).limit(50)
+        return [self._serialize(s) for s in sessions]
+
+    def get_session(self, session_id: str) -> dict[str, Any] | None:
+        from bson import ObjectId
+        doc = self._sessions.find_one({"_id": ObjectId(session_id)})
+        return self._serialize(doc) if doc else None
+
+    def add_message(self, session_id: str, role: str, content: str, actions: list | None = None) -> None:
+        from bson import ObjectId
+        msg = {"role": role, "content": content, "actions": actions or [], "timestamp": datetime.now(timezone.utc)}
+        self._sessions.update_one(
+            {"_id": ObjectId(session_id)},
+            {"$push": {"messages": msg}, "$set": {"updated_at": datetime.now(timezone.utc)}},
         )
 
+    def delete_session(self, session_id: str) -> None:
+        from bson import ObjectId
+        self._sessions.delete_one({"_id": ObjectId(session_id)})
 
-class SessionStore(Protocol):
-    """Protocol that any session backend must implement."""
-
-    def get(self, session_id: str) -> Session | None: ...
-
-    def save(self, session: Session) -> None: ...
-
-    def delete(self, session_id: str) -> bool: ...
-
-    def list_sessions(self) -> list[str]: ...
-
-
-class FileSessionStore:
-    """JSON-file-backed session store for development / small deployments."""
-
-    def __init__(self, data_dir: str = DEFAULT_DATA_DIR) -> None:
-        self._dir = Path(data_dir)
-        self._dir.mkdir(parents=True, exist_ok=True)
-
-    def _path(self, session_id: str) -> Path:
-        safe = session_id.replace("/", "_").replace("..", "_")
-        return self._dir / f"{safe}.json"
-
-    def get(self, session_id: str) -> Session | None:
-        path = self._path(session_id)
-        if not path.exists():
-            return None
-        try:
-            data = json.loads(path.read_text())
-            session = Session.from_dict(data)
-            if time.time() - session.updated_at > SESSION_TTL_SECONDS:
-                path.unlink(missing_ok=True)
-                return None
-            return session
-        except (json.JSONDecodeError, KeyError):
-            logger.warning("Corrupt session file: %s", path)
-            path.unlink(missing_ok=True)
-            return None
-
-    def save(self, session: Session) -> None:
-        session.updated_at = time.time()
-        self._enforce_limit()
-        path = self._path(session.session_id)
-        path.write_text(json.dumps(session.to_dict(), default=str))
-
-    def delete(self, session_id: str) -> bool:
-        path = self._path(session_id)
-        if path.exists():
-            path.unlink()
-            return True
-        return False
-
-    def list_sessions(self) -> list[str]:
-        return [p.stem for p in self._dir.glob("*.json")]
-
-    def _enforce_limit(self) -> None:
-        """Evict the oldest sessions when we exceed MAX_SESSIONS."""
-        files = sorted(self._dir.glob("*.json"), key=lambda p: p.stat().st_mtime)
-        while len(files) > MAX_SESSIONS:
-            oldest = files.pop(0)
-            oldest.unlink(missing_ok=True)
-            logger.info("Evicted old session: %s", oldest.stem)
-
-
-# Module-level singleton
-_store: FileSessionStore | None = None
-
-
-def get_session_store() -> FileSessionStore:
-    """Return the global session store instance."""
-    global _store
-    if _store is None:
-        _store = FileSessionStore()
-    return _store
+    def _serialize(self, doc: dict) -> dict[str, Any]:
+        doc["id"] = str(doc.pop("_id"))
+        for k in ("created_at", "updated_at"):
+            if k in doc and doc[k]:
+                doc[k] = doc[k].isoformat()
+        for msg in doc.get("messages", []):
+            if "timestamp" in msg:
+                msg["timestamp"] = msg["timestamp"].isoformat()
+        return doc
