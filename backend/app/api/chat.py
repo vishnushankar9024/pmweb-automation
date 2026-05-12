@@ -153,6 +153,68 @@ async def submit_feedback(
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
+@router.post("/feedback/fix-now")
+async def fix_now(feedback_id: str = Form(...)):
+    """Immediate fix: diagnose → create PR → agent on duty fixes."""
+    from pymongo import MongoClient
+
+    from app.services.mlops_engine import MLOpsEngine
+
+    client = MongoClient(
+        "mongodb+srv://pmwebxadmin:sa_admin2025"
+        "@cluster0.oddu5r6.mongodb.net/"
+    )
+    engine = MLOpsEngine(client["pmweb-automation"])
+    result = engine.process_fix_now(feedback_id)
+    return result
+
+
+@router.post("/feedback/fix-later")
+async def fix_later(feedback_id: str = Form(...)):
+    """Queue for batch fix at 7 PM IST."""
+    from pymongo import MongoClient
+
+    from app.services.mlops_engine import MLOpsEngine
+
+    client = MongoClient(
+        "mongodb+srv://pmwebxadmin:sa_admin2025"
+        "@cluster0.oddu5r6.mongodb.net/"
+    )
+    engine = MLOpsEngine(client["pmweb-automation"])
+    result = engine.process_fix_later(feedback_id)
+    return result
+
+
+@router.get("/feedback/progress/{feedback_id}")
+async def fix_progress(feedback_id: str):
+    """Poll for fix progress — frontend shows progress bar."""
+    from pymongo import MongoClient
+
+    from app.services.mlops_engine import MLOpsEngine
+
+    client = MongoClient(
+        "mongodb+srv://pmwebxadmin:sa_admin2025"
+        "@cluster0.oddu5r6.mongodb.net/"
+    )
+    engine = MLOpsEngine(client["pmweb-automation"])
+    return engine.get_fix_status(feedback_id)
+
+
+@router.get("/feedback/queued-count")
+async def queued_count():
+    """Badge count for sidebar."""
+    from pymongo import MongoClient
+
+    from app.services.mlops_engine import MLOpsEngine
+
+    client = MongoClient(
+        "mongodb+srv://pmwebxadmin:sa_admin2025"
+        "@cluster0.oddu5r6.mongodb.net/"
+    )
+    engine = MLOpsEngine(client["pmweb-automation"])
+    return {"count": engine.get_queued_count()}
+
+
 @router.get("/feedback/tickets")
 async def list_feedback_tickets(status: str = None):
     return feedback_store.list_tickets(status)
