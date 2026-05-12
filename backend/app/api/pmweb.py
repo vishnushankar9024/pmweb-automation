@@ -9,6 +9,11 @@ from app.api.chat import agent, executor
 router = APIRouter(prefix="/api/pmweb", tags=["pmweb"])
 
 
+def get_browser_if_connected():
+    """Compatibility hook for legacy PMWebClient fallback behavior."""
+    return None
+
+
 @router.post("/connect")
 async def connect_pmweb() -> dict:
     loop = asyncio.get_event_loop()
