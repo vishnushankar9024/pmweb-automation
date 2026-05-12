@@ -1,0 +1,1214 @@
+﻿/* fixing tooltip bg Color*/
+div.RadToolTip_Office2007 table.rtWrapper td.rtWrapperContent
+{ background-color:#ffffff !important;
+    }
+    
+/* Fixing formdecorator with  the radgrid and the textbox inside the item template we need to remove when we update telerik*/
+table.rfdRoundedWrapper  td
+{
+    padding:0px !important;
+    border:0px !important;
+}
+/* Fixing calendar*/
+/*html body .RadInput_Office2007 .riTextBox, html body .RadInputMgr_Office2007
+{padding:2px !important;
+    }*/
+    
+    .RadScheduler .rsApt .rsAptContent
+    {
+        line-height:15px;
+        line-height:17px; 
+    }
+
+/*.RadGrid_Office2007, .RadGrid_Office2007 .rgMasterTable, 
+.RadGrid_Office2007 .rgDetailTable, .RadGrid_Office2007 .rgGroupPanel table, 
+.RadGrid_Office2007 .rgCommandRow table, .RadGrid_Office2007 .rgEditForm table, 
+.GridToolTip_Office2007, .RadMenu_Office2007, .RadMenu_Office2007 .rmLink 
+,.RadTreeView_Outlook, .RadTreeView_Outlook a.rtIn, .RadTreeView_Outlook .rtEdit .rtIn input
+,.RadComboBox_Outlook, .RadComboBox_Outlook .rcbInput, .RadComboBoxDropDown_Outlook 
+,.RadToolBar_Office2007 .rtbWrap, .RadToolBar_Office2007 .rtbTemplate
+,.RadTabStrip_Office2007 .rtsLI, .RadTabStrip_Office2007 .rtsLink 
+,html body .RadInput_Office2007 .riTextBox, html body .RadInputMgr_Office2007
+,.RadToolBarDropDown_Office2007 .rtbWrap, .RadToolBarDropDown_Office2007 .rtbTemplate
+,.RadCalendar_Office2007 .rcMainTable
+,.RadCalendarMonthView_Office2007 input*/
+ input.rfdInput, textarea.rfdTextarea
+,.riTextBox
+/*,.RadComboBox_Office2007, .RadComboBox_Office2007 .rcbInput, .RadComboBoxDropDown_Office2007*/
+/*,.RadComboBox_Vista, .RadComboBox_Vista .rcbInput, .RadComboBoxDropDown_Vista
+,.RadComboBox_Metro, .RadComboBoxDropDown_Metro, .RadComboBox_Metro .rcbInput*/
+
+{
+    margin-left: 0px;
+}
+
+/*.RadTabStrip_Office2007 .rtsLevel .rtsLink:hover
+{
+    text-decoration:none !important;
+}*/
+/*,.RadToolBar_Office2007 .rtbChoiceArrow*/
+/*.RadToolBar_Office2007 .rtbDropDownExpanded .rtbChoiceArrow
+,.RadToolBar_Office2007 .rtbSplBtnExpanded .rtbChoiceArrow
+ {
+background-image:url('ToolBar/rtbClickedDropArrows.png') !important;
+}*/
+
+
+/*.RadUpload_Office2007 .ruRemove:hover{
+ background-image:url('Upload/ruSprite.png') !important;
+    background-position:-65px 0px  !important;
+}*/
+.RadUpload .ruFakeInput{
+border-top : 2px solid important!;
+}
+/*.RadUpload .ruActions .ruButton:hover, .RadUploadProgressArea .ruActions .ruButton:hover{
+   background-image:url('Upload/ruSprite.png') !important;
+    background-position:-65px 0px  !important;
+}*/
+/*.RadTabStrip_Metro .rtsLink {
+text-transform: none !important;
+}*/
+.RadColorPicker .rcpColorPreview {height:10px !important;width:10px !important;}
+.RadColorPicker .rcpHexInput, .RadColorPicker .rcpInput {height:12px !important;line-height:12px !important; }
+.RadColorPicker .rcpHexInput {width:60px !important; }
+/*.RadGrid_Metro .rgCommandRow {
+background: #fff !important;
+color: blue;
+}*/
+/*.RadGrid_Metro {
+border-Top: 1px solid #fff !important;
+
+}*/
+/*.RadGrid_Metro .rgRow td, .RadGrid_Metro .rgAltRow td, .RadGrid_Metro .rgEditRow td, .RadGrid_Metro .rgFooter td {
+border-style: solid;
+border-width: 0 0 1px 1px;
+border-top: none !important;
+border-bottom: none !important;
+}*/
+/*.RadGrid_Metro .rgEditRow td  
+{
+     border-color:#4e74c0 !important;
+color: #FFF !important;
+
+}*/
+/*.RadGrid_Metro .rgEditRow  {
+background-color: #4e74c0 !important;
+
+}
+
+.RadGrid_Metro .rgSelectedRow
+{
+    background-color:#c5cee0 !important;
+}
+.RadGrid_Metro .rgSelectedRow td
+{
+    border-color:#c5cee0 !important;
+    color:#000 !important;
+}*/
+
+
+/*.RadGrid_Metro .rgSelectedRow input, .RadGrid_Metro .rgSelectedRow a {
+color: #000 !important;
+}
+
+.RadGrid_Metro .rgCommandRow a {
+color: #000 !important;
+text-decoration: none;
+}*/
+
+
+/************* RadComboBoxItem add white space *************/
+.ComboBoxItemIndent
+{
+    text-indent: 20px  !important;
+}
+
+.ComboBoxItemIndent40px
+{
+    text-indent: 40px  !important;
+}
+
+.ComboBoxItemIndent50px
+{
+    text-indent: 50px  !important;
+}
+/*************************/
+
+/************* RadComboBoxItem add white space *************/
+.ComboBoxItemBoldIndent
+{
+    text-indent: 20px  !important;
+    font-weight: bold;
+}
+
+/*************************/
+body
+{
+    background-color:#678FC2;
+    margin: 0;
+    color: #000000;
+   /* direction:rtl !important;*/
+   }
+
+a, a:visited, a:active
+{
+    color: #012361;
+    text-decoration: none;
+    font-size: 11px;
+    cursor: hand;
+}
+
+a img
+{
+        text-decoration: none;
+        border:none;
+    
+}
+a:hover
+{
+    color: #9D701C;
+    text-decoration: none;
+}
+ a.Link, a.Link:visited, a.Link:active, a.Link:hover
+{
+    color:#0000c1 !important;
+    cursor: pointer;
+     text-decoration: none;
+}
+
+a.Link:disabled,a:disabled
+{
+    color: #C0C0C0 !important;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.Collapse
+{
+    background-image: url(../Images/Global/PlusMinus.gif) !important;
+    background-position :0px -12px !important;
+    background-repeat:no-repeat !important;
+    width: 12px !important;
+    height: 12px !important;
+    cursor:pointer !important;
+}
+.Expand
+{
+    background-image: url(../Images/Global/PlusMinus.gif) !important;
+    background-position :0px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 12px !important;
+    height: 12px !important;
+    cursor:hand !important;
+}
+
+.ShowMenu
+{
+    background-image: url(../Images/Global/smallHideMenu.png) !important;
+    background-position :0px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 20px !important;
+    height: 20px !important;
+    cursor:pointer !important;
+}
+.HideMenu
+{
+    background-image: url(../Images/Global/smallHideMenu.png) !important;
+    background-position :-20px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 20px !important;
+    height: 20px !important;
+    cursor:pointer !important;
+}
+
+
+.ShowAssetMenu
+{
+    background-image: url(../Images/Global/smallHideMenu.png) !important;
+    background-position :-40px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 20px !important;
+    height: 20px !important;
+    cursor:pointer !important;
+}
+.HideAssetMenu
+{
+    background-image: url(../Images/Global/smallHideMenu.png) !important;
+    background-position :-60px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 20px !important;
+    height: 20px !important;
+    cursor:pointer !important;
+}
+
+input, textarea
+{
+    border: 1px solid #C4DBF9;
+    color: #000000;
+    padding: 1px 1px 1px 1px;
+    margin-right: 0px;
+}
+
+input.SelectedToPaste, textarea.SelectedToPaste{
+    border: 1px solid red;
+}
+select.SelectedToPaste
+{
+    background-color: #FFE8E8;
+}
+fieldset{border: 1px solid #C4DBF9; padding:5px;}
+fieldset legend
+{
+    color: #609DF0;
+}
+
+/************** PM Inputs ****************/
+
+/*input[type="button"], input[type="submit"]
+{
+	background-image: url(../Images/Global/DefaultButtonM100.png);
+	background-position:0px;
+	background-repeat: no-repeat;
+	border: 0px solid #000000;
+	width: 100px;
+	height: 20px;
+	font-size: 10px;
+	cursor: pointer;
+}
+
+input[type="button"].Disabled
+,.disabledbtn
+,input[disabled="disabled"][type="submit"]
+,input[disabled="disabled"][type="button"]
+{
+    color: #999999;
+    cursor: default;
+}
+
+input[type="button"].Enabled
+{
+    color: #000000;
+}
+
+input[type="button"]:hover, input[type="submit"]:hover
+{
+  
+}*/
+
+.btnGenerator
+{
+    background-image: url(../Images/Global/GenerateButton.png) !important;
+	height: 18px !important;
+}
+
+/*input[type="button"].LargeButton, input[type="submit"].LargeButton
+{
+    background-image: url(../Images/Global/DefaultButtonM150.png);
+	background-position:0px;
+	background-repeat: no-repeat;
+	border: 0px solid #000000;
+	width: 150px;
+	height: 20px;
+	font-size: 10px;
+	cursor: hand;
+}*/
+.lnkButton
+{
+    background-image: url(../Images/Global/DefaultButtonM100.png);
+	background-position:0px;
+	background-repeat: no-repeat;
+
+	width: 100px;
+	height: 20px;
+	font-size: 10px;
+	cursor: hand;
+   text-align:center;
+   line-height:20px;
+}
+.lnkButton:hover
+{
+    background-image: url(../Images/Global/DefaultButtonM100.png);
+    background-position : -100px;
+}
+
+/*input[type="button"].LargeButton:hover, input[type="submit"].LargeButton:hover
+{
+    background-image: url(../Images/Global/DefaultButtonM150.png);
+    background-position : -150px;
+}
+
+input[type="button"].SmallButton, input[type="submit"].SmallButton
+{
+    background-image: url(../Images/Global/SmallButtonM33.png);
+    background-position : 0px;
+    background-repeat: no-repeat;
+    border: 0px solid #000000;
+    width: 21px;
+    height: 14px;
+    font-size: 10px;
+    cursor:hand;
+}*/
+
+input[type="button"].SmallSplitButton, input[type="submit"].SmallSplitButton
+,input[type="button"].SmallSplitButton:active, input[type="submit"].SmallSplitButton:active 
+{
+    background-image: url(../Images/Global/smallSplit.png);
+    background-position : 0px;
+    background-repeat: no-repeat;
+    border: 0px solid #000000;
+    width: 16px;
+    height: 14px;
+    font-size: 10px;
+    cursor:pointer;
+}
+
+/*input[type="button"].EmptyNotes, input[type="submit"].EmptyNotes
+{
+    background-image: url(../Images/Global/EmptySmallSplit.png);
+    background-position : 0px;
+    background-repeat: no-repeat;
+    border: 0px solid #000000;
+    width: 16px;
+    height: 14px;
+    font-size: 10px;
+    cursor:pointer;
+}
+
+input[type="button"].FilledNotes, input[type="submit"].FilledNotes
+{
+    background-image: url(../Images/Global/smallSplit.png);
+    background-position : 0px;
+    background-repeat: no-repeat;
+    border: 0px solid #000000;
+    width: 16px;
+    height: 14px;
+    font-size: 10px;
+    cursor:pointer;
+}
+
+input[type="button"].SmallButton:hover, input[type="submit"].SmallButton:hover
+{
+    background-image: url(../Images/Global/SmallButtonM33.png);
+    width: 21px;
+    background-position : -21px;
+}*/
+
+
+
+input[type="radio"], input[type="checkbox"]
+{
+	border:0px;
+}
+/************************************************/
+Select
+{
+    border:1px solid #C4DBF9;
+     padding:1px 1px 1px 1px;
+}
+
+#tblMain{margin: auto;}
+
+#divContentHolder {padding-left:0.2em;}
+
+.Header 
+{
+	float: left;
+	width: 100%;
+	height: 45px;
+	border-bottom: #666666 solid 1px;
+	background: #FFFFFF;
+	font-size: 100%;
+	line-height: normal;
+	padding: 0px;
+}
+
+.MenuChild1()
+{
+	font-weight: bold;
+	color: #00FFFF;
+	 text-decoration:none;
+}
+
+
+
+.Msg
+{
+	z-index: 110;
+	filter: alpha(opacity=80);
+	opacity: 0.8;
+	-moz-opacity: 1;
+	border-right: black 1px solid;
+	border-top: black 1px solid;
+	border-left: black 1px solid;
+	position: absolute;
+	border-bottom: black 1px solid;
+	visibility: hidden;
+	width: 250px;
+	color: Black;
+	 padding:2px;
+}
+
+.Validator
+{
+	
+	text-decoration: none !important;
+	color: #C60000 !important;
+}
+
+.NormalGrayBack
+{
+   
+    background-color: #E4E4DA;
+    text-align:left;
+}
+
+.NormalWhiteBack
+{
+   
+    background-color: #FFFFFF;
+    }
+    
+ .WhiteDarkBlueBack
+ ,.WhiteDarkBlueBack a
+{
+    background-repeat:no-repeat;
+    text-align: left;
+    color: #FFFFFF;
+    font-weight: bold;
+    vertical-align: baseline;
+    height: 20px;
+}
+
+.BlackLightBlueBack
+{  
+  
+    text-align: left;
+    background: #7da5e0 url(../Images/Global/LightBlueBar.gif) repeat-x;
+    color: #000000;
+}
+
+.Container1
+{
+    border: 1px solid #C4DBF9;
+    padding: 1px 0 1px 1px;
+    border-collapse: collapse;
+}
+    
+.td0
+{
+    background-color: #AFA99A;
+    font-weight: bold;
+}
+
+.td1
+{
+    background-color: #FFF4CC;
+}
+
+.td2
+{
+    background-color: #E4B865;
+}
+
+.RadPageTitle {
+           
+            background: #7da5e0 repeat-x;
+            background-image:url(../Images/Menu/ItemBg.gif);
+            color: #10110f;
+            font-weight:bold;
+            padding-left:5px;
+            font-size: 11px;
+            text-align:left;
+            line-height:25px;
+            }
+            
+ /*.ToolBar  Depends On Skin
+{
+    background-position: 0px 2px !important;
+    background: url('ToolBar/ToolbarBg.png') repeat-x;
+    background-color: #D6E6F4;
+}*/
+
+.treeMenu
+{
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #002d96;
+    width:200px !important;
+}
+
+
+
+.AllLightBlueBorder
+{
+    border: 1px solid #C4DBF9;
+}
+
+.LightBlueBackground
+{
+    background-color: #C4DBF9;
+}
+
+.AllDarkBlueBorder
+{
+    border: 1px solid #002D96 !important;
+}
+.RightLightBlueBorder
+{
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #C4DBF9;
+}
+
+.TopLightBlueBorder
+{
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #C4DBF9;
+}
+
+.BottomLightBlueBorder
+{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #C4DBF9;
+}
+
+.SmallItalic
+{
+   
+    text-decoration: none;
+    font-style: italic;
+}
+.SmallGray{font-size: 8pt !important; color:Gray}
+
+.BackroungLightGray{ background-color:#e4e4e4; }
+
+.Center{ text-align:center !important; }
+
+.Middle{ vertical-align:middle!important;}
+
+.Top{ vertical-align:top !important; }
+
+.Right{ text-align:right !important; }
+
+.Left{ text-align:left !important; }
+
+.floatLeft {float:left !important;}
+
+.floatRight {float:right !important;}
+
+.Hide{ display:none !important; }
+
+.MaxWidth { width:100%; }
+
+.MaxHeight { height:100%;}
+
+.Error { color: #FF0000; }
+
+.NoWrap { white-space:nowrap }
+
+.Wrap {white-space:normal}
+
+.Bold { font-weight: bold !important; }
+
+.Italic { font-style:italic; }
+
+.EmptyImg { width:0px; height:0px;}
+
+.Padding7{ padding:7px !important;}
+
+.Padding4{ padding:4px !important;}
+
+/*************** Rotator ********/
+.RotatorDiv
+{
+    text-align:center;
+    padding:5px;
+    border: solid 1px #dddddd !important;
+ }
+ 
+ .RotatorButtonRight
+{
+	background-image: url('Rotator/RotatorButtons.gif');
+	background-repeat: no-repeat;
+	height: 20px;
+	width: 20px;
+	line-height: 20px;
+	background-position: 0 -20px;
+}
+
+.RotatorButtonRight:hover
+{
+	background-position: -20px -20px;
+	 cursor:hand;
+}
+
+ .RotatorButtonLeft
+{
+	background-image: url('Rotator/RotatorButtons.gif');
+	background-repeat: no-repeat;
+	height: 20px;
+	width: 20px;
+	line-height: 20px;
+	background-position: 0 -60px;
+	
+}
+
+.RotatorButtonLeft:hover
+{
+	background-position: -20px -60px;
+	 cursor:hand;
+}
+
+ /*************** Rotator ********/
+ 
+ .GridFooter TD
+{
+	border: 0px transparent none !important;
+	text-align:right;
+	color: Black;
+	font-weight: bold;
+	height: 15px !important;
+	padding-right: 7px;
+	padding-left: 7px;
+}
+ 
+ .Success
+ {
+ 	color: Green;
+ }
+ 
+ .Failure
+ {
+ 	color: Red;
+ }
+  
+ .ScheduleButton
+ {
+ 	width:75px;
+	height: 22px;
+}
+
+.combo-item-template input,
+.combo-item-template label
+{
+	vertical-align:middle;
+}
+
+ 
+ /****** Masked Text Box ******/
+ .riTextBox
+{
+	background-position: #fff;
+	padding-right: 1px;
+	padding-left: 1px;
+	background: #fff;
+	padding-bottom: 3px;
+	font: 12px "segoe ui" ,arial,sans-serif;
+	color: #000;
+	padding-top: 2px;
+	border-right: #c3d9f9 1px solid;
+	border-top: #c3d9f9 1px solid;
+	border-left: #c3d9f9 1px solid;
+	border-bottom: #c3d9f9 1px solid;
+}
+
+/*********** Rad Window ***********/
+.TelerikModalOverlay
+{
+	filter: progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0) !important;
+	background-color: Green !important;
+	opacity: 0 !important;
+	mozopacity: 0 !important;
+}
+
+
+
+
+.SearchButton {
+	background:#FFFFFF url(../Images/Toolbar/lookup.png) no-repeat -2px 0px !important;
+	padding:4px 4px 4px 27px;
+	border:1px solid #CCCCCC;
+	width:200px;
+	height:14px;
+}
+.TelerikSearchButton
+{
+	background:#FFFFFF url(../Images/Toolbar/lookup1.png) no-repeat 120px 1px !important;
+	padding:4px 4px 4px 27px;
+	border:1px solid #CCCCCC;
+	width:140px !important;
+	height:10px;
+}
+
+/*.RadGrid_Office2007 .rgAltRow TD {	PADDING-RIGHT: 7px;	PADDING-LEFT: 7px}*/
+
+
+input[type="checkbox"] + label,input[type="radio"]  + label{
+	margin:0px 0px 20px 3px ;
+	/*!margin:0px ;*/
+}
+
+
+.PositiveInteger,
+.Integer,
+.PositiveDouble,
+.Double,
+.PositivePercent,
+.Percent,
+.PositiveCurrency,
+.Currency,.Days,
+.Longtitude
+{
+	text-align: right;
+}
+
+/**** Div to Drag*/
+#sel_box
+{
+    display: none;
+    position: absolute;
+    border: 1px solid #369;
+    background: #def;
+    opacity: .3;
+    filter: alpha(opacity=30);
+    width: 0;
+    height: 0;
+    z-index: 10;
+}
+
+/*****************************************************PANELBAR*/
+
+/* dropdown */
+
+.rcbSlide
+{
+	position:absolute;
+	overflow:hidden;
+	display:none;
+	_height:1px;
+	float:left;
+}
+
+
+
+.rgCommandRow img
+{
+	height:16px;
+	width:16px;
+}
+
+/*header*/
+.rgTwoLines .rgHeaderDiv
+{
+	background-position:0 -6200px;
+}
+
+.rgNoScrollImage .rgHeaderDiv
+{
+	background-image:none;
+}
+
+
+.AssetManagement
+{
+  background-image: url(../Images/Menu/MenuAll.gif);
+  background-position : 48px;
+  
+}
+
+/* </Separators> */
+
+/* </RadMenu / Office2007> */
+
+/***REDLINING START*****/
+
+.RL_AllLightBlueBorder
+{
+    border: 5px solid #C4DBF9;
+}
+
+.RL_AllLightBlueBorder 
+{
+    border: 5px solid #C4DBF9;
+}
+
+.dvActionSection
+{
+     width: 250px;
+    background-color:#F8F8F8;
+    border:solid 1px #8d8b8b ;
+     height: 250px;
+     overflow-x:hidden;
+     overflow-y:auto;
+}
+.dvTreeSection
+{
+     width: 250px;
+    border:solid 1px #8d8b8b ;
+     height: 250px;
+     overflow-x:hidden;
+     overflow-y:auto;
+}
+.dvActionSection br {display:none}
+
+.RL_ActionHeader,.RL_UsersHeader
+{
+    height: 25px;
+    width: 240px;
+    padding: 5px;
+    background-color: #EFEFEF;
+    font-weight: bold;
+    color:#000;
+    border:solid 1px #8d8b8b ;
+    border-bottom:0px;
+}
+
+.RL_PolylineHeader
+{
+    width: 240px;
+    padding: 5px;
+    background-color: #EFEFEF;
+    font-weight: bold;
+    color:#000;
+    border:solid 1px #8d8b8b ;
+    border-bottom:0px;
+    border-top:0px;
+}
+
+.RL_ActionFooter
+{
+    border:solid 1px #8d8b8b ;
+    border-width:1px 0 0px 0 !important ;
+    width: 252px;
+}
+
+.RL_Action
+{
+    width: 252px;
+    background-color: #f8f8f8;
+    padding: 5px;
+    border-width: 0 0px 0 0px;
+    border-color:#8d8b8b;
+    border-style:solid;
+    display: table;
+}
+
+.RL_Action:hover
+{
+    background-color: #e4e4e4;
+    cursor:pointer;
+}
+
+.RL_Users
+{
+    height: 80px; 
+    overflow: auto;
+    padding:3px;
+    background-color:#f8f8f8;
+    border:solid 1px #8d8b8b ;
+    border-top:0px !important;
+    width: 244px;
+} 
+
+.RL_Info1
+{
+     padding:0px;
+     width: 250px;
+     border: solid 1px #8d8b8b;
+}
+
+
+.RL_Info
+{
+     padding:3px;
+     border-radius: 5px;
+    -moz-border-radius: 5px;
+     border: solid 1px #8d8b8b;
+}
+
+.RL_DW
+{
+    position:absolute;
+    left: 270px; top: 155px;
+}
+
+.RL_DW > img
+{
+    width:50px;
+}
+.GroupedTasks
+{
+    border: 1px solid #86AED7;
+    background-color: #CFDFEF;
+}
+.UngroupedTasks
+{ 
+    padding-left: 5px;
+ }
+
+.UngroupedTasks:hover
+{
+    background-color: #E8EFF7;
+}
+/***REDLINING END*****/
+
+/**** Scroller Starts ***/
+
+
+.jspContainer
+{
+	overflow: hidden;
+	position: relative;
+}
+
+.jspPane
+{
+	position: absolute;
+}
+
+.jspVerticalBar
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 6px;
+	height: 100%;
+	background: red;
+}
+
+.jspHorizontalBar
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 6px;
+	background: red;
+}
+
+.jspVerticalBar *,
+.jspHorizontalBar *
+{
+	margin: 0;
+	padding: 0;
+}
+
+.jspCap
+{
+	display: none;
+}
+
+.jspHorizontalBar .jspCap
+{
+	float: left;
+}
+
+.jspTrack
+{
+    background-position: #E6E6E6;
+    background: #EBEEF3;
+    position: relative;
+}
+
+.jspDrag
+{
+    background-position: #333333;
+    background: #ABC8EB;
+    position: relative;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag
+{
+	float: left;
+	height: 100%;
+}
+
+.jspArrow
+{
+	background: #50506d;
+	text-indent: -20000px;
+	display: block;
+	cursor: pointer;
+}
+
+.jspArrow.jspDisabled
+{
+	cursor: default;
+	background: #80808d;
+}
+
+.jspVerticalBar .jspArrow
+{
+	height: 16px;
+}
+
+.jspHorizontalBar .jspArrow
+{
+	width: 6px;
+	float: left;
+	height: 100%;
+}
+
+.jspVerticalBar .jspArrow:focus
+{
+	outline: none;
+}
+
+.jspCorner
+{
+	background: #eeeef4;
+	float: left;
+	height: 100%;
+}
+
+/**** Scroller Ends ***/
+/**** ContactBox Starts ***/
+ div.ContactBox {
+    border: 1px solid #86AED7;
+   	background-image: url('Menu/ContactBg.png');
+    background-color: transparent;
+    background-repeat: repeat-x;
+    background-position: 0 7px;
+    margin-top:3px; 
+    margin-left:6px; 
+    padding:2px;
+    border-radius: 10px 10px 10px 10px;
+    display:inline-block;
+}
+ div.ContactBox:hover{
+    background-position: 0 -8px;
+ }
+ 
+ /**** ContactBox Ends ***/
+ 
+ /******RadWindow***********/
+ 
+  div.RadWindow
+ {
+     z-index:9000 !important;
+ }
+
+ /* Telerik RadTreeList PM Skin */
+
+/*global*/
+
+
+.RadTreeList .rtlTable .rtlRBtm td
+{
+    padding: 3px 7px 4px 7px;
+    border-bottom-width: 1px !important;
+    border-bottom-style: solid !important;
+    border-bottom-color: #D0D7E5 !important;
+}
+
+
+
+.green
+{ background:#CCFFCC !important; 
+	
+	}
+	
+	
+.ReadOnlyCalendar
+{
+	border:none !important;
+	background-color:Transparent !important;   
+}
+
+/*.RadToolBarDropDown_Office2007 .rtbDisabled .rtbWrap
+{
+	color: #ababab;
+}*/
+
+
+
+       div.RadComboBox table.rcbDisabled
+       {
+           filter:none !important;
+           opacity:initial;
+       }
+
+
+.chkAlignMiddle input
+{
+    vertical-align:middle;
+    margin-top:0px !important;
+    margin-bottom:1px !important;
+}
+
+
+
+
+/********************Responsive Grid Layout**************************/
+
+.PMHeader .row{display:flex;
+               flex-wrap:wrap;
+               margin-right:-15px;
+               margin-left:-15px;
+
+}
+
+
+
+.PMHeader .col-1,.PMHeader .col-2,.PMHeader .col-3,.PMHeader .col-4,.PMHeader .col-5,.PMHeader .col-6,.PMHeader .col-7,.PMHeader .col-8,.PMHeader .col-9,.PMHeader .col-10,.PMHeader .col-11,.PMHeader .col-12{
+    position:relative;
+    width:100%;
+    min-height:1px;
+    padding-left:15px;
+}
+.PMHeader .row .col-1{
+    flex:0 0 8.33333%;
+    max-width:8.33333%;
+}
+.PMHeader .row .col-2{
+    flex:0 0 16.66667%;
+    max-width:16.66667%;
+}
+.PMHeader .row .col-3{
+    flex:0 0 25%;
+    max-width:25%;
+}
+.PMHeader .row .col-4{
+    flex:0 0 33.33333%;
+    max-width:33.33333%;
+}
+.PMHeader .row .col-5{
+    flex:0 0 41.66667%;
+    max-width:41.66667%;
+}
+.PMHeader .row .col-6{
+    flex:0 0 50%;
+    max-width:50%;
+}
+.PMHeader .row .col-7{
+    flex:0 0 58.33333%;
+    max-width:58.33333%;
+}
+.PMHeader .row .col-8{
+    flex:0 0 66.66667%;
+    max-width:66.66667%;
+}
+.PMHeader .row .col-9{
+    flex:0 0 75%;
+    max-width:75%;
+}
+.PMHeader .row .col-10{
+    flex:0 0 83.33333%;
+    max-width:83.33333%;
+}
+.PMHeader .row .col-11{
+    flex:0 0 91.66667%;
+    max-width:91.66667%;
+}
+.PMHeader .row .col-12{
+    flex:0 0 100%;
+    max-width:100%;
+}
+
+

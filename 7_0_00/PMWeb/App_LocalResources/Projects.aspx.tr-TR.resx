@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnElevation.Text" xml:space="preserve">
+    <value>Yükseklik</value>
+  </data>
+  <data name="btnGoogleAddress.Text" xml:space="preserve">
+    <value>Google Adresi</value>
+  </data>
+  <data name="btnlatitude.Text" xml:space="preserve">
+    <value>Enlem</value>
+  </data>
+  <data name="btnLongitude.Text" xml:space="preserve">
+    <value>Boylam</value>
+  </data>
+  <data name="chkInactive.Text" xml:space="preserve">
+    <value>Etkin değil</value>
+  </data>
+  <data name="ddlArchitects.EmptyMessage" xml:space="preserve">
+    <value>Mimar Seçiniz ...</value>
+  </data>
+  <data name="ddlArchitects_Load" xml:space="preserve">
+    <value>Mimarlar</value>
+  </data>
+  <data name="ddlClients.EmptyMessage" xml:space="preserve">
+    <value>İstemci Seçin ...</value>
+  </data>
+  <data name="ddlClients_Load" xml:space="preserve">
+    <value>Müşteriler</value>
+  </data>
+  <data name="ddlCommitmentCompany.EmptyMessage" xml:space="preserve">
+    <value>Taahhüt Şirketi Seçin ...</value>
+  </data>
+  <data name="ddlCommitmentCompany_Load" xml:space="preserve">
+    <value>Taahhüt Şirketi</value>
+  </data>
+  <data name="ddlCompanies.EmptyMessage" xml:space="preserve">
+    <value>Firma Seçiniz ...</value>
+  </data>
+  <data name="ddlCompanies_Load" xml:space="preserve">
+    <value>Firmalar</value>
+  </data>
+  <data name="ddlGCs.EmptyMessage" xml:space="preserve">
+    <value>GC seçin ...</value>
+  </data>
+  <data name="ddlGCs_Load" xml:space="preserve">
+    <value>GC</value>
+  </data>
+  <data name="ddlOwner.EmptyMessage" xml:space="preserve">
+    <value>Sahip Seçin ...</value>
+  </data>
+  <data name="ddlOwner_Load" xml:space="preserve">
+    <value>Sahip</value>
+  </data>
+  <data name="ddlPrograms.EmptyMessage" xml:space="preserve">
+    <value>Programı Seçin ...</value>
+  </data>
+  <data name="ddlProjects.EmptyMessage" xml:space="preserve">
+    <value>Proje Seçiniz ...</value>
+  </data>
+  <data name="ddlProperties.EmptyMessage" xml:space="preserve">
+    <value>Konum Seçin ...</value>
+  </data>
+  <data name="ddlStatuses.EmptyMessage" xml:space="preserve">
+    <value>Durum Seç ...</value>
+  </data>
+  <data name="ddlTypes.EmptyMessage" xml:space="preserve">
+    <value>Tür Seçin ...</value>
+  </data>
+  <data name="GridColumn_Building" xml:space="preserve">
+    <value>Bina</value>
+  </data>
+  <data name="GridColumn_Equipment" xml:space="preserve">
+    <value>Ekipmanlar</value>
+  </data>
+  <data name="GridColumn_Floor" xml:space="preserve">
+    <value>Zemin</value>
+  </data>
+  <data name="GridColumn_Property" xml:space="preserve">
+    <value>yer</value>
+  </data>
+  <data name="GridColumn_Space" xml:space="preserve">
+    <value>Uzay</value>
+  </data>
+  <data name="GridColumn_Suite" xml:space="preserve">
+    <value>Sonra</value>
+  </data>
+  <data name="hliInitiativeID.Text" xml:space="preserve">
+    <value>Girişim kimliği</value>
+  </data>
+  <data name="hliTenantRequest.Text" xml:space="preserve">
+    <value>ID iste</value>
+  </data>
+  <data name="hplCurrency.Text" xml:space="preserve">
+    <value>Para birimi</value>
+  </data>
+  <data name="lblAddress.Text" xml:space="preserve">
+    <value>Adres</value>
+  </data>
+  <data name="lblAddress1.Text" xml:space="preserve">
+    <value>Adres 1</value>
+  </data>
+  <data name="lblAddress2.Text" xml:space="preserve">
+    <value>Adres 2</value>
+  </data>
+  <data name="lblArchitect.Text" xml:space="preserve">
+    <value>Mimar</value>
+  </data>
+  <data name="lblAssets.Text" xml:space="preserve">
+    <value>Bağlı Varlıklar</value>
+  </data>
+  <data name="lblCategory.Text" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="lblCity.Text" xml:space="preserve">
+    <value>Kent</value>
+  </data>
+  <data name="lblClient.Text" xml:space="preserve">
+    <value>Müşteri</value>
+  </data>
+  <data name="lblCommitment.Text" xml:space="preserve">
+    <value>Taahhüt Şirketi</value>
+  </data>
+  <data name="lblCountry.Text" xml:space="preserve">
+    <value>Ülke</value>
+  </data>
+  <data name="lblCurrency.Text" xml:space="preserve">
+    <value>Para birimi</value>
+  </data>
+  <data name="lblCurrencyError.Text" xml:space="preserve">
+    <value>Proje Para Birimi, İşletme Projesi olarak bir veya daha fazla bağlantılı Konumla eşleşmediğinden kaydedilemez.</value>
+  </data>
+  <data name="lblExecutive.Text" xml:space="preserve">
+    <value>Yönetici</value>
+  </data>
+  <data name="lblFax.Text" xml:space="preserve">
+    <value>Faks</value>
+  </data>
+  <data name="lblGC.Text" xml:space="preserve">
+    <value>GC</value>
+  </data>
+  <data name="lblGoogleAddress.Text" xml:space="preserve">
+    <value>Google Adresi</value>
+  </data>
+  <data name="lblImgGall.Text" xml:space="preserve">
+    <value>Resim Galerisi</value>
+  </data>
+  <data name="lblManager.Text" xml:space="preserve">
+    <value>Yönetici</value>
+  </data>
+  <data name="lblName.Text" xml:space="preserve">
+    <value>İsim *</value>
+  </data>
+  <data name="lblOwner.Text" xml:space="preserve">
+    <value>Sahip</value>
+  </data>
+  <data name="lblPBS.text" xml:space="preserve">
+    <value>PBS</value>
+  </data>
+  <data name="lblPercentComplete.Text" xml:space="preserve">
+    <value>Yüzde Tamamlandı</value>
+  </data>
+  <data name="lblPersonnel.Text" xml:space="preserve">
+    <value>Personel</value>
+  </data>
+  <data name="lblPhone.Text" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="lblProgram.Text" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="lblProgramWBS.Text" xml:space="preserve">
+    <value>WBS Programı</value>
+  </data>
+  <data name="lblProjectId.Text" xml:space="preserve">
+    <value>Proje Kimliği *</value>
+  </data>
+  <data name="lblProjectIdUnique.Text" xml:space="preserve">
+    <value>Proje kimliği benzersiz olmalıdır.</value>
+  </data>
+  <data name="lblProjectNameUnique.Text" xml:space="preserve">
+    <value>İsim benzersiz olmalıdır.</value>
+  </data>
+  <data name="lblProjectStatus.Text" xml:space="preserve">
+    <value>Proje durumu</value>
+  </data>
+  <data name="lblProjectType.Text" xml:space="preserve">
+    <value>Tür</value>
+  </data>
+  <data name="lblProperty.Text" xml:space="preserve">
+    <value>yer</value>
+  </data>
+  <data name="lblRevision.Text" xml:space="preserve">
+    <value>Revizyon</value>
+  </data>
+  <data name="lblRevisionDate.Text" xml:space="preserve">
+    <value>Tarih (değiştir | kaynağı değiştir)</value>
+  </data>
+  <data name="lblScope.Text" xml:space="preserve">
+    <value>Dürbün</value>
+  </data>
+  <data name="lblState.Text" xml:space="preserve">
+    <value>Eyalet / ZIP</value>
+  </data>
+  <data name="lblStatus.Text" xml:space="preserve">
+    <value>Durum / Revizyon</value>
+  </data>
+  <data name="lblSuperintendent.Text" xml:space="preserve">
+    <value>Müfettiş</value>
+  </data>
+  <data name="lblTags.Text" xml:space="preserve">
+    <value>Etiketler</value>
+  </data>
+  <data name="lblTargetBudget.Text" xml:space="preserve">
+    <value>Hedef Bütçe</value>
+  </data>
+  <data name="lblTargetDuration.Text" xml:space="preserve">
+    <value>Hedef Süre / UOM</value>
+  </data>
+  <data name="lblTargetFinish.Text" xml:space="preserve">
+    <value>Hedef Bitiş</value>
+  </data>
+  <data name="lblTargetRevenue.Text" xml:space="preserve">
+    <value>Hedef Gelir</value>
+  </data>
+  <data name="lblTargetStart.Text" xml:space="preserve">
+    <value>Hedef Başlangıcı</value>
+  </data>
+  <data name="lblUOM.Text" xml:space="preserve">
+    <value>UOM</value>
+  </data>
+  <data name="lblUploadLogo.Text" xml:space="preserve">
+    <value>Logo</value>
+  </data>
+  <data name="lblZip.Text" xml:space="preserve">
+    <value>Zip</value>
+  </data>
+  <data name="rfv_Name.ErrorMessage" xml:space="preserve">
+    <value>gereklidir</value>
+  </data>
+  <data name="rfv_ProjectID.ErrorMessage" xml:space="preserve">
+    <value>gereklidir</value>
+  </data>
+</root>

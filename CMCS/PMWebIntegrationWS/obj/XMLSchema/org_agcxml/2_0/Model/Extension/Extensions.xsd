@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    The notices below are provided with respect to licensed content incorporated herein:
+    Copyright (c) The Associated General Contractors of America, Inc. 2009-2014. All Rights Reserved. http://www.agc.org and http://www.agcxml.org. Terms of license can be found in LicenseAgreement.pdf included with this download package.
+    Copyright (c) 1997-2014 Open Applications Group, Inc. All Rights Reserved.  http://www.openapplications.org.
+-->
+<xs:schema targetNamespace="http://agcxml.org/2" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://agcxml.org/2" xmlns:gc="http://agcxml.org/2" xmlns:platform="http://www.openapplications.org/oagis/10" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>
+      Name: Extensions.xsd
+      Release: 2.0 Alpha 4(pre)
+      Release Date: 2014-Feb-04
+      Full Name: /org_agcxml/2_0/Model/Extension/Extensions.xsd
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:import namespace="http://www.openapplications.org/oagis/10" schemaLocation="../../../../org_openapplications_oagis/10_0/Model/Platform/2_0/Extension/Extensions.xsd">
+    <xs:annotation>
+      <xs:documentation>XML elements and types for extensions across all OAGIS schemas.</xs:documentation>
+    </xs:annotation>
+  </xs:import>
+
+
+
+
+
+  <!-- 
+      - - - - - - - - - - - - - - -
+      Top Level Extensions
+      - - - - - - - - - - - - - - -
+  -->
+
+  <!--
+    RFIHeaderExtension : RFIHeaderExtensionType : platform:AllExtensionType
+
+    RFIHeaderExtensionType : platform:AllExtensionType | RFIHeaderExtension Usage
+    ...................................................|..........................
+
+    platform:AllExtensionType                          | RFIHeaderExtension Usage
+    ...................................................|..........................
+  -->
+  <xs:element name="RFIHeaderExtension" type="RFIHeaderExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RFIHeaderExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="platform:AllExtensionType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!--
+    RFIIssueExtension : RFIIssueExtensionType : platform:AllExtensionType
+
+    RFIIssueExtensionType : platform:AllExtensionType | RFIIssueExtension Usage
+    ..................................................|.........................
+
+    platform:AllExtensionType                         | RFIIssueExtension Usage
+    ..................................................|.........................
+  -->
+  <xs:element name="RFIIssueExtension" type="RFIIssueExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RFIIssueExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="platform:AllExtensionType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!--
+    RFIReplyExtension : RFIReplyExtensionType : platform:AllExtensionType
+
+    RFIReplyExtensionType : platform:AllExtensionType | RFIReplyExtension Usage
+    ..................................................|.........................
+
+    platform:AllExtensionType                         | RFIReplyExtension Usage
+    ..................................................|.........................
+  -->
+  <xs:element name="RFIReplyExtension" type="RFIReplyExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RFIReplyExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="platform:AllExtensionType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+
+
+
+  <!-- 
+      - - - - - - - - - - - - - - -
+      Components Extensions
+      - - - - - - - - - - - - - - -
+  -->
+
+  <!--
+    ImpactAssessmentExtension : ImpactAssessmentExtensionType : platform:AllExtensionType
+
+    ImpactAssessmentExtensionType : platform:AllExtensionType | ImpactAssessmentExtension Usage
+    ..........................................................|.................................
+
+    platform:AllExtensionType                                 | ImpactAssessmentExtension Usage
+    ..........................................................|.................................
+  -->
+  <xs:element name="ImpactAssessmentExtension" type="ImpactAssessmentExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ImpactAssessmentExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="platform:AllExtensionType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!--
+    ProjectContactExtension : ProjectContactExtensionType : platform:AllExtensionType
+
+    ProjectContactExtensionType : platform:AllExtensionType | ProjectContactExtension Usage
+    ........................................................|...............................
+
+    platform:AllExtensionType                               | ProjectContactExtension Usage
+    ........................................................|...............................
+  -->
+  <xs:element name="ProjectContactExtension" type="ProjectContactExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ProjectContactExtensionType">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="platform:AllExtensionType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+
+
+
+  <!-- 
+      - - - - - - - - - - - - - - -
+      Fields Extensions
+      - - - - - - - - - - - - - - -
+  -->
+</xs:schema>

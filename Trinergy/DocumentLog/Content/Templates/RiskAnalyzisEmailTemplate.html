@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>String was not recognized as a valid DateTime.</title>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        body {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 12px;
+            color: black;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        #emailContainer, #emailContainer th, #emailContainer td {
+            border: 1px solid black;
+        }
+
+            #emailContainer th {
+                background-color: #046399;
+                color: #fff;
+            }
+    </style>
+</head>
+
+<body bgcolor="white">
+    <br />Dear {{project_manager}},
+    <table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%" id="bodyTable">
+        <tr>
+            <td colspan="2">
+                <br /><br /><br />{{flag_message}} In case you require any clarification please refer to Risk management procedure – HFD-PMO-PRO-018 or contact your Risk Manager at T: <a href="tel:40251132">40251132</a> E: <a href="mailto:hanwar1@hamad.qa">hanwar1@hamad.qa</a><br /><br /><br />
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Project Name:</strong> {{project_name}}<br /><br /></td>
+            <td align="right"><!--<strong>Project No.:</strong> {{project_no}}--></td>
+        </tr>
+        <tr>
+            <td align="center" valign="top" colspan="2">
+                <table cellspacing="0" cellpadding="5" border="0" width="100%" id="emailContainer">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Definition (Description + Consequences)</th>
+                            <th>Criticality</th>
+                            <th>Action Owner</th>
+                            <th>Completion Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{body}}
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="color:#42B3E5; font-weight:bold">
+                <br /><br /><br />
+                Risk Team - HFD PMO
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

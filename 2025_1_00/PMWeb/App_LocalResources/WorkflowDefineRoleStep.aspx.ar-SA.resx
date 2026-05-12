@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="chkAllMustApprove.Text" xml:space="preserve">
+    <value>على الجميع الموافقة</value>
+  </data>
+  <data name="chkAllowDelegating.Text" xml:space="preserve">
+    <value>السماح للمندوبين</value>
+  </data>
+  <data name="chkApprovals.Text" xml:space="preserve">
+    <value>الموافقات</value>
+  </data>
+  <data name="chkBranches.Text" xml:space="preserve">
+    <value>الفروع</value>
+  </data>
+  <data name="chkCanEditAttachments.Text" xml:space="preserve">
+    <value>يمكن تعديل المرفقات</value>
+  </data>
+  <data name="chkCanEditNotes.Text" xml:space="preserve">
+    <value>يمكن تعديل الملاحظات</value>
+  </data>
+  <data name="chkCanEditRecord.Text" xml:space="preserve">
+    <value>يمكن تعديل السجل</value>
+  </data>
+  <data name="chkCanFinalApprove.Text" xml:space="preserve">
+    <value>يمكن الموافقة النهائيّة</value>
+  </data>
+  <data name="chkCanRequestTeamInput.Text" xml:space="preserve">
+    <value>يمكن طلب معلومات من الفريق</value>
+  </data>
+  <data name="chkDelegates.Text" xml:space="preserve">
+    <value>المندوبين</value>
+  </data>
+  <data name="chkDispalyEmailButtons.Text" xml:space="preserve">
+    <value>إظهار أزرار البريد</value>
+  </data>
+  <data name="chkDisplayAs.Text" xml:space="preserve">
+    <value>إظهار ك</value>
+  </data>
+  <data name="chkDocuSignStep.Text" xml:space="preserve">
+    <value>DocuSign خطوة</value>
+  </data>
+  <data name="chkEmail.Text" xml:space="preserve">
+    <value>البريد</value>
+  </data>
+  <data name="chkFinalApproval.Text" xml:space="preserve">
+    <value>الموافقة النهائيّة</value>
+  </data>
+  <data name="chkOnscreenMessage.Text" xml:space="preserve">
+    <value>رسالة على الشّاشة</value>
+  </data>
+  <data name="chkRejects.Text" xml:space="preserve">
+    <value>الرفوض</value>
+  </data>
+  <data name="chkRequireComments.Text" xml:space="preserve">
+    <value>مطلوب التعليق</value>
+  </data>
+  <data name="chkReturns.Text" xml:space="preserve">
+    <value>الإعادات</value>
+  </data>
+  <data name="chkSubmissions.Text" xml:space="preserve">
+    <value>الإحالات</value>
+  </data>
+  <data name="chkSubmitIfWorkflowEnabled.Text" xml:space="preserve">
+    <value>الإحالة إذا كان سير العمل مسموح</value>
+  </data>
+  <data name="chkTextSMS.Text" xml:space="preserve">
+    <value>رسالة نصّ قصيرة</value>
+  </data>
+  <data name="chkWithdrawals.Text" xml:space="preserve">
+    <value>المسحوبات</value>
+  </data>
+  <data name="cmvReviewDays.ErrorMessage" xml:space="preserve">
+    <value>ينبغي على أيام المراجعة ان تكون أكبر أو تساوي صفر</value>
+  </data>
+  <data name="cvManualCC.ErrorMessage" xml:space="preserve">
+    <value>البريد غير صالح</value>
+  </data>
+  <data name="FORMS" xml:space="preserve">
+    <value>النماذج</value>
+  </data>
+  <data name="GENERATEACTION_COPY" xml:space="preserve">
+    <value>-- نسخ --</value>
+  </data>
+  <data name="GENERATEACTION_NONE" xml:space="preserve">
+    <value>-- غير متوفر --</value>
+  </data>
+  <data name="GENERATEACTION_REVISION" xml:space="preserve">
+    <value>-- مراجعة --</value>
+  </data>
+  <data name="GridColumn_ActionType" xml:space="preserve">
+    <value>نوع حالة سير العمل</value>
+  </data>
+  <data name="GridColumn_Allow" xml:space="preserve">
+    <value>إسمح</value>
+  </data>
+  <data name="GridColumn_DisplayAs" xml:space="preserve">
+    <value>إظهار ك</value>
+  </data>
+  <data name="lblAction.Text" xml:space="preserve">
+    <value>حالة سير العمل</value>
+  </data>
+  <data name="lblActions.Text" xml:space="preserve">
+    <value>حالات سير العمل</value>
+  </data>
+  <data name="lblApprove.Text" xml:space="preserve">
+    <value>موافقة</value>
+  </data>
+  <data name="lblApprover.Text" xml:space="preserve">
+    <value>* الموافقين</value>
+  </data>
+  <data name="lblCC.Text" xml:space="preserve">
+    <value>نسخة الى</value>
+  </data>
+  <data name="lblDelegate.Text" xml:space="preserve">
+    <value>مندوب</value>
+  </data>
+  <data name="lblEventTypes.Text" xml:space="preserve">
+    <value>أنواع الحدث</value>
+  </data>
+  <data name="lblFinalApprove.Text" xml:space="preserve">
+    <value>الموافقة النهائيّة</value>
+  </data>
+  <data name="lblGenerate.Text" xml:space="preserve">
+    <value>توليد</value>
+  </data>
+  <data name="lblGenerateRecords.Text" xml:space="preserve">
+    <value>توليد سجلّات</value>
+  </data>
+  <data name="lblInstructions.Text" xml:space="preserve">
+    <value>التعليمات</value>
+  </data>
+  <data name="lblManualCC.Text" xml:space="preserve">
+    <value>نسخة لشخص غير موجود بالنظام</value>
+  </data>
+  <data name="lblNotifyOnAll.Text" xml:space="preserve">
+    <value>إرسال تنبيه في كل خطوة</value>
+  </data>
+  <data name="lblOptions.Text" xml:space="preserve">
+    <value>الخيارات</value>
+  </data>
+  <data name="lblRAM.Text" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="lblReject.Text" xml:space="preserve">
+    <value>مرفوض</value>
+  </data>
+  <data name="lblRequired.Text" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="lblResubmitTo.Text" xml:space="preserve">
+    <value>إعادة إرسال الى</value>
+  </data>
+  <data name="lblReturn.Text" xml:space="preserve">
+    <value>إرجاع</value>
+  </data>
+  <data name="lblReturnTo.Text" xml:space="preserve">
+    <value>إرجاع الى</value>
+  </data>
+  <data name="lblReviewDays.Text" xml:space="preserve">
+    <value>*عدد أيام المراجعة</value>
+  </data>
+  <data name="lblStep.Text" xml:space="preserve">
+    <value>*خطوة</value>
+  </data>
+  <data name="lblValidationProcedure.Text" xml:space="preserve">
+    <value>إجراء التحقّق</value>
+  </data>
+  <data name="lblWithdraw.Text" xml:space="preserve">
+    <value>سحب</value>
+  </data>
+  <data name="LOD_Multiple" xml:space="preserve">
+    <value>-- متعدّد --</value>
+  </data>
+  <data name="LOD_Roles" xml:space="preserve">
+    <value>الموافقين</value>
+  </data>
+  <data name="Page.Title" xml:space="preserve">
+    <value>تعريف خطوة الدور</value>
+  </data>
+  <data name="RadToolBarButton_Cancel.Text" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="RadToolBarButton_Save.Text" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="RadToolBarButton_SaveExit.Text" xml:space="preserve">
+    <value>حفظ وخروج</value>
+  </data>
+  <data name="RadToolBarButton_StepSecurity" xml:space="preserve">
+    <value>خطوة أمن</value>
+  </data>
+  <data name="ReturnTo_Prompt" xml:space="preserve">
+    <value>-- الرجوع الى الأول --</value>
+  </data>
+  <data name="rfvReviewDays.ErrorMessage" xml:space="preserve">
+    <value>.مطلوب</value>
+  </data>
+  <data name="rtlHelp.Text" xml:space="preserve">
+    <value>RecordId و RecordTypeId ينبغي على إجراء التحقّق ان يكون موجود في قاعدة البيانات مع وجود</value>
+  </data>
+  <data name="SelectedMsg" xml:space="preserve">
+    <value>محدّد</value>
+  </data>
+  <data name="StepText" xml:space="preserve">
+    <value>خطوة</value>
+  </data>
+</root>

@@ -1,0 +1,18 @@
+{
+    "title.selectOption": "Select Companies/Contacts",
+    "grid-column.select": "Select",
+    "grid-column.line": "Line",
+    "grid-column.company": "Company",
+    "grid-column.contact": "Contact",
+    "grid-column.type": "Type",
+    "grid-column.email": "Email",
+    "grid-column.project": "Project",
+    "grid-column.reference": "Reference",
+    "grid-column.state": "State",
+    "grid-column.city": "City",
+    "grid-column.country": "Country",
+    "grid-column.list": "List",
+    "tabstrip-tab.companiesContacts": "Companies/Contacts",
+    "tabstrip-tab.distributionLists": "Distribution Lists"
+
+}

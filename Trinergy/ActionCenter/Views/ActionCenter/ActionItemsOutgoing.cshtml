@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Trinergy.Model.ActionItems>
+@{
+    Layout = null;
+}
+
+<style>
+    .group-header-td {
+        background-color: #007FC9;
+        cursor: pointer;
+    }
+
+    .group-header-form-td {
+        /*background-color: #357fbe;*/
+        background-color: LightBlue;
+        cursor: pointer;
+        color: #000000 !important;
+    }
+
+    .collalldiv {
+        background-color: #286090;
+        cursor: pointer;
+    }
+
+
+    .headspan {
+        color: white !important;
+    }
+
+    html, body {
+        font-family: InterVariable, "Work Sans", sans-serif; !important;
+        font-size: 13px !important;
+    }
+
+    #tableDocs thead th {
+        width: 200px;
+        vertical-align: middle;
+    }
+
+    #tableDocs * {
+        font-size: 14px !important;
+    }
+
+    .subReportHeader {
+        background-color: cadetblue !important;
+        color: #ffffff;
+    }
+
+    table.dataTable thead th, table.dataTable thead td {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        vertical-align: middle !important;
+        word-break: normal;
+        word-wrap: normal;
+    }
+    /*
+        table.dataTable tbody td {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            vertical-align: middle !important;
+        }
+        table.dataTable {
+            margin: 0 auto;
+            width: 100%;
+            clear: both;
+            border-collapse: collapse;
+            table-layout: fixed !important;
+            word-wrap: break-word;
+        }*/
+    .dataTables_scrollBody {
+        /*margin-left:-26px;*/
+    }
+</style>
+
+
+<table class="table table-bordered table-striped grid tableAI" style="width:100%">
+    <thead>
+        <tr class="subReportHeader">
+            <th></th>
+            <th>S.No.</th>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Assigned To</th>
+            <th>Due Date</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.ProjectName</td>
+                <td width="50px">@item.SNo</td>
+                <td width="300px">@item.Subject</td>
+                <td width="300px">@item.Description</td>
+                <td width="300px">@item.AssignedTo</td>
+                <td width="100px">@(item.DueDate != null ? item.DueDate.ToString("dd-MMM-yy") : "")</td>
+                <td width="300px">@item.Notes</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

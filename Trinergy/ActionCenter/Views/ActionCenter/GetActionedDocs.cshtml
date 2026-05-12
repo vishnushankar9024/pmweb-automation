@@ -1,0 +1,238 @@
+﻿@model IEnumerable<Trinergy.Model.ActiveWFDocumentModel>
+@{
+    Layout = null;
+}
+
+<style>
+    .group-header-td {
+        background-color: #007FC9;
+        cursor: pointer;
+    }
+
+    .group-header-form-td {
+        /*background-color: #357fbe;*/
+        background-color: LightBlue;
+        cursor: pointer;
+        color: #000000 !important;
+    }
+
+    .collalldiv {
+        background-color: #286090;
+        cursor: pointer;
+    }
+
+
+    .headspan {
+        color: white !important;
+    }
+
+    html, body {
+        font-family: InterVariable, "Work Sans", sans-serif; !important;
+        font-size: 13px !important;
+    }
+
+    #tableActionedDocs thead th {
+        width: 200px;
+        vertical-align: middle;
+    }
+
+    #tableActionedDocs * {
+        font-size: 14px !important;
+    }
+
+    .subReportHeader {
+        background-color: cadetblue !important;
+        color: #ffffff;
+    }
+
+    table.dataTable thead th, table.dataTable thead td {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        vertical-align: middle !important;
+        word-break: normal;
+        word-wrap: normal;
+    }
+
+    table.dataTable tbody td {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        vertical-align: middle !important;
+    }
+
+    table.dataTable {
+        margin: 0 auto;
+        width: 100%;
+        clear: both;
+        border-collapse: collapse;
+        table-layout: fixed !important;
+        word-wrap: break-word;
+    }
+
+    .dataTables_scrollBody {
+        /*margin-left:-26px;*/
+    }
+
+    .filter-content {
+        width: 130px;
+        height: 75px;
+        background-color: #fff !important;
+        position: absolute;
+        z-index: 1;
+        margin-top: 5px;
+        margin-left: 5px;
+        display: none;
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+        border-radius: .25rem !important;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .btn-primary-custum {
+        color: #fff !important;
+        background-color: #337ab7 !important;
+        border-color: #2e6da4 !important;
+        margin-left: 5px;
+    }
+
+    #weekPicker {
+        margin-left: 20px;
+        margin-right: 10px;
+    }
+</style>
+<table class="table table-bordered table-striped grid" id="tableActionedDocs" style="width:100%">
+    <thead>
+        <tr class="subReportHeader">
+            <th>Project</th>
+            <th></th>
+            <th>Record #</th>
+            <th>Incoming Reference</th>
+            <th style="text-align:center">Subject</th>
+            <th>Links</th>
+            <th>My Action</th>
+            <th>Current Status</th>
+            <th>Attachments</th>
+            <th>My Comments</th>
+            <th>Form</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var document in Model)
+            {
+            <tr>
+                <td>@document.Project</td>
+                <td>@document.FileNames</td>
+                <td>@document.RecordNumber</td>
+                <td><a href="javascript:void(0)" onclick="GetRecord('@document.Recordurl', '@document.Project' , '@document.RecordType', '@document.Reference', '@document.RecordNumber', '@document.Description', false, false)">@document.Reference</a></td>
+                <td><a href="javascript:void(0)" onclick="GetWorkflowStatus(@document.DocumentId, this)">@document.Description</a></td>
+                <td class="text-nowrap">
+                    @if (document.OCSLink != null && document.OCSLink != "")
+                    {
+                        <a href="javascript:void(0)" onclick="GetRecord('@document.OCSLink', '@document.Project' , '@document.RecordType', '@document.Reference', '@document.RecordNumber', '@document.Description', true)">Online OCS</a>
+                        <div style="border-bottom:2px solid #000;display:block;height:2px;">&nbsp;</div>
+                    }
+                    @if (document.HasBI)
+                    {
+                        string biReportUrl = Url.Content("~/WebForms/BIReportViewer.aspx") + "?username=" + Session["PMWebUser"].ToString() + "&recordId=" + document.FormId + "&objectTypeId=" + document.ObjectTypeId;
+                        <a href="javascript:void(0)" onclick="GetRecord('@biReportUrl', '@document.Project' , '@document.RecordType', '@document.Reference', '@document.RecordNumber', '@document.Description')">BI Report</a>
+                    }
+                </td>
+                <td style="white-space:nowrap">@document.ActionType on <br />@document.ActionedDate.ToString("dd-MMM-yyyy hh:mm tt")</td>
+                <td>@document.CurrStepOwner -<br />(@document.Status)</td>
+                <td class="text-nowrap" onclick="GetAttachments(@document.DocumentId, this)"><a href="javascript:void(0)">Attachments</a></td>
+                <td><div class="comments"><span class="more">@Html.Raw(document.WorkflowComments)</span></div></td>
+                <td>@document.RecordType</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*<script src="~/Scripts/shorten.js"></script>*@
+<script src="~/Scripts/readmore.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var columns = [0, 2, 3, 4, 5, 7, 8]
+        var tableActionedDoc = $('#tableActionedDocs').DataTable({
+            "language": {
+                "emptyTable": "No Documents Pending For Action."
+            },
+
+            responsive: true,
+            //dom: "<'row header-strip'<'col-sm-3'<'row'<'text-center'l><'text-center'B>>><'col-sm-6 text-center toolbarPD'T><'col-sm-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+            dom: "<'row header-strip'<'col-sm-9'<'row'<'text-center'l><'text-center'B>>><'col-sm-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+            buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'A3',
+                title: 'Pending Documents',
+                filename: 'PendingDocuments',
+                exportOptions: {
+                    columns: columns
+                },
+                customize: function (doc) {
+                    doc.defaultStyle.fontSize = 7;
+
+                }
+
+            }, {
+                extend: 'excel',
+                title: 'Pending Documents',
+                filename: 'PendingDocuments',
+                exportOptions: {
+                    columns: columns
+                },
+
+            }
+            ],
+            "scrollX": true,
+            "scrollY": calcDataTableHeight(),
+            "scrollCollapse": true,
+            "bAutoWidth": false,
+            fixedColumns: true,
+            "columnDefs": [
+               { "visible": false, "targets": [1] },
+               { "width": "200px", "targets": [0,4] },
+               { "width": "60px", "targets": [2, 3, 5, 6, 7, 8, 9, 10] }
+            ],
+            "bPaginate": false,
+            "pageLength": 10,
+            "displayLength": 10,
+            "order": [],
+            "ordering": false,
+            "drawCallback": function (settings) {
+                $('.comments').readmore({
+                    moreLink: '<a href="#">More</a>',
+                    collapsedHeight: 60,
+                    afterToggle: function (trigger, element, expanded) {
+                        if (!expanded) { // The "Close" link was clicked
+                            $('html, body').animate({ scrollTop: element.offset().top }, { duration: 100 });
+                        }
+                    }
+                });
+            }
+        });//.columns.adjust();
+        //$('#tableActionedDocs').DataTable().columns.adjust();
+
+        AddActionedDocumentButtons(@ViewBag.DataId, @ViewBag.TodayActionedDocumentsCount, @Model.Count(), '@DateTime.Now.AddDays(-6).ToString("yyyy-MM-dd")', '@DateTime.Now.ToString("yyyy-MM-dd")', '@ViewBag.StartDate', '@ViewBag.EndDate');
+        @*InitDateRangePicker(@ViewBag.DataId, '@ViewBag.StartDate', '@ViewBag.EndDate');*@
+        $('.dt-button').each(function () {
+            $(this).removeClass('dt-button');
+            //$(this).addClass('btn btn-primary-custum');
+        });
+        $(parent).css('overflow', 'hidden');
+    });
+    function OpenPMWebWin(url) {
+        var h = $(window).height() - 200;
+        var w = 1000; //$(window).width();
+
+        var docWin;
+        if (docWin != null) {
+            docWin.location.href = url;
+        }
+        else {
+            docWin = window.open(url, "", "toolbar=no ,location=0, scrollbars=yes, status=no,titlebar=no,menubar=no,width=" + w + ",height=" + h);
+        }
+        docWin.focus();
+    }
+</script>
+

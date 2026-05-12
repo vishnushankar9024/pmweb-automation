@@ -1,0 +1,16 @@
+{
+    "/rfi.aspx": "/forms/rfi",
+    "/documentsubmittals.aspx": "/forms/onlinesubmittal",
+    "/submittalsitem.aspx": "/forms/submittalitem",
+    "/submittalset.aspx": "/forms/submittalset",
+    "/meetingminutes.aspx": "/forms/meetingminute",
+    "/drawinglists.aspx": "/forms/drawinglist",
+    "/drawingsets.aspx": "/forms/drawingset",
+    "/dailyreports.aspx": "/forms/dailyreport",
+    "/inspections.aspx": "/forms/inspection",
+    "/punchlists.aspx": "/forms/punchlist",
+    "/transmittals.aspx": "/forms/transmittal",
+    "/todolist.aspx": "/forms/actionitem",
+    "/correspondence.aspx": "/forms/correspondence",
+    "/safetyforms.aspx": "/forms/safetyform"
+}

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="VB" Debug="true" Service="Service.Common" CodeBehind="Common.svc.vb" %>

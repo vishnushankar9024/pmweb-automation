@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    The notices below are provided with respect to licensed content incorporated herein:
+    Copyright (c) The Associated General Contractors of America, Inc. 2009-2014. All Rights Reserved. http://www.agc.org and http://www.agcxml.org. Terms of license can be found in LicenseAgreement.pdf included with this download package.
+    Copyright (c) 1997-2014 Open Applications Group, Inc. All Rights Reserved.  http://www.openapplications.org.
+-->
+<xs:schema targetNamespace="http://agcxml.org/2" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns="http://agcxml.org/2" xmlns:gc="http://agcxml.org/2" xmlns:platform="http://www.openapplications.org/oagis/10" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>
+      Name: Fields.xsd
+      Release: 2.0 Alpha 4(pre)
+      Release Date: 2014-Feb-04
+      Full Name: /org_agcxml/2_0/Model/Common/Components/Fields.xsd
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:include schemaLocation="../CodeLists/CodeLists.xsd">
+    <xs:annotation>
+      <xs:documentation>Enum types, or "code lists", shared across agcXML schemas such as a project role code or discipline code.</xs:documentation>
+    </xs:annotation>
+  </xs:include>
+  <xs:import namespace="http://www.openapplications.org/oagis/10" schemaLocation="../../../../../org_openapplications_oagis/10_0/Model/Platform/2_0/Common/Components/Fields.xsd">
+    <xs:annotation>
+      <xs:documentation>Simple types for smaller grained fields shared across OAGIS schemas such as an amount of money or a yes/no indicator.</xs:documentation>
+    </xs:annotation>
+  </xs:import>
+  <xs:import namespace="http://www.openapplications.org/oagis/10" schemaLocation="../../../../../org_openapplications_oagis/10_0/Model/Platform/2_0/Common/IdentifierScheme/IdentifierScheme_AgencyIdentification_3055_D08B.xsd">
+    <xs:annotation>
+      <xs:documentation>XML elements and types that implement the Agency Identification from UN/CEFACT.</xs:documentation>
+    </xs:annotation>
+  </xs:import>
+
+  <!--
+    ParticipantID : ParticipantIDType : platform:IDType
+
+    ParticipantIDType : platform:IDType                                                 | ParticipantID Usage
+    ....................................................................................|..............................................
+
+    platform:IDType                                                                     | ParticipantID Usage
+    ....................................................................................|..............................................
+        @schemeID       : xs:normalizedString                                    [0..1] | scheme used to interpret the id value
+        @schemeVersionID: xs:normalizedString                                    [0..1] | version of the identifier scheme
+        @schemeAgencyID : platform:clm63055D08B_AgencyIdentificationContentType  [0..1] | agency, or authority, defining the id scheme
+  -->
+  <xs:element name="ParticipantID" type="ParticipantIDType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>An id for a &lt;Participant&gt; for reference by other elements or attributes within the same BOD instance.  As such, id need only be unique among other &lt;Participant&gt; items within the same BOD instance.  The id need not have meaning outside the BOD instance in which it appears.</xs:documentation>
+      <xs:documentation>The value of the id, not counting any attributes, must be usable as a key by the &lt;xs:key&gt; facility in XML Schema.  In agcXML, all &lt;xs:key&gt; and &lt;xs:keyref&gt; declarations appear in the Noun's &lt;xs:element&gt; due to restrictions in XML Schema.  These restrictions require declarations only in an &lt;xs:element&gt;, and the &lt;xs:key&gt; has to be at or above any key references.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ParticipantIDType">
+    <xs:annotation>
+      <xs:documentation>An id for a &lt;Participant&gt; for reference by other elements or attributes within the same BOD instance.  As such, id need only be unique among other &lt;Participant&gt; items within the same BOD instance.  The id need not have meaning outside the BOD instance in which it appears.</xs:documentation>
+      <xs:documentation>The value of the id, not counting any attributes, must be usable as a key by the &lt;xs:key&gt; facility in XML Schema.  In agcXML, all &lt;xs:key&gt; and &lt;xs:keyref&gt; declarations appear in the Noun's &lt;xs:element&gt; due to restrictions in XML Schema.  These restrictions require declarations only in an &lt;xs:element&gt;, and the &lt;xs:key&gt; has to be at or above any key references.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="platform:IDType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!--
+    ParticipantRef : ParticipantRefType : ParticipantIDType
+
+    ParticipantRefType : ParticipantIDType | ParticipantRef Usage
+    .......................................|......................
+  -->
+  <xs:element name="ParticipantRef" type="ParticipantRefType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>An id of a &lt;Participant&gt; defined elsewhere within the same BOD instance.</xs:documentation>
+      <xs:documentation>The value of the id, not counting any attributes, must be usable as a keyref by the &lt;xs:keyref&gt; facility in XML Schema.  In agcXML, all &lt;xs:key&gt; and &lt;xs:keyref&gt; declarations appear in the Noun's &lt;xs:element&gt; due to restrictions in XML Schema.  These restrictions require declarations only in an &lt;xs:element&gt;, and the &lt;xs:key&gt; has to be at or above any key references.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ParticipantRefType">
+    <xs:annotation>
+      <xs:documentation>An id of a &lt;Participant&gt; defined elsewhere within the same BOD instance.</xs:documentation>
+      <xs:documentation>The value of the id, not counting any attributes, must be usable as a keyref by the &lt;xs:keyref&gt; facility in XML Schema.  In agcXML, all &lt;xs:key&gt; and &lt;xs:keyref&gt; declarations appear in the Noun's &lt;xs:element&gt; due to restrictions in XML Schema.  These restrictions require declarations only in an &lt;xs:element&gt;, and the &lt;xs:key&gt; has to be at or above any key references.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="ParticipantIDType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!--
+    SchemeAgencyUse : SchemeAgencyUseType : platform:TokenType
+
+    SchemeAgencyUseType : platform:TokenType        | SchemeAgencyUse Usage
+    ................................................|.............................
+        @rootPrefix: platform:IndicatorType  [0..1] | whether this id is a prefix
+
+    platform:TokenType                              | SchemeAgencyUse Usage
+    ................................................|.............................
+  -->
+  <xs:element name="SchemeAgencyUse" type="SchemeAgencyUseType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>A declaration that scheme agency identifier is used.  For example, a Participant can declare its scheme agency ids. Optionally, this can be a root prefix of schema agency ids used.</xs:documentation>
+      <xs:documentation>The intent is to be able to associate an ID that appears elsewhere in the BOD with the usage, such as by a Participant.  When this is a root prefix, then any ID that begins with this prefix is associated with this usage.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SchemeAgencyUseType">
+    <xs:annotation>
+      <xs:documentation>A declaration that scheme agency identifier is used.  For example, a Participant can declare its scheme agency ids. Optionally, this can be a root prefix of schema agency ids used.</xs:documentation>
+      <xs:documentation>The intent is to be able to associate an ID that appears elsewhere in the BOD with the usage, such as by a Participant.  When this is a root prefix, then any ID that begins with this prefix is associated with this usage.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="platform:TokenType">
+        <xs:attribute name="rootPrefix" type="platform:IndicatorType">
+          <xs:annotation>
+            <xs:documentation>Whether the value here is a prefix for scheme agency ids.  If omitted, defaults to false.  If true, then any ID whose scheme agency begins with this prefix is associated with this usage.</xs:documentation>
+            <xs:documentation>Consider ending a prefix with the delimiter used in ids such as a colon or slash to ensure unambiguous prefix matching.  Prefix matching does not append any delimiter implicitly.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!--
+    RFILineRef : RFILineRefType : platform:OpenIDType
+
+    RFILineRefType : platform:OpenIDType                                                | RFILineRef Usage
+    ....................................................................................|..............................................
+
+    platform:OpenIDType                                                                 | RFILineRef Usage
+    ....................................................................................|..............................................
+        @schemeID       : xs:normalizedString                                    [0..1] | scheme used to interpret the id value
+        @schemeVersionID: xs:normalizedString                                    [0..1] | version of the identifier scheme
+        @schemeAgencyID : platform:clm63055D08B_AgencyIdentificationContentType  [0..1] | agency, or authority, defining the id scheme
+        @typeCode       : xs:token                                               [0..1] | 
+  -->
+  <xs:element name="RFILineRef" type="RFILineRefType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>An id of an &lt;RFIIssue&gt;, &lt;RFISubIssue&gt; or &lt;RFIReply&gt; defined elsewhere within the same BOD instance.  This field must match (RFIIssue|RFISubIssue|RFIReply)/platform:LineNumberID.</xs:documentation>
+      <xs:documentation>The value of the id, not counting any attributes, must be usable as a keyref by the &lt;xs:keyref&gt; facility in XML Schema.  In agcXML, all &lt;xs:key&gt; and &lt;xs:keyref&gt; declarations appear in the Noun's &lt;xs:element&gt; due to restrictions in XML Schema.  These restrictions require declarations only in an &lt;xs:element&gt;, and the &lt;xs:key&gt; has to be at or above any key references.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RFILineRefType">
+    <xs:annotation>
+      <xs:documentation>An id of an &lt;RFIIssue&gt;, &lt;RFISubIssue&gt; or &lt;RFIReply&gt; defined elsewhere within the same BOD instance.  This field must match (RFIIssue|RFISubIssue|RFIReply)/platform:LineNumberID.</xs:documentation>
+      <xs:documentation>The value of the id, not counting any attributes, must be usable as a keyref by the &lt;xs:keyref&gt; facility in XML Schema.  In agcXML, all &lt;xs:key&gt; and &lt;xs:keyref&gt; declarations appear in the Noun's &lt;xs:element&gt; due to restrictions in XML Schema.  These restrictions require declarations only in an &lt;xs:element&gt;, and the &lt;xs:key&gt; has to be at or above any key references.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="platform:OpenIDType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+
+  <!-- 
+      - - - - - - - - - - - - - - -
+      Fields for Open Code Lists
+      - - - - - - - - - - - - - - -
+  -->
+
+  <!--
+      DisciplineCode    : DisciplineCodeType
+      DisciplineCodeType: DisciplineCodeContentType
+          listID       : xs:normalizedString                                   [0..1]
+          listAgencyID : platform:clm63055D08B_AgencyIdentificationContentType [0..1]
+          listVersionID: xs:normalizedString                                   [0..1]
+  -->
+  <xs:element name="DisciplineCode" type="DisciplineCodeType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>The discipline addressed in documents such as RFIs.  Example:  architectural, mechanical or structural.</xs:documentation>
+      <xs:documentation>Enumerated values are:  Architectural, GeneralRequirements, Mechanical, Structural, Electrical, Plumbing.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DisciplineCodeType">
+    <xs:annotation>
+      <xs:documentation>The discipline addressed in documents such as RFIs.  Example:  architectural, mechanical or structural.</xs:documentation>
+      <xs:documentation>Enumerated values are:  Architectural, GeneralRequirements, Mechanical, Structural, Electrical, Plumbing.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="DisciplineCodeContentType">
+        <xs:attributeGroup ref="OpenCodeListAttributeGroup"></xs:attributeGroup>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!--
+      ImpactCode    : ImpactCodeType
+      ImpactCodeType: ImpactCodeContentType
+          listID       : xs:normalizedString                                   [0..1]
+          listAgencyID : platform:clm63055D08B_AgencyIdentificationContentType [0..1]
+          listVersionID: xs:normalizedString                                   [0..1]
+  -->
+  <xs:element name="ImpactCode" type="ImpactCodeType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>Type of impact on a construction project.  Used to assess a change in a workflow such as RFI.</xs:documentation>
+      <xs:documentation>Enumerated values are:  Cost, Schedule, Drawing, PlanOrSpecification, Environmental.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ImpactCodeType">
+    <xs:annotation>
+      <xs:documentation>Type of impact on a construction project.  Used to assess a change in a workflow such as RFI.</xs:documentation>
+      <xs:documentation>Enumerated values are:  Cost, Schedule, Drawing, PlanOrSpecification, Environmental.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="ImpactCodeContentType">
+        <xs:attributeGroup ref="OpenCodeListAttributeGroup"></xs:attributeGroup>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!--
+      ProjectRoleCode    : ProjectRoleCodeType
+      ProjectRoleCodeType: ProjectRoleCodeContentType
+          listID       : xs:normalizedString                                   [0..1]
+          listAgencyID : platform:clm63055D08B_AgencyIdentificationContentType [0..1]
+          listVersionID: xs:normalizedString                                   [0..1]
+  -->
+  <xs:element name="ProjectRoleCode" type="ProjectRoleCodeType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>Role of a participant in the project such as a contractor or owner.</xs:documentation>
+      <xs:documentation>Enumerated values are:  PrimeArchitect, Architect, PrimeDesigner, Designer, Owner, OwnerRepresentative, PrimeContractor, Contractor, Subcontractor, NotaryRepresentative, BrokerRepresentative, SuretyRepresentative, ConstructionManager, ConstructionManagerConstructorRepresentative, ConstructionManagerAdvisorRepresentative, ContractorSafetyRepresentative, ContractorRepresentative, EngineerRepresentative, ArchitectRepresentative, ExternalAuthority.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ProjectRoleCodeType">
+    <xs:annotation>
+      <xs:documentation>Role of a participant in the project such as a contractor or owner.</xs:documentation>
+      <xs:documentation>Enumerated values are:  PrimeArchitect, Architect, PrimeDesigner, Designer, Owner, OwnerRepresentative, PrimeContractor, Contractor, Subcontractor, NotaryRepresentative, BrokerRepresentative, SuretyRepresentative, ConstructionManager, ConstructionManagerConstructorRepresentative, ConstructionManagerAdvisorRepresentative, ContractorSafetyRepresentative, ContractorRepresentative, EngineerRepresentative, ArchitectRepresentative, ExternalAuthority.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="ProjectRoleCodeContentType">
+        <xs:attributeGroup ref="OpenCodeListAttributeGroup"></xs:attributeGroup>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!--
+      RFICategoryCode    : RFICategoryCodeType
+      RFICategoryCodeType: RFICategoryCodeContentType
+          listID       : xs:normalizedString                                   [0..1]
+          listAgencyID : platform:clm63055D08B_AgencyIdentificationContentType [0..1]
+          listVersionID: xs:normalizedString                                   [0..1]
+  -->
+  <xs:element name="RFICategoryCode" type="RFICategoryCodeType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>The category for this RFI such as engineering conflict, insufficient information or drawing discrepancy.</xs:documentation>
+      <xs:documentation>Enumerated values are:  AlternateProposal, Confirmation, DrawingDiscrepancy, EngineeringConflict, FieldCondition, InsufficientInformation, PlanOrSpecDiscrepancy, SpecificationClarification.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RFICategoryCodeType">
+    <xs:annotation>
+      <xs:documentation>The category for this RFI such as engineering conflict, insufficient information or drawing discrepancy.</xs:documentation>
+      <xs:documentation>Enumerated values are:  AlternateProposal, Confirmation, DrawingDiscrepancy, EngineeringConflict, FieldCondition, InsufficientInformation, PlanOrSpecDiscrepancy, SpecificationClarification.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="RFICategoryCodeContentType">
+        <xs:attributeGroup ref="OpenCodeListAttributeGroup"></xs:attributeGroup>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!--
+      RFIImportanceCode    : RFIImportanceCodeType
+      RFIImportanceCodeType: RFIImportanceCodeContentType
+          listID       : xs:normalizedString                                   [0..1]
+          listAgencyID : platform:clm63055D08B_AgencyIdentificationContentType [0..1]
+          listVersionID: xs:normalizedString                                   [0..1]
+  -->
+  <xs:element name="RFIImportanceCode" type="RFIImportanceCodeType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>Importance of the RFI, issue or reply.</xs:documentation>
+      <xs:documentation>Enumerated values are:  Low, Medium, High.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RFIImportanceCodeType">
+    <xs:annotation>
+      <xs:documentation>Importance of the RFI, issue or reply.</xs:documentation>
+      <xs:documentation>Enumerated values are:  Low, Medium, High.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="RFIImportanceCodeContentType">
+        <xs:attributeGroup ref="OpenCodeListAttributeGroup"></xs:attributeGroup>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!--
+      WorkflowStageCode    : WorkflowStageCodeType
+      WorkflowStageCodeType: WorkflowStageCodeContentType
+          listID       : xs:normalizedString                                   [0..1]
+          listAgencyID : platform:clm63055D08B_AgencyIdentificationContentType [0..1]
+          listVersionID: xs:normalizedString                                   [0..1]
+  -->
+  <xs:element name="WorkflowStageCode" type="WorkflowStageCodeType" nillable="true">
+    <xs:annotation>
+      <xs:documentation>Current stage of a work item such as composing a response to an RFI line item.</xs:documentation>
+      <xs:documentation>Enumerated values are:  Suggested, NotStarted, Started, Paused, Canceled, Error, Complete.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="WorkflowStageCodeType">
+    <xs:annotation>
+      <xs:documentation>Current stage of a work item such as composing a response to an RFI line item.</xs:documentation>
+      <xs:documentation>Enumerated values are:  Suggested, NotStarted, Started, Paused, Canceled, Error, Complete.  This is an open code list in agcXML.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="WorkflowStageCodeContentType">
+        <xs:attributeGroup ref="OpenCodeListAttributeGroup"></xs:attributeGroup>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+
+
+  <!--
+      ...................
+       Date and Time
+      ...................
+  -->
+
+  <xs:element name="DateTime" type="DateTimeType">
+    <xs:annotation>
+      <xs:documentation>Fields.DateTimeType</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DateTimeType">
+    <xs:annotation>
+      <xs:documentation>A flexible representation of a date and time including date and time truncation.  May include an explicit format code and a timezone when the format code excludes timezone information.</xs:documentation>
+      <xs:documentation>Format codes are ISO 8601 and have a date code followed by an optional time code.  The time code has an optional timezone suffix.</xs:documentation>
+      <xs:documentation>Date codes (8):  YYYY-MM-DD | --MM-DD | ---DD | YYYY-DDD | -DDD | YYYY-Www-D | -Www-D | -W-D</xs:documentation>
+      <xs:documentation>Time codes (3):  Thh:mm:ss | Thh:mm | Thh</xs:documentation>
+      <xs:documentation>Timezone codes (2):  Z | +hh:mm</xs:documentation>
+      <xs:documentation>Examples:  YYYY-MM-DD | YYYY-MM-DDThh:mm:ss | YYYY-MM-DDThh:mm:ssZ | YYYY-MM-DDThh:mm:ss+hh:mm | YYYY-MM-DDThh:mm | YYYY-MM-DDThh:mmZ | YYYY-MM-DDThh:mm+hh:mm | YYYY-MM-DDThh | YYYY-MM-DDThhZ | YYYY-MM-DDThh:mm+hh</xs:documentation>
+      <xs:documentation>Values for @timeZoneCode attribute for a minus hour offset:  "M0100", "M0100EU", "M0200", "M0300", "M0300BR", "M0300GL", "M0300US", "M0330US", "M0400", "M0400BR", "M0400CL", "M0400GL", "M0400PY", "M0400US", "M0500", "M0500BR", "M0500CU", "M0500US", "M0600", "M0600CL", "M0600US", "M0700", "M0700US", "M0800", "M0800US", "M0830", "M0900", "M0900US", "M1000", "M1000US", "M1100", "M1200".</xs:documentation>
+      <xs:documentation>Values for @timeZoneCode attribute for a plus hour offset:  "P0000", "P0000EU", "P0100", "P0100EU", "P0100NA", "P0200", "P0200EG", "P0200EU", "P0200IL", "P0200JO", "P0200SY", "P0300", "P0300EU", "P0300IQ", "P0330IR", "P0400", "P0400EU", "P0430", "P0500", "P0500EU", "P0530", "P0545", "P0600", "P0600EU", "P0630", "P0700", "P0700EU", "P0800", "P0800EU", "P0900", "P0900EU", "P0930", "P0930AUS", "P1000", "P1000AUS", "P1030AUS", "P1000EU", "P1100", "P1100EU", "P1200", "P1200EU", "P1200NZ", "P1245NZ", "P1300", "P1300EU", "P1400".</xs:documentation>
+      <xs:documentation>Implementation note:  This type is the same as platform:DateTimeType except optional formatCode and timeZoneCode attributes are added.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="DateTimeType_C6A6DE_AlternateType">
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="Date" type="DateType">
+    <xs:annotation>
+      <xs:documentation>Fields.DateType</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DateType">
+    <xs:annotation>
+      <xs:documentation>A flexible representation of a date including date truncation.  May include an explicit ISO 8601 format code.</xs:documentation>
+      <xs:documentation>Values for the formatCode attribute:  "YYYY-MM-DD", "YYYY-MM", "YYYY", "YY", "--MM-DD", "--MM--", "---DD", "YYYY-DDD", "-DDD", "YYYY-Www-D", "-Www-D", "YYYY-Www", "-Www", "-W-D".</xs:documentation>
+      <xs:documentation>Implementation note:  This type is the same as platform:DateType except an optional formatCode attribute is added.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="platform:DateType_WER432">
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="Time" type="TimeType">
+    <xs:annotation>
+      <xs:documentation>Fields.TimeType</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="TimeType">
+    <xs:annotation>
+      <xs:documentation>A flexible representation for time of day including time truncation.  May include an explicit ISO 8601 format code.</xs:documentation>
+      <xs:documentation>Values for the formatCode attribute:  "hh:mm:ss", "hh:mm:ss+hh:mm", "hh:mm:ssZ", "hh:mm", "hh:mmZ", "hh:mm+hh:mm", "hh", "hhZ", "hh+hh:mm", "-mm:ss", "-mm", "--ss".</xs:documentation>
+      <xs:documentation>Implementation note:  This type is the same as platform:TimeType except an optional formatCode attribute is added.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="platform:TimeType_P09C33">
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:element name="Duration" type="DurationType">
+    <xs:annotation>
+      <xs:documentation>Fields.DurationType</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:simpleType name="DurationType">
+    <xs:annotation>
+      <xs:documentation>A flexible representation for time duration.  May be the standard XML Schema duration type or a number of weeks using the additional ISO 8601 format of "nW".</xs:documentation>
+      <xs:documentation>Implementation note:  This type is an alias for platform:DurationType.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="platform:DurationType">
+    </xs:restriction>
+  </xs:simpleType>
+
+
+
+  <!--
+      ...................
+       OAGIS Adaptations
+      ...................
+  
+  -->
+
+  <!--
+      OpenCodeListAttributeGroup
+          Formed from common attributes used in OAGIS for open code lists.
+  -->
+  <xs:attributeGroup name="OpenCodeListAttributeGroup">
+    <xs:attribute name="listID" type="xs:normalizedString" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">
+          <ccts:Cardinality>0..1</ccts:Cardinality>
+          <ccts:DictionaryEntryName>Code. List. Identifier</ccts:DictionaryEntryName>
+          <ccts:Definition>The identification of a list of codes</ccts:Definition>
+          <ccts:PropertyTermName>List</ccts:PropertyTermName>
+          <ccts:RepresentationTermName>Identifier</ccts:RepresentationTermName>
+          <ccts:DataTypeTermName>Identifier</ccts:DataTypeTermName>
+          <ccts:SupplementaryComponentValueDomain>
+            <ccts:DefaultIndicator>False</ccts:DefaultIndicator>
+            <ccts:PrimitiveTypeName>Normalized String</ccts:PrimitiveTypeName>
+          </ccts:SupplementaryComponentValueDomain>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="listAgencyID" type="platform:clm63055D08B_AgencyIdentificationContentType" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">
+          <ccts:Cardinality>0..1</ccts:Cardinality>
+          <ccts:DictionaryEntryName>Code. List Agency. Identifier</ccts:DictionaryEntryName>
+          <ccts:Definition>The identification of the agency that manages the code list</ccts:Definition>
+          <ccts:PropertyTermName>List Agency</ccts:PropertyTermName>
+          <ccts:RepresentationTermName>Identifier</ccts:RepresentationTermName>
+          <ccts:DataTypeTermName>Identifier</ccts:DataTypeTermName>
+          <ccts:SupplementaryComponentValueDomain>
+            <ccts:DefaultIndicator>True</ccts:DefaultIndicator>
+            <ccts:SchemeOrListID>3055</ccts:SchemeOrListID>
+            <ccts:SchemeOrListVersionID>D08B</ccts:SchemeOrListVersionID>
+            <ccts:SchemeOrListAgencyID>6</ccts:SchemeOrListAgencyID>
+            <ccts:SchemeOrListModificationAllowedIndicator>False</ccts:SchemeOrListModificationAllowedIndicator>
+          </ccts:SupplementaryComponentValueDomain>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="listVersionID" type="xs:normalizedString" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">
+          <ccts:Cardinality>0..1</ccts:Cardinality>
+          <ccts:DictionaryEntryName>Code. List Version. Identifier</ccts:DictionaryEntryName>
+          <ccts:Definition>The identification of the version of the list of codes</ccts:Definition>
+          <ccts:PropertyTermName>List Version</ccts:PropertyTermName>
+          <ccts:RepresentationTermName>Identifier</ccts:RepresentationTermName>
+          <ccts:DataTypeTermName>Identifier</ccts:DataTypeTermName>
+          <ccts:SupplementaryComponentValueDomain>
+            <ccts:DefaultIndicator>False</ccts:DefaultIndicator>
+            <ccts:PrimitiveTypeName>Normalized String</ccts:PrimitiveTypeName>
+          </ccts:SupplementaryComponentValueDomain>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <!--
+      DateTimeType_C6A6DE_AlternateType
+          An alternate to platform:DateTimeType_C6A6DE which declares an attribute required that should be optional.
+          The usage in inline documentation describes an optional attribute and specifies specific cases when it
+          should not be used.  The attribute is timeZoneCode.
+  
+          The solution is to repeat the definition and change the attribute because xs:restriction does not apply
+          when promoting an attribute from required to optional.
+  
+          In addition, the attribute "formatCode" is declared optional but documented as required.  We prefer the
+          optional usage and correct the documentation in the redefinition.
+  -->
+  <xs:complexType name="DateTimeType_C6A6DE_AlternateType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        <ccts:UniqueID>C6A6DE</ccts:UniqueID>
+        <ccts:VersionID>1.0</ccts:VersionID>
+        <ccts:DictionaryEntryName>Date Time. Type</ccts:DictionaryEntryName>
+        <ccts:Definition>A date time identifies a date and time of day to various common resolutions: year, month, week, day, hour, minute, second, and fraction of second</ccts:Definition>
+        <ccts:DataTypeTermName>Date Time</ccts:DataTypeTermName>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="platform:DateTimeType_AD9DD9">
+        <xs:annotation>
+          <xs:documentation>
+            <ccts:ContentComponentValueDomain>
+              <ccts:Definition>The particular date and time point in the progression of time</ccts:Definition>
+              <ccts:DefaultIndicator>False</ccts:DefaultIndicator>
+              <ccts:PrimitiveTypeName>TimePoint</ccts:PrimitiveTypeName>
+            </ccts:ContentComponentValueDomain>
+          </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="formatCode" type="platform:clm6DateTimeFormatCode1_DateTimeFormatCodeContentType" use="optional">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">
+              <ccts:Cardinality>0..1</ccts:Cardinality>
+              <ccts:DictionaryEntryName>Date Time. Format. Code</ccts:DictionaryEntryName>
+              <ccts:Definition>The format code to which the date time occurs</ccts:Definition>
+              <ccts:PropertyTermName>Format</ccts:PropertyTermName>
+              <ccts:RepresentationTermName>Code</ccts:RepresentationTermName>
+              <ccts:DataTypeTermName>Code</ccts:DataTypeTermName>
+              <ccts:SupplementaryComponentValueDomain>
+                <ccts:DefaultIndicator>True</ccts:DefaultIndicator>
+                <ccts:SchemeOrListID>DateTimeFormatCode</ccts:SchemeOrListID>
+                <ccts:SchemeOrListVersionID>1</ccts:SchemeOrListVersionID>
+                <ccts:SchemeOrListAgencyID>6</ccts:SchemeOrListAgencyID>
+                <ccts:SchemeOrListModificationAllowedIndicator>False</ccts:SchemeOrListModificationAllowedIndicator>
+              </ccts:SupplementaryComponentValueDomain>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="timeZoneCode" type="platform:clm6TimeZoneCode1_TimeZoneCodeContentType" use="optional">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">
+              <ccts:Cardinality>0..1</ccts:Cardinality>
+              <ccts:DictionaryEntryName>Date Time. Time Zone. Code</ccts:DictionaryEntryName>
+              <ccts:Definition>The time zone to which the date time refers</ccts:Definition>
+              <ccts:PropertyTermName>Time Zone</ccts:PropertyTermName>
+              <ccts:RepresentationTermName>Code</ccts:RepresentationTermName>
+              <ccts:DataTypeTermName>Code</ccts:DataTypeTermName>
+              <ccts:SupplementaryComponentValueDomain>
+                <ccts:DefaultIndicator>True</ccts:DefaultIndicator>
+                <ccts:SchemeOrListID>TimeZoneCode</ccts:SchemeOrListID>
+                <ccts:SchemeOrListVersionID>1</ccts:SchemeOrListVersionID>
+                <ccts:SchemeOrListAgencyID>6</ccts:SchemeOrListAgencyID>
+                <ccts:SchemeOrListModificationAllowedIndicator>False</ccts:SchemeOrListModificationAllowedIndicator>
+              </ccts:SupplementaryComponentValueDomain>
+            </xs:documentation>
+            <xs:appinfo>
+              <ccts:SupplementaryComponentUsageRule>
+                <ccts:UniqueID>UNDT04FVC1</ccts:UniqueID>
+                <ccts:Constraint>If Date Time contains neither offset nor Z, Date Time is local and Time Zone Code specifies the Time Zone to which Date Time refers</ccts:Constraint>
+                <ccts:ConstraintTypeCode>UNS</ccts:ConstraintTypeCode>
+                <ccts:ConditionTypeCode>INV</ccts:ConditionTypeCode>
+              </ccts:SupplementaryComponentUsageRule>
+              <ccts:SupplementaryComponentUsageRule>
+                <ccts:UniqueID>UNDT6N2C0S</ccts:UniqueID>
+                <ccts:Constraint>If Date Time contains Z, Date Time is in the UTC and Time Zone Code specifies the Time Zone in which Date Time should be displayed to the user</ccts:Constraint>
+                <ccts:ConstraintTypeCode>UNS</ccts:ConstraintTypeCode>
+                <ccts:ConditionTypeCode>INV</ccts:ConditionTypeCode>
+              </ccts:SupplementaryComponentUsageRule>
+              <ccts:SupplementaryComponentUsageRule>
+                <ccts:UniqueID>UNDT201AZX</ccts:UniqueID>
+                <ccts:Constraint>Time Zone. Code can only be present if no offset to UTC (+/-hh:mm) is specified in DateTime</ccts:Constraint>
+                <ccts:ConstraintTypeCode>UNS</ccts:ConstraintTypeCode>
+                <ccts:ConditionTypeCode>INV</ccts:ConditionTypeCode>
+              </ccts:SupplementaryComponentUsageRule>
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>

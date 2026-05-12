@@ -1,0 +1,18 @@
+﻿{
+  "toolbar-button.add": "Add",
+  "toolbar-button.delete": "Delete",
+  "toolbar-button.submit": "Submit",
+  "toolbar-button.save": "Save",
+  "toolbar-button.cancel": "Cancel",
+  "toolbar-button.tabs": "Tabs",
+  "toolbar-button.listView": "List View",
+  "toolbar-button.showDetails": "Show Details",
+  "toolbar-button.serverAndLocal": "Server and local",
+  "toolbar-button.serverOnly": "Server only",
+  "toolbar-button.savenexit": "Save and Exit",
+  "toolbar-button.edit": "Edit",
+  "deleteWarningMessage": "Are you sure you want to delete? <br>This cannot be undone.",
+  "deleteWarningTitle": "Confirm Delete",
+  "msg.fillRequiredFields": "Please fill all required fields",
+  "msg.endDateInFuture": "End Date should be in the future"
+}

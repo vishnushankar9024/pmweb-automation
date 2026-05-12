@@ -1,0 +1,73 @@
+/* jQuery Countdown styles 1.6.0. */
+.hasCountdown {
+	border: 1px solid #4875b8;
+	
+    width:380px; 
+    height:60px;
+    background:url(VerticalBlueGredientBg.jpg) repeat-x ;
+}
+.Counter
+{   font-size:3em;
+	 font-weight:bold;	
+	 line-height:34px;
+
+	}
+.numbersCountdown
+{
+   background-color:White;
+ width:90px;
+  height:54px; 	
+	}
+.countdown_rtl {
+	direction: rtl;
+}
+.countdown_holding span {
+	color: #888;
+}
+.countdown_row { 
+	width: 380px;
+	 padding-left:5px;
+	  padding-top:3px;
+	text-align: center;
+}
+.countdown_show1 .countdown_section {
+	width: 98%;
+}
+.countdown_show2 .countdown_section {
+	width: 48%;
+}
+.countdown_show3 .countdown_section {
+	width: 32.5%;
+}
+.countdown_show4 .countdown_section {
+	width: 24.5%;
+}
+.countdown_show5 .countdown_section {
+	width: 19.5%;
+}
+.countdown_show6 .countdown_section {
+	width: 16.25%;
+}
+.countdown_show7 .countdown_section {
+	width: 14%;
+}
+.countdown_section {
+	display: block;
+	float: left;
+	font-size: 75%;
+	text-align: center;
+}
+.countdown_amount {
+	font-size: 1.5em;
+	height:20px;
+	  border: 1px solid White;
+	  color:White;
+	  text-align:center;
+	   line-height:20px;
+	   background:url(VerticalBlueGradientBg.jpg) repeat-y ;
+	    background-color:#4875b8;
+}
+.countdown_descr {
+	display: block;
+	width: 100%;
+}

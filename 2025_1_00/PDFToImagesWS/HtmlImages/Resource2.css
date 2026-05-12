@@ -1,0 +1,466 @@
+
+.redtable {
+    border-collapse: collapse;
+    border-style: none;
+    border-width: 0;
+    font-family: Tahoma;
+}
+.redtable tr.redtableTableHeaderRow {
+    background: none repeat scroll 0 0 #800000;
+    border-spacing: 10px;
+    color: #3F4D6B;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 14pt;
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
+    text-transform: capitalize;
+    vertical-align: top;
+}
+.redtable td.redtableTableHeaderFirstCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.redtable td.redtableTableHeaderLastCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.redtable td.redtableTableHeaderOddCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.redtable td.redtableTableHeaderEvenCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.redtable tr.redtableTableOddRow {
+    background-color: #F2F3F4;
+    color: #666666;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.redtable tr.redtableTableEvenRow {
+    background-color: #B3B9BF;
+    color: #666666;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.redtable td.redtableTableFirstCol {
+    padding: 0 5.4pt;
+}
+.redtable td.redtableTableLastCol {
+    padding: 0 5.4pt;
+}
+.redtable td.redtableTableOddCol {
+    padding: 0 5.4pt;
+}
+.redtable td.redtableTableEvenCol {
+    padding: 0 5.4pt;
+}
+.redtable tr.redtableTableFooterRow {
+    background-color: #800000;
+    color: #FFFFFF;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-weight: 500;
+    line-height: 11pt;
+}
+.redtable td.redtableTableFooterFirstCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.redtable td.redtableTableFooterLastCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.redtable td.redtableTableFooterOddCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.redtable td.redtableTableFooterEvenCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.orangetable {
+    border-collapse: collapse;
+    border-style: none;
+    border-width: 0;
+    font-family: Tahoma;
+}
+.orangetable tr.orangetableTableHeaderRow {
+    background: none repeat scroll 0 0 #FF8000;
+    border-spacing: 10px;
+    color: #3F4D6B;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 14pt;
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
+    text-transform: capitalize;
+    vertical-align: top;
+}
+.orangetable td.orangetableTableHeaderFirstCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.orangetable td.orangetableTableHeaderLastCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.orangetable td.orangetableTableHeaderOddCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.orangetable td.orangetableTableHeaderEvenCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.orangetable tr.orangetableTableOddRow {
+    background-color: #FFFFFF;
+    color: #666666;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.orangetable tr.orangetableTableEvenRow {
+    background-color: #FFE1C3;
+    color: #666666;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.orangetable td.orangetableTableFirstCol {
+    padding: 0 5.4pt;
+}
+.orangetable td.orangetableTableLastCol {
+    padding: 0 5.4pt;
+}
+.orangetable td.orangetableTableOddCol {
+    padding: 0 5.4pt;
+}
+.orangetable td.orangetableTableEvenCol {
+    padding: 0 5.4pt;
+}
+.orangetable tr.orangetableTableFooterRow {
+    background-color: #FF8000;
+    color: #FFFFFF;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-weight: 500;
+    line-height: 11pt;
+}
+.orangetable td.orangetableTableFooterFirstCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.orangetable td.orangetableTableFooterLastCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.orangetable td.orangetableTableFooterOddCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.orangetable td.orangetableTableFooterEvenCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.greentable {
+    border-collapse: collapse;
+    border-style: none;
+    border-width: 0;
+    font-family: Tahoma;
+}
+.greentable tr.greentableTableHeaderRow {
+    background: none repeat scroll 0 0 #008040;
+    border-spacing: 10px;
+    color: #3F4D6B;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 14pt;
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
+    text-transform: capitalize;
+    vertical-align: top;
+}
+.greentable td.greentableTableHeaderFirstCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.greentable td.greentableTableHeaderLastCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.greentable td.greentableTableHeaderOddCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.greentable td.greentableTableHeaderEvenCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.greentable tr.greentableTableOddRow {
+    background-color: #FFFFFF;
+    color: #666666;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.greentable tr.greentableTableEvenRow {
+    background-color: #CBFFE5;
+    color: #666666;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.greentable td.greentableTableFirstCol {
+    padding: 0 5.4pt;
+}
+.greentable td.greentableTableLastCol {
+    padding: 0 5.4pt;
+}
+.greentable td.greentableTableOddCol {
+    padding: 0 5.4pt;
+}
+.greentable td.greentableTableEvenCol {
+    padding: 0 5.4pt;
+}
+.greentable tr.greentableTableFooterRow {
+    background-color: #008040;
+    color: #FFFFFF;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-weight: 500;
+    line-height: 11pt;
+}
+.greentable td.greentableTableFooterFirstCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.greentable td.greentableTableFooterLastCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.greentable td.greentableTableFooterOddCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.greentable td.greentableTableFooterEvenCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.yellowtable {
+    border-collapse: collapse;
+    border-style: none;
+    border-width: 0;
+    font-family: Tahoma;
+}
+.yellowtable tr.yellowtableTableHeaderRow {
+    background: none repeat scroll 0 0 #FFD700;
+    border-spacing: 10px;
+    color: #3F4D6B;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 14pt;
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
+    text-transform: capitalize;
+    vertical-align: top;
+}
+.yellowtable td.yellowtableTableHeaderFirstCol {
+    color: #000000;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.yellowtable td.yellowtableTableHeaderLastCol {
+    color: #000000;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.yellowtable td.yellowtableTableHeaderOddCol {
+    color: #000000;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.yellowtable td.yellowtableTableHeaderEvenCol {
+    color: #000000;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.yellowtable tr.yellowtableTableOddRow {
+    background-color: #000000;
+    color: #FFFFFF;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.yellowtable tr.yellowtableTableEvenRow {
+    background-color: #FFF3AD;
+    color: #666666;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.yellowtable td.yellowtableTableFirstCol {
+    padding: 0 5.4pt;
+}
+.yellowtable td.yellowtableTableLastCol {
+    padding: 0 5.4pt;
+}
+.yellowtable td.yellowtableTableOddCol {
+    padding: 0 5.4pt;
+}
+.yellowtable td.yellowtableTableEvenCol {
+    padding: 0 5.4pt;
+}
+.yellowtable tr.yellowtableTableFooterRow {
+    background-color: #FFD700;
+    color: #000000;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-weight: 500;
+    line-height: 11pt;
+}
+.yellowtable td.yellowtableTableFooterFirstCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.yellowtable td.yellowtableTableFooterLastCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.yellowtable td.yellowtableTableFooterOddCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.yellowtable td.yellowtableTableFooterEvenCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.purpletable {
+    border-collapse: collapse;
+    border-style: none;
+    border-width: 0;
+    font-family: Tahoma;
+}
+.purpletable tr.purpletableTableHeaderRow {
+    background: none repeat scroll 0 0 #8080C0;
+    border-spacing: 10px;
+    color: #3F4D6B;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 14pt;
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
+    text-transform: capitalize;
+    vertical-align: top;
+}
+.purpletable td.purpletableTableHeaderFirstCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.purpletable td.purpletableTableHeaderLastCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.purpletable td.purpletableTableHeaderOddCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.purpletable td.purpletableTableHeaderEvenCol {
+    color: #FFFFFF;
+    line-height: 14pt;
+    padding: 0 5.4pt;
+}
+.purpletable tr.purpletableTableOddRow {
+    background-color: #FFFFFF;
+    color: #666666;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.purpletable tr.purpletableTableEvenRow {
+    background-color: #DFDFEF;
+    color: #666666;
+    font-size: 10pt;
+    vertical-align: top;
+}
+.purpletable td.purpletableTableFirstCol {
+    padding: 0 5.4pt;
+}
+.purpletable td.purpletableTableLastCol {
+    padding: 0 5.4pt;
+}
+.purpletable td.purpletableTableOddCol {
+    padding: 0 5.4pt;
+}
+.purpletable td.purpletableTableEvenCol {
+    padding: 0 5.4pt;
+}
+.purpletable tr.purpletableTableFooterRow {
+    background-color: #8080C0;
+    color: #FFFFFF;
+    font-family: Tahoma;
+    font-size: 10pt;
+    font-weight: 500;
+    line-height: 11pt;
+}
+.purpletable td.purpletableTableFooterFirstCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.purpletable td.purpletableTableFooterLastCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.purpletable td.purpletableTableFooterOddCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}
+.purpletable td.purpletableTableFooterEvenCol {
+    border-top: 1pt solid #808080;
+    padding: 0 5.4pt;
+    text-align: left;
+}

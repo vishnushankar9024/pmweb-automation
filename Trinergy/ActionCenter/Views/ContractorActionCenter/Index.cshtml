@@ -1,0 +1,665 @@
+﻿@model PMWebHelper.ViewModel.ActionCenterViewModel
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Action Center</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Scripts/tree/themes/proton/style.css" />
+    <style>
+        * {
+            font-size: 14px;
+        }
+
+        .attachments {
+            font-size: 12px !important;
+        }
+
+            .attachments .panel-heading {
+                padding: 2px 15px !important;
+            }
+
+                .attachments .panel-heading h4 {
+                    margin-top: 2px;
+                    margin-bottom: 2px;
+                }
+
+            .attachments .col-md-6 {
+                padding: 2px;
+            }
+
+            .attachments ul {
+                padding: 0px;
+                list-style: none;
+            }
+
+            .attachments .panel-body {
+                padding: 5px 5px 5px 15px;
+            }
+
+                .attachments .panel-body .panel-body {
+                    padding-left: 5px;
+                }
+
+            .attachments a {
+                color: blue;
+                text-decoration: underline;
+            }
+
+        .tdRed {
+            background-color: red;
+        }
+
+        .tdGreen {
+            background-color: green;
+        }
+
+        .tdTransparent {
+            background-color: transparent;
+        }
+
+        .tdYellow {
+            background-color: #e7b416;
+        }
+
+        .panel-heading {
+            cursor: pointer;
+        }
+
+        .panel-title:after {
+            /* symbol for "opening" panels */
+            font-family: 'Glyphicons Halflings'; /* essential for enabling glyphicon */
+            content: "\e113"; /* adjust as needed, taken from bootstrap.css */
+            float: right; /* adjust as needed */
+            color: grey; /* adjust as needed */
+        }
+
+        .panel-title.collapsed:after {
+            /* symbol for "collapsed" panels */
+            content: "\e114"; /* adjust as needed, taken from bootstrap.css */
+        }
+    </style>
+    <style class="cp-pen-styles">
+        ul.css-treeview {
+            /*margin: 0px 0px 0px 20px;*/
+            list-style: none;
+            line-height: 2em;
+            font-family: Arial;
+        }
+
+            ul.css-treeview li {
+                font-size: 16px;
+                position: relative;
+            }
+
+                ul.css-treeview li:before {
+                    position: absolute;
+                    left: -15px;
+                    top: 0px;
+                    content: '';
+                    display: block;
+                    border-left: 1px solid #ccc;
+                    height: 1em;
+                    border-bottom: 1px solid #ccc;
+                    width: 10px;
+                }
+
+                ul.css-treeview li:after {
+                    position: absolute;
+                    left: -15px;
+                    bottom: -7px;
+                    content: '';
+                    display: block;
+                    border-left: 1px solid #ccc;
+                    height: 100%;
+                }
+
+                ul.css-treeview li.root {
+                    margin: 0px 0px 0px -20px;
+                }
+
+                    ul.css-treeview li.root:before {
+                        display: none;
+                    }
+
+                    ul.css-treeview li.root:after {
+                        display: none;
+                    }
+
+                ul.css-treeview li:last-child:after {
+                    display: none;
+                }
+
+        .folder {
+            margin-left: 0px !important;
+            background-color: lightgrey;
+            border: 1px solid #ffffff;
+        }
+
+        .actionhead {
+            color: red;
+            font-weight: bold;
+        }
+
+        button.dt-button, div.dt-button, a.dt-button {
+            margin-right: 0px !important;
+            margin-left: 5px !important;
+            height: 25px;
+        }
+
+        .blink {
+            animation: blink-animation 1s steps(5, start) infinite;
+            -webkit-animation: blink-animation 1s steps(5, start) infinite;
+        }
+    </style>
+    <style>
+        .group-header-td {
+            background-color: #007FC9;
+            cursor: pointer;
+        }
+
+        .group-header-form-td {
+            /*background-color: #357fbe;*/
+            background-color: LightBlue;
+            cursor: pointer;
+            color: #000000 !important;
+        }
+
+        .collalldiv {
+            background-color: #286090;
+            cursor: pointer;
+        }
+
+
+        .headspan {
+            color: white !important;
+        }
+
+        html, body {
+            font-family: Calibri !important;
+            font-size: 13px !important;
+        }
+
+        #tableDocs thead th {
+            width: 200px;
+            vertical-align: middle;
+        }
+
+        #tableDocs * {
+            font-size: 14px !important;
+        }
+
+        .subReportHeader {
+            background-color: cadetblue !important;
+            color: #ffffff;
+        }
+
+        table.dataTable thead th, table.dataTable thead td {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            vertical-align: middle !important;
+            word-break: normal;
+            word-wrap: normal;
+        }
+        /*
+        table.dataTable tbody td {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            vertical-align: middle !important;
+        }
+        table.dataTable {
+            margin: 0 auto;
+            width: 100%;
+            clear: both;
+            border-collapse: collapse;
+            table-layout: fixed !important;
+            word-wrap: break-word;
+        }*/
+        .dataTables_scrollBody {
+            /*margin-left:-26px;*/
+        }
+
+        .comments {
+            width: 350px;
+        }
+
+        hr {
+            margin:0px !important; 
+        }
+
+    </style>
+</head>
+
+<body>
+    <div style="padding:30px; padding-top:0px; margin:20px; margin-top:10px;">
+
+        <div class="row">
+            @*<h4 class="text-right blink">
+                    Click here for Current status of All Documents in the workflow process</a>
+                </h4>*@
+            <div class="panel-group" id="accordion">
+
+                <div class="row marginTop10">
+                    <div class="panel panel-default" style="border:10px">
+                        <div class="panel-heading" data-toggle="collapse" data-target='#collapsePD'>
+                            <h4 class="panel-title" data-toggle="collapse" data-target='#collapsePD'>
+                                My Pending Documents  @*for @Model.User.Name (@Model.User.Username)*@
+                            </h4>
+                        </div>
+                        <div id="collapsePD" class="panel-collapse collapse in">
+                            <div class="panel-body">
+
+                                <div id="divListPD">
+                                    <table class="table table-bordered table-striped grid" id="tableDocs" style="width:100%">
+                                        <thead>
+                                            <tr class="subReportHeader">
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Record #</th>
+                                                @*<th>HFD Received Date</th>*@
+                                                <th>Recipient Received Date</th>
+                                                <th>Ref No. #</th>
+                                                @*<th>HFD Due Date</th>*@
+                                                <th style="text-align:center; width:350px;">Subject</th>
+                                                @*<th>Recipient Due Date</th>
+                                                    <th>Remaining Days</th>*@
+                                                <th>Attachments</th>
+                                                <th>Action</th>
+                                                <th>Exteral Comments Sheet</th>
+                                                <th style="width:250px;">Previous Step Workflow Comments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var document in Model.PendingDocs)
+            {
+                                                <tr>
+                                                    <td style="width:100%">@document.Project</td>
+                                                    <td style="width:100%">@document.DocType</td>
+                                                    <td style="width:100%">@document.FileNames</td>
+                                                    <td>@document.RecordNumber</td>
+                                                    @*<td>@document.IssueDate.ToString("dd-MMM-yy")</td>*@
+                                                    <td>@document.ReceivedDate.ToString("dd-MMM-yy")</td>
+                                                    <td>@document.Reference</td>
+                                                    @*<td>@((document.IssueDate.AddDays(String.IsNullOrEmpty(document.ReviewDays) == true ? 0 : Convert.ToDouble(document.ReviewDays))).ToString("dd-MMM-yy"))</td>*@
+                                                    <td><a href="javascript:void(0)" onclick="GetWorkflowStatus(@document.DocumentId, this)">@document.Description</a></td>
+                                                    @{
+                                                        string cssClasstrd;
+                                                        if (!string.IsNullOrEmpty(document.CalcDueDate))
+                                                        {
+                                                            if ((document.DueDate - DateTime.Today).TotalDays < 0)
+                                                            {
+                                                                cssClasstrd = "tdRed";
+                                                            }
+                                                            else if ((document.DueDate - DateTime.Today).TotalDays >= 0 && (document.DueDate - DateTime.Today).TotalDays <= 5)
+                                                            {
+                                                                cssClasstrd = "tdYellow";
+                                                            }
+                                                            else
+                                                            {
+                                                                cssClasstrd = "tdGreen";
+                                                            }
+
+                                                        }
+                                                        else
+                                                        {
+                                                            cssClasstrd = "tdTransparent";
+                                                        }
+                                                    }
+                                                    @*<td class="@cssClasstrd">
+                                                            @if (!string.IsNullOrEmpty(document.CalcDueDate))
+                                                            {
+
+                                                                @(DateTime.Parse(document.CalcDueDate).ToString("dd-MMM-yy"));
+
+                                                            }
+                                                        </td>
+
+                                                        <td>@document.RemainingDays</td>*@
+                                                    <td><a href="javascript:void(0)" onclick="GetAttachments(@document.DocumentId, this)">Attachments</a></td>
+                                                    <td><a class="actionhead" href="@document.Recordurl" target="_top">Action</a></td>
+                                                    <td>
+                                                        @if (document.FormTypeId == "66")
+                                                        {
+                                                            <a href="~/WebForms/ReportViewer.aspx?pid=@document.ProjectId&fid=@document.FormId&tid=@document.FormTypeId" target="_blank">Download</a>
+                                                        }
+                                                    </td>
+                                                    <td><div class="comments"><span class="more">@Html.Raw(document.WorkflowComments)</span></div></td>
+                                                </tr>
+                                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="pleaseWaitDialog" class="modal" style="display: none">
+        <div class="center">
+
+            <img src="~/Content/Images/hamadwait.gif" alt="Loading, please wait" />
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/formstyles.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<link href="~/Content/buttons.dataTables.css" rel="stylesheet" />
+
+<link href="~/Content/Documents.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+
+<link rel="stylesheet" type="text/css" href="~/Content/datatables.min.css" />
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/tree/jstree.min.js"></script>
+
+<script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+
+
+
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>*@
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="~/Scripts/buttons.html5.min.js"></script>
+<script src="~/Scripts/readmore.min.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+        //$(".comment").shorten({
+        //    showChars: 100,
+        //});
+
+        // Configure/customize these variables.
+        var showChar = 50;  // How many characters are shown by default
+        var ellipsestext = "...";
+        var moretext = "Show more >";
+        var lesstext = "Show less";
+
+
+        var table = $('#tableDocs').DataTable({
+            "language": {
+                "emptyTable": "No Documents Pending For Action."
+            },
+
+            responsive: true,
+            dom: "<'row'<'col-sm-3'<'row'<'text-center'l><'text-center'B>>><'col-sm-6 text-center toolbarPD'T><'col-sm-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+            //"sDom": '<"toolbar">frtip',
+            buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'A3',
+                title: 'Pending Documents',
+                filename: 'PendingDocuments',
+                exportOptions: {
+                    columns: [3, 4, 5, 6, 7, 8, 9, 10]
+                },
+                customize: function (doc) {
+                    doc.defaultStyle.fontSize = 7;
+
+                }
+
+            }, {
+                extend: 'excel',
+                title: 'Pending Documents',
+                filename: 'PendingDocuments',
+                exportOptions: {
+                    columns: [3, 4, 5, 6, 7, 8, 9, 10]
+                },
+
+            }],
+            "scrollX": true,
+
+            "scrollY": '50vh',
+            "scrollCollapse": true,
+            "bAutoWidth": true,
+            fixedColumns: true,
+            //"columns": [
+            //        { width: '100%' }, //ProjectName
+            //        { width: '100%' }, //FormName
+            //        { width: '100%' }, //FormName
+            //        { width: '60px' }, //RecordNumber
+            //        { width: '70px' }, //Reference
+            //         { width: '70px' }, //Reference
+            //        { width: '100px' },//FormDate
+            //        { width: '250px' }, //Subject
+            //        { width: '70px' }, //Collaborate
+            //        { width: '80px' }, //DocStatus
+            //        { width: '80px' }, //Subject
+            //        { width: '60px' }, //DocStatus
+
+
+            //],
+            "columnDefs": [
+
+                { "visible": false, "targets": [0, 1, 2] }
+            , {
+                "targets": [3, 4, 7, 8],
+                "className": "text-center",
+            },
+            { "width": "350px", "targets": [6] },
+            { "width": "150px", "targets": [5, 9, 10] },
+            { "width": "75px", "targets": [3, 4, 7, 8] }
+
+            ],
+            "bPaginate": false,
+            "pageLength": 10,
+            "order": [[0, 'asc'], [1, 'asc']],
+            "displayLength": 10,
+            "drawCallback": function (settings) {
+                $('.comments').readmore({
+                    moreLink: '<a href="#">More</a>',
+                    collapsedHeight: 60,
+                    afterToggle: function (trigger, element, expanded) {
+                        if (!expanded) { // The "Close" link was clicked
+                            $('html, body').animate({ scrollTop: element.offset().top }, { duration: 100 });
+                        }
+                    }
+                });
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+                var lastsub = null;
+                api.rows({ page: 'current' }).data().each(function (row, i) {
+                    group = row[0];
+                    subgroup = row[1];
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group-header group-header-form projectname"><td colspan="11" class="group-header-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4 headspan">&nbsp;&nbsp;<strong>' + group + '</strong></span></td></tr>'
+                        );
+                        last = group;
+                        lastsub = null;
+                    }
+
+                    if (lastsub !== subgroup) {
+                        $(rows).eq(i).before(
+                            '<tr class="group-header-form formname"><td colspan="11" class="group-header-form-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4">&nbsp;&nbsp;<strong>' + subgroup + '</strong></span></td></tr>'
+                        );
+                        lastsub = subgroup;
+                    }
+                });
+                //$(".group-header").nextUntil('.group-header').hide();
+                //$(".group-header-form").nextUntil('.group-header-form').hide();
+            }
+        }).columns.adjust();
+        //$("div.toolbarPD").html('<h3 style="color:#007FC9"><b>Document Pending for @Session["PMWebUser"].ToString()</b></h3>');
+        $('#tableDocs').DataTable().columns.adjust();
+
+        $('#tableDocs tbody').on('click', 'tr.projectname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $('#tableDocs tbody').on('click', 'tr.formname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header-form').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header-form').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $(parent).css('overflow', 'hidden');
+
+    });
+    function GetAttachments(DocId, Obj) {
+
+        $(".tempRow").remove();
+        $.ajax({
+            url: '@Url.Action("GetAttachments", "ContractorActionCenter")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { DocId: DocId },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+                debugger;
+                var tr = '<tr class="tempRow"><td colspan="16">' + data + '</td></tr>'
+                $(Obj).closest("tr").after(tr);
+                AttachmentsCallBack();
+            },
+            error: function (xhr) {
+                alert(xhr);
+            }
+        });
+    }
+
+    function AttachmentsCallBack() {
+        $("#accordion").accordion({
+            header: "h3",
+            collapsible: true,
+            autoHeight: false,
+            navigation: true,
+            heightStyle: "content"
+        });
+
+    }
+
+    function GetWorkflowStatus(RecordId, Obj) {
+        $(".tempRow").remove();
+        $.ajax({
+            url: '@Url.Action("GetWorkflowStatus", "DocumentLog")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { RecordId: RecordId, "_": Math.random() },
+            //beforeSend: function () {
+            //    $('#pleaseWaitDialog').modal();
+            //},
+            //complete: function () {
+            //    $('#pleaseWaitDialog').modal('hide');
+            //},
+            async: true,
+            cache: false,
+            success: function (data) {
+                var tr = '<tr class="tempRow"><td colspan="16">' + data + '</td></tr>'
+                $(Obj).closest("tr").after(tr);
+            },
+            error: function (xhr) {
+                //alert("failed");
+            }
+        });
+    }
+
+
+
+
+
+</script>
+
+<script type="text/javascript">
+    function DownloadFolder(FolderId, DocId) {
+        debugger;
+        $.ajax({
+            url: '@Url.Action("DownloadFolder", "DocumentLog")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { FolderId: FolderId, DocId: DocId },
+            beforeSend: function () {
+                $('#pleaseWaitDialog').modal();
+            },
+            complete: function () {
+                $('#pleaseWaitDialog').modal('hide');
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+                debugger;
+                var json = JSON.parse(data)
+                var newWin = window.open(json.downloadLink, "_blank");
+                if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
+                    alert('Disable popup blocker to download.');
+                }
+            },
+            error: function (xhr) {
+                //alert("failed");
+            }
+        });
+    }
+    function CloseSubReport() {
+        $(".tempRow").remove();
+    }
+    function OpenWin() {
+        var h = $(window).height();
+        var w = $(window).width();
+
+        var url = "PMwebHelper/ContractorActionCenter/AllDocumnets";
+        //var url = "/ContractorActionCenter/AllDocumnets";
+        var docWin;
+        if (docWin != null) {
+            docWin.location.href = url;
+        }
+        else {
+            docWin = window.open(url, "", "toolbar=no ,location=0, scrollbars=yes, status=no,titlebar=no,menubar=no,width=" + w + ",height=" + h);
+            //window.open(url);
+        }
+        docWin.focus();
+    }
+</script>
+<style>
+    .panel-title {
+        font-size: 16px !important;
+    }
+</style>

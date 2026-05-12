@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dtsAgcXml" targetNamespace="http://tempuri.org/dtsAgcXml.xsd" xmlns:mstns="http://tempuri.org/dtsAgcXml.xsd" xmlns="http://tempuri.org/dtsAgcXml.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dtsAgcXml" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dtsAgcXml" msprop:Generator_UserDSName="dtsAgcXml">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblDocumentNotes" msprop:Generator_TableClassName="tblDocumentNotesDataTable" msprop:Generator_TableVarName="tabletblDocumentNotes" msprop:Generator_TablePropName="tblDocumentNotes" msprop:Generator_RowDeletingName="tblDocumentNotesRowDeleting" msprop:Generator_UserTableName="tblDocumentNotes" msprop:Generator_RowChangingName="tblDocumentNotesRowChanging" msprop:Generator_RowEvHandlerName="tblDocumentNotesRowChangeEventHandler" msprop:Generator_RowDeletedName="tblDocumentNotesRowDeleted" msprop:Generator_RowEvArgName="tblDocumentNotesRowChangeEvent" msprop:Generator_RowChangedName="tblDocumentNotesRowChanged" msprop:Generator_RowClassName="tblDocumentNotesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:int" />
+              <xs:element name="Subject" msprop:Generator_ColumnVarNameInTable="columnSubject" msprop:Generator_ColumnPropNameInRow="Subject" msprop:Generator_ColumnPropNameInTable="SubjectColumn" msprop:Generator_UserColumnName="Subject" type="xs:string" minOccurs="0" />
+              <xs:element name="Note" msprop:Generator_ColumnVarNameInTable="columnNote" msprop:Generator_ColumnPropNameInRow="Note" msprop:Generator_ColumnPropNameInTable="NoteColumn" msprop:Generator_UserColumnName="Note" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblDocumentAttachments" msprop:Generator_TableClassName="tblDocumentAttachmentsDataTable" msprop:Generator_TableVarName="tabletblDocumentAttachments" msprop:Generator_TablePropName="tblDocumentAttachments" msprop:Generator_RowDeletingName="tblDocumentAttachmentsRowDeleting" msprop:Generator_UserTableName="tblDocumentAttachments" msprop:Generator_RowChangingName="tblDocumentAttachmentsRowChanging" msprop:Generator_RowEvHandlerName="tblDocumentAttachmentsRowChangeEventHandler" msprop:Generator_RowDeletedName="tblDocumentAttachmentsRowDeleted" msprop:Generator_RowEvArgName="tblDocumentAttachmentsRowChangeEvent" msprop:Generator_RowChangedName="tblDocumentAttachmentsRowChanged" msprop:Generator_RowClassName="tblDocumentAttachmentsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:int" />
+              <xs:element name="FileContent" msprop:Generator_ColumnVarNameInTable="columnFileContent" msprop:Generator_ColumnPropNameInRow="FileContent" msprop:Generator_ColumnPropNameInTable="FileContentColumn" msprop:Generator_UserColumnName="FileContent" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="Extension" msprop:Generator_ColumnVarNameInTable="columnExtension" msprop:Generator_ColumnPropNameInRow="Extension" msprop:Generator_ColumnPropNameInTable="ExtensionColumn" msprop:Generator_UserColumnName="Extension" type="xs:string" minOccurs="0" />
+              <xs:element name="FileName" msprop:Generator_ColumnVarNameInTable="columnFileName" msprop:Generator_ColumnPropNameInRow="FileName" msprop:Generator_ColumnPropNameInTable="FileNameColumn" msprop:Generator_UserColumnName="FileName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tblDocumentNotes" />
+      <xs:field xpath="mstns:Id" />
+    </xs:unique>
+    <xs:unique name="tblDocumentAttachments_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tblDocumentAttachments" />
+      <xs:field xpath="mstns:Id" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="VB" Debug="true" Service="API.RestPeriods" CodeBehind="Periods.svc.vb" %>

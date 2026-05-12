@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    The notices below are provided with respect to licensed content incorporated herein:
+    Copyright (c) The Associated General Contractors of America, Inc. 2009-2014. All Rights Reserved. http://www.agc.org and http://www.agcxml.org. Terms of license can be found in LicenseAgreement.pdf included with this download package.
+    Copyright (c) 1997-2014 Open Applications Group, Inc. All Rights Reserved.  http://www.openapplications.org.
+-->
+<xs:schema targetNamespace="http://agcxml.org/2" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://agcxml.org/2" xmlns:gc="http://agcxml.org/2" xmlns:platform="http://www.openapplications.org/oagis/10" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>
+      Name: Meta.xsd
+      Release: 2.0 Alpha 4(pre)
+      Release Date: 2014-Feb-04
+      Full Name: /org_agcxml/2_0/Model/Common/Components/Meta.xsd
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:include schemaLocation="Fields.xsd">
+    <xs:annotation>
+      <xs:documentation>Simple types for smaller grained fields shared across agcXML schemas such as a project reference or a yes/no indicator.</xs:documentation>
+    </xs:annotation>
+  </xs:include>
+  <xs:include schemaLocation="../../Extension/Extensions.xsd">
+    <xs:annotation>
+      <xs:documentation>Allows additional information not captured in the agcXML specification.</xs:documentation>
+      <xs:documentation>To build an extension, define a new XML schema in a separate XML namespace.</xs:documentation>
+      <xs:documentation>To use an extension, import your new  schema into the XML instance for a BOD and add fields to an Extension field. Extension fields can be found in many nouns, headers, components and fields.</xs:documentation>
+    </xs:annotation>
+  </xs:include>
+</xs:schema>

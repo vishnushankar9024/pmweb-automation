@@ -1,0 +1,12 @@
+{
+  "grid-column.recordNumber": "Record #",
+  "grid-column.description": "Description",
+  "grid-column.objectType": "Record Type",
+  "grid-column.docStatusId": "Status",
+  "grid-column.revision": "Revision",
+  "grid-column.revisionDate": "Date",
+  "grid-column.actionDate": "Last Viewed",
+  "recentRecord": "Recent Records",
+  "AllTypes":  "All Types"
+
+}

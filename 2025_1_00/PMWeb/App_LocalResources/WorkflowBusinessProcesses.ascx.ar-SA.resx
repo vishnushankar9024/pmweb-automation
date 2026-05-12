@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Action.HeaderText" xml:space="preserve">
+    <value>عمل</value>
+  </data>
+  <data name="Action_NextStep" xml:space="preserve">
+    <value>الخطوة التاليّة</value>
+  </data>
+  <data name="AnyRecordType" xml:space="preserve">
+    <value>--أيّ--</value>
+  </data>
+  <data name="chkAllowRecalculateToDueDate.Text" xml:space="preserve">
+    <value>السماح بالإعادة والموافقة على إعادة حساب تاريخ الإستحقاق   </value>
+  </data>
+  <data name="chkAllowResubmitterToEdit.Text" xml:space="preserve">
+    <value>السماح للمقدّم بالتعديل</value>
+  </data>
+  <data name="chkShowAllFolders.Text" xml:space="preserve">
+    <value>إظهار كل المجلّدات</value>
+  </data>
+  <data name="chkShowUserNames.Text" xml:space="preserve">
+    <value>إظهار الإسم الأول / الإسم الأخير</value>
+  </data>
+  <data name="CustomForm" xml:space="preserve">
+    <value>نموذج مخصّص</value>
+  </data>
+  <data name="cvRolesList.ErrorMessage" xml:space="preserve">
+    <value>الدّور مطلوب</value>
+  </data>
+  <data name="ddlAssociate" xml:space="preserve">
+    <value>مرتبط ب</value>
+  </data>
+  <data name="ddlAssociate.EmptyMessage" xml:space="preserve">
+    <value>... إختر أنواع النماذج</value>
+  </data>
+  <data name="ddlRoles" xml:space="preserve">
+    <value>الأدوار</value>
+  </data>
+  <data name="ddlRoles.EmptyMessage" xml:space="preserve">
+    <value>... إختر الأدوار</value>
+  </data>
+  <data name="ddlTemplate" xml:space="preserve">
+    <value>نموذج</value>
+  </data>
+  <data name="ddlTemplate.EmptyMessage" xml:space="preserve">
+    <value>... إختر نموذج</value>
+  </data>
+  <data name="Delegate.HeaderText" xml:space="preserve">
+    <value>مندوب</value>
+  </data>
+  <data name="Description.HeaderText" xml:space="preserve">
+    <value>وصف</value>
+  </data>
+  <data name="Description_Multiple" xml:space="preserve">
+    <value>-- متعدّد --</value>
+  </data>
+  <data name="DocuSign.HeaderText" xml:space="preserve">
+    <value>DocuSign</value>
+  </data>
+  <data name="FORMS" xml:space="preserve">
+    <value>نماذج</value>
+  </data>
+  <data name="GC_AllMustApprove.HeaderText" xml:space="preserve">
+    <value>ينبغي على الجميع &lt;br&gt;الموافقة</value>
+  </data>
+  <data name="GC_AnyCanApprove.HeaderText" xml:space="preserve">
+    <value> يمكن لأيّ كان&lt;br&gt;الموافقة </value>
+  </data>
+  <data name="GC_CanAddAttachments.HeaderText" xml:space="preserve">
+    <value>يمكن إضافة &lt;br&gt;المرفقات</value>
+  </data>
+  <data name="GC_CanEditRecords.HeaderText" xml:space="preserve">
+    <value>يمكن تعديل&lt;br&gt;السجلات</value>
+  </data>
+  <data name="GC_CC.HeaderText" xml:space="preserve">
+    <value>نسخة</value>
+  </data>
+  <data name="GC_NotifyOnAllApprovals.HeaderText" xml:space="preserve">
+    <value>الإبلاغ&lt;br&gt; عن كلّ &lt;br&gt; الموافقات</value>
+  </data>
+  <data name="GC_NotifyOnAllReject.HeaderText" xml:space="preserve">
+    <value>الإبلاغ&lt;br&gt; عن كلّ &lt;br&gt;المرفوضات</value>
+  </data>
+  <data name="GC_NotifyOnAllReturns.HeaderText" xml:space="preserve">
+    <value>الإبلاغ&lt;br&gt; عن كلّ &lt;br&gt;المردودات</value>
+  </data>
+  <data name="GC_NotifyOnAllWithdrawals.HeaderText" xml:space="preserve">
+    <value> الإبلاغ&lt;br&gt; عن كلّ &lt;br&gt;المسحوبات</value>
+  </data>
+  <data name="GC_NotifyOnFinalApproval.HeaderText" xml:space="preserve">
+    <value> الإبلاغ&lt;br&gt; عند &lt;br&gt;الموافقة الأخيرة</value>
+  </data>
+  <data name="GC_ReturnTo.HeaderText" xml:space="preserve">
+    <value>إعادة الى</value>
+  </data>
+  <data name="GC_ReviewDays.HeaderText" xml:space="preserve">
+    <value>إستعراض&lt;br&gt;الأيّام</value>
+  </data>
+  <data name="GC_Roles.HeaderText" xml:space="preserve">
+    <value>الأدوار</value>
+  </data>
+  <data name="GC_Step.HeaderText" xml:space="preserve">
+    <value>الخطوة</value>
+  </data>
+  <data name="GridColumn_User" xml:space="preserve">
+    <value>* المستخدم</value>
+  </data>
+  <data name="GridColumn_User.HeaderText" xml:space="preserve">
+    <value>* المستخدم</value>
+  </data>
+  <data name="hplVisualDesigner.Text" xml:space="preserve">
+    <value>مصمّم سير العمل المرئيّ</value>
+  </data>
+  <data name="IsBranch.HeaderText" xml:space="preserve">
+    <value>نوع</value>
+  </data>
+  <data name="lblAddBranchRule.Text" xml:space="preserve">
+    <value>إضافة فرع</value>
+  </data>
+  <data name="lblAddRole.Text" xml:space="preserve">
+    <value>إضاقة دور</value>
+  </data>
+  <data name="lblAlertActive.Text" xml:space="preserve">
+    <value>التنبيه مفعّل</value>
+  </data>
+  <data name="lblAllMustApproveEmail.Text" xml:space="preserve">
+    <value>"إرسال بريد واحد في حال "على الجميع الموافقة</value>
+  </data>
+  <data name="lblAssociateWith.Text" xml:space="preserve">
+    <value>مرتبط ب</value>
+  </data>
+  <data name="lblBranchMsg.Text" xml:space="preserve">
+    <value>تنبيه: فرع أو أكثر ليس فيه أيّ خطوات</value>
+  </data>
+  <data name="lblDays.Text" xml:space="preserve">
+    <value>(+/-) أيام</value>
+  </data>
+  <data name="lblDaysForOriginalSubmitterToReSubmit.Text" xml:space="preserve">
+    <value>* عدد الأيّام للمقدّم الأصلي لإعادة تقديمه</value>
+  </data>
+  <data name="lblDelete.Text" xml:space="preserve">
+    <value>إمسح</value>
+  </data>
+  <data name="lblEditSelectedLines.Text" xml:space="preserve">
+    <value>عدّل</value>
+  </data>
+  <data name="lblEmail.Text" xml:space="preserve">
+    <value>بريد</value>
+  </data>
+  <data name="lblLoadingMessage.Text" xml:space="preserve">
+    <value>تحميل الرسالة</value>
+  </data>
+  <data name="lblNotes.Text" xml:space="preserve">
+    <value> &lt;br&gt; ملاحظات</value>
+  </data>
+  <data name="lblOnScreen.Text" xml:space="preserve">
+    <value>على الشّاشة</value>
+  </data>
+  <data name="lblOverdueAlert.Text" xml:space="preserve">
+    <value>تنبيه متأخر</value>
+  </data>
+  <data name="lblRecalculateDue.Text" xml:space="preserve">
+    <value>إعادة حساب تواريخ الإستحقاق عند إنجاز خطوة في سير العمل</value>
+  </data>
+  <data name="lblRefresh.Text" xml:space="preserve">
+    <value>تحديث</value>
+  </data>
+  <data name="lblRoles.Text" xml:space="preserve">
+    <value>الأدوار</value>
+  </data>
+  <data name="lblRolesAPMRules.Text" xml:space="preserve">
+    <value>الأدوار وقواعد الآليّة الإدارية</value>
+  </data>
+  <data name="lblSelectTemplate.Text" xml:space="preserve">
+    <value>تحديد النموذج</value>
+  </data>
+  <data name="lblSteps.Text" xml:space="preserve">
+    <value>خطوات</value>
+  </data>
+  <data name="lblSuperUsers.Text" xml:space="preserve">
+    <value>مدراء عمليّة إدارة الأعمال</value>
+  </data>
+  <data name="lblTemplate.Text" xml:space="preserve">
+    <value>إختر النموذج</value>
+  </data>
+  <data name="lblTemplateIdError.Text" xml:space="preserve">
+    <value>ينبغي على رمز النموذج ان يكون فريداً</value>
+  </data>
+  <data name="lblTemplateIDName.Text" xml:space="preserve">
+    <value>رمز إدارة العمليّة الإداريّة</value>
+  </data>
+  <data name="lblTemplateName.Text" xml:space="preserve">
+    <value>* إسم االعمليّة الإداريّة</value>
+  </data>
+  <data name="lblTemplateNameError.Text" xml:space="preserve">
+    <value>ينبغي على الإسم ان يكون فريداً</value>
+  </data>
+  <data name="lblTextSMS.Text" xml:space="preserve">
+    <value>رسالة نصّ قصيرة</value>
+  </data>
+  <data name="lblVisualWorkflow.Text" xml:space="preserve">
+    <value>سير العمل المرئيّ</value>
+  </data>
+  <data name="Level.HeaderText" xml:space="preserve">
+    <value>مستوى</value>
+  </data>
+  <data name="LOD_Any" xml:space="preserve">
+    <value>-- أيّ --</value>
+  </data>
+  <data name="LOD_Multiple" xml:space="preserve">
+    <value>-- متعدّد --</value>
+  </data>
+  <data name="LOD_OverdueApprover" xml:space="preserve">
+    <value>-- الموافقة عند تأخير المعاملة --</value>
+  </data>
+  <data name="LOD_RecordTypes" xml:space="preserve">
+    <value>أنواع السجلّات</value>
+  </data>
+  <data name="LOD_Roles" xml:space="preserve">
+    <value>الأدوار</value>
+  </data>
+  <data name="LOD_Template" xml:space="preserve">
+    <value>النماذج</value>
+  </data>
+  <data name="MenuItem_AddBranchRule.Text" xml:space="preserve">
+    <value>إضافة قاعدة فرعيّة</value>
+  </data>
+  <data name="MenuItem_AddRole.Text" xml:space="preserve">
+    <value>إضافة دور</value>
+  </data>
+  <data name="MenuItem_DeleteBranchRule.Text" xml:space="preserve">
+    <value>مسح قاعدة فرعيّة</value>
+  </data>
+  <data name="MenuItem_EditBranchRule.Text" xml:space="preserve">
+    <value>تعديل قاعدة فرعيّة</value>
+  </data>
+  <data name="MenuItem_EditRole.Text" xml:space="preserve">
+    <value>تعديل دور</value>
+  </data>
+  <data name="Msg_AddTemplate" xml:space="preserve">
+    <value>إضافة نموذج</value>
+  </data>
+  <data name="Msg_LocProgramRoles" xml:space="preserve">
+    <value>أدوار مكان البرنامج</value>
+  </data>
+  <data name="Msg_ProgramRoles" xml:space="preserve">
+    <value>أدوار البرنامج</value>
+  </data>
+  <data name="Msg_Roles" xml:space="preserve">
+    <value>الأدوار</value>
+  </data>
+  <data name="Msg_SystemRoles" xml:space="preserve">
+    <value>أدوار النظام</value>
+  </data>
+  <data name="RadTab_BranchRules.Text" xml:space="preserve">
+    <value>قواعد الفروع</value>
+  </data>
+  <data name="RadTab_Roles.Text" xml:space="preserve">
+    <value>الأدوار</value>
+  </data>
+  <data name="ReturnTo.HeaderText" xml:space="preserve">
+    <value>إرجاع الى</value>
+  </data>
+  <data name="ReturnTo_Step" xml:space="preserve">
+    <value>خطوة</value>
+  </data>
+  <data name="ReturnTo_StepNumber" xml:space="preserve">
+    <value># رقم الخطوة</value>
+  </data>
+  <data name="rfvTemplateId.ErrorMessage" xml:space="preserve">
+    <value>.مطلوب</value>
+  </data>
+  <data name="rfvTemplateName.ErrorMessage" xml:space="preserve">
+    <value>.مطلوب</value>
+  </data>
+  <data name="rfvTemplateName0.ErrorMessage" xml:space="preserve">
+    <value>.عدد الأيّام غير صالح</value>
+  </data>
+  <data name="rtlHelp.Text" xml:space="preserve">
+    <value>(يمكن لمدراء النماذج تحرير الوثيقة عند إنتهاء سير العمل (موافق عليه، مرفوض أو مسحوب</value>
+  </data>
+  <data name="StepNumber.HeaderText" xml:space="preserve">
+    <value># رقم الخطوة</value>
+  </data>
+  <data name="UseVisualDesigner.Text" xml:space="preserve">
+    <value>إستخدم المصمّم المرئيّ لسير العمل</value>
+  </data>
+  <data name="WarningMsg_CannotBeDeletedUsedByBusinnesProcesses" xml:space="preserve">
+    <value>لا يمكن حذف النموذج لأنّه يتمّ إستعماله في إحدى قواعد الآليّة العمليّة الإداريّة</value>
+  </data>
+  <data name="WarningMsg_CannotBeDeletedUsedByRules" xml:space="preserve">
+    <value>لا يمكن حذف النموذج لآنه يتمّ إستعماله في إحدى قواعد الآليّة العمليّة الإداريّة</value>
+  </data>
+  <data name="WarningMsg_UsedRole" xml:space="preserve">
+    <value>لا يمكن إستخدام الأدوار أكثر من مرّة في سير عمل</value>
+  </data>
+</root>

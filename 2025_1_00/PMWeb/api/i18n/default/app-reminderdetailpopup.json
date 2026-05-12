@@ -1,0 +1,13 @@
+{
+    "label.Subject": "Subject",
+    "label.Project": "Project",
+    "label.Location": "Location",
+    "label.RecordType": "Record Type",
+    "label.Field": "Field",
+    "label.Record": "Record",
+    "label.ReferenceDate": "Reference Date",
+    "label.DaysToDate": "Days To Date",
+    "label.Message": "Message",
+    "label.Reminder": "Reminder",
+    "label.Event": "Event"
+}

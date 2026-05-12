@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    The notices below are provided with respect to licensed content incorporated herein:
+    Copyright (c) The Associated General Contractors of America, Inc. 2009-2014. All Rights Reserved. http://www.agc.org and http://www.agcxml.org. Terms of license can be found in LicenseAgreement.pdf included with this download package.
+    Copyright (c) 1997-2014 Open Applications Group, Inc. All Rights Reserved.  http://www.openapplications.org.
+-->
+<xs:schema targetNamespace="http://agcxml.org/2" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://agcxml.org/2" xmlns:gc="http://agcxml.org/2" xmlns:platform="http://www.openapplications.org/oagis/10" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>
+      Name: GetRFI.xsd
+      Release: 2.0 Alpha 4(pre)
+      Release Date: 2014-Feb-04
+      Full Name: /org_agcxml/2_0/Model/BODs/GetRFI.xsd
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:import namespace="http://www.openapplications.org/oagis/10" schemaLocation="../../../../org_openapplications_oagis/10_0/Model/Platform/2_0/Common/Components/Meta.xsd">
+    <xs:annotation>
+      <xs:documentation>XML elements and types shared across OAGIS schemas for metdata such as types for identifiers.</xs:documentation>
+    </xs:annotation>
+  </xs:import>
+
+  <xs:include schemaLocation="../Nouns/RFI.xsd">
+    <xs:annotation>
+      <xs:documentation>A request for information (RFI) is a workflow where one or more issues or questions can be answered by different project participants.</xs:documentation>
+      <xs:documentation>An RFI is a line item based document.  That is, it has a header for the RFI workflow and a flat list of line items.</xs:documentation>
+      <xs:documentation>Each line item represents either an issue or a reply to an issue.  Issues and replies can be related to each other, but line items within an RFI are layed out linearly rather than nesting them.</xs:documentation>
+      <xs:documentation>In its simplest form, an RFI has 2 line items:  one reply to one issue.  More generally, though, an issue can split into sub-issues, and strictly speaking, there is no restriction for a single top level issue.</xs:documentation>
+      <xs:documentation>In addition, a line item is not limited to a single reply.  Rather, collaborative workflows could multiple participants contribute separate replies that then, optionally, feed into a final reply.</xs:documentation>
+    </xs:annotation>
+  </xs:include>
+
+  <xs:element name="GetRFI" type="GetRFIType">
+    <xs:annotation>
+      <xs:documentation>The purpose of the GetRFI BOD is to query another business application or module for information about one or more RFI instances. The response is a ShowRFI BOD.  The Get verb takes several parameters to constrain the data of interest including RFI identity and subset.</xs:documentation>
+      <xs:documentation>Generally speaking, the Get verb plays the "Read" role in a CRUD data access layer.  Like SQL for a database, the Get verb allows for "selection" and "projection".  That is, data to return can be selected based on identity and values for other fields (the WHERE clause in SQL).  Matching data can be projected onto a specific set of fields of interest (the SELECT clause in SQL) to return.  However, the full expressiveness of SQL is not used.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetRFIType">
+    <xs:annotation>
+      <xs:documentation>The purpose of the GetRFI BOD is to query another business application or module for information about one or more RFI instances. The response is a ShowRFI BOD.  The Get verb takes several parameters to constrain the data of interest including RFI identity and subset.</xs:documentation>
+      <xs:documentation>Generally speaking, the Get verb plays the "Read" role in a CRUD data access layer.  Like SQL for a database, the Get verb allows for "selection" and "projection".  That is, data to return can be selected based on identity and values for other fields (the WHERE clause in SQL).  Matching data can be projected onto a specific set of fields of interest (the SELECT clause in SQL) to return.  However, the full expressiveness of SQL is not used.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="platform:BusinessObjectDocumentType">
+        <xs:sequence>
+          <xs:element name="DataArea" type="GetRFIDataAreaType">
+            <xs:annotation>
+              <xs:documentation>Holds the business information for the GetRFI BOD message.  There is a single Get verb instance and one or more RFI instances.</xs:documentation>
+              <xs:documentation>The Get verb instance indicates the action to perform and carries parameters that apply to all RFI instances.</xs:documentation>
+              <xs:documentation>Each RFI instance carries just enough information to support the Get action.  As a general rule, noun instances in a BOD can be partial; the full form is typically not needed.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GetRFIDataAreaType">
+    <xs:annotation>
+      <xs:documentation>Holds the business information for the GetRFI BOD message.  There is a single Get verb instance and one or more RFI instances.</xs:documentation>
+      <xs:documentation>The Get verb instance indicates the action to perform and carries parameters that apply to all RFI instances.</xs:documentation>
+      <xs:documentation>Each RFI instance carries just enough information to support the Get action.  As a general rule, noun instances in a BOD can be partial; the full form is typically not needed.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="platform:Get">
+        <xs:annotation>
+          <xs:documentation>The purpose of the GetRFI BOD is to query another business application or module for information about one or more RFI instances. The response is a ShowRFI BOD.  The Get verb takes several parameters to constrain the data of interest including RFI identity and subset.</xs:documentation>
+          <xs:documentation>Generally speaking, the Get verb plays the "Read" role in a CRUD data access layer.  Like SQL for a database, the Get verb allows for "selection" and "projection".  That is, data to return can be selected based on identity and values for other fields (the WHERE clause in SQL).  Matching data can be projected onto a specific set of fields of interest (the SELECT clause in SQL) to return.  However, the full expressiveness of SQL is not used.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="RFI" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A request for information (RFI) is a workflow where one or more issues or questions can be answered by different project participants.</xs:documentation>
+          <xs:documentation>An RFI is a line item based document.  That is, it has a header for the RFI workflow and a flat list of line items.</xs:documentation>
+          <xs:documentation>Each line item represents either an issue or a reply to an issue.  Issues and replies can be related to each other, but line items within an RFI are layed out linearly rather than nesting them.</xs:documentation>
+          <xs:documentation>In its simplest form, an RFI has 2 line items:  one reply to one issue.  More generally, though, an issue can split into sub-issues, and strictly speaking, there is no restriction for a single top level issue.</xs:documentation>
+          <xs:documentation>In addition, a line item is not limited to a single reply.  Rather, collaborative workflows could multiple participants contribute separate replies that then, optionally, feed into a final reply.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

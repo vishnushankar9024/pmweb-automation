@@ -1,0 +1,14 @@
+{
+    "grid-column.Id": "Id",
+    "grid-column.InvoiceNumber": "Invoice Number",
+    "grid-column.Description": "Description",
+    "grid-column.NumberOfLinesOver": "Number of Lines Over",
+    "grid-column.Status": "Status",
+    "grid-column.Date": "Date",
+    "OverbillingMessage": "One or more Progress Invoices has caused an overbilling state that must be corrected before further invoice workflow action can be taken.",
+    "rbDoNotAllowOverbilling": "Do not allow overbilling (revised value or lines)",
+    "rbAllowbilling": "Allow overbilling",
+    "lblUpToLine1": "Up To",
+    "lblUpToTotal1": "Up To"
+
+}

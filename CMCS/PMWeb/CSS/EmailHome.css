@@ -1,0 +1,186 @@
+﻿/* FF2 bugfix*/
+#RAD_SPLITTER_PANE_CONTENT_ctl00_topPane
+{
+	overflow: visible !important;
+}
+
+#RAD_SPLITTER_PANE_CONTENT_ctl00_ContentPlaceHolder2_RadPane1
+{
+	overflow: hidden;
+}
+
+#ctl00_CPH1_ctl00_ContentPlaceHolder2_DetailsView1Panel
+{
+	overflow-x: hidden;
+}
+
+/* required so RadGrid in the Contacts page is 100% tall in FireFox */
+#ctl00_CPH1_ctl00_ContentPlaceHolder2_RadGrid1Panel
+{
+	height:100%;
+}
+
+/* apply height to the update panel that contains the RadScheduler
+   so it can resize properly */
+#ctl00_CPH1_ctl00_ContentPlaceHolder2_RadScheduler1Panel
+{
+	height:100%;
+}
+
+.RadToolBar .rtbTemplate .RadInput 
+{
+	line-height: 22px;
+	display: -moz-inline-stack;
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	vertical-align: baseline;
+}
+
+.RadToolBar .RadComboBox,
+.RadMenu .RadComboBox,
+.RadMenu .skinLabel
+{
+	vertical-align: middle;
+}
+
+* html .RadMenu .rmTemplate .rmText
+{
+	padding-bottom: 3px;
+}
+
+.contacts-filter-toolbar .rtbTemplate
+{
+	color:White;
+	width:400px;
+}
+
+.RadToolBar.EmailSendtoolbar
+{
+	margin-left:24px;
+}
+
+div.inbox-search-toolbar .rtbOuter,
+div.inbox-search-toolbar .rtbMiddle,
+div.inbox-search-toolbar .rtbInner,
+div.contacts-filter-toolbar .rtbOuter,
+div.contacts-filter-toolbar .rtbMiddle,
+div.contacts-filter-toolbar .rtbInner
+{
+	border-left-width: 0;
+	border-right-width: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+
+
+/* message DetailsView*/
+
+#message-body
+{
+	padding: 15px 5px 25px;
+}
+
+.rfdBlack #message-body a { color: #9EDA29; }
+.rfdDefault #message-body a { color: #6C6C6C; }
+.rfdForest #message-body a { color: #751A04; }
+.rfdHay #message-body a { color: #50B306; }
+.rfdOffice2007 #message-body a { color: #606F94; }
+.rfdOutlook #message-body a { color: #355D98; }
+.rfdSunset #message-body a { color: #5d1f00; }
+.rfdTelerik #message-body a { color: #64B33E; }
+.rfdVista #message-body a { color: #0F5477; }
+.rfdWeb20 #message-body a { color: #38477F; }
+.rfdWebBlue #message-body a { color: #38477F; }
+
+.message-view
+{
+	width: 100%;
+}
+
+.message-view ul
+{
+	margin: 10px 6px;
+	padding: 0;
+	list-style:none;
+	border-bottom: 1px solid #add1ff;
+}
+
+.message-view ul h3
+{
+	margin: 0;
+}
+
+.message-view li label
+{
+	display: inline-block;
+	width: 40px;
+	color:#6f9dd9;
+}
+
+/* contact details nested view template */
+.contact-details img
+{
+	float:left;
+	margin: 0 12px 0 6px;
+}
+* html .contact-details img { margin-left: 3px }
+
+.contact-details ul
+{
+	list-style:none;
+	margin: 10px;
+}
+
+.contact-details label
+{
+	display:inline-block;
+	font-weight:bold;
+	width:80px;
+}
+
+
+.rpTemplate input
+{
+	vertical-align: middle;
+	margin-top: 0;
+}
+
+/* <notes> */
+
+.notes-list img
+{
+	vertical-align: text-top;
+	margin: 0 4px 0 0;
+}
+
+/* </notes> */
+
+
+.message-viewPopup
+{
+	width: 100%;
+}
+
+.message-viewPopup ul
+{
+	margin: 0px 0px;
+	padding: 0;
+	list-style:none;
+	border-bottom: 1px solid #add1ff;
+}
+
+.message-viewPopup ul h3
+{
+	margin: 0;
+}
+
+.message-viewPopup li label
+{
+	display: inline-block;
+	width: 40px;
+	color:#6f9dd9;
+}
+.EmailVerticalSplitter , .TreeSplitterPane , .EmailPreviewPane{height:calc(100vh - 130px) !important}
+.emailTable{width:100%;height:60px}

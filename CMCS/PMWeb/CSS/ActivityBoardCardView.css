@@ -1,0 +1,415 @@
+﻿
+body {
+    background-color: #C9C9C9;
+}
+
+.DivNewColText {
+    background: white;
+    padding: 16px 30px 16px 30px;
+    box-sizing: border-box;
+    border-radius: 7px;
+}
+
+    .DivNewColText input {
+        width: 240px;
+        height: 24px;
+    }
+
+.DivEditCol {
+    background: white;
+    box-sizing: border-box;
+    border-radius: 7px;
+    margin-bottom: 6px;
+}
+
+    .DivEditCol input {
+        border-radius: 4px !important;
+    }
+
+.DivNewTaskText input {
+    width: 268px;
+    height: 24px;
+}
+
+.ABCol {
+    display: inline-block;
+    max-width: 318px;
+    min-width: 300px;
+    vertical-align: top;
+    margin-right: 16px;
+}
+
+.ColTitle {
+    margin-bottom: 9px;
+    padding-left: 8px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #000000;
+    cursor: move;
+    position: relative;
+}
+
+div.AddNewCol div.ColTitle {
+    width: 100%;
+    cursor: pointer;
+}
+
+.AddNewCol {
+    display: inline-block;
+    width: 300px;
+    vertical-align: top;
+    height: 56px;
+    margin-right: 16px;
+}
+
+.DivAddTask {
+    padding-bottom: 8px;
+    width: 100%;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.PlusImg {
+    color: #000000;
+    line-height: 0.7;
+    margin-right: 4px;
+}
+
+.NewColText, .PlusImg {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.imgAddTask {
+    margin-left: 142px;
+    color: #000000;
+    line-height: 0.7;
+    /*width:16px;
+           height:16px;
+           background:url('Images/ResponsiveIcons/16Enabled.png') no-repeat;
+           background-position: -496px 0 !important;*/
+}
+
+.ABRowsContainer {
+    min-height: calc(var(--Content-height) - 50px - 24px - 45px - 40px);
+    max-width: 318px;
+}
+
+.ABRowHolder {
+    background-color: transparent;
+    padding: 16px;
+    width: 298px;
+    box-sizing: border-box;
+}
+
+.ABRow:hover, .ABRow:focus {
+    border: 1px solid #999999;
+}
+
+.ABRow {
+    background-color: white;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 1px solid white;
+    margin-bottom: 16px;
+    width: 298px;
+}
+
+.AttachDiv {
+    margin-bottom: 8px;
+}
+
+.TitleDiv {
+    margin-bottom: 7px;
+}
+
+.chkDone {
+    display: none;
+}
+
+.TitleSpan {
+    width: 242px;
+    display: block;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.IsDone .chkDone {
+    margin-right: 8px;
+    background: url('Images/ResponsiveIcons/ActivityBoardIcons/16x16 Enabled.png') no-repeat;
+    display: inline-block;
+    background-position: -2080px 0 !important;
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin-top: 0.5px;
+}
+
+.IsDone .TitleSpan {
+    float: right;
+    width: 218px !Important;
+    color: #999999;
+}
+
+.IsDone div.DivDueDate.DueDateRed {
+    color: #999999 !important;
+}
+
+.tblTaskInfo {
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 0;
+}
+
+.assignedToImg {
+    width: 24px;
+}
+
+.ToolTipDiv {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.imgAssignedTo {
+    border-radius: 50%;
+}
+
+.AssignedToInitials {
+    border: 1px solid #666666;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+    position: relative;
+    border-radius: 50%;
+}
+
+    .AssignedToInitials .Tooltip, .ToolTipDiv .Tooltip {
+        padding: 0 5px;
+        background: white;
+        display: none;
+        position: absolute;
+        z-index: 1;
+        border: 1px solid;
+        top: 110%;
+        text-align: center;
+        line-height: 22px;
+        height: 22px;
+    }
+
+    .AssignedToInitials:hover .Tooltip, .ToolTipDiv:hover .Tooltip {
+        display: inline-block;
+    }
+
+.EmptyImg {
+    background: url('Images/ResponsiveIcons/24Enabled.png') no-repeat;
+    display: block;
+    background-position: -1872px 0 !important;
+    width: 24px;
+    height: 24px;
+}
+
+    .EmptyImg.ImgDisabled {
+        background: url('Images/ResponsiveIcons/24Disabled.png') no-repeat;
+    }
+
+img {
+    display: inline-block;
+}
+
+.DueDate {
+    width: 80px;
+    height: 24px;
+    line-height: 24px;
+}
+
+    .DueDate img {
+        margin-left: 8px;
+    }
+
+.DivDueDateImg {
+    width: 24px;
+    height: 24px;
+    background: url('Images/ResponsiveIcons/24Enabled.png') no-repeat;
+    background-position: -864px 0;
+}
+
+.DivDueDate {
+    margin-left: 8px;
+    color: #999999;
+}
+
+.DueDateRed {
+    color: #E73E3B !important;
+}
+
+.UserIcons {
+    padding: 0;
+}
+
+.ImgLikes {
+    background: url('Images/ResponsiveIcons/ActivityBoardIcons/16x16 Enabled.png') no-repeat;
+    display: block;
+    background-position: -2064px 0 !important;
+    width: 16px;
+    height: 16px;
+}
+
+.ImgComments {
+    background: url('Images/ResponsiveIcons/ActivityBoardIcons/16x16 Enabled.png') no-repeat;
+    display: block;
+    background-position: -1296px 0 !important;
+    width: 16px;
+    height: 16px;
+}
+
+.ImgSubTasks {
+    background: url('Images/ResponsiveIcons/ActivityBoardIcons/16x16 Enabled.png') no-repeat;
+    display: block;
+    background-position: -2128px 0 !important;
+    width: 16px;
+    height: 16px;
+}
+
+.NumberOf {
+    font-size: 12px;
+    vertical-align: top;
+    color: #999999;
+}
+
+.FlagDiv {
+    margin-top: 8px;
+    width: 264px;
+    clear: both;
+    min-height: 16px;
+    color: white;
+}
+
+    .FlagDiv > span {
+        margin-left: 2px;
+        width: 262px;
+        white-space: normal;
+        word-break: break-word;
+        height: auto;
+        display: block;
+    }
+
+.portlet-placehoder {
+    background-color: #999999;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 16px;
+}
+
+.Colportlet-placehoder {
+    background-color: #999999;
+    height: calc(100vh - 200px);
+    width: 300px;
+    display: inline-block;
+    max-width: 318px;
+    min-width: 300px;
+    vertical-align: top;
+    margin-right: 16px;
+}
+
+.TempRow .ABRowHolder {
+    height: 72.5px;
+}
+
+.hoveredItem {
+    position: absolute;
+    height: 24px;
+    width: 300px;
+    margin-top: -5px;
+}
+
+    .hoveredItem:hover {
+        border: 1px solid #999999;
+        border-radius: 7px;
+    }
+
+.ColHoveredItem {
+    margin-left: -8px;
+    margin-top: -3px !important;
+    height: 100%;
+    padding-bottom: 5px;
+}
+
+    .ColHoveredItem:hover .hoveredMenu {
+        display: block !important;
+    }
+
+.hoveredMenu {
+    float: right;
+    background: url('Images/ResponsiveIcons/24Enabled.png') no-repeat;
+    background-position: -1920px 0px;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    display: none;
+    cursor: pointer;
+}
+
+.hoveredTaskMenu {
+    float: right;
+    background: url('Images/ResponsiveIcons/24Enabled.png') no-repeat;
+    background-position: -1920px -3px;
+    width: 24px;
+    height: 14px;
+    display: none;
+    cursor: pointer;
+}
+
+.ABRow:hover .hoveredTaskMenu, .ABRow:focus .hoveredTaskMenu {
+    display: block;
+}
+
+.spnColName {
+    white-space: normal;
+    word-break: break-word;
+    width: 250px;
+    display: block;
+    line-height: 21px;
+}
+
+.ABCol.ui-sortable-helper {
+    background-color: #C9C9C9;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    min-height: 100%;
+    min-width: 100%;
+    display: inline-block;
+}
+
+@media screen and (max-width:1024px) {
+    .hoveredMenu, .hoveredTaskMenu {
+        display: block !important;
+    }
+}
+
+.ABMenu {
+    margin-top: 10px;
+}
+
+    .ABMenu .rmItem, .ABMenu .rmItem .rmLink {
+        width: inherit !important;
+    }
+
+.RadMenu.ABMenu .rmVertical .rmText {
+    padding: 0 20px 0 20px !important;
+    margin: 0 !important
+}
+
+.RadMenu.ABMenu .rmVertical .rmSeparator .rmText {
+    padding: 0 !important;
+    margin: 0 !important
+}

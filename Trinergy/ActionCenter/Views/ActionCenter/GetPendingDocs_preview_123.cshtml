@@ -1,0 +1,416 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+    .group-header-td {
+        background-color: #007FC9;
+        cursor: pointer;
+    }
+
+    .group-header-form-td {
+        /*background-color: #357fbe;*/
+        background-color: LightBlue;
+        cursor: pointer;
+        color: #000000 !important;
+    }
+
+    .collalldiv {
+        background-color: #286090;
+        cursor: pointer;
+    }
+
+
+    .headspan {
+        color: white !important;
+    }
+
+    html, body {
+        font-family: Calibri !important;
+        font-size: 13px !important;
+    }
+
+    #tableDocs thead th {
+        width: 200px;
+        vertical-align: middle;
+    }
+
+    #tableDocs * {
+        font-size: 14px !important;
+    }
+
+    .subReportHeader {
+        background-color: cadetblue !important;
+        color: #ffffff;
+    }
+
+    table.dataTable thead th, table.dataTable thead td {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        vertical-align: middle !important;
+        word-break: normal;
+        word-wrap: normal;
+    }
+
+    table.dataTable tbody td {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        vertical-align: middle !important;
+    }
+
+    table.dataTable {
+        margin: 0 auto;
+        width: 100%;
+        clear: both;
+        border-collapse: collapse;
+        table-layout: fixed !important;
+        word-wrap: break-word;
+    }
+
+    .dataTables_scrollBody {
+        /*margin-left:-26px;*/
+    }
+
+    .filter-content {
+        width: 130px;
+        height: 75px;
+        background-color: #fff !important;
+        position: absolute;
+        z-index: 1;
+        margin-top: 5px;
+        margin-left: 5px;
+        display: none;
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+        border-radius: .25rem !important;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .btn-primary-custum {
+        color: #fff !important;
+        background-color: #337ab7 !important;
+        border-color: #2e6da4 !important;
+        margin-left: 5px;
+    }
+</style>
+
+
+@(Html.Kendo().Grid<Astad.Model.ActiveWFDocumentModel>()
+                                        .Name("grid_PendingDocuments")
+                                        .Columns(columns =>
+                                        {
+                                            //columns.Bound(c => c.InitiativeNo).Filterable(filter => filter.Cell(cell => cell.Operator("contains").ShowOperators(true).Delay(100)))
+                                            //.ClientTemplate(Html.ActionLink("#: InitiativeNo #", "Details", "NI", new { id = "#: Id #" }, new { target = "_blank" }).ToHtmlString())
+                                            //  .Width(120);
+                                            columns.Bound(c => c.Project).ClientGroupHeaderTemplate("<span class=\"group-header-project\">#: value #</span>").Hidden(true).IncludeInMenu(false);
+                                            columns.Bound(c => c.RecordType).ClientGroupHeaderTemplate("<span class=\"group-header-form\">#: value #</span>").Hidden(true).IncludeInMenu(false);
+                                            columns.Bound(c => c.FileNames).Hidden(true).IncludeInMenu(false);
+                                            columns.Bound(c => c.RecordNumber).Title("Record No.").HeaderTemplate("Record<br />No.").Width(100);
+                                            columns.Bound(c => c.Reference).Title("Incoming Reference").HeaderTemplate("Incoming<br />Reference").Width(125);
+                                            //columns.Bound(c => c.FormDate).Title("Date").Width(80);
+                                            columns.Bound(c => c.Description).Title("Subject")
+                                         .ClientTemplate("<a href='javascript: void(0)' onclick=\"GetWorkflowStatus(#:DocumentId#, this)\">#:Description#</a>")
+                                           .Width(225);
+                                            columns.Bound(c => c.ReceivedDate).Format("{0:dd-MMM-yy}").Title("Recipient Received Date").HeaderTemplate("Recipient Received Date").Width(80);
+                                            columns.Bound(c => c.DueDate).Format("{0:dd-MMM-yy}").Title("Recipient Due Date").HeaderTemplate("Recipient Due Date").Width(80);
+                                            columns.Bound(c => c.RemainingDays).Title("Remaining / Pending Days").HeaderTemplate("Remaining / Pending Days").Width(80);
+                                            columns.Bound(c => c.DocumentId)
+                                            .ClientTemplate("<a href='javascript:void(0)' class\"actionhead\" onclick=\"GetRecord('#:RecURL#', '#:ProjectName#' , '#:FormName#', '#:Reference#', '#:RecordNumber#', '#:Description#')\">Action</a>")
+                                              .Width(100);
+                                            columns.Bound(c => c.OCSLink).Title("Links")
+                                            .ClientTemplate("<a href='javascript:void(0)' class\"actionhead\" onclick=\"GetRecord('#:RecURL#', '#:ProjectName#' , '#:FormName#', '#:Reference#', '#:RecordNumber#', '#:Description#')\">Action</a>")
+                                              .Width(100);
+                                            columns.Bound(c => c.DocumentId).Title("Attachments")
+                                           .ClientTemplate("<a href='javascript: void(0)' onclick=\"GetAttachments(#:DocumentId#, this)\">Attachments</a>")
+                                             .Width(120);
+                                            columns.Bound(c => c.TeamInputRequestedTo).Title("Team Input Request Pending With").HeaderTemplate("Team Input <br />Request<br />Pending With").Width(150);
+                                            columns.Bound(c => c.TeamInputRepliedBy).Title("Team Input Reply Received From").HeaderTemplate("Team Input <br />Reply Received<br />From").Width(150);
+                                            columns.Bound(c => c.WorkflowComments).Title("Previous step workflow comments").HeaderTemplate("Previous step workflow<br />comments").Encoded(false).Width(250);
+                                        })
+                                        .HtmlAttributes(new { style = "height: 700px;" })
+                                        .Scrollable()
+                                        .Groupable()
+                                        .Sortable()
+                                        .Filterable(filter =>
+                                                filter.Mode(GridFilterMode.Menu)
+                                                .Operators(ops => ops
+                                                .ForString(str => str.Clear()
+                                                    .Contains("Contains")
+                                                    .StartsWith("Starts with")
+                                                    )
+                                                    .ForDate(dt => dt.Clear()
+                                                    .IsGreaterThanOrEqualTo("is after or equal to")
+                                                    .IsLessThanOrEqualTo("is before or equal to")
+                                                    )
+                                        )
+                                )
+                                //.Pageable(p => p.Numeric(false).PreviousNext(false))
+                                .Pageable()
+                                .AutoBind(false)
+                                .DataSource(dataSource => dataSource
+                                    .Ajax()
+                                    .Read(read => read.Action("GetPendingDocuments", "ActionCenter"))
+                                    .PageSize(100)
+                                    .Batch(true)
+                                    .Group(g =>
+                                    {
+                                        g.Add(c => c.Project);
+                                        g.Add(c => c.RecordType);
+                                    })
+                                    .ServerOperation(true)
+                                )
+                                .Groupable(g =>
+                                {
+                                    g.Enabled(false);
+                                })
+                                .ColumnMenu()
+                            )
+
+@*<script src="~/Scripts/shorten.js"></script>*@
+<script src="~/Scripts/readmore.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        //$(".comment").shorten({
+        //    showChars: 100,
+        //});
+        var table = $('#tableDocs').DataTable({
+            "language": {
+                "emptyTable": "No Documents Pending For Action."
+            },
+
+            responsive: true,
+            //dom: "<'row header-strip'<'col-sm-3'<'row'<'text-center'l><'text-center'B>>><'col-sm-6 text-center toolbarPD'T><'col-sm-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+            dom: "<'row header-strip'<'col-md-9 col-sm-12'<'row'<'text-center'l><'text-center'B>>><'col-sm-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+            //"sDom": '<"toolbar">frtip',
+            buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'A3',
+                title: 'Pending Documents',
+                filename: 'PendingDocuments',
+                exportOptions: {
+                    columns: [3, 4, 5, 6, 7, 8, 9, 10, 12]
+                },
+                customize: function (doc) {
+                    doc.defaultStyle.fontSize = 7;
+
+                }
+
+            }, {
+                extend: 'excel',
+                title: 'Pending Documents',
+                filename: 'PendingDocuments',
+                exportOptions: {
+                    columns: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+                },
+
+            }
+            //,{
+            //    text: 'Group By<i class="fas fa-caret-down"></i>',
+            //    action: function (e, dt, node, config) {
+            //        $('.filter-project-type').toggle('slide', {
+            //            duration: 1000,
+            //            easing: 'easeOutBounce',
+            //            direction: 'up'
+            //        });
+            //    }
+            //}
+
+            ],
+            "scrollX": true,
+            "scrollY":  calcDataTableHeight(),
+            "bAutoWidth": false,
+            fixedColumns: true,
+            //"columns": [
+            //        { width: '100%' }, //ProjectName
+            //        { width: '100%' }, //FormName
+            //        { width: '100%' }, //FormName
+
+            //        { width: '60px' }, //RecordNumber
+            //        { width: '200px' }, //Reference
+            //         { width: '250px' }, //Subject
+            //        { width: '60px' },//Received Date
+            //        { width: '60px' }, //Due Date
+            //        { width: '60px' }, //Remaining Days
+            //        { width: '60px' }, //Action
+            //        { width: '60px' }, //Links
+            //        { width: '60px' }, //Attachments
+            //        { width: '100px' }, //Team input Request
+            //        { width: '100px' }, //Team input Reply
+            //        { width: '250px' }, //Comments
+
+
+            //],
+            "columnDefs": [
+                { "visible": false, "targets": [0, 1, 2] }
+            , {
+                "targets": [3, 6, 7, 8, 9, 10, 11],
+                "className": "text-center",
+            }
+            ,
+             { "width": "200px", "targets": [4] },
+            { "width": "250px", "targets": [5] },
+            { "width": "60px", "targets": [3, 6, 7, 8, 9, 10, 11, 12, 13] }
+
+            ],
+            "bPaginate": false,
+            "pageLength": 10,
+            //"order": [[0, 'asc'], [1, 'asc']],
+            "displayLength": 10,
+            "drawCallback": function (settings) {
+                $('.comments').each(function () {
+                    $(this).readmore({
+                        moreLink: '<a href="#">More</a>',
+                        collapsedHeight: 60,
+                        afterToggle: function (trigger, element, expanded) {
+                            if (!expanded) { // The "Close" link was clicked
+                                $('html, body').animate({ scrollTop: element.offset().top - 100 }, { duration: 100 });
+                            }
+                        }
+                    });
+                });
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+                var lastsub = null;
+                api.rows({ page: 'current' }).data().each(function (row, i) {
+                    group = row[0];
+                    subgroup = row[1];
+                    //if ($("#chkGroupByProjects").is(':checked'))
+                    {
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                '<tr class="group-header group-header-form projectname"><td colspan="14" class="group-header-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4 headspan">&nbsp;&nbsp;<strong>' + group + '</strong></span></td></tr>'
+                            );
+                            last = group;
+                            lastsub = null;
+                        }
+                    }
+                    //if ($("#chkGroupByDocType").is(':checked'))
+                    {
+                        if (lastsub !== subgroup) {
+                            $(rows).eq(i).before(
+                                '<tr class="group-header-form formname"><td colspan="14" class="group-header-form-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4">&nbsp;&nbsp;<strong>' + subgroup + '</strong></span></td></tr>'
+                            );
+                            lastsub = subgroup;
+                        }
+                    }
+                });
+                //$(".group-header").nextUntil('.group-header').hide();
+                //$(".group-header-form").nextUntil('.group-header-form').hide();
+            }
+        });//.columns.adjust();
+        //$("div.toolbarPD").html('<h3 style="color:#007FC9"><b>Document Pending for @Session["PMWebUser"].ToString()</b></h3>');
+        //$('#tableDocs').DataTable().columns.adjust();
+
+        //table.buttons().container().appendTo('#example_wrapper .col-sm-6:eq(0)');
+        //$("div.toolbar").html('Custom tool bar! Text/images etc.');
+        //$(".group-header").nextUntil('.group-header').toggle();
+        $('#tableDocs tbody').on('click', 'tr.projectname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $('#tableDocs tbody').on('click', 'tr.formname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header-form').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header-form').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $(parent).css('overflow', 'hidden');
+
+        var buttons = $(".dt-buttons");
+        $('<a href="#">Expand All</a>').click(function () {
+            $("tr.group-header").each(function (i, e) {
+                $(this).nextUntil('.group-header').show();
+                $(this).find('span:first').removeClass('glyphicon-chevron-down');
+                $(this).find('span:first').addClass('glyphicon-chevron-up');
+            });
+            table.page.len(10).draw();
+        }).prependTo(buttons);
+
+        $('<a href="#">Collapse All</a>').click(function () {
+            table.page.len(-1).draw();
+            $("tr.group-header-form").each(function (i, e) {
+                $(this).nextUntil('.group-header-form').hide();
+                $(this).find('span:first').removeClass('glyphicon-chevron-up');
+                $(this).find('span:first').addClass('glyphicon-chevron-down');
+            });
+        }).prependTo(buttons);
+
+        //Buttons with badge
+        AddActionCenterButtons(@ViewBag.DataId, @ViewBag.PendingCount, @ViewBag.TeamInputRequestedCount, @ViewBag.TeamInputRecievedCount, @ViewBag.OverdueCount, @ViewBag.OverdueMorethanFourteenDaysCount);
+
+        $('.dt-button').each(function () {
+            $(this).removeClass('dt-button');
+            //$(this).addClass('btn btn-primary-custum');
+        });
+
+        //var btn = $('.dt-button:eq(4)');
+        //var filter_content_project_type = $('<div class="filter-content filter-project-type"></div>').appendTo(('.dt-buttons'));
+        //filter_content_project_type.css({ 'left': btn.position().left, 'width': '130px', 'height': '75px' });
+        //$('<label><input type="checkbox" class="project_type_checkbox" name="chkGroupBy" id="chkGroupByProjects" value="projects" checked /> Projects</label><br />').appendTo(filter_content_project_type);
+        //$('<label><input type="checkbox" class="project_type_checkbox" name="chkGroupBy" id="chkGroupByDocType" value="doctype" checked /> Document Type</label><br />').appendTo(filter_content_project_type);
+
+        //table.draw();
+        $('.project_type_checkbox').change(function () {
+            var groupBy = 0;
+            if ($("#chkGroupByProjects").is(':checked') && $("#chkGroupByDocType").is(':checked')) {
+                groupBy = 0;
+            }
+            else if ($("#chkGroupByProjects").is(':checked')) {
+                groupBy = 1;
+            }
+            else if ($("#chkGroupByDocType").is(':checked')) {
+                groupBy = 2;
+            }
+
+            $.ajax({
+                url: '@Url.Action("GetGrid", "ActionCenter")?GroupBy=' + groupBy,
+                dataType: "html",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                //data: { statusID: 1 },
+                beforeSend: function () {
+                    $('#pleaseWaitDialog').modal('show');
+                },
+                complete: function () {
+                    $('#pleaseWaitDialog').modal('hide');
+                },
+                async: true,
+                cache: false,
+                success: function (data) {
+                    $('#tableDocs tbody').empty();
+                    $('#tableDocs tbody').html(data);
+                    //table.draw();
+                },
+                error: function (xhr) {
+
+                }
+            });
+        });
+    });
+    $('.comments').each(function () {
+        $(this).readmore({
+            moreLink: '<a href="#">More</a>',
+            collapsedHeight: 60,
+            afterToggle: function (trigger, element, expanded) {
+                if (!expanded) { // The "Close" link was clicked
+                    $('html, body').animate({ scrollTop: element.offset().top - 100 }, { duration: 100 });
+                }
+            }
+        });
+    });
+</script>
+

@@ -1,0 +1,20 @@
+{
+  "grid-column.select": "Select",
+  "grid-column.lineNumber": "Line",
+  "grid-column.isActive": "Active",
+  "grid-column.level": "Level",
+  "grid-column.roles": "Role",
+  "grid-column.action": "Action",
+  "grid-column.delegate": "Delegate to / Replace with",
+  "grid-column.applyToRecords": "Apply to records",
+  "grid-column.activatedDate": "Activated",
+  "grid-column.endDate": "End",
+  "grid-column.deactivatedDate": "Deactivated",
+  "grid-column.notes": "Notes",
+  "msg.delegationSaved": "Delegation Saved Successfully",
+  "msg.delegationUpdated": "Delegation Updated Successfully",
+  "msg.delegationActivated": "Delegation Activated",
+  "msg.delegationDeactivated": "Delegation Deactivated",
+  "msg.delegationDeleted": "Delegation Deleted",
+  "msg.errorDeletingDelegation": "Error Deleting Delegation"
+}

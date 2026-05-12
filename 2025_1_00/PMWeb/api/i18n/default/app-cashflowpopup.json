@@ -1,0 +1,12 @@
+{
+  "label.LinkedLine": "Linked Line",
+  "label.Amount": "Amount",
+  "label.Quantity": "Quantity",
+  "label.FromPeriod": "From Period",
+  "label.ToPeriod": "To Period",
+  "label.Curve": "Curve",
+  "label.CostCode": "Cost Code",
+  "label.Description": "Description",
+  "label.UOM": "UOM",
+  "label.field": "Field"
+}

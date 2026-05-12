@@ -1,0 +1,23 @@
+{
+    "PanelText": "Click the Add button or select a rule in the tree to edit it",
+    "Level": "Level",
+    "Name": "Name*",
+    "RecordType": "Record Type*",
+    "Currency": "Currency",
+    "EvaluationOrder": "Evaluation Order",
+    "DefineConditionalStatement": "Define Conditional Statement",
+    "grid-column.select": "Select",
+    "grid-column.lineNumber": "Line",
+    "grid-column.Parentheses": "( )",
+    "grid-column.AndOr": "And/Or",
+    "grid-column.Field": "Field",
+    "grid-column.Operator": "Operator",
+    "grid-column.DynamicValue": "Dynamic Value",
+    "grid-column.StaticValue": "Static Value",
+    "DenyAccessTo": "Deny Access To",
+    "grid-column.Apply": "Apply",
+    "grid-column.Group": "Group",
+    "grid-column.Description": "Description",
+    "grid-column.IsGuest": "Is Guest",
+    "ErrorText": "Rule name must be unique by Record Type and Entity."
+}

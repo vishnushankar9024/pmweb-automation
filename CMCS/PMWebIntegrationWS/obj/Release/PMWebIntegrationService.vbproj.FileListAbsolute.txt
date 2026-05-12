@@ -1,0 +1,11 @@
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\bin\PMWebIntegrationService.dll.config
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\bin\PMWebIntegrationService.dll
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\bin\PMWebIntegrationService.pdb
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\bin\PMWebIntegrationService.xml
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\obj\Release\PMWebIntegrationService.Resources.resources
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\obj\Release\PMWebIntegrationService.vbproj.GenerateResource.cache
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\obj\Release\PMWebIntegrationService.vbproj.CoreCompileInputs.cache
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\obj\Release\PMWebIntegrationService.dll
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\obj\Release\PMWebIntegrationService.xml
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\obj\Release\PMWebIntegrationService.pdb
+C:\Users\waeld.DEVAD0\Desktop\Team\Develop\PMWebDev\8.2.00\PMWebIntegrationService\obj\Release\PMWebIntegrationService.vbproj.AssemblyReference.cache

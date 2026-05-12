@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetFileForImport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFileForImportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFileForImportResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFileForImportWithDelimeter">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Delimeter" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFileForImportWithDelimeterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFileForImportWithDelimeterResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFileSize">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFileSizeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetFileSizeResult" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dt">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestFileResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestFileDataset">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dts">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestFileDatasetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestFileDatasetResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewCompanyTable">
+        <s:complexType />
+      </s:element>
+      <s:element name="NewCompanyTableResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NewCompanyTableResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dts">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FilePath" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="OverWriteFile" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenerateFileResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExcelFileSheet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SheetName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetExcelFileSheetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExcelFileSheetResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgcxmlSendRFIToPMWeb">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XMLMessage" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgcxmlSendRFIToPMWebResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AgcxmlSendRFIToPMWebResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgcxmlSendRFIFromPMWeb">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProjectNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="RFINumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgcxmlSendRFIFromPMWebResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AgcxmlSendRFIFromPMWebResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetFileForImportSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFileForImport" />
+  </wsdl:message>
+  <wsdl:message name="GetFileForImportSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFileForImportResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFileForImportWithDelimeterSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFileForImportWithDelimeter" />
+  </wsdl:message>
+  <wsdl:message name="GetFileForImportWithDelimeterSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFileForImportWithDelimeterResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFileSizeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFileSize" />
+  </wsdl:message>
+  <wsdl:message name="GetFileSizeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFileSizeResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestFileSoapIn">
+    <wsdl:part name="parameters" element="tns:TestFile" />
+  </wsdl:message>
+  <wsdl:message name="TestFileSoapOut">
+    <wsdl:part name="parameters" element="tns:TestFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="TestFileDatasetSoapIn">
+    <wsdl:part name="parameters" element="tns:TestFileDataset" />
+  </wsdl:message>
+  <wsdl:message name="TestFileDatasetSoapOut">
+    <wsdl:part name="parameters" element="tns:TestFileDatasetResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewCompanyTableSoapIn">
+    <wsdl:part name="parameters" element="tns:NewCompanyTable" />
+  </wsdl:message>
+  <wsdl:message name="NewCompanyTableSoapOut">
+    <wsdl:part name="parameters" element="tns:NewCompanyTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenerateFileSoapIn">
+    <wsdl:part name="parameters" element="tns:GenerateFile" />
+  </wsdl:message>
+  <wsdl:message name="GenerateFileSoapOut">
+    <wsdl:part name="parameters" element="tns:GenerateFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExcelFileSheetSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExcelFileSheet" />
+  </wsdl:message>
+  <wsdl:message name="GetExcelFileSheetSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExcelFileSheetResponse" />
+  </wsdl:message>
+  <wsdl:message name="AgcxmlSendRFIToPMWebSoapIn">
+    <wsdl:part name="parameters" element="tns:AgcxmlSendRFIToPMWeb" />
+  </wsdl:message>
+  <wsdl:message name="AgcxmlSendRFIToPMWebSoapOut">
+    <wsdl:part name="parameters" element="tns:AgcxmlSendRFIToPMWebResponse" />
+  </wsdl:message>
+  <wsdl:message name="AgcxmlSendRFIFromPMWebSoapIn">
+    <wsdl:part name="parameters" element="tns:AgcxmlSendRFIFromPMWeb" />
+  </wsdl:message>
+  <wsdl:message name="AgcxmlSendRFIFromPMWebSoapOut">
+    <wsdl:part name="parameters" element="tns:AgcxmlSendRFIFromPMWebResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IntegrationSoap">
+    <wsdl:operation name="GetFileForImport">
+      <wsdl:input message="tns:GetFileForImportSoapIn" />
+      <wsdl:output message="tns:GetFileForImportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFileForImportWithDelimeter">
+      <wsdl:input message="tns:GetFileForImportWithDelimeterSoapIn" />
+      <wsdl:output message="tns:GetFileForImportWithDelimeterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFileSize">
+      <wsdl:input message="tns:GetFileSizeSoapIn" />
+      <wsdl:output message="tns:GetFileSizeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TestFile">
+      <wsdl:input message="tns:TestFileSoapIn" />
+      <wsdl:output message="tns:TestFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TestFileDataset">
+      <wsdl:input message="tns:TestFileDatasetSoapIn" />
+      <wsdl:output message="tns:TestFileDatasetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewCompanyTable">
+      <wsdl:input message="tns:NewCompanyTableSoapIn" />
+      <wsdl:output message="tns:NewCompanyTableSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateFile">
+      <wsdl:input message="tns:GenerateFileSoapIn" />
+      <wsdl:output message="tns:GenerateFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExcelFileSheet">
+      <wsdl:input message="tns:GetExcelFileSheetSoapIn" />
+      <wsdl:output message="tns:GetExcelFileSheetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AgcxmlSendRFIToPMWeb">
+      <wsdl:input message="tns:AgcxmlSendRFIToPMWebSoapIn" />
+      <wsdl:output message="tns:AgcxmlSendRFIToPMWebSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AgcxmlSendRFIFromPMWeb">
+      <wsdl:input message="tns:AgcxmlSendRFIFromPMWebSoapIn" />
+      <wsdl:output message="tns:AgcxmlSendRFIFromPMWebSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IntegrationSoap" type="tns:IntegrationSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetFileForImport">
+      <soap:operation soapAction="http://tempuri.org/GetFileForImport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFileForImportWithDelimeter">
+      <soap:operation soapAction="http://tempuri.org/GetFileForImportWithDelimeter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFileSize">
+      <soap:operation soapAction="http://tempuri.org/GetFileSize" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestFile">
+      <soap:operation soapAction="http://tempuri.org/TestFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestFileDataset">
+      <soap:operation soapAction="http://tempuri.org/TestFileDataset" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewCompanyTable">
+      <soap:operation soapAction="http://tempuri.org/NewCompanyTable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateFile">
+      <soap:operation soapAction="http://tempuri.org/GenerateFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExcelFileSheet">
+      <soap:operation soapAction="http://tempuri.org/GetExcelFileSheet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgcxmlSendRFIToPMWeb">
+      <soap:operation soapAction="http://tempuri.org/AgcxmlSendRFIToPMWeb" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgcxmlSendRFIFromPMWeb">
+      <soap:operation soapAction="http://tempuri.org/AgcxmlSendRFIFromPMWeb" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IntegrationSoap12" type="tns:IntegrationSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetFileForImport">
+      <soap12:operation soapAction="http://tempuri.org/GetFileForImport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFileForImportWithDelimeter">
+      <soap12:operation soapAction="http://tempuri.org/GetFileForImportWithDelimeter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFileSize">
+      <soap12:operation soapAction="http://tempuri.org/GetFileSize" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestFile">
+      <soap12:operation soapAction="http://tempuri.org/TestFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestFileDataset">
+      <soap12:operation soapAction="http://tempuri.org/TestFileDataset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewCompanyTable">
+      <soap12:operation soapAction="http://tempuri.org/NewCompanyTable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateFile">
+      <soap12:operation soapAction="http://tempuri.org/GenerateFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExcelFileSheet">
+      <soap12:operation soapAction="http://tempuri.org/GetExcelFileSheet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgcxmlSendRFIToPMWeb">
+      <soap12:operation soapAction="http://tempuri.org/AgcxmlSendRFIToPMWeb" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgcxmlSendRFIFromPMWeb">
+      <soap12:operation soapAction="http://tempuri.org/AgcxmlSendRFIFromPMWeb" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Integration">
+    <wsdl:port name="IntegrationSoap" binding="tns:IntegrationSoap">
+      <soap:address location="http://localhost:33213/Integration.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IntegrationSoap12" binding="tns:IntegrationSoap12">
+      <soap12:address location="http://localhost:33213/Integration.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

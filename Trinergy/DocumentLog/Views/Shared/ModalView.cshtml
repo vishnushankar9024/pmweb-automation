@@ -1,0 +1,131 @@
+﻿<div id="attachmentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" style="min-width:80%">
+        <!-- Modal content-->
+        <div class="modal-content" style="width:100%;">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+                <h4 class="modal-title">Attachments</h4>
+            </div>
+            <div class="modal-body" style="max-height:400px; overflow:auto;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="pmwebModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" style="min-width:95%; height:750px;">
+        <!-- Modal content-->
+        <div class="modal-content" style="width:100%;">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+                <h4 class="modal-title">&nbsp;</h4>
+                <h4 class="modal-title" style="font-weight:bold;display:none;"></h4>
+                <div id="projectDetails" style="margin-top:10px;display:none;">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <strong>Record #:</strong> <span id="modalRecordNo"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Incoming Reference:</strong> <span id="modalReferenceNo"></span>
+</div>
+                        <div class="col-md-6">
+                            <strong>Subject:</strong> <span id="modalSubject"></span>
+</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="overflow:auto">
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>*@
+        </div>
+
+    </div>
+</div>
+<div id="workflowModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" style="min-width:80%;">
+        <!-- Modal content-->
+        <div class="modal-content" style="width:100%;">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+                <h4 class="modal-title">Workflow</h4>
+            </div>
+            <div class="modal-body" style="max-height:400px; overflow:auto;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="timesheetDeatilsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" style="min-width:80%;">
+        <!-- Modal content-->
+        <div class="modal-content" style="width:100%;">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+                <h4 class="modal-title">Time Sheet Details</h4>
+            </div>
+            <div class="modal-body" style="max-height:400px; overflow:auto;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@if ((bool)ViewBag.IsUserVisited == false)
+{
+<div id="documentLogModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" style="min-width:50%;">
+        <!-- Modal content-->
+        <div class="modal-content" style="width:100%;">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+                <h4 class="modal-title text-center" style="font-size:24px;">Document Log (new version)</h4>
+            </div>
+            <div class="modal-body" style="max-height:400px; overflow:auto;font-size:20px;">
+                Dear @ViewBag.UserName,<br /><br />
+                We are happy to announce the new release of the Document Log version 2.0 with additional features.<br /><br />
+                Kindly click <a href="@Url.Action("GetUserGuide", "Task", new { folderName = "Document Log" })" target="_blank" class="k-button btn btn-primary badge-active">Help&nbsp;&nbsp;<i class="fa fa-question-circle" aria-hidden="true"></i></a> to view the new features and capabilities of the new Document Log.<br /><br />
+                Thank you<br />
+                PMWeb Team
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="actionCenterModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" style="min-width:50%;">
+        <!-- Modal content-->
+        <div class="modal-content" style="width:100%;">
+            <div class="modal-header">
+                <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+                <h4 class="modal-title text-center" style="font-size:24px;">Action Center (new version)</h4>
+            </div>
+            <div class="modal-body" style="max-height:400px; overflow:auto;font-size:20px;">
+                Dear @ViewBag.UserName,<br /><br />
+                We are happy to announce the new release of the Action Center version 2.0 with additional features.<br /><br />
+                Kindly click <a href="@Url.Action("GetUserGuide", "Task", new { folderName = "Action Center" })" target="_blank" class="k-button btn btn-primary badge-active">Help&nbsp;&nbsp;<i class="fa fa-question-circle" aria-hidden="true"></i></a> to view the new features and capabilities of the new Action Center.<br /><br />
+                Thank you<br />
+                PMWeb Team
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pyro">
+    <div class="before"></div>
+    <div class="after"></div>
+</div>
+}

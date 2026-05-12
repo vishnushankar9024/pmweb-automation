@@ -1,0 +1,502 @@
+﻿@model Trinergy.Model.Correspondence
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>INCOMING / OUTGOING CORRESPONDENCE</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Scripts/tree/themes/proton/style.css" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <style>
+        html, body {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .correspondence-container {
+            border: 2px solid #000;
+            margin: 30px;
+        }
+
+            .correspondence-container h1 {
+                background-color: #0079c1;
+                border-bottom: 2px solid #000;
+                padding: 0px;
+                margin: 0px;
+                font-size: 20px;
+                text-align: center;
+                color: #fff;
+                font-weight: bold;
+                padding: 10px;
+            }
+
+        .form-group label span {
+            color: #ff0000;
+        }
+
+        .form {
+            padding: 20px;
+            margin: 0px;
+        }
+
+        .splitter {
+            border-top: 2px solid #000;
+        }
+
+        label {
+            font-weight: normal !important;
+        }
+
+        .dropdown-menu > li > a {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: 400;
+            line-height: 1.42857143;
+            color: #333;
+            white-space: nowrap;
+        }
+    </style>
+    <script type="text/javascript">
+        var CorrespondenceData = @Html.Raw(Json.Encode(Model));
+        console.log(CorrespondenceData);
+        function BindPrograms()
+        {
+            var sel = $('#ddlProgram');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+            var Obj = CorrespondenceData.Programs;
+            $.each(Obj, function(i){
+                sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+            });
+        }
+
+        function BindProject(pid)
+        {
+            var sel = $('#ddlProjectName');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+            if(pid != 0)
+            {
+                var Obj = $.grep(CorrespondenceData.Projects, function(p){ return p.ProgramId == pid});
+                $.each(Obj, function(i){
+                    sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+                });
+            }
+            sel.change();
+        }
+
+        function BindProjectNo(pid)
+        {
+            var sel = $('#txtProjectNo');
+            sel.val('');
+            var Project = $.grep(CorrespondenceData.Projects, function(p){ return p.Id == pid})[0];
+            if(Project)
+            {
+                sel.val(Project.ProjectNumber);
+            }
+        }
+
+        function BindIssueMethods(pid)
+        {
+            var sel = $('#ddlIssue');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+            if(pid != 0){
+                var Obj = CorrespondenceData.IssueMethods;
+                $.each(Obj, function(i){
+                    sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+                });
+            }
+            sel.change();
+        }
+
+        function BindPhase(pid)
+        {
+            var sel = $('#ddlPhase');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+            if(pid != 0)
+            {
+                var Obj = $.grep(CorrespondenceData.Phase, function(p){ return p.RefId == pid});
+                $.each(Obj, function(i){
+                    sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+                });
+            }
+            sel.change();
+        }
+
+        function BindStage(pid)
+        {
+            var sel = $('#ddlStage');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+            if(pid != 0){
+                var Obj = CorrespondenceData.Stage;
+                $.each(Obj, function(i){
+                    sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+                });
+            }
+            sel.change();
+        }
+
+        function BindContacts()
+        {
+            var sel = $('#ddlFrom');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+
+            var sel1 = $('#ddlTo');
+            sel1.empty();
+            sel1.append('<option value="0">Select</option>');
+
+            var Obj = CorrespondenceData.Contacts;
+            $.each(Obj, function(i){
+                sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+                sel1.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+            });
+        }
+
+        function BindCategory(pid)
+        {
+            $("#discipline").hide();
+            var sel = $('#ddlCategory');
+            sel.val('');
+            //sel.append('<option value="0">Select</option>');
+            if(pid != 0)
+            {
+                var issue = $.grep(CorrespondenceData.IssueMethods, function(p){ return p.Id == pid})[0];
+                var Obj = $.grep(CorrespondenceData.Category, function(p){ return p.Id == issue.RefId})[0];
+                sel.val(Obj.Name);
+
+                if(Obj.Id == 2)
+                {
+                    $("#discipline").show();
+                }
+            }
+        }
+
+        function BindSubCategory(pid)
+        {
+            var sel = $('#ddlSubCategory');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+            if(pid != 0){
+                var Obj = $.grep(CorrespondenceData.SubCategory, function(p){ return p.RefId == pid});
+                $.each(Obj, function(i){
+                    sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+                });
+            }
+            sel.change();
+        }
+
+        function BindDocType(pid)
+        {
+            var sel = $('#ddlDocType');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+            if(pid != 0){
+                var Obj = $.grep(CorrespondenceData.DocumentType, function(p){ return p.RefId == pid});
+                $.each(Obj, function(i){
+                    sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+                });
+            }
+            sel.change();
+        }
+
+        function BindDiscipline()
+        {
+            var sel = $('#ddlDiscipline');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+            var Obj = CorrespondenceData.Discipline;
+            $.each(Obj, function(i){
+                sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+            });
+            sel.change();
+        }
+
+        function BindSubDiscipline(pid)
+        {
+            var sel = $('#ddlSubDiscipline');
+            sel.empty();
+            //sel.append('<option value="0">Select</option>');
+            if(pid != 0){
+                var Obj = $.grep(CorrespondenceData.SubDiscipline, function(p){ return p.RefId == pid});
+                $.each(Obj, function(i){
+                    sel.append('<option value="' +  Obj[i].Id +'">' + Obj[i].Name + '</option>');
+                });
+            }
+        }
+
+        $(document).ready(function(){
+            BindPrograms();
+            BindContacts();
+            $('#ddlProgram').change(function(){
+                BindProject($(this).val());
+                $('.selectpicker').selectpicker('refresh');
+            });
+            $('#ddlProjectName').change(function(){
+                BindProjectNo($(this).val());
+                BindIssueMethods($(this).val());
+                $('.selectpicker').selectpicker('refresh');
+            });
+            $('#ddlIssue').change(function() {
+                BindPhase($(this).val());
+                BindCategory($(this).val());
+                $('.selectpicker').selectpicker('refresh');
+            });
+            $('#ddlPhase').change(function() {
+                BindStage($(this).val());
+                BindSubCategory($(this).val());
+                $('.selectpicker').selectpicker('refresh');
+            });
+            $('#ddlSubCategory').change(function() {
+                BindDocType($(this).val());
+                $('.selectpicker').selectpicker('refresh');
+            });
+            BindDiscipline();
+            $('#ddlDiscipline').change(function() {
+                BindSubDiscipline($(this).val());
+                $('.selectpicker').selectpicker('refresh');
+            });
+            $('.selectpicker').selectpicker();
+        });
+    </script>
+</head>
+<body>
+    <div class="correspondence-container">
+        <h1>INCOMING / OUTGOING CORRESPONDENCE</h1>
+        <div class="row form">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlProgram">Campus / Program <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlProgram" data-live-search="true" title="Choose one of the following..."></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlLocation">Building / Location</label>
+                            <small>(if applicable)</small>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlLocation" data-live-search="true" title="Choose one of the following..."></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlProjectName">Project Name <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlProjectName" data-live-search="true" title="Choose one of the following..."></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="txtProjectNo">Project No.</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtProjectNo" disabled="disabled" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form splitter">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlIssue">Method of Issue <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlIssue" data-live-search="true" title="Choose one of the following..."></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlPhase">Phase <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlPhase" data-live-search="true"  title="Choose one of the following..."></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlGateway">Gateway <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <select class="form-control selectpicker" id="ddlGateway" data-live-search="true"  title="Choose one of the following..."></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <label for="ddlStage">Stage <span>*</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select class="form-control selectpicker" id="ddlStage" data-live-search="true"  title="Choose one of the following..."></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlDate">Date <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlDate" data-live-search="true"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form splitter">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlFrom">From <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlFrom" data-live-search="true"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlFrom">To <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlTo" data-live-search="true"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlDocumentTitle">Documnent Title <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="ddlDocumentTitle" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlOrigRef">Originator Refernce No. <small>(If applicable)</small></label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="ddlOrigRef" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlCategory">Category <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <input class="form-control" id="ddlCategory" disabled="disabled" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlSubCategory">Sub Category <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlSubCategory" data-live-search="true"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlDocType">Document Type <span>*</span></label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control selectpicker" id="ddlDocType" data-live-search="true"></select>
+                        </div>
+                    </div>
+                </div>
+                <div id="discipline" style="display:none;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="ddlDiscipline">Discipline <span>*</span></label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-control selectpicker" id="ddlDiscipline" data-live-search="true"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="ddlSubDiscipline">Sub Discipline <span>*</span></label>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-control selectpicker" id="ddlSubDiscipline" data-live-search="true"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlFile">Correnspondence File</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="file" id="ddlFile" class="form-control-file" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form splitter">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ddlFrom">HFD Document Ref No.</label>
+                        </div>
+                        <div class="col-md-9">
+                            <span id="HFDRefNo"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Trinergy.Model.ActiveWFDocumentModel>
+@foreach (var document in Model)
+            {
+    <tr>
+        <td style="width:100%">@document.Project</td>
+        <td style="width:100%">@document.RecordType</td>
+        <td style="width:100%">@document.FileNames</td>
+        <td>@document.RecordNumber</td>
+        <td>@document.Reference</td>
+        <td class="text-nowrap">@document.IssueDate.ToString("dd-MMM-yy")</td>
+        <td class="text-nowrap">@document.ReceivedDate.ToString("dd-MMM-yy")</td>
+        <td class="text-nowrap">@((document.IssueDate.AddDays(String.IsNullOrEmpty(document.ReviewDays) == true ? 0 : Convert.ToDouble(document.ReviewDays))).ToString("dd-MMM-yy"))</td>
+        <td><a href="javascript:void(0)" onclick="GetWorkflowStatus(@document.DocumentId, this)">@document.Description</a></td>
+        @{
+            string cssClasstrd;
+            if (!string.IsNullOrEmpty(document.CalcDueDate))
+            {
+                if ((document.DueDate - DateTime.Today).TotalDays < 0)
+                {
+                    cssClasstrd = "tdRed";
+                }
+                else if ((document.DueDate - DateTime.Today).TotalDays >= 0 && (document.DueDate - DateTime.Today).TotalDays <= 5)
+                {
+                    cssClasstrd = "tdYellow";
+                }
+                else
+                {
+                    cssClasstrd = "tdGreen";
+                }
+
+            }
+            else
+            {
+                cssClasstrd = "tdTransparent";
+            }
+        }
+        <td class="@cssClasstrd text-nowrap">
+            @if (!string.IsNullOrEmpty(document.CalcDueDate))
+            {
+
+                @(DateTime.Parse(document.CalcDueDate).ToString("dd-MMM-yy"));
+
+            }
+        </td>
+
+        <td>@document.RemainingDays</td>
+        <td class="text-nowrap"><a href="javascript:void(0)" onclick="GetAttachments(@document.DocumentId, this)">Attachments</a></td>
+        <td class="text-nowrap"><a class="actionhead" href="@document.Recordurl" target="_top">Action</a></td>
+        <td>
+            @if (document.FormTypeId == "66")
+            {
+                <a href="~/WebForms/ReportViewer.aspx?pid=@document.ProjectId&fid=@document.FormId&tid=@document.FormTypeId" target="_blank">Download</a>
+            }
+        </td>
+        <td><div class="comments"><span class="more">@Html.Raw(document.WorkflowComments)</span></div></td>
+    </tr>
+            }

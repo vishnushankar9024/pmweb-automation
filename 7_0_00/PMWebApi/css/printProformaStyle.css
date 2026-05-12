@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+#printProformaDiv, #printProformaDiv label, #printProformaDiv td, #printProformaDiv th {
+    font-family: 'Roboto', sans-serif;
+}
+.print_img_header{
+    width: 100%;
+    max-width: 150px;
+}
+.margin_b{
+    margin-bottom: 0;
+}
+.print_td{
+    padding: 5px 15px 5px 0;
+}
+.print_table3 tr th{
+    font-size: 13px;
+    padding: 2px 2px 2px 5px;
+    background: #eee;
+}
+.td_mt{
+    margin-top: 20px;
+}
+.print_table2{
+    margin-top: 20px;
+}
+.print_table3{
+    border: 1px solid #ccc;
+    border-spacing: 0;
+}
+.print_table3 tr td{
+    padding-left: 5px;
+    font-size: 13px;
+}

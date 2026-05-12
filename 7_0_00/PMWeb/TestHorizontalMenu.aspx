@@ -1,0 +1,23 @@
+﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="TestHorizontalMenu.aspx.vb" Inherits="Website.TestHorizontalMenu" %>
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
+<%@ Register TagPrefix="telerik" Namespace="Telerik.Charting" Assembly="Telerik.Web.UI" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title></title>
+    <%--<link href="CSS/PMCss.css" rel="stylesheet" type="text/css" />--%>
+    
+
+</head>
+<body>
+    <form id="form1" runat="server">
+     <asp:ScriptManager ID="PMScriptManager" runat="server"></asp:ScriptManager>
+     
+
+        
+    
+    </form>
+    </body>
+</html>

@@ -1,0 +1,206 @@
+﻿.ActivityBoardLV .ABListView .rtlA, .ActivityBoardLV .ABListView .rtlR {
+    background-color: white;
+    height: 35px;
+    color: #666666;
+    vertical-align: inherit;
+}
+
+.ActivityBoardLV td.rtlCF {
+    font-size: 14px;
+}
+
+.ActivityBoardLV .ABListView {
+    height: 100%;
+    /*margin-bottom: 40px;
+            margin-top: 24px;*/
+}
+
+    .ActivityBoardLV .ABListView .rtlHeader {
+        background-color: white !important;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #666666 !important;
+        background-image: none !important;
+        height: 40px;
+    }
+
+.ActivityBoardLV .RadTreeList .rtlDataDiv {
+    height: calc(var(--Content-height) - 50px - 24px - 40px) !important;
+}
+
+.ActivityBoardLV .RadTreeList, .ActivityBoardLV .RadTreeList .rtlVBorders .rtlR td, .ActivityBoardLV .RadTreeList .rtlVBorders .rtlA td,
+.ActivityBoardLV .RadTreeList .rtlVBorders .rtlREdit td, .ActivityBoardLV .RadTreeList .rtlVBorders .rtlRFooter td, .ActivityBoardLV .RadTreeList .rtlVBorders .rtlHeader th {
+    border: 0;
+}
+
+.ActivityBoardLV .initialsBox {
+    border: 1px solid #666666;
+    width: 28px;
+    height: 23px;
+    text-align: center;
+    padding-top: 5px;
+    display: inline-block;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.ActivityBoardLV .imgUserBox {
+    border-radius: 50%;
+}
+
+.ActivityBoardLV .ShowContextMenuButton .Icon {
+    background-image: url(../CSS/Images/ResponsiveIcons/24Enabled.png) !important;
+    background-repeat: no-repeat;
+    background-position: -1920px 0px !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin-left: 8px !important;
+    display: inline-block;
+}
+
+.ActivityBoardLV .newColumnImg .Icon {
+    background: url(Images/ResponsiveIcons/16Enabled.png) no-repeat;
+    display: block;
+    background-position: -414px 0 !important;
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+}
+
+.ActivityBoardLV .ShowContextMenuButton {
+    opacity: 0;
+}
+
+    .ActivityBoardLV .ShowContextMenuButton:hover {
+        opacity: 1 !important;
+    }
+
+@media screen and (min-width:320px) and (max-width:843px) {
+    .ActivityBoardLV .ShowContextMenuButton {
+        opacity: 1 !important;
+    }
+}
+
+.ActivityBoardLV .lblTaskName {
+    vertical-align: super;
+    font-size: 14px !important;
+}
+
+.ActivityBoardLV .LVDueDate {
+    text-decoration: none;
+}
+
+.ActivityBoardLV .RadTreeList a, .ActivityBoardLV .RadTreeList a:visited, .ActivityBoardLV .RadTreeList a:active {
+    color: #666666;
+}
+
+.ActivityBoardLV .RadTreeList_Default .rtlRSel {
+    background: #E4E4E4 !important;
+}
+
+.ActivityBoardLV .RadTreeList_Default .rtlCollapse, .ActivityBoardLV .RadTreeList_Default .rtlExpand {
+    margin-top: 4px;
+}
+
+.ActivityBoardLV .RadTreeList div.rtlHeader {
+    border: 0;
+}
+
+.ActivityBoardLV .chkDoneImg .Icon {
+    background-image: url('Images/ResponsiveIcons/ActivityBoardIcons/16x16 Enabled.png') !important;
+    background-repeat: no-repeat;
+    display: inline-block;
+    background-position: -2080px 0 !important;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    float: left;
+}
+
+.TreeListDraggedRows_Default tr.rtlA,
+.TreeListDraggedRows_Default tr.rtlR {
+    background-color: white !important;
+    color: #666666 !important;
+}
+
+.TreeListDraggedRows_Default .rtlA td,
+.TreeListDraggedRows_Default .rtlR td {
+    border: 0 !important;
+}
+
+.TreeListDraggedRows_Default tr.rtlA .FullNameDiv,
+.TreeListDraggedRows_Default tr.rtlR .FullNameDiv {
+    margin-top: 0px !important;
+}
+
+.TreeListDraggedRows_Default tr.rtlA .userIconBox,
+.TreeListDraggedRows_Default tr.rtlR .userIconBox {
+    display: none !important;
+}
+
+.ActivityBoardLV .assignedToImg .Icon {
+    background: url(Images/ResponsiveIcons/24Enabled.png) no-repeat;
+    display: block;
+    background-position: -1872px 0 !important;
+    width: 24px;
+    height: 24px;
+}
+
+.ActivityBoardLV .FilterButton {
+    float: right;
+    margin-right: 24px;
+    border: 1px solid white;
+    border-radius: 50%;
+    width: 22px;
+    height: 21px;
+    text-align: center;
+}
+
+.ActivityBoardLV .FilterButtonSel {
+    border: 1px solid #666666 !important;
+}
+
+.ActivityBoardLV .FilterButton .Icon {
+    background-image: url(Images/ResponsiveIcons/16Enabled.png) !important;
+    background-repeat: no-repeat;
+    background-position: -1632px 0px !important;
+    display: inline-block !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-top: 2px;
+}
+
+.ActivityBoardLV .deleteImg .Icon {
+    background: url(Images/ResponsiveIcons/24Enabled.png) no-repeat;
+    display: block;
+    background-position: -768px 0px !important;
+    width: 24px;
+    height: 24px;
+}
+
+.ActivityBoardLV a.lnkButtonBar.ToolbarMarkUndone {
+    background-color: #999999;
+    color: white;
+    border-color: #999999;
+}
+
+.ActivityBoardLV .rtbItemClicked .ToolbarMarkUndone .rtbIn {
+    color: white;
+}
+
+.ActivityBoardLV .RadToolBar .lnkButtonBar .rtbIn {
+    padding: 0;
+}
+
+.ActivityBoardLV .DatePickerNoInput24 .rcCalPopup {
+    background: url(Images/ResponsiveIcons/24Enabled.png) no-repeat !important;
+    display: block;
+    background-position: -864px 0 !important;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+}
+
+.ActivityBoardLV .DatePickerNoInput24 .rcInputCell {
+    display: none;
+}

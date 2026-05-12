@@ -1,0 +1,271 @@
+﻿@model Trinergy.Wrapper.AttachmentOutput
+@{
+    Layout = null;
+    Trinergy.Wrapper.Tree tree = new Trinergy.Wrapper.Tree();
+    int treeCount = 0;
+    var document = Model.Document;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Attachments</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Scripts/tree/themes/proton/style.css" />
+    <style>
+        body {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 12px;
+            color: black;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        #emailContainer, #emailContainer th, #emailContainer td {
+            border: 1px solid black;
+        }
+
+            #emailContainer th {
+                background-color: #046399;
+                color: #fff;
+            }
+
+        ul.css-treeview {
+            /*margin: 0px 0px 0px 20px;*/
+            list-style: none;
+            line-height: 2em;
+            font-family: Arial;
+        }
+
+            ul.css-treeview li {
+                font-size: 16px;
+                position: relative;
+            }
+
+                ul.css-treeview li:before {
+                    position: absolute;
+                    left: -15px;
+                    top: 0px;
+                    content: '';
+                    display: block;
+                    border-left: 1px solid #ccc;
+                    height: 1em;
+                    border-bottom: 1px solid #ccc;
+                    width: 10px;
+                }
+
+                ul.css-treeview li:after {
+                    position: absolute;
+                    left: -15px;
+                    bottom: -7px;
+                    content: '';
+                    display: block;
+                    border-left: 1px solid #ccc;
+                    height: 100%;
+                }
+
+                ul.css-treeview li.root {
+                    margin: 0px 0px 0px -20px;
+                }
+
+                    ul.css-treeview li.root:before {
+                        display: none;
+                    }
+
+                    ul.css-treeview li.root:after {
+                        display: none;
+                    }
+
+                ul.css-treeview li:last-child:after {
+                    display: none;
+                }
+
+        .subReportHeader {
+            background-color: cadetblue !important;
+            color: #ffffff;
+        }
+    </style>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/tree/jstree.min.js"></script>
+</head>
+<body>
+    <div style="width:80%; margin-left:auto;margin-right:auto; margin-top:5px;">
+        <div class="col-md-8"><h4>PMWeb Report - Submitted On @document.FormDate<br />@document.ProjectName</h4></div>
+        <div style="float:right"><img src="~/Images/HFD_302.png" class="img-responsive" /></div>
+        <table class="table table-bordered table-striped grid dataTable" id="emailContainer">
+            <thead>
+                <tr class="subReportHeader">
+                    <th style="text-align:center;">Incoming Reference</th>
+                    <th style="text-align:center;">Date</th>
+                    <th style="text-align:center;">Subject</th>
+                    <th style="text-align:center;">From</th>
+                    <th style="text-align:center;">To</th>
+                    <th style="text-align:center;">Status</th>
+                    <th style="text-align:center;">Pending With</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@document.Reference</td>
+                    <td>@document.FormDate</td>
+                    <td><a href="@document.RecURL" target="_blank">@document.Subject</a></td>
+                    <td>@document.From</td>
+                    <td>@document.To</td>
+                    <td style="text-align:center">@document.DocStatus</td>
+                    <td>@document.PendingUser</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="accordion">
+            @foreach (string folderName in Model.ParentFolders)
+            {
+                var folders = Model.Folders.Where(w => w.FolderType.ToLower() == folderName.ToLower()).ToList();
+                var folder = folders.Where(w => w.FolderName.ToLower() == folderName.ToLower()).FirstOrDefault();
+                int fileCount = 0;
+
+                string treeId = "tree" + treeCount;
+                treeCount++;
+                if (folder != null)
+                {
+                    fileCount = tree.GetFileCountByFolder(Model.Folders, folder.Id);
+                }
+
+                <h3>@folderName (@fileCount)</h3>
+                <div>
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            @if (folders.Any())
+                            {
+                                <input type="button" value="++" title="Expand All" onclick="$('#@treeId').jstree('open_all');">
+                                <input type="button" value="--" title="Collapse All" onclick="$('#@treeId').jstree('close_all');">
+                                <br />
+                                <div style="width:100%;" id="@treeId">
+                                    @if (folder != null)
+                                    {
+                                        @Html.Raw(tree.GetAttachmentTreeNode(folders, folder.ParentId))
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div>No @folderName</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <br /><br />
+        <h4>Workflow</h4>
+        <div>
+            @Html.Action("GetWorkflowStatus", "DocumentLog", new { RecordId = document.DocumentId })
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#accordion").accordion({
+                header: "h3",
+                collapsible: true,
+                autoHeight: false,
+                navigation: true,
+                heightStyle: "content"
+            });
+            @for (treeCount = 0; treeCount < Model.ParentFolders.Count(); treeCount++)
+        {
+            string treeId = "tree" + treeCount;
+                <text>
+            $('#@treeId').jstree({
+                'core': {
+                    'themes': {
+                        'name': 'proton',
+                        'responsive': true
+                    }
+                }
+            });
+            </text>
+            }
+            var Attachment = {
+                FolderId: '',
+                DocId: ''
+            }
+            $(".jstree-action").click(function (e) {
+                Attachment.FolderId = $(this).attr('id');
+                Attachment.DocId = $(this).attr('docId');
+                $("#actionModal").modal('show');
+            });
+
+            $("#btnAttachmentDownload").click(function () {
+                DownloadFolder(Attachment.FolderId, Attachment.DocId);
+            });
+
+            var files = null;
+            $('#AttachmentFile').change(function (e) {
+                files = e.target.files;
+            });
+
+
+            $("#btnAttachmentUpload").click(function () {
+                var formData = new FormData();
+                if (files && files.length > 0) {
+                    for (var i = 0; i < files.length; i++) {
+                        formData.append(files[i].name, files[i]);
+                    }
+
+                    $.ajax({
+                        url: '@Url.Action("MultiUpload", "ContractorActionCenter")?folderId=' + Attachment.FolderId + "&docId=" + Attachment.DocId,
+                        type: "POST", //as we will be posting files and other method POST is used
+                        processData: false, //remember to set processData and ContentType to false, otherwise you may get an error
+                        contentType: false,
+                        data: formData,
+                        success: function (data) {
+                            $("#actionModal").modal('hide');
+                        },
+                        error: function (xhr) {
+                            alert("failed");
+                        },
+                        error: function (err) {
+                            //alert(err.statusText);
+                        }
+                    });
+                }
+            });
+        });
+        function DownloadFolder(FolderId, DocId) {
+            debugger;
+            $.ajax({
+                url: '@Url.Action("DownloadFolder", "DocumentLog")',
+                dataType: "html",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                data: { FolderId: FolderId, DocId: DocId },
+                beforeSend: function () {
+                    $('#pleaseWaitDialog').modal();
+                },
+                complete: function () {
+                    $('#pleaseWaitDialog').modal('hide');
+                },
+                async: true,
+                cache: false,
+                success: function (data) {
+                    debugger;
+                    var json = JSON.parse(data)
+                    var newWin = window.open(json.downloadLink, "_blank");
+                    if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
+                        alert('Disable popup blocker to download.');
+                    }
+                },
+                error: function (xhr) {
+                    //alert("failed");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    The notices below are provided with respect to licensed content incorporated herein:
+    Copyright (c) The Associated General Contractors of America, Inc. 2009-2014. All Rights Reserved. http://www.agc.org and http://www.agcxml.org. Terms of license can be found in LicenseAgreement.pdf included with this download package.
+    Copyright (c) 1997-2014 Open Applications Group, Inc. All Rights Reserved.  http://www.openapplications.org.
+-->
+<ws:definitions name="ChangeOrder" targetNamespace="http://agcxml.org/2/ws" xmlns:tns="http://agcxml.org/2/ws" xmlns:gc="http://agcxml.org/2" xmlns:platform="http://www.openapplications.org/oagis/10" xmlns:ws="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <ws:documentation>
+    Name: ChangeOrder.wsdl
+    Release: 2.0 Alpha 4(pre)
+    Release Date: 2014-Feb-04
+    Full Name: /org_agcxml/2_0/WebServices/WSDL/ChangeOrder.wsdl
+    
+    WSDL for ChangeOrder.  This file contains an interface only and omits implementation specifics.
+    
+    To use, declare an implementation specific WSDL, use &lt;ws:import&gt; to include this WSDL, and add
+    &lt;ws:binding&gt; and &lt;ws:service&gt; elements suitable for your deployment.
+  </ws:documentation>
+
+  <!--
+      WSDL types
+          A simple XML schema that includes each of the noun's BODs plus the generic ConfirmBOD
+  -->
+  <ws:types>
+    <xs:schema targetNamespace="http://agcxml.org/2">
+      <xs:include schemaLocation="../../Model/BODs/AcknowledgeChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the AcknowledgeChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/CancelChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the CancelChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/CancelAcknowledgeChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the CancelAcknowledgeChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/ChangeChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the ChangeChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/ChangeAcknowledgeChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the ChangeAcknowledgeChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/GetChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>The purpose of the GetChangeOrder BOD is to query another business application or module for information about one or more ChangeOrder instances. The response is a ShowChangeOrder BOD.  The Get verb takes several parameters to constrain the data of interest including ChangeOrder identity and subset.</xs:documentation>
+          <xs:documentation>Generally speaking, the Get verb plays the "Read" role in a CRUD data access layer.  Like SQL for a database, the Get verb allows for "selection" and "projection".  That is, data to return can be selected based on identity and values for other fields (the WHERE clause in SQL).  Matching data can be projected onto a specific set of fields of interest (the SELECT clause in SQL) to return.  However, the full expressiveness of SQL is not used.</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/ProcessChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the ProcessChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/NotifyChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the NotifyChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/ShowChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the ShowChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/SyncChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the SyncChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:include schemaLocation="../../Model/BODs/SyncResponseChangeOrder.xsd">
+        <xs:annotation>
+          <xs:documentation>TODO - The purpose of the SyncResponseChangeOrder BOD is ...</xs:documentation>
+        </xs:annotation>
+      </xs:include>
+      <xs:import namespace="http://www.openapplications.org/oagis/10" schemaLocation="../../../../org_openapplications_platform/10_0/Model/Platform/2_0/BODs/ConfirmBOD.xsd"></xs:import>
+    </xs:schema>
+  </ws:types>
+
+  <!--
+      WSDL messages
+          One message for each of the noun's BODs
+  -->
+  <ws:message name="AcknowledgeChangeOrder">
+    <ws:part name="Message" element="gc:AcknowledgeChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="CancelChangeOrder">
+    <ws:part name="Message" element="gc:CancelChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="CancelAcknowledgeChangeOrder">
+    <ws:part name="Message" element="gc:CancelAcknowledgeChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="ChangeChangeOrder">
+    <ws:part name="Message" element="gc:ChangeChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="ChangeAcknowledgeChangeOrder">
+    <ws:part name="Message" element="gc:ChangeAcknowledgeChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="GetChangeOrder">
+    <ws:part name="Message" element="gc:GetChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="ProcessChangeOrder">
+    <ws:part name="Message" element="gc:ProcessChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="NotifyChangeOrder">
+    <ws:part name="Message" element="gc:NotifyChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="ShowChangeOrder">
+    <ws:part name="Message" element="gc:ShowChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="SyncChangeOrder">
+    <ws:part name="Message" element="gc:SyncChangeOrder"></ws:part>
+  </ws:message>
+  <ws:message name="SyncResponseChangeOrder">
+    <ws:part name="Message" element="gc:SyncResponseChangeOrder"></ws:part>
+  </ws:message>
+
+  <!--
+      One WSDL portType for the noun
+          There is one operation for each of the noun's action verb BODs such as Process ChangeOrder.
+          The input message is the BOD.  The output message message is the response BOD such as AcknowledgeChangeOrder.
+          The fault message is the generic ConfirmBOD.
+  -->
+  <ws:portType name="ChangeOrder_PortType">
+    <ws:operation name="CancelChangeOrder">
+      <ws:input message="tns:CancelChangeOrder"></ws:input>
+      <ws:output message="tns:CancelAcknowledgeChangeOrder"></ws:output>
+      <ws:fault message="tns:ConfirmBOD" name="CancelChangeOrderFault"></ws:fault>
+    </ws:operation>
+    <ws:operation name="ChangeChangeOrder">
+      <ws:input message="tns:ChangeChangeOrder"></ws:input>
+      <ws:output message="tns:ChangeAcknowledgeChangeOrder"></ws:output>
+      <ws:fault message="tns:ConfirmBOD" name="ChangeChangeOrderFault"></ws:fault>
+    </ws:operation>
+    <ws:operation name="GetChangeOrder">
+      <ws:input message="tns:GetChangeOrder"></ws:input>
+      <ws:output message="tns:ShowChangeOrder"></ws:output>
+      <ws:fault message="tns:ConfirmBOD" name="GetChangeOrderFault"></ws:fault>
+    </ws:operation>
+    <ws:operation name="ProcessChangeOrder">
+      <ws:input message="tns:ProcessChangeOrder"></ws:input>
+      <ws:output message="tns:AcknowledgeChangeOrder"></ws:output>
+      <ws:fault message="tns:ConfirmBOD" name="ProcessChangeOrderFault"></ws:fault>
+    </ws:operation>
+    <ws:operation name="NotifyChangeOrder">
+      <ws:input message="tns:NotifyChangeOrder"></ws:input>
+      <ws:output message="tns:ConfirmBODChangeOrder"></ws:output>
+      <ws:fault message="tns:ConfirmBOD" name="NotifyChangeOrderFault"></ws:fault>
+    </ws:operation>
+    <ws:operation name="ShowChangeOrder">
+      <ws:input message="tns:ShowChangeOrder"></ws:input>
+      <ws:output message="tns:ConfirmBODChangeOrder"></ws:output>
+      <ws:fault message="tns:ConfirmBOD" name="ShowChangeOrderFault"></ws:fault>
+    </ws:operation>
+    <ws:operation name="SyncChangeOrder">
+      <ws:input message="tns:SyncChangeOrder"></ws:input>
+      <ws:output message="tns:SyncResponseChangeOrder"></ws:output>
+      <ws:fault message="tns:ConfirmBOD" name="SyncChangeOrderFault"></ws:fault>
+    </ws:operation>
+  </ws:portType>
+</ws:definitions>

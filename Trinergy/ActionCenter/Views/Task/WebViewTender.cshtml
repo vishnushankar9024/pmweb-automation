@@ -1,0 +1,614 @@
+﻿@model IEnumerable<Trinergy.Model.DocumentLogModel>
+@{
+    Layout = null;
+    int recordCount = 0;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Tender Documents as of @(DateTime.Now.ToString("MMM dd, yyyy"))</title>
+    <style>
+        .multiselect-selected-text {
+            display: inline-grid;
+            width: 180px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Scripts/tree/themes/proton/style.css" />
+    <style>
+        .attachments {
+            font-size: 12px !important;
+        }
+
+            .attachments .panel-heading {
+                padding: 2px 15px !important;
+            }
+
+                .attachments .panel-heading h4 {
+                    margin-top: 2px;
+                    margin-bottom: 2px;
+                }
+
+            .attachments .col-md-6 {
+                padding: 2px;
+            }
+
+            .attachments ul {
+                padding: 0px;
+                list-style: none;
+            }
+
+            .attachments .panel-body {
+                padding: 5px 5px 5px 15px;
+            }
+
+                .attachments .panel-body .panel-body {
+                    padding-left: 5px;
+                }
+
+            .attachments a {
+                color: blue;
+                text-decoration: underline;
+            }
+    </style>
+    <style class="cp-pen-styles">
+        ul.css-treeview {
+            /*margin: 0px 0px 0px 20px;*/
+            list-style: none;
+            line-height: 2em;
+            font-family: Arial;
+        }
+
+            ul.css-treeview li {
+                font-size: 16px;
+                position: relative;
+            }
+
+                ul.css-treeview li:before {
+                    position: absolute;
+                    left: -15px;
+                    top: 0px;
+                    content: '';
+                    display: block;
+                    border-left: 1px solid #ccc;
+                    height: 1em;
+                    border-bottom: 1px solid #ccc;
+                    width: 10px;
+                }
+
+                ul.css-treeview li:after {
+                    position: absolute;
+                    left: -15px;
+                    bottom: -7px;
+                    content: '';
+                    display: block;
+                    border-left: 1px solid #ccc;
+                    height: 100%;
+                }
+
+                ul.css-treeview li.root {
+                    margin: 0px 0px 0px -20px;
+                }
+
+                    ul.css-treeview li.root:before {
+                        display: none;
+                    }
+
+                    ul.css-treeview li.root:after {
+                        display: none;
+                    }
+
+                ul.css-treeview li:last-child:after {
+                    display: none;
+                }
+
+        .folder {
+            margin-left: 0px !important;
+            background-color: lightgrey;
+            border: 1px solid #ffffff;
+        }
+
+        .dataTables_length {
+            padding-left: 25px !important;
+        }
+
+        /*.SearchLeftPanel {
+            background-color: #e5eecc;
+        }*/
+
+        #panelsearch {
+            /*display: none;*/
+            width: 98.9%;
+            z-index: 999;
+            position: absolute;
+        }
+
+        .multiselect-selected-text {
+            width: 98%;
+        }
+
+        button.multiselect, .multiselect-native-select > .btn-group {
+            width: 100%;
+            text-align: left;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+        }
+
+        .panel-title {
+            color: #fff !important;
+        }
+
+        .open > .dropdown-menu {
+            max-height: 300px !important;
+            overflow: auto !important;
+            display: inline !important;
+            width: 100% !important;
+        }
+
+            .open > .dropdown-menu > li {
+                height: 25px;
+            }
+    </style>
+    <style>
+        .group-header-td {
+            background-color: cadetblue;
+            cursor: pointer;
+        }
+
+        .group-header-form-td {
+            /*background-color: #357fbe;*/
+            background-color: burlywood;
+            cursor: pointer;
+            color: #000000 !important;
+        }
+
+        .collalldiv {
+            background-color: #286090;
+            cursor: pointer;
+        }
+
+        .headspan {
+            color: white !important;
+        }
+
+        html, body {
+            font-family: Calibri !important;
+            font-size: 13px !important;
+        }
+
+        #tableProjects thead th {
+            width: 200px;
+            vertical-align: middle;
+        }
+
+        #tableProjects * {
+            font-size: 14px !important;
+        }
+
+        .subReportHeader {
+            background-color: #046399 !important;
+            color: #ffffff;
+        }
+
+        table.dataTable thead th, table.dataTable thead td {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            vertical-align: middle !important;
+        }
+
+        table.dataTable tbody td {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            vertical-align: middle !important;
+        }
+
+        table.dataTable {
+            margin: 0 auto;
+            width: 100%;
+            clear: both;
+            border-collapse: collapse;
+            table-layout: fixed !important;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div style="padding-left:30px; padding-top:5px;width: 98.9%;">
+        <h1 style="float: left;margin-top: 30px; margin:bottom:0px;">Tender Documents as of @(DateTime.Now.ToString("MMM dd, yyyy"))</h1>
+        <div class="img-responsive" style="float:right"><img src="~/Images/HFD_302.png" /></div>
+        <div class="row">
+            <div id="panelgrid" class="col-md-12">
+                <div id="worklist">
+                    
+                    <table class="table table-bordered table-striped grid dataTable" id="tableProjects">
+                        <thead>
+                            <tr class="subReportHeader">
+                                <th>Project Name</th>
+                                <th></th>
+                                <th></th>
+                                <th style="text-align:center;" class="text-nowrap">S.No.</th>
+                                <th style="text-align:center;width:125px;" class="text-nowrap">Incoming Reference</th>
+                                <th style="text-align:center;width:40px;" class="text-nowrap">Date</th>
+                                <th style="text-align:center;width:125px;" class="text-nowrap">Subject</th>
+                                <th style="text-align:center;width:125px;" class="text-nowrap">From</th>
+                                <th style="text-align:center;width:125px;" class="text-nowrap">To</th>
+                                <th style="text-align:center;width:45px;" class="text-nowrap">Workflow</th>
+                                <th style="text-align:center;width:125px;" class="text-nowrap">Pending With</th>
+                                <th style="text-align:center;width:40px;" class="text-nowrap">Pending <br />Days</th>
+                                <th style="text-align:center;width:40px;" class="text-nowrap">Response <br />Required</th>
+                                @*<th style="text-align:center;width:40px;">Attachments</th>*@
+                                <th style="text-align:center;width:125px;" class="text-nowrap">Incoming</th>
+                                <th style="text-align:center;width:125px;" class="text-nowrap">Draft</th>
+                                <th style="text-align:center;width:125px;" class="text-nowrap">Outgoing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var document in Model)
+                            {
+                                recordCount++;
+                                string res = document.Response_Required == true ? "background-color:darkseagreen" : "background-color:lightgray;";
+                                
+                                string bgcolor = "";
+                                if (document.PendingDays > 1)
+                                {
+                                    bgcolor = "red";
+                                }
+                                else if (document.PendingDays > 0 && document.PendingDays <= 1)
+                                {
+                                    bgcolor = "#e7b416";
+                                }
+                                else
+                                {
+                                    bgcolor = "green";
+                                }
+
+                                <tr>
+                                    <td style="width:100%">@document.ProjectName (@document.GateWay)</td>
+                                    <td style="width:100%">@document.PendingUser</td>
+                                    <td style="width:100%">@document.FileNames</td>
+                                    <td style="text-align:center; width:40px;">@recordCount</td>
+                                    <td>@document.Reference</td>
+                                    <td class="text-center text-nowrap">@document.FormDate</td>
+                                    <td><a href="@document.RecURL" target="_blank">@document.Subject</a></td>
+                                    <td>@document.From</td>
+                                    <td>@document.To</td>
+                                    <td style="text-align:center"><a href="javascript:void(0)" onclick="GetWorkflowStatus(@document.DocumentId, this)">@document.DocStatus</a></td>
+                                    <td>@document.PendingUser</td>
+                                    <td style="color:#FFF; text-align:center;background-color:@bgcolor">@document.PendingDays</td>
+                                    <td class="text-nowrap; text-center">@Html.Raw(document.Response_Required == true ? "Yes" : "For <br />Information") </td>
+                                    @*<td style="text-align:center"><a href="javascript:void(0)" onclick="GetAttachments(@document.RecordId, this)" class="attachments">View</a></td>*@
+                                    <td>@Html.Raw(document.IncomingFileNames)</td>
+                                    <td>@Html.Raw(document.DraftFileNames)</td>
+                                    <td>@Html.Raw(document.OutgoingFileNames)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="pleaseWaitDialog" class="modal" style="display: none;">
+        <div class="center">
+            <img src="~/Content/Images/hamadwait.gif" alt="Loading, please wait" />
+        </div>
+    </div>
+</body>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/formstyles.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<link href="~/Content/buttons.dataTables.css" rel="stylesheet" />
+
+<link href="~/Content/Documents.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+
+<link rel="stylesheet" type="text/css" href="~/Content/datatables.min.css" />
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/tree/jstree.min.js"></script>
+
+<script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+
+
+
+
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>*@
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="~/Scripts/buttons.html5.min.js"></script>
+
+
+<script src="~/Scripts/shorten.js"></script>
+
+<script type="text/javascript">
+    function calcDataTableHeight() {
+        return ($(window).height() * 0.75);
+    };
+
+    $(document).ready(function () {
+        $(".comment").shorten({
+            showChars: 100,
+        });
+        var table = $('#tableProjects').DataTable({
+            dom: "<'row'<'col-sm-3'<'row'<'text-center'l><'text-center'B>>><'col-sm-6 text-center toolbar'T><'col-sm-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+            buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'A3',
+                title: 'Tender Documents as of @(DateTime.Now.ToString("MMM dd, yyyy"))',
+                filename: 'Tender Documents as of @(DateTime.Now.ToString("MMM dd, yyyy"))',
+                exportOptions: {
+                    columns: [0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+                },
+                customize: function (doc) {
+                    doc.defaultStyle.fontSize = 7;
+
+                }
+
+            }, {
+                extend: 'excel',
+                title: 'Tender Documents as of @(DateTime.Now.ToString("MMM dd, yyyy"))',
+                filename: 'Tender Documents as of @(DateTime.Now.ToString("MMM dd, yyyy"))',
+                exportOptions: {
+                    columns: [0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+                }
+            }],
+            "scrollX": true,
+            "scrollY": calcDataTableHeight(),
+            "bAutoWidth": false,
+            "columnDefs": [
+                { "visible": false, "targets": [0, 1, 2] },
+            ],
+            "columns": [
+                { width: '100%' },
+                { width: '100%' },
+                { width: '100%' },
+                { width: '40px' },
+                { width: '125px;'},
+                { width: '40px;' },
+                { width: '125px' },
+                { width: '125px' },
+                { width: '125px' },
+                { width: '45px' },
+                { width: '125px' },
+                { width: '40px' },
+                 { width: '40px' },
+                //{ width: '40px' },
+                { width: '125px' },
+                { width: '125px' },
+                { width: '125px' }
+            ],
+            fixedColumns: true,
+            "ordering": false,
+            "pageLength": 50,
+            //"order": [[0, 'asc'], [1, 'asc']],
+            "displayLength": 10,
+            "drawCallback": function (settings) {
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+                var lastsub = null;
+                api.rows({ page: 'current' }).data().each(function (row, i) {
+                    group = row[0];
+                    subgroup = row[1];
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group-header group-header-form projectname"><td colspan="13" class="group-header-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4 headspan">&nbsp;&nbsp;<strong>' + group + '</strong></span></td></tr>'
+                        );
+                        last = group;
+                        lastsub = null;
+                    }
+
+                    //if (lastsub !== subgroup) {
+                    //    $(rows).eq(i).before(
+                    //        '<tr class="group-header-form formname"><td colspan="13" class="group-header-form-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4">&nbsp;&nbsp;<strong>' + subgroup + '</strong></span></td></tr>'
+                    //    );
+                    //    lastsub = subgroup;
+                    //}
+                });
+            }
+        });
+
+        //$("div.toolbar").html('<h1 style="margin-top:0px; margin:bottom:0px;">Documents pending on <strong>ASHGHAL / General</strong> projects on <br />@(DateTime.Now.ToString("MMM dd, yyyy"))</h1>');
+
+        $('#tableProjects tbody').on('click', 'tr.projectname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $('#tableProjects tbody').on('click', 'tr.formname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header-form').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header-form').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $(parent).css('overflow', 'hidden');
+        var timePanel = $("#tableProjects_info").parent();
+        timePanel.append($('<div style="display: block;clear: both;">Created from PMWeb on @System.DateTime.Now.ToString("MMM dd, yyyy - hh:mm tt")</div>'));
+    });
+    function getFormattedDate(date) {
+
+        var DateNewFormat = $.datepicker.formatDate("dd-mm-yy", new Date(date));
+        return DateNewFormat;
+    }
+    function GroupCallBack() {
+
+    }
+    function GetAttachments(DocId, Obj) {
+        $(".tempRow").remove();
+        $.ajax({
+            url: '@Url.Action("GetAttachments", "DocumentLog")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { DocId: DocId },
+            beforeSend: function () {
+                $('#pleaseWaitDialog').modal('show');
+            },
+            complete: function () {
+                $('#pleaseWaitDialog').modal('hide');
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+                var tr = '<tr class="tempRow"><td colspan="16">' + data + '</td></tr>'
+                $(Obj).closest("tr").after(tr);
+                AttachmentsCallBack(DocId);
+            },
+            error: function (xhr) {
+                //alert("failed");
+            }
+        });
+    }
+
+    function GetWorkflowStatus(RecordId, Obj) {
+        $(".tempRow").remove();
+        $.ajax({
+            url: '@Url.Action("GetWorkflowStatus", "DocumentLog")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { RecordId: RecordId },
+            beforeSend: function () {
+                $('#pleaseWaitDialog').modal('show');
+            },
+            complete: function () {
+                $('#pleaseWaitDialog').modal('hide');
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+                var tr = '<tr class="tempRow"><td colspan="16">' + data + '</td></tr>'
+                $(Obj).closest("tr").after(tr);
+            },
+            error: function (xhr) {
+                //alert("failed");
+            }
+        });
+    }
+
+
+    function GetNotificationLog(FormId, RecordTypeId, Obj) {
+        $(".tempRow").remove();
+        $.ajax({
+            url: '@Url.Action("GetNotificationLog", "DocumentLog")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { FormId: FormId, RecordTypeId: RecordTypeId },
+            beforeSend: function () {
+                $('#pleaseWaitDialog').modal('show');
+            },
+            complete: function () {
+                $('#pleaseWaitDialog').modal('hide');
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+                var tr = '<tr class="tempRow"><td colspan="16">' + data + '</td></tr>'
+                $(Obj).closest("tr").after(tr);
+            },
+            error: function (xhr) {
+                //alert("failed");
+            }
+        });
+    }
+
+
+    function GetCollabrate(DocId, Obj) {
+        $(".tempRow").remove();
+        $.ajax({
+            url: '@Url.Action("GetCollabrate", "DocumentLog")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { DocId: DocId },
+            beforeSend: function () {
+                $('#pleaseWaitDialog').modal('show');
+            },
+            complete: function () {
+                $('#pleaseWaitDialog').modal('hide');
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+                var tr = '<tr class="tempRow"><td colspan="16">' + data + '</td></tr>'
+                $(Obj).closest("tr").after(tr);
+            },
+            error: function (xhr) {
+                //alert("failed");
+            }
+        });
+    }
+
+    function AttachmentsCallBack(DocId) {
+        $("#accordion").accordion({
+            header: "h3",
+            collapsible: true,
+            autoHeight: false,
+            navigation: true,
+            heightStyle: "content"
+        });
+    }
+    function DownloadFolder(FolderId, DocId) {
+        $.ajax({
+            url: '@Url.Action("DownloadFolder", "DocumentLog")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { FolderId: FolderId, DocId: DocId },
+            beforeSend: function () {
+                $('#pleaseWaitDialog').modal('show');
+            },
+            complete: function () {
+                $('#pleaseWaitDialog').modal('hide');
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+                var json = JSON.parse(data)
+                var newWin = window.open(json.downloadLink, "_blank");
+                if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
+                    alert('Disable popup blocker to download.');
+                }
+            },
+            error: function (xhr) {
+                //alert("failed");
+            }
+        });
+    }
+</script>
+</html>

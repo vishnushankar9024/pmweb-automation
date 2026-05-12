@@ -1,0 +1,656 @@
+﻿/*
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.1.0
+build: 2026
+*/
+
+
+html {
+    background: #FFF;
+}
+
+td, th, blockquote, p, textarea, input, legend, fieldset, form, code, pre, h6, h5, h4, h3, h2, h1, li, ol, ul, dd, dt, dl, div, body {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+img, fieldset, acronym, abbr {
+    border: 0;
+}
+
+var, th, strong, em, dfn, code, cite, caption, address {
+    font-style: normal;
+}
+
+var, th, strong, em, dfn, code, cite, caption, address, h6, h5, h4, h3, h2, h1 {
+    font-weight: normal;
+}
+
+li {
+    list-style: none;
+}
+
+th, caption {
+    text-align: left;
+}
+
+h6, h5, h4, h3, h2, h1 {
+    font-size: 100%;
+}
+
+q:after, q:before {
+    content: '';
+}
+
+acronym, abbr {
+    font-variant: normal;
+}
+
+sup {
+    vertical-align: text-top;
+}
+
+sub {
+    vertical-align: text-bottom;
+}
+
+select, textarea, input {
+    font: inherit inherit inherit;
+    *font-size: 100%;
+}
+/******* END OF YAHOO RESET ****/
+
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    /* background:url("../Images/login/login_bck.jpg") fixed no-repeat top right ;*/
+}
+
+.tdSidebar {
+    width: 400px;
+    height: 100%;
+    background-color: #7396AA;
+}
+
+body {
+    height: 98%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #FFF !important;
+}
+
+
+input#txtPassword {
+    padding-left: 1%;
+    width: 82.5% !important;
+    height: 33px;
+    color: #000;
+}
+
+
+#txtPasswordHide {
+    padding-left: 1%;
+    width: 82%;
+    height: 36px;
+}
+
+#out_links {
+    margin-left: 10px;
+    text-align: Left;
+    margin-top: 30px;
+    line-height: 20px;
+}
+
+form {
+    height: 100%;
+    width: 100%;
+    padding: 0px 0px;
+    position: relative;
+    /*min-width:1100px;
+          min-height:550px;*/
+}
+
+.divIcon {
+    height: 24px;
+    width: 24px;
+    background: #7396AA;
+    background-image: url('../Images/24x24 White.png');
+    margin-top: 8px;
+    margin-left: 8px;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    transition: 300ms;
+    -webkit-transition: 300ms;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 2px;
+        bottom: 1px;
+        background: #316888 !important;
+        transition: 300ms;
+        -webkit-transition: 300ms;
+    }
+
+
+
+
+/*input:checked + .slider:before {
+    -webkit-transform: translateX(15px);
+    -ms-transform: translateX(15px);
+    transform: translateX(15px);
+     box-shadow: 0 0 1px /*1*/ #316888 /*1*/;
+}*/
+
+/*input:checked + .slider:before {
+   
+}*/
+
+input:checked + .slider {
+    background-color: white;
+}
+
+
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    .slider.round {
+        border-radius: 34px;
+    }
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(15px);
+    -ms-transform: translateX(15px);
+    transform: translateX(15px);
+    box-shadow: 0 0 1px #999;
+    background: #FFF;
+    bottom: 1px;
+    border: none;
+    left: 2px;
+    height: 16px;
+}
+
+/*input:checked + .slider:before {
+}*/
+
+input:checked + .slider {
+    background-color: #999;
+    border: none;
+     background-color: white;
+}
+
+/*input:checked + .slider {
+   
+}*/
+/*#main{
+		height:99%;
+		float:left;
+		width:260px;
+		border:1px silver solid;
+		-moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+          position:relative;
+         background-color:#fff;
+         margin-top:10px;
+         margin-left:10px;
+         padding-left:10px;
+         padding-right:10px;
+}*/
+#SideBar {
+    float: left;
+    width: 400px;
+    min-height: 100vh;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background: #316888 !important;
+    padding-bottom: 0;
+    /*padding-left: 20px;*/
+}
+
+.outerIconComboBox {
+    background: #7396AA;
+    padding: 0px;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    position: relative;
+    top: 11px;
+    left: 4px;
+}
+
+.btnLogin {
+    color: #FFF !important;
+    background: #7396AA !important;
+    width: calc(84% + 42px) !important;
+    height: 40px !important;
+    margin-top: 10px !important;
+    -webkit-appearance: none !important;
+    border: 0 !important;
+}
+
+
+/*.btnLogin:hover {
+        color: #FFF !important;
+        background: #7396AA !important;
+        border :1px solid gold;
+        width: calc(84% + 42px) !important;
+    }*/
+
+.RadComboBox_Default .rcbArrowCell {
+    background-image: url('../Images/ddlArrowDown.png') !important;
+}
+
+.tblLogin {
+    text-align: center;
+}
+
+    .tblLogin tr td {
+        padding: 2px 5px;
+    }
+
+#ClientBox {
+    margin-left: 0px;
+    width: 240px;
+    font-size: 11px;
+    padding: 7px;
+    margin-top: 40px;
+    display: block;
+}
+
+.divClientBox {
+    color: white;
+}
+
+.RadComboBox ll,
+.RadComboBox .rcbArrowCell {
+    padding: 0;
+    border-width: 0;
+    border-style: solid;
+    background-color: transparent;
+    background-repeat: no-repeat;
+}
+
+.ClientBox_item {
+    padding: 0px;
+}
+
+html, legend {
+    color: #000;
+}
+
+html {
+    background: #FFF;
+}
+
+td, th, blockquote, p, textarea, input, legend, fieldset, form, code, pre, h6, h5, h4, h3, h2, h1, li, ol, ul, dd, dt, dl, div, body {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+img, fieldset, acronym, abbr {
+    border: 0;
+}
+
+var, th, strong, em, dfn, code, cite, caption, address {
+    font-style: normal;
+}
+
+var, th, strong, em, dfn, code, cite, caption, address, h6, h5, h4, h3, h2, h1 {
+    font-weight: normal;
+}
+
+li {
+    list-style: none;
+}
+
+th, caption {
+    text-align: left;
+}
+
+h6, h5, h4, h3, h2, h1 {
+    font-size: 100%;
+}
+
+q:after, q:before {
+    content: '';
+}
+
+acronym, abbr {
+    font-variant: normal;
+}
+
+sup {
+    vertical-align: text-top;
+}
+
+sub {
+    vertical-align: text-bottom;
+}
+
+select, textarea, input {
+    font: inherit inherit inherit;
+    font-size: 100%;
+}
+
+#ClientBox {
+    margin-left: 0px;
+    width: 240px;
+    font-size: 11px;
+    padding: 7px;
+    margin-top: 40px;
+    display: block;
+}
+
+input[type="submit"], input[type="button"] {
+    background: url("../Images/login/btnLogin.jpg");
+    border: 0;
+    height: 24px;
+    color: #fff;
+    width: 100px;
+    font-size: 12px !important;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+    input[type="button"]:hover, input[type="submit"]:hover {
+        /*background:url("../Images/login/btnLogin.jpg")!important;*/
+        border: 1px solid rgb(249,170,51) !important;
+        cursor: pointer;
+    }
+
+
+
+#login {
+    /* margin-left:30px;*/
+    margin-top: 40px;
+}
+
+.login_field {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #000;
+    line-height: 32px;
+}
+
+#Login_btn {
+    width: 100%;
+}
+
+input#txtUser {
+    padding-left: 1%;
+    width: 84%;
+    height: 40px;
+    position: relative;
+    left: -1px;
+    font-style: normal;
+    top: -6px;
+}
+
+/*a:hover{
+    text-decoration: underline !important;
+    text-decoration-line: underline !important;
+    text-decoration-style: initial !important;
+    text-decoration-color: initial !important;
+}*/
+
+.outerIcon {
+    background-color: #7396AA;
+    padding: 0px;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    left: 5px;
+    position: relative;
+    top: 16px;
+}
+
+#h1_User_Login {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    /* font-weight: bold; */
+    letter-spacing: 3px;
+}
+
+input#cboDatabases_Input {
+    height: 38px;
+    border-color: #e5e5e5;
+    background-color: #FFF;
+    color: #000;
+    padding-left: 5px;
+    display: block !important;
+    font-style: normal;
+}
+/*input[type="text"]:hover, textarea:hover{
+ border:none !important
+}*/
+.riTextBox.riEmpty {
+    color: #999;
+}
+
+input#cboDatabases_Input, textarea:hover {
+    border: none !important;
+}
+
+#copyright {
+    bottom: 5px;
+    text-align: left;
+    margin-left: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 8pt;
+    display: block;
+    margin-top: 5px;
+}
+
+td.rcbInputCell.rcbInputCellLeft {
+    width: 91% !important;
+}
+
+#info {
+    float: left;
+    width: 500px;
+    height: 100%;
+    padding: 0 10px;
+    color: #524d4d;
+    min-width: 600px;
+}
+
+#info_img {
+    height: 360px;
+    position: absolute;
+    right: 0px;
+}
+
+#info_data {
+    padding-left: 20px;
+    margin-top: 400px;
+}
+
+#info h2 {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0px;
+}
+
+#info p {
+    line-height: 22px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+
+
+a, a:visited, a:active {
+    color: #0000c1 !important;
+}
+
+input#cboUsers_Input {
+    height: 36px;
+    border-color: #e5e5e5;
+    background-color: #FFF;
+    color: #000;
+    padding-left: 5px;
+}
+
+span#lblPassword {
+    position: absolute;
+    top: 0;
+    left: 6px;
+    color: #999;
+    font-size: 12px;
+}
+
+/*RADCOMBOBOX*/
+.RadComboBox table td.rcbArrowCell {
+    padding: 0;
+    border: 1px solid #666666;
+}
+
+/*.RadComboBox .rcbInput {
+    margin: 0;
+    padding: 2px 0 1px;
+    height: auto;
+    width: 100%;
+    border-width: 0;
+    outline: 0;
+    color: inherit;
+    background-color: transparent;
+    vertical-align: top;
+    opacity: 1;
+}*/
+
+
+
+.RadComboBox_Default .rcbInput {
+    color: #333333;
+    line-height: 16px;
+}
+
+.RadComboBox .rcbArrowCell a {
+    width: 30px;
+}
+
+.RadComboBox input, .RadComboBox input:focus {
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.RadComboBox .rcbArrowCellRight {
+    background-position: 5px 10px !important;
+    background-color: white !important;
+}
+
+.RadComboBox .rcbArrowCell {
+    width: 18px;
+}
+
+.RadComboBox table td.rcbArrowCell {
+    padding: 0;
+    border: 1px solid #666666;
+}
+
+.RadComboBox .rcbEmptyMessage {
+    font-style: italic;
+    color: transparent;
+    color: #999 !important;
+    font-size: 12px;
+}
+
+/*input#txtUser_text.ritextBox.riEmpty{
+    font-style: italic;
+    color: transparent;
+    color: #999 !important;
+    font-size: 12px;
+}
+.riTextBox.riEmpty{
+      font-style: italic !important;
+    color: transparent !important;
+    color: #999 !important;
+    font-size: 12px !important;
+}
+
+.ritextBox.riHover{
+    font-style: italic !important;
+    color: transparent !important;
+    color: #999 !important;
+    font-size: 12px !important;
+}*/
+.Validator {
+    color: #ffffff !important;
+    font-size: 13px !important;
+}
+
+@media screen and (max-width:800px) {
+    .tdImgLogin {
+        display: none;
+    }
+
+    #SideBar {
+        width: 100%;
+        margin-left: 0px;
+        padding-left: 0px;
+    }
+
+    .tblLogin {
+        text-align: center;
+    }
+
+    .Msg {
+        left: 40px !important;
+        top: -144px !important;
+    }
+}
+
+.RadComboBox_Default table {
+    height: 42px;
+}
+
+@media screen and (min-width:500px) and (max-width:800px) {
+
+    td.rcbInputCell.rcbInputCellLeft {
+        width: 95% !important;
+    }
+}
+
+@media screen and (min-width:844px) {
+    .MarginLeft {
+        margin-left: 10px;
+    }
+}

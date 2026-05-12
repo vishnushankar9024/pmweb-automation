@@ -1,0 +1,834 @@
+﻿@model PMWebHelper.ViewModel.ActionCenterViewModel
+@{
+    Layout = null;
+    string rnd = new Random().Next().ToString();
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Action Center - @Model.User.Name</title>
+    
+    <script src="https://kendo.cdn.telerik.com/2019.2.619/js/jquery.min.js"></script> <!-- jQuery first -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> <!-- Then Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href='@Url.Content("~/Content/css/loader.css")' rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Scripts/tree/themes/proton/style.css" />
+
+    <link href='@Url.Content("~/Content/web/kendo.common.min.css")?_=@rnd' rel="stylesheet" type="text/css" />
+    <link href="~/Content/web/kendo.uniform.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="all" href="~/Content/daterangepicker.css" />
+
+    <link href='@Url.Content("~/Content/ActionCenterDocumentLog.css")?_=@rnd' rel="stylesheet" type="text/css" />
+    <link href='@Url.Content("~/Content/KendoGrid.css")?_=@rnd' rel="stylesheet" type="text/css" />
+    <link href='@Url.Content("~/Content/css/SlideMenu.css")?_=@rnd' rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Content/admin-pro/css/font-awesome.min.css">
+
+
+    <script src="https://kendo.cdn.telerik.com/2019.2.619/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2019.2.619/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2019.2.619/js/kendo.aspnetmvc.min.js"></script>
+
+    <script src='@Url.Content("~/Scripts/kendo.modernizr.custom.js")'></script>
+    <script src='@Url.Content("~/Scripts/ActionCenterDocLog.js")?_=@rnd'></script>
+    <script src='@Url.Content("~/Scripts/KendoGrid.js")?_=@rnd'></script>
+
+   @* <script src="~/Scripts/bootstrap.min.js"></script>*@
+    <script src="~/Scripts/tree/jstree.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="~/Scripts/daterangepicker.js"></script>
+
+    @if ((bool)ViewBag.IsUserVisited == false)
+    {
+        <link href="~/Content/pyro.css?_=@rnd" rel="stylesheet" type="text/css" />
+    }
+    <style>
+        .badge {
+            --bs-badge-color: blue;
+        }
+		#pmwebRecordFrame {
+		width: 100% !important;
+		height: auto-height !important;
+		}
+	#aspnetForm > div.ContentPane {
+		margin-top: 0px;
+		padding-top: 0px;
+		margin-left: 0px;   
+		padding-left: 0px;
+	}
+	.drawer {
+    display: none !important;
+}
+
+
+        </style>
+</head>
+
+<body>
+    @if (ViewBag.ControlCenter != null)
+    {
+        <div id="myNav" class="overlay">
+            <div class="overlay-content">
+                <div class="row" style="border-bottom:2px solid #808080; margin-bottom:6px;margin-left:-25px;margin-right:-25px;">
+                    <div class="col-9"><h3>Create New</h3></div><div class="col-3 text-right" style="padding-top:15px;"><a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="font-size:20px;">&times;</a></div>
+                </div>
+                @foreach (var listForm in (List<Trinergy.Model.ListForms>)ViewBag.ControlCenter)
+                {
+                    <div class="row" style="margin-bottom:3px;padding-bottom:3px; border-bottom:1px dashed #808080">
+                        <div class="col-md-9" style="padding-top:4px;font-weight: bold;font-size: 16px;font-family: Calibri;">&plus; &nbsp; @listForm.DisplayName</div>
+                        <div class="col-md-3 text-right" style="vertical-align:middle"><a href="@listForm.CreateLink" target="_top" class="btn btn-primary badge-active" style="vertical-align:middle">Create</a></div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    @(Html.Kendo().TabStrip()
+    .Name("tabActionCenter")
+    .Animation(animation => animation.Open(effect => effect.Fade(FadeDirection.In)))
+    .Items(tabs =>
+    {
+    tabs.Add().Text("My Pending Documents").Selected(true)
+        .Content(@<text>@pendingDocumentsGrid()</text>);
+    if (Model.ShowTimesheet == true)
+    {
+        tabs.Add().Text("Time Sheet").Content(@<text>@TimeSheet()</text>);
+    }
+    //tabs.Add().Text("Status of All Documents");
+    tabs.Add().Text("My Actioned Documents").Content(@<text>@ActionedDocumentsGrid()</text>);
+        if(((List<Trinergy.Model.ListForms>)ViewBag.ControlCenter).Count() > 0)
+        {
+            tabs.Add().Text("New Correspondence");
+        }
+        else
+        {
+            tabs.Add().Text("Create").HtmlAttributes(new { disabled="disabled"});
+        }
+    })
+    .Events(e =>
+    {
+        e.Select("onTabSelect");
+    })
+
+    )
+    <div id="pleaseWaitDialog" class="modal" style="display: none">
+        <div class="center">
+            <img src="~/Content/Images/hamadwait.gif" alt="Loading, please wait" />
+        </div>
+    </div>
+    <div id="attachmentDownloadDialog" class="modal" style="display: none; z-index:9999;">
+        <div class="center">
+            <img src="~/Content/Images/hamadwait.gif" alt="Loading, please wait" />
+            <br />The files are downloading, please remain patience.<br />
+            If you are downloading more than 100 files, It will take longer than usual.
+        </div>
+    </div>
+    <div id="teamInputModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width:80%;">
+            <!-- Modal content-->
+            <div class="modal-content" style="width:100%;">
+                <div class="modal-header">
+                    <button type="button" class="btn btn-danger modal-close" data-dismiss="modal">Close</button>
+                    <h4 class="modal-title">Team Input Reviewed Details</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @Html.Partial("ModalView")
+
+    @helper pendingDocumentsGrid()
+    {
+        @(Html.Kendo().Grid<Trinergy.Model.ActiveWFDocumentModel>()
+            .Name("grid_PendingDocuments")
+            .Columns(columns =>
+            {
+                //columns.Bound(c => c.Project).ClientGroupHeaderTemplate("<span class=\"group-header-project\">#: value # - (#:count#)</span>").Hidden(true).IncludeInMenu(false);
+                columns.Bound(c => c.Project).ClientGroupHeaderTemplate("#: value # - (#:count#)").Hidden(true).IncludeInMenu(false);
+                //columns.Bound(c => c.RecordType).ClientGroupHeaderTemplate("<span class=\"group-header-form\">#: value # - (#:count#)</span>").Hidden(true).IncludeInMenu(false);
+                columns.Bound(c => c.RecordType).ClientGroupHeaderTemplate("#: value # - (#:count#)").Hidden(true).IncludeInMenu(false).HtmlAttributes(new { projectid = "#:ProjectId#" });
+                columns.Bound(c => c.FileNames).Hidden(true).IncludeInMenu(false);
+                columns.Bound(c => c.RecordNumber).Title("Record No.").HeaderTemplate("Record<br />No.").Width(150).Hidden(false).IncludeInMenu(true);
+                columns.Bound(c => c.Reference).Title("Incoming Reference").HeaderTemplate("Incoming<br />Reference").Width(125).Hidden(true).IncludeInMenu(false);
+                //columns.Bound(c => c.Description).Title("Subject")
+                //            .ClientTemplate("<a href='javascript: void(0)' onclick=\"GetWorkflowStatus(#:DocumentId#, this)\">#:Description#</a>")
+                //            .Width(225);
+                columns.Bound(c => c.ProjectPhase).Title("Project Package").HeaderTemplate("Project<br/>Package")
+                .Width(100);
+                columns.Bound(c => c.Description).Title("Subject")
+                           .Width(225);
+                columns.Bound(c => c.ReceivedDate).Format("{0:dd-MMM-yy}").Title("Recipient Received Date").HeaderTemplate("Recipient<br/>Received<br/>Date").HtmlAttributes(new { @class = "text-center" }).Width(100);
+                columns.Bound(c => c.DueDate).Format("{0:dd-MMM-yy}").Title("Recipient Due Date").HeaderTemplate("Recipient<br/>Due<br/>Date").HtmlAttributes(new { @class = "text-center" }).Width(100);
+                columns.Bound(c => c.RemainingDays).Title("Remaining / Pending Days").HeaderTemplate("Remaining / <br/>Pending <br/>Days").HtmlAttributes(new { @class = "text-center" }).Width(120);
+                columns.Bound(c => c.DocumentId).Title("Action").HtmlAttributes(new { @class = "text-center" })
+                .ClientTemplate("<a href='javascript:void(0)' data-url='#:Recordurl#' class=\"action-link\" onclick=\"GetRecord('#:Recordurl#')\">Action</a>")
+                    .Width(100);
+                columns.Bound(c => c.OCSLink).Title("Links").HtmlAttributes(new { @class = "text-center" })
+                    .ClientTemplate(
+                        "#if(OCSLink != null) {#<a href='javascript:void(0)' data-url='#:OCSLink#' onclick=\"GetRecord('#:OCSLink#', true)\">OCS</a><div class=\"link-splitter\">&nbsp;</div>#}" +
+                        "if(HasBI == true) {# <a href=\"javascript: void(0)\" onclick=\"GetRecord('#:BIUrl#')\">BI Report</a><div class=\"link-splitter\">&nbsp;</div>#}" +
+                        "if(BusinessCaseSummaryLink != null && BusinessCaseSummaryLink != '') {#<br /><a href='javascript:void(0)' data-url='#:BusinessCaseSummaryLink#' onclick=\"GetRecord('#:BusinessCaseSummaryLink#', true)\">Business Case Summary</a><div class=\"link-splitter\">&nbsp;</div>#}" +
+                        "if(ProjectCharterLink != null && ProjectCharterLink != '') {#<a href='javascript:void(0)' data-url='#:ProjectCharterLink#' onclick=\"GetRecord('#:ProjectCharterLink#', true)\">Project Charter</a><div class=\"link-splitter\">&nbsp;</div>#}" +
+                        "if(FacilitiesEvaluationReportLink != null && FacilitiesEvaluationReportLink != '') {#<a href='javascript:void(0)' data-url='#:FacilitiesEvaluationReportLink#' onclick=\"GetRecord('#:FacilitiesEvaluationReportLink#', true)\">Facilities Evaluation Report</a><div class=\"link-splitter\">&nbsp;</div>#}" +
+                        "if(ScopeOfWorkLink != null && ScopeOfWorkLink != '') {#<a href='javascript:void(0)' data-url='#:ScopeOfWorkLink#' onclick=\"GetRecord('#:ScopeOfWorkLink#', true)\">Scope Of Work</a><div class=\"link-splitter\">&nbsp;</div>#}#"
+                        )
+                    .Width(100);
+                columns.Bound(c => c.DocumentId).Title("Attachments").HtmlAttributes(new { @class = "text-center" })
+                .ClientTemplate("<a href='javascript: void(0)' onclick=\"GetAttachments(#:DocumentId#, this)\">Attachments</a>")
+                    .Width(120);
+                columns.Bound(c => c.TeamInputRequestedTo).Encoded(false).Title("Team Input Request Pending With").HeaderTemplate("Team Input <br />Request<br />Pending With").Width(150);
+                columns.Bound(c => c.TeamInputRepliedBy).Encoded(false).Title("Team Input Reply Received From").HeaderTemplate("Team Input <br />Reply Received<br />From").Width(150);
+                columns.Bound(c => c.TeamInputRequestedToRaw).Encoded(false).Title("Team Input Request Pending With").Hidden(true).IncludeInMenu(false);
+                columns.Bound(c => c.TeamInputRepliedByRaw).Encoded(false).Title("Team Input Reply Received From").Hidden(true).IncludeInMenu(false);
+                columns.Bound(c => c.WorkflowComments).Title("Previous step workflow comments")
+                .HeaderTemplate("Previous step workflow<br />comments").Encoded(false).Width(250);
+                columns.Bound(c => c.ReplyStatus).Title("Document Status").HeaderTemplate("Document <br /> Status").Width(150).Hidden(false).IncludeInMenu(true);
+            })
+            .HtmlAttributes(new { style = "height: 700px;" })
+            .Scrollable()
+            .Groupable()
+            .Sortable()
+    //        .Filterable(filter =>
+    //                filter.Mode(GridFilterMode.Menu)
+    //                .Operators(ops => ops
+    //                .ForString(str => str.Clear()
+    //                    .Contains("Contains")
+    //                    .StartsWith("Starts with")
+    //                    )
+    //                    .ForDate(dt => dt.Clear()
+    //                    .IsGreaterThanOrEqualTo("is after or equal to")
+    //                    .IsLessThanOrEqualTo("is before or equal to")
+    //                    )
+    //        )
+    //)
+    .Filterable()
+    //.Pageable(p => p.Numeric(false).PreviousNext(false))
+    .Pageable(p => p.Refresh(true))
+    .AutoBind(true)
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("GetPendingDocuments", "ActionCenter").Data("GetPendingDocumentsData"))
+        .PageSize(100)
+        .Batch(true)
+        .Group(g =>
+        {
+            g.Add(c => c.Project);
+            g.Add(c => c.RecordType);
+        })
+        .Aggregates(a =>
+        {
+            a.Add(c => c.Project).Count();
+            a.Add(c => c.RecordType).Count();
+        })
+        .ServerOperation(true)
+    )
+    .Groupable(g =>
+    {
+        g.Enabled(false);
+    })
+    .Excel(e =>
+    {
+        e.FileName("Pending Document.xlsx");
+        e.AllPages(true);
+        e.Collapsible(true);
+        e.Filterable(true);
+    })
+    .Events(e =>
+    {
+        e.DataBound("onPendingDocumentsDataBound");
+        e.ExcelExport("onPendingDocumentExcelExport");
+        e.GroupExpand("onPendingDocumentGroupExpand");
+        e.GroupCollapse("onPendingDocumentGroupCollapse");
+    })
+    .ColumnMenu()
+    .ToolBar(t =>
+    {
+    t.Template(@<text>
+        <div class="refreshBtnContainer" id="actionCenterBadges">
+            <a href="javascript:void(0)" class="btn btn-badge btn-primary badge-active" data-badge="0">Total Pending <span class="badge badge-light badge-pending">0</span></a>
+            <a href="javascript:void(0)" class="btn btn-badge btn-primary" data-badge="1">Team Input Request <span class="badge badge-light badge-request">0</span></a>
+            <a href="javascript:void(0)" class="btn btn-badge btn-primary" data-badge="2">Team Input Received <span class="badge badge-light badge-received">0</span></a>
+            <a href="javascript:void(0)" class="btn btn-badge btn-primary" data-badge="3">Overdue <span class="badge badge-light badge-overdue">0</span></a>
+            <a href="javascript:void(0)" class="btn btn-badge btn-primary" data-badge="4">Overdue more than 14 days <span class="badge badge-light badge-overdue14">0</span></a>
+            @*@if (ViewBag.PendingCount > 0)
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary badge-active" onclick="GetPendingDocuments(this, 0)">Total Pending <span class="badge badge-light badge-pending">@ViewBag.PendingCount</span></a>
+                }
+                else
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary no-cursor">Total Pending <span class="badge badge-light">@ViewBag.PendingCount</span></a>
+                }
+
+                @if (ViewBag.TeamInputRequestedCount > 0)
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary" onclick="GetPendingDocuments(this, 1)">Team Input Request <span class="badge badge-light badge-request">@ViewBag.TeamInputRequestedCount</span></a>
+                }
+                else
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary no-cursor">Team Input Request <span class="badge badge-light">@ViewBag.TeamInputRequestedCount</span></a>
+                }
+
+                @if (ViewBag.TeamInputRecievedCount > 0)
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary" onclick="GetPendingDocuments(this, 2)">Team Input Received <span class="badge badge-light badge-received">@ViewBag.TeamInputRecievedCount</span></a>
+                }
+                else
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary no-cursor">Team Input Received <span class="badge badge-light">@ViewBag.TeamInputRecievedCount</span></a>
+                }
+
+                @if (ViewBag.OverdueCount > 0)
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary" onclick="GetPendingDocuments(this, 3)">Overdue <span class="badge badge-light badge-overdue">@ViewBag.OverdueCount</span></a>
+                }
+                else
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary no-cursor">Overdue <span class="badge badge-light">@ViewBag.OverdueCount</span></a>
+                }
+
+                @if (ViewBag.OverdueMorethanFourteenDaysCount > 0)
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary" onclick="GetPendingDocuments(this, 4)">Overdue more than 14 days <span class="badge badge-light badge-overdue">@ViewBag.OverdueMorethanFourteenDaysCount</span></a>
+                }
+                else
+                {
+                    <a href="javascript:void(0)" class="btn btn-badge btn-primary no-cursor">Overdue more than 14 days <span class="badge badge-light">@ViewBag.OverdueMorethanFourteenDaysCount</span></a>
+                }*@
+            <a class="k-button k-button-icontext k-grid-excel" href="#"><span class="k-icon k-i-excel"></span>Export to Excel</a>
+            <input type="button" value="Collapse All" class="k-button" id="btnCollapseExpand" onclick="gridExpandCollapseAll(this, 'grid_PendingDocuments')" />
+            <button id="refresh" class="k-button" onclick="RefreshGrid('grid_PendingDocuments')"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;Refresh</button>
+        </div>
+        <div class="toolbar">
+            <label class="search-label" for="filter">Search:</label>
+            @(Html.Kendo().TextBox().Name("filter").HtmlAttributes(new { placeholder = "Search", oninput = "ApplyFilter(event, 'grid_PendingDocuments')" }))
+            <a href="@Url.Action("GetUserGuide", "Task", new { folderName = "Action Center"})" target="_blank" class="k-button btn btn-primary badge-active">Help&nbsp;&nbsp;<i class="fa fa-question-circle" aria-hidden="true"></i></a>
+        </div>
+    </text>);
+    })
+    )
+    }
+    @helper ActionedDocumentsGrid()
+    {
+        @(Html.Kendo().Grid<Trinergy.Model.ActiveWFDocumentModel>()
+            .Name("grid_ActionedDocuments")
+            .Columns(columns =>
+            {
+                columns.Bound(c => c.Project).Title("Project Name").ClientGroupHeaderTemplate("<span class=\"group-header-project\">#: value #</span>").Width(150);
+                columns.Bound(c => c.FileNames).Hidden(true).IncludeInMenu(false);
+                columns.Bound(c => c.RecordNumber).Title("Record No.").HeaderTemplate("Record<br />No.").Hidden(false).IncludeInMenu(true).Width(100);
+                columns.Bound(c => c.Reference).Title("Incoming Reference").HeaderTemplate("Incoming<br />Reference").Hidden(true).IncludeInMenu(false).Width(100);                
+                columns.Bound(c => c.ProjectPhase).Title("Project Package").HeaderTemplate("Project<br/>Package")
+               .Width(100);
+                //columns.Bound(c => c.Description).Title("Subject")
+                //            .ClientTemplate("<a href='javascript: void(0)' onclick=\"GetWorkflowStatus(#:DocumentId#, this)\">#:Description#</a>");
+                columns.Bound(c => c.Description).Title("Subject");
+                columns.Bound(c => c.OCSLink).Title("Links").HtmlAttributes(new { @class = "text-center" })
+                    .ClientTemplate("#if(OCSLink != null) {#<a href='javascript:void(0)' data-url='#:OCSLink#' class\"actionhead\" onclick=\"GetRecord('#:OCSLink#', true)\">OCS</a><div class=\"link-splitter\">&nbsp;</div>#} if(HasBI == true) {# <a href=\"javascript: void(0)\" onclick=\"GetRecord('#:BIUrl#')\">BI Report</a>#}#")
+                    .Width(80);
+                columns.Bound(c => c.ActionType).Title("My Action").HtmlAttributes(new { @class = "no-wrap" })
+                .ClientTemplate("#:ActionType#<br />on #:ActionedDateFormated#")
+                    .Width(120);
+                columns.Bound(c => c.ActionedDateFormated).Title("My Action Date").Width(100).Hidden(true).IncludeInMenu(false);
+                columns.Bound(c => c.CurrStepOwner).Title("Current Status")
+                .ClientTemplate("#:CurrStepOwner#-<br /><a href='javascript:void(0)' data-url='#:Recordurl#' class\"actionhead\" onclick=\"GetRecord('#:Recordurl#')\">#:Status#</a>")
+                    .Width(150);
+                columns.Bound(c => c.DocumentId).Title("Attachments").HtmlAttributes(new { @class = "text-center" })
+               .ClientTemplate("<a href='javascript: void(0)' onclick=\"GetAttachments(#:DocumentId#, this)\">Attachments</a>")
+                   .Width(120);
+                columns.Bound(c => c.WorkflowComments).Title("My workflow comments").HeaderTemplate("My workflow<br />comments")
+                //.ClientTemplate("#:WorkflowComments#<br/><a href='javascript: void(0)' onclick=\"GetWorkflowStatus(#:DocumentId#, this)\">More</a>")
+                .ClientTemplate("#:WorkflowComments#<br/><a href='javascript: void(0)' onclick=\"GetRecord('#:WorkflowBIUrl#', '', '', '', '', '')\">More</a>")
+                .HeaderTemplate("My workflow<br />comments").Encoded(false).Width(250);
+                columns.Bound(c => c.RecordType).Title("Form").ClientGroupHeaderTemplate("<span class=\"group-header-form\">#: value #</span>").Width(150);
+                columns.Bound(c => c.ReplyStatus).Title("Document Status").HeaderTemplate("Document <br /> Status").Width(150).Hidden(true).IncludeInMenu(true);
+            })
+            .HtmlAttributes(new { style = "height: 700px;" })
+            .Scrollable()
+            .Sortable()
+            .Filterable()
+    .Pageable(p => p.Refresh(true))
+    .AutoBind(false)
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("GetActionedDocuments", "ActionCenter").Data("GetActionedGridData"))
+        .PageSize(100)
+        .Batch(true)
+        .ServerOperation(true)
+    )
+    .Groupable(g =>
+    {
+        g.Enabled(false);
+    })
+    .Excel(e =>
+    {
+        e.FileName("Actioned Document.xlsx");
+        e.AllPages(true);
+        e.Collapsible(true);
+        e.Filterable(true);
+    })
+    .Events(e =>
+    {
+        e.DataBound("onActionedDocumentsDataBound");
+        e.ExcelExport("onActionedDocumentExcelExport");
+    })
+    .ColumnMenu()
+    .ToolBar(t =>
+    {
+    t.Template(@<text>
+        <div class="refreshBtnContainer">
+            @if (ViewBag.ActionedDocumentsCount > 0)
+            {
+                <a href="javascript:void(0)" class="btn btn-badge btn-actioned btn-primary badge-active" onclick="GetActionedDocuments(this, 0)">Total <span class="badge badge-light badge-pending" id="totalActionedCount">@ViewBag.ActionedDocumentsCount</span></a>
+            }
+            else
+            {
+                <a href="javascript:void(0)" class="btn btn-badge btn-actioned btn-primary no-cursor">Total <span class="badge badge-light">@ViewBag.ActionedDocumentsCount</span></a>
+            }
+            @(Html.Kendo().TextBox().Name("weekPicker"))
+            <a href="javascript:void(0)" class="btn btn-badge btn-actioned btn-primary" onclick="GetActionedDocuments(this, 0)">Get</a>
+            @*<input type="text" id="weekPicker" class="form-control" style="width:175px; display:inline-block">*@
+            @if (ViewBag.TodayActionedDocumentsCount > 0)
+            {
+                <a href="javascript:void(0)" class="btn btn-actioned btn-badge btn-primary" onclick="GetActionedDocuments(this, 1)">Actioned Today <span class="badge badge-light badge-request" id="todayActionedCount">@ViewBag.TodayActionedDocumentsCount</span></a>
+            }
+            else
+            {
+                <a href="javascript:void(0)" class="btn btn-actioned btn-badge btn-primary no-cursor">Actioned Today <span class="badge badge-light">@ViewBag.TodayActionedDocumentsCount</span></a>
+            }
+            <a class="k-button k-button-icontext k-grid-excel" href="#"><span class="k-icon k-i-excel"></span>Export to Excel</a>
+            <button id="refresh" class="k-button" onclick="RefreshGrid('grid_ActionedDocuments')"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;Refresh</button>
+        </div>
+        <div class="toolbar">
+            <label class="search-label" for="filter">Search:</label>
+            @(Html.Kendo().TextBox().Name("filter").HtmlAttributes(new { placeholder = "Search", oninput = "ApplyFilter(event, 'grid_ActionedDocuments')" }))
+
+        </div>
+    </text>);
+    })
+    )
+    }
+    @helper TimeSheet()
+    {
+        @(Html.Kendo().Grid<Trinergy.Model.TimesheetModel>()
+        .Name("grid_Timesheet")
+        .Columns(column =>
+        {
+            column.Bound(c => c.Name).Title("Resource");
+            column.Bound(c => c.Id).ClientTemplate("<a href='javascript: void(0)' onclick=\"GetTimeSheetDetails(#:Id#, this)\">View</a>").Title("View").Width(100);
+            column.Bound(c => c.FromDate).Format("{0:dd-MMM-yy}").Title("From Date");
+            column.Bound(c => c.ToDate).Format("{0:dd-MMM-yy}").Title("To Date");
+            column.Bound(c => c.Submiteddate).Format("{0:dd-MMM-yy}").Title("Submitted On");
+            column.Bound(c => c.DueDate).Format("{0:dd-MMM-yy}").Title("Due On");
+            column.Bound(c => c.TimesheetURL).Title("Action").Width(100)
+           .ClientTemplate("<a href='javascript:void(0)' class=\"action-link\" onclick=\"GetRecord('#:TimesheetURL#')\">Action</a>");
+            column.Select();
+        })
+        .HtmlAttributes(new { style = "height: 700px;" })
+            .Scrollable()
+            .Sortable()
+    .Pageable(p => p.Refresh(true))
+    .Filterable()
+    .AutoBind(false)
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("GetPendingTimesheetGrid", "ActionCenter"))
+        .PageSize(100)
+        .Batch(true)
+        .ServerOperation(true)
+    )
+    .Groupable(g =>
+    {
+        g.Enabled(false);
+    })
+    .Excel(e =>
+    {
+        e.FileName("Timesheet.xlsx");
+        e.AllPages(true);
+        e.Collapsible(true);
+        e.Filterable(true);
+    })
+    .Events(e =>
+    {
+        e.DataBound("onTimesheetDataBound");
+        e.ExcelExport("onActionedDocumentExcelExport");
+    })
+    .ColumnMenu()
+    .ToolBar(t =>
+    {
+    t.Template(@<text>
+        <div class="refreshBtnContainer">
+            <a class="k-button k-button-icontext k-grid-excel" href="#"><span class="k-icon k-i-excel"></span>Export to Excel</a>
+            <button id="refresh" class="k-button" onclick="RefreshGrid('grid_Timesheet')"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;Refresh</button>
+        </div>
+        <div class="toolbar">
+            <label class="search-label" for="filter">Search:</label>
+            @(Html.Kendo().TextBox().Name("filter").HtmlAttributes(new { placeholder = "Search", oninput = "ApplyFilter(event, 'grid_Timesheet')" }))
+
+        </div>
+    </text>);
+    })
+    )
+    }
+    @*@(Html.Kendo().Window()
+            .Name("copyMoveWindow")
+            .Title("Move / Copy Attachments")
+            .LoadContentFrom("GetAttachmentsMove", "ActionCenter", new { DocId = 0 })
+            .Width(1200)
+            .Modal(true)
+            .Visible(true)
+            .Actions(actions => actions.Close())
+    )*@
+    <script type="text/javascript">
+        /*********************** Pending Documents Grid ********************************/
+        var _dataId = 0;
+        function GetPendingDocumentsData() {
+            return {
+                dataId: _dataId
+            };
+        }
+        function onPendingDocumentsDataBound(e) {
+            $("#btnCollapseExpand").val("Collapse All");
+            var grid = e.sender;
+            CheckSessionForGrid(grid);
+            $('.comments').each(function (index) {
+                var td = $(this).closest('td');
+                var tr = $(td).closest('tr');
+                var data = grid.dataItem(tr);
+                $('a', td).remove();
+                $('<a />', {
+                    href: '#'
+                })
+                .text('More')
+                .click(function (e) {
+                    //GetWorkflowStatus(data.DocumentId, this)
+                    GetRecord(data.WorkflowBIUrl)
+                })
+                .appendTo(td);
+            });
+            AddActionCenterBadge(e.sender.dataSource.data());
+            $(".group-header-project").each(function () {
+                $(this).closest("td").addClass("group-header-project");
+            });
+            $(".group-header-form").each(function () {
+                $(this).closest("td").addClass("group-header-form");
+            });
+
+            setTimeout(InitDocumentCollapsedRows(e), 0);
+            setTimeout(ChangePedningDaysCellColor(this, 11, 'RemainingDays'), 10);
+            setTimeout(BindActionRightClick(e), 10);
+        }
+        function GetPendingDocuments(obj, __dataId) {
+
+            $(".btn-badge").removeClass("badge-active");
+            $(obj).addClass("badge-active");
+
+            _dataId = __dataId;
+            $("#grid_PendingDocuments").data("kendoGrid").dataSource.read();
+        }
+
+        var exportFlag = false;
+        function onPendingDocumentExcelExport(e) {
+            if (!exportFlag) {
+                e.sender.showColumn(0);
+                e.sender.showColumn(1);
+
+                e.sender.hideColumn(10);
+                e.sender.hideColumn(11);
+                e.sender.hideColumn(12);
+                e.sender.hideColumn(13);
+                e.sender.hideColumn(14);
+
+                e.sender.showColumn(15);
+                e.sender.showColumn(16);
+                e.sender.hideColumn(17);
+
+                e.sender.dataSource.group([]);
+                e.preventDefault();
+                exportFlag = true;
+                setTimeout(function () {
+                    e.sender.saveAsExcel();
+                });
+            } else {
+                setTimeout(function () {
+                    e.sender.dataSource.group([{ field: "Project" }, { field: "RecordType" }]);
+
+                    e.sender.hideColumn(0);
+                    e.sender.hideColumn(1);
+
+                    e.sender.showColumn(10);
+                    e.sender.showColumn(11);
+                    e.sender.showColumn(12);
+                    e.sender.showColumn(13);
+                    e.sender.showColumn(14);
+
+                    e.sender.hideColumn(15);
+                    e.sender.hideColumn(16);
+                    e.sender.showColumn(17);
+
+                }, 10);
+                exportFlag = false;
+            }
+        }
+        var exportActionedFlag = false;
+        function onActionedDocumentExcelExport(e) {
+            if (!exportActionedFlag) {
+                e.sender.hideColumn(5);
+                e.sender.showColumn(7);
+                e.sender.hideColumn(9);
+
+                e.preventDefault();
+                exportActionedFlag = true;
+                setTimeout(function () {
+                    e.sender.saveAsExcel();
+                });
+            } else {
+                setTimeout(function () {
+                    //e.sender.dataSource.group({ field: "Project" });
+                    e.sender.showColumn(5);
+                    e.sender.hideColumn(7);
+                    e.sender.showColumn(9);
+                });
+                exportActionedFlag = false;
+            }
+        }
+        var _actionedDataId = 0;
+        function GetActionedDocuments(obj, __dataId) {
+            $(".btn-actioned").removeClass("badge-active");
+            $(obj).addClass("badge-active");
+
+            _actionedDataId = __dataId;
+            $("#grid_ActionedDocuments").data("kendoGrid").dataSource.read();
+        }
+        function GetActionedGridData() {
+            return {
+                dataId: _actionedDataId,
+                dtStart: startDate,
+                dtEnd: endDate
+            }
+        }
+
+        function onActionedDocumentsDataBound(e) {
+            CheckSessionForGrid(e.sender);
+            if (_actionedDataId == 0) {
+                setTimeout(function () {
+                    var len = e.sender.dataSource.total();
+                    $("#totalActionedCount").text(len);
+                }, 0);
+            }
+            AddActionCenterActionedBadge(e.sender.dataSource.data());
+        }
+        var selectedTab = 0;
+        var winOpened =  false;
+        function onTabSelect(e) {
+            //console.log( this.currentItem());
+            if ($('.k-link', e.item).text() == 'New Correspondence') {
+                openNav();
+                e.preventDefault();
+                return;
+            }
+            setTimeout(function () {
+                //$("#grid_PendingDocuments").data("kendoGrid").dataSource.data([]);
+                //$("#grid_ActionedDocuments").data("kendoGrid").dataSource.data([]);
+
+                var tabStrip = $("#tabActionCenter").data("kendoTabStrip");
+                @if(Model.ShowTimesheet == true)
+                {
+                    <text>
+                    if (tabStrip.select().index() == 0) {
+                        if(selectedTab == 0)
+                        {
+                            winOpened = false;
+                        }
+                        selectedTab = 0;
+                        $("#grid_PendingDocuments").data("kendoGrid").dataSource.read();
+                    }
+                    else if (tabStrip.select().index() == 1) {
+                        if(selectedTab == 1)
+                        {
+                            winOpened = false;
+                        }
+                        selectedTab = 1;
+                        $("#grid_Timesheet").data("kendoGrid").dataSource.read();
+                    }
+                    else if (tabStrip.select().index() == 2) {
+                        if(selectedTab == 3)
+                        {
+                            winOpened = false;
+                        }
+                        selectedTab = 3;
+                        $("#grid_ActionedDocuments").data("kendoGrid").dataSource.read();
+                    }
+                </text>
+                }
+                else
+                {
+                     <text>
+                    if (tabStrip.select().index() == 0) {
+                        if(selectedTab == 0)
+                        {
+                            winOpened = false;
+                        }
+                        selectedTab = 0;
+                        $("#grid_PendingDocuments").data("kendoGrid").dataSource.read();
+                    }
+                    //else if (tabStrip.select().index() == 1) {
+                    //    tabStrip.select(selectedTab);
+                    //    if(winOpened == false)
+                    //    {
+                    //        OpenWin();
+                    //        winOpened = true;
+                    //    }
+                    //}
+                    else if (tabStrip.select().index() == 1) {
+                        if(selectedTab == 2)
+                        {
+                            winOpened = false;
+                        }
+                        selectedTab = 2;
+                        $("#grid_ActionedDocuments").data("kendoGrid").dataSource.read();
+                    }
+                </text>
+                }
+
+            }, 0);
+        }
+        //function RemoveItem()
+        //{
+        //    var grid = $("#grid_PendingDocuments").data("kendoGrid");
+
+        //    //grid.removeRow(tr);
+        //    var dataItem = grid.dataSource.at(0);
+        //    grid.dataSource.remove(dataItem);
+        //    grid.dataSource.sync();
+        //}
+        /*********************** End Pending Documents Grid ********************************/
+        /**************************** Timesheet *****************************/
+        function onTimesheetDataBound(e) {
+            CheckSessionForGrid(e.sender);
+            var checkbox = e.sender.element.find(".k-grid-header .k-checkbox"); // Find the element
+            if (checkbox) {
+                var th = checkbox.closest("th");
+                $('#btnTimesheetApprove').remove();
+                $('<button />', {
+                    id: 'btnTimesheetApprove'
+                })
+                .css({ 'margin-left': '25px' })
+                .text('Approve')
+                .addClass('btn btn-primary')
+                .click(function (e) {
+                    ApproveTimeSheet(e);
+                })
+                .appendTo(th)
+            }
+        }
+        function OpenWin(link) {
+            debugger;
+            console.log("OpenWin");
+            var h = $(window).height();
+            var w = $(window).width();
+
+            var url = '';
+            if (link && link != '') {
+                url = link;
+            }
+            else {
+                url = "PMwebHelper/ActionCenter/AllDocumnets";
+            }
+            //var url = "/ActionCenter/AllDocumnets";
+            var docWin;
+            if (docWin != null) {
+                docWin.location.href = url;
+            }
+            else {
+                docWin = window.open(url, "", "toolbar=no, location=0, scrollbars=yes, status=no, titlebar=no, menubar=no ,width=" + w + ", height=" + h);
+                //window.open(url);
+            }
+            if (docWin)
+                docWin.focus();
+        }
+        $("#pmwebModal").on('hidden.bs.modal', function () {
+            $("#grid_PendingDocuments").data("kendoGrid").dataSource.read();
+            @if(Model.ShowTimesheet == true)
+            {
+                <text>
+                    $("#grid_Timesheet").data("kendoGrid").dataSource.read();
+                </text>
+            }
+        });
+        $(function () {
+            setHeight($("#grid_PendingDocuments"), true);
+            setHeight($("#grid_ActionedDocuments"), true);
+            setHeight($("#grid_Timesheet"), true);
+            InitDateRangePicker(0, '@ViewBag.StartDate', '@ViewBag.EndDate');
+            startDate = '@DateTime.Now.AddDays(-6).ToString("yyyy-MM-dd")';
+            endDate = '@DateTime.Now.ToString("yyyy-MM-dd")';
+            global.url.GetSession = '@Url.Action("GetSession", "Home")';
+            global.url.CeateSession = '@Url.Action("CeateSession", "Home")';
+            global.url.GetTeamInputDetails = '@Url.Action("GetTeamInputDetails", "ActionCenter")';
+            global.url.GetAttachments = '@Url.Action("GetAttachments", "ActionCenter")';
+            global.url.GetWorkflowStatus = '@Url.Action("GetWorkflowStatus", "ActionCenter")';
+            global.url.ActionCenterPendingDocs = '@Url.Action("GetPendingDocs", "ActionCenter")';
+            global.url.ActionedDocs = '@Url.Action("GetActionedDocs", "ActionCenter")';
+            global.url.TimesheetDetails = '@Url.Action("GetTimeSheetDetails", "ActionCenter")';
+            global.url.ApproveTimeSheet = '@Url.Action("ApproveTimeSheet", "ActionCenter")';
+            global.url.GetPendingDocumentsAjax = '@Url.Action("GetPendingDocumentsAjax", "ActionCenter")';
+            global.url.GetActionedDocumentsAjax = '@Url.Action("GetActionedDocumentsAjax", "ActionCenter")';
+
+            global.pmwebUsername = '@Session["PMWebUser"].ToString()';
+            global.pmwebUserId = '@Session["PMWebUserId"].ToString()';
+            global.url.SetCustomApplicateViewer = '@Url.Action("UpdateCustomApplicationViewer", "Task")';
+            global.url.DownloadFolder = '@Url.Action("DownloadFolder", "DocumentLog")';
+
+            @if((bool)ViewBag.IsUserVisited == false)
+            {
+                <text>
+            //var modalElement = document.getElementById('actionCenterModal');
+            //var modal = new bootstrap.Modal(modalElement);
+            /*modal.show();*/
+
+            //Commented by deepika
+            //var _modal = $('#actionCenterModal');
+            //_modal.modal();
+            //var _modal = $('#actionCenterModal');
+            //_modal.modal('show');
+            @*$(".k-tabstrip-wrapper").hide();
+                $("#actionCenterModal").on('hidden.bs.modal', function () {
+                    $(".pyro").remove();
+                    $(".k-tabstrip-wrapper").show();
+                    $("body").css({ "background-color": "#FFF" });
+                    SetCustomApplicateViewer(@Session["PMWebUserId"].ToString(), 'Action Center');
+                });*@
+                </text>
+             }
+        });
+        var isTabSelected = 0;
+        function openNav() {
+            $("#myNav").animate({ height: "100%", opacity: "1" }, 10);
+            //$('.overlay-content').toggle('slide', {
+            //    duration: 1000,
+            //    easing: 'easeOutBounce',
+            //    direction: 'up'
+            //});
+        }
+        function closeNav() {
+                $("#myNav").animate({ height: "0%", opacity: "0" }, 100);
+        }
+        $(document).ready(function () {
+            isTabSelected = 0;
+            closeNav();
+        });
+        $('.overlay').click(function () {
+                closeNav();
+        });
+        $(".overlay-content").click(function(e){
+          e.stopPropagation();
+        });
+    </script>
+</body>
+</html>

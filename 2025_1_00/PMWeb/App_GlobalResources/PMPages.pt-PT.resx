@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Asset_Folder_Assets" xml:space="preserve">
+    <value>Activos</value>
+  </data>
+  <data name="Asset_Folder_Leases" xml:space="preserve">
+    <value>Locações</value>
+  </data>
+  <data name="Asset_Folder_MaintenanceContracts" xml:space="preserve">
+    <value>Contratos de Manutenção</value>
+  </data>
+  <data name="Asset_Folder_Setup" xml:space="preserve">
+    <value>Configuração</value>
+  </data>
+  <data name="Asset_Folder_WorkOrders" xml:space="preserve">
+    <value>Ordens de Trabalho</value>
+  </data>
+  <data name="Asset_Module" xml:space="preserve">
+    <value>Asset Management</value>
+  </data>
+  <data name="Asset_Page_Buildings" xml:space="preserve">
+    <value>Edifícios</value>
+  </data>
+  <data name="Asset_Page_ConfigureDispatchBoards" xml:space="preserve">
+    <value>Configurar Dispatch Boards</value>
+  </data>
+  <data name="Asset_Page_DispatchBoard" xml:space="preserve">
+    <value>Dispatch Câmara</value>
+  </data>
+  <data name="Asset_Page_Equipment" xml:space="preserve">
+    <value>Equipamento</value>
+  </data>
+  <data name="Asset_Page_Floors" xml:space="preserve">
+    <value>Pisos</value>
+  </data>
+  <data name="Asset_Page_InventoryLocations" xml:space="preserve">
+    <value>Inventory Locations</value>
+  </data>
+  <data name="Asset_Page_Leases" xml:space="preserve">
+    <value>Locações</value>
+  </data>
+  <data name="Asset_Page_Locations" xml:space="preserve">
+    <value>Locais</value>
+  </data>
+  <data name="Asset_Page_MaintenanceContracts" xml:space="preserve">
+    <value>Contratos de Manutenção</value>
+  </data>
+  <data name="Asset_Page_Moveout" xml:space="preserve">
+    <value>NMO</value>
+  </data>
+  <data name="Asset_Page_Spaces" xml:space="preserve">
+    <value>Spaces</value>
+  </data>
+  <data name="Asset_Page_Units" xml:space="preserve">
+    <value>Unidades</value>
+  </data>
+  <data name="Asset_Page_WorkOrders" xml:space="preserve">
+    <value>Ordens de Trabalho</value>
+  </data>
+  <data name="Asset_Page_WorkOrdersMapView" xml:space="preserve">
+    <value>Ver mapa</value>
+  </data>
+  <data name="Asset_Page_WorkRequests" xml:space="preserve">
+    <value>Solicitações de trabalho</value>
+  </data>
+  <data name="CostManagement_Folder_Budgets" xml:space="preserve">
+    <value>Orçamentos</value>
+  </data>
+  <data name="CostManagement_Folder_ChangeManagement" xml:space="preserve">
+    <value>Change Management</value>
+  </data>
+  <data name="CostManagement_Folder_Contracts" xml:space="preserve">
+    <value>Contratos</value>
+  </data>
+  <data name="CostManagement_Folder_Funding" xml:space="preserve">
+    <value>Financiamento</value>
+  </data>
+  <data name="CostManagement_Folder_Invoices" xml:space="preserve">
+    <value>Facturas</value>
+  </data>
+  <data name="CostManagement_Module" xml:space="preserve">
+    <value>Gestão de Custos</value>
+  </data>
+  <data name="CostManagement_Page_BudgetRequests" xml:space="preserve">
+    <value>Pedidos de Orçamento</value>
+  </data>
+  <data name="CostManagement_Page_Budgets" xml:space="preserve">
+    <value>Orçamentos</value>
+  </data>
+  <data name="CostManagement_Page_CashFlow" xml:space="preserve">
+    <value>Fluxo de caixa</value>
+  </data>
+  <data name="CostManagement_Page_ChangeEvents" xml:space="preserve">
+    <value>Eventos Change</value>
+  </data>
+  <data name="CostManagement_Page_CommitmentCOs" xml:space="preserve">
+    <value>Compromisso COs</value>
+  </data>
+  <data name="CostManagement_Page_Commitments" xml:space="preserve">
+    <value>Autorizações</value>
+  </data>
+  <data name="CostManagement_Page_ContractCOs" xml:space="preserve">
+    <value>Contrato COs</value>
+  </data>
+  <data name="CostManagement_Page_Contracts" xml:space="preserve">
+    <value>Contratos</value>
+  </data>
+  <data name="CostManagement_Page_CostCodes" xml:space="preserve">
+    <value>Códigos Custo</value>
+  </data>
+  <data name="CostManagement_Page_CostLedger" xml:space="preserve">
+    <value>Livros Custo</value>
+  </data>
+  <data name="CostManagement_Page_CostWorksheet" xml:space="preserve">
+    <value>Planilhas de custo</value>
+  </data>
+  <data name="CostManagement_Page_DefineWorksheet" xml:space="preserve">
+    <value>Planilhas Definir</value>
+  </data>
+  <data name="CostManagement_Page_Forecasts" xml:space="preserve">
+    <value>Previsões</value>
+  </data>
+  <data name="CostManagement_Page_FundingAuthorizations" xml:space="preserve">
+    <value>Financiamento Autorizações</value>
+  </data>
+  <data name="CostManagement_Page_FundingRecords" xml:space="preserve">
+    <value>Financiamento Records</value>
+  </data>
+  <data name="CostManagement_Page_FundingRequests" xml:space="preserve">
+    <value>Os pedidos de financiamento</value>
+  </data>
+  <data name="CostManagement_Page_JournalEntries" xml:space="preserve">
+    <value>Journal Entries</value>
+  </data>
+  <data name="CostManagement_Page_MiscellaneousInvoices" xml:space="preserve">
+    <value>Facturas Diversos</value>
+  </data>
+  <data name="CostManagement_Page_PrimeContracts" xml:space="preserve">
+    <value>Contratos</value>
+  </data>
+  <data name="CostManagement_Page_Production" xml:space="preserve">
+    <value>Produção</value>
+  </data>
+  <data name="CostManagement_Page_ProgressInvoices" xml:space="preserve">
+    <value>Progresso Facturas</value>
+  </data>
+  <data name="CostManagement_Requisition" xml:space="preserve">
+    <value>Requisições</value>
+  </data>
+  <data name="Estimating_Folder_Setup" xml:space="preserve">
+    <value>Configuração</value>
+  </data>
+  <data name="Estimating_Module" xml:space="preserve">
+    <value>Estimativa</value>
+  </data>
+  <data name="Estimating_Page_Assemblies" xml:space="preserve">
+    <value>Assembléias</value>
+  </data>
+  <data name="Estimating_Page_Estimates" xml:space="preserve">
+    <value>Estimativas</value>
+  </data>
+  <data name="Estimating_Page_Formulas" xml:space="preserve">
+    <value>Fórmulas</value>
+  </data>
+  <data name="Estimating_Page_Items" xml:space="preserve">
+    <value>Itens</value>
+  </data>
+  <data name="Estimating_Page_OnlineBidding" xml:space="preserve">
+    <value>Licitações Online</value>
+  </data>
+  <data name="Estimating_Page_Procurement" xml:space="preserve">
+    <value>Contratos</value>
+  </data>
+  <data name="Portfolio_Folder_Setup" xml:space="preserve">
+    <value>Configuração</value>
+  </data>
+  <data name="Portfolio_Module" xml:space="preserve">
+    <value>Portfolio</value>
+  </data>
+  <data name="Portfolio_Page_BIReporting" xml:space="preserve">
+    <value>BI Reporting</value>
+  </data>
+  <data name="Portfolio_Page_ClassificationMatrix" xml:space="preserve">
+    <value>Classificações Matrix</value>
+  </data>
+  <data name="Portfolio_Page_Companies" xml:space="preserve">
+    <value>Empresas</value>
+  </data>
+  <data name="Portfolio_Page_Folder_Lists" xml:space="preserve">
+    <value>Listas</value>
+  </data>
+  <data name="Portfolio_Page_Items" xml:space="preserve">
+    <value>Itens</value>
+  </data>
+  <data name="Portfolio_Page_Lists" xml:space="preserve">
+    <value>Listas</value>
+  </data>
+  <data name="Portfolio_Page_MapView" xml:space="preserve">
+    <value>Ver mapa</value>
+  </data>
+  <data name="Portfolio_Page_PayTypes" xml:space="preserve">
+    <value>Pay Tipos</value>
+  </data>
+  <data name="Portfolio_Page_Periods" xml:space="preserve">
+    <value>Períodos</value>
+  </data>
+  <data name="Portfolio_Page_PortfolioView" xml:space="preserve">
+    <value>Ver portfólio</value>
+  </data>
+  <data name="Portfolio_Page_Projects" xml:space="preserve">
+    <value>Projetos</value>
+  </data>
+  <data name="Portfolio_Page_Resources" xml:space="preserve">
+    <value>Recursos</value>
+  </data>
+  <data name="Portfolio_Page_Security" xml:space="preserve">
+    <value>Segurança</value>
+  </data>
+  <data name="Portfolio_Page_Specifications" xml:space="preserve">
+    <value>Especificações</value>
+  </data>
+  <data name="ProjectManagement_Folder_AdvancedForms" xml:space="preserve">
+    <value>Formas avançadas</value>
+  </data>
+  <data name="ProjectManagement_Module" xml:space="preserve">
+    <value>Engineering Forms</value>
+  </data>
+  <data name="ProjectManagement_Page_ActionItems" xml:space="preserve">
+    <value>Os itens de ação</value>
+  </data>
+  <data name="ProjectManagement_Page_Correspondence" xml:space="preserve">
+    <value>Correspondência</value>
+  </data>
+  <data name="ProjectManagement_Page_DrawingLists" xml:space="preserve">
+    <value>Desenho Lists</value>
+  </data>
+  <data name="ProjectManagement_Page_DrawingSets" xml:space="preserve">
+    <value>Desenho geométrico</value>
+  </data>
+  <data name="ProjectManagement_Page_MeetingMinutes" xml:space="preserve">
+    <value>Acta da reunião</value>
+  </data>
+  <data name="ProjectManagement_Page_PunchLists" xml:space="preserve">
+    <value>Punch Lists</value>
+  </data>
+  <data name="ProjectManagement_Page_RFIs" xml:space="preserve">
+    <value>IRF</value>
+  </data>
+  <data name="ProjectManagement_Page_Submittals" xml:space="preserve">
+    <value>Submittals</value>
+  </data>
+  <data name="ProjectManagement_Page_Transmittals" xml:space="preserve">
+    <value>Transmissões</value>
+  </data>
+  <data name="Scheduling_Module" xml:space="preserve">
+    <value>Agendamento</value>
+  </data>
+  <data name="Scheduling_Page_CalendarDays" xml:space="preserve">
+    <value>Calendários</value>
+  </data>
+  <data name="Scheduling_Page_PPM" xml:space="preserve">
+    <value>PPM</value>
+  </data>
+  <data name="Scheduling_Page_ProjectCodes" xml:space="preserve">
+    <value>Projeto Códigos</value>
+  </data>
+  <data name="Scheduling_Page_ResoucesAvailability" xml:space="preserve">
+    <value>Resouces Disponibilidade</value>
+  </data>
+  <data name="Scheduling_Page_RiskAnalysis" xml:space="preserve">
+    <value>Análise de Risco</value>
+  </data>
+  <data name="Scheduling_Page_Schedules" xml:space="preserve">
+    <value>Horários</value>
+  </data>
+  <data name="Scheduling_Page_Timesheets" xml:space="preserve">
+    <value>Timesheets</value>
+  </data>
+  <data name="Workflow_Folder_Forms" xml:space="preserve">
+    <value>Formulários</value>
+  </data>
+  <data name="Workflow_Folder_PrologRecords" xml:space="preserve">
+    <value>Prolog Records</value>
+  </data>
+  <data name="Workflow_Module" xml:space="preserve">
+    <value>Workflow</value>
+  </data>
+  <data name="Workflow_Page_Contracts" xml:space="preserve">
+    <value>Prolog  Contratos</value>
+  </data>
+  <data name="Workflow_Page_CustomFormBuilder" xml:space="preserve">
+    <value>Custom Form Builder</value>
+  </data>
+  <data name="Workflow_Page_FileManager" xml:space="preserve">
+    <value>Gerenciador de Arquivos</value>
+  </data>
+  <data name="Workflow_Page_Inbox" xml:space="preserve">
+    <value>Inbox</value>
+  </data>
+  <data name="Workflow_Page_PCOs" xml:space="preserve">
+    <value>Prolog PCO</value>
+  </data>
+  <data name="Workflow_Page_Setup" xml:space="preserve">
+    <value>Configuração</value>
+  </data>
+  <data name="Workflow_Page_Workflow" xml:space="preserve">
+    <value>Workflow</value>
+  </data>
+</root>

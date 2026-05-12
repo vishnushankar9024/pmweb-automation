@@ -1,0 +1,621 @@
+﻿.RadSlider {
+  width: 22px;
+  height: 22px;
+  /* the dragHandle needs to have greater z-index than the increase/decrease handlers, as it can be positioned over the rounded corders
+	of the track, part of those handles */
+  /* any link inside RadSlider */
+  /* slider wrapper class */
+  /* horizontal slider */
+  /* vertical slider */
+  /* end rslVertical styles */
+  /* ITEMS AND TICKS */
+  /* text */
+  /* Item specific */
+  /* Tick specific */
+  /* LiveDrag=false */
+  /* Position the elements of the slider */
+  /* TrackPosition=Center */
+  /* Item/Tick */
+  /* Item/Tick text */
+  /* set width of the ticks */
+}
+
+.RadSlider,
+.RadSlider * {
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+}
+
+.RadSlider,
+.RadSlider .rslItem,
+.RadSlider .rslLargeTick span {
+  font: normal 10px "Segoe UI", Arial, Verdana, sans-serif;
+  color: black;
+}
+
+.RadSlider .rslTrack {
+  z-index: 1;
+  border-style: solid;
+}
+
+.RadSlider .rslDisabled {
+  opacity: .5;
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity = 50);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+}
+
+.RadSlider .rslDisabled,
+.RadSlider .rslDisabled a,
+.RadSlider .rslDisabled li {
+  cursor: no-drop;
+}
+
+
+
+.RadSlider a {
+  display: block;
+  text-indent: -9999px;
+  overflow: hidden;
+  text-decoration: none;
+  text-align: center;
+  overflow: hidden;
+}
+
+.RadSlider a:focus,
+.RadSlider a:active {
+  outline: none;
+}
+
+.RadSlider .rslHandle span,
+.RadSlider
+.rslDraghandle span {
+  display: block;
+}
+
+.RadSlider .rslHorizontal,
+.RadSlider .rslVertical {
+  position: relative;
+  -moz-user-select: none;
+  font-size: 1px;
+  line-height: 2px;
+}
+
+.RadSlider .rslHorizontal,
+.RadSlider .rslHorizontal a.rslHandle,
+.RadSlider .rslHorizontal a.rslDraghandle {
+  height: 22px;
+  line-height: 22px;
+}
+
+.RadSlider .rslHorizontal a.rslHandle {
+  width: 25px;
+  background-repeat: no-repeat;
+}
+
+.RadSlider .rslHorizontal .rslDecrease {
+  background-position: 0 -22px;
+}
+
+.RadSlider .rslHorizontal .rslDecrease:hover {
+  background-position: -25px -22px;
+}
+
+.RadSlider .rslHorizontal .rslIncrease {
+  background-position: 0 0;
+}
+
+.RadSlider .rslHorizontal .rslIncrease:hover {
+  background-position: -25px 0;
+}
+
+.RadSlider .rslHorizontal a.rslDraghandle {
+  width: 9px;
+  margin-top: -8px;
+  background-repeat: no-repeat;
+}
+
+.RadSlider .rslHorizontal a.rslDraghandle:hover {
+  background-position: -9px 0;
+}
+
+.RadSlider .rslHorizontal a.rslDraghandle:focus,
+.RadSlider .rslHorizontal a.rslDraghandle:active {
+  background-position: -18px 0;
+}
+
+.RadSlider .rslHorizontal .rslTrack,
+.RadSlider .rslHorizontal .rslSelectedregion {
+  height: 6px;
+  line-height: 6px;
+}
+
+.RadSlider .rslHorizontal .rslTrack {
+  border-width: 0 1px;
+}
+
+.RadSlider .rslHorizontal .rslItemsWrapper {
+  margin: 0 1px;
+  /* The margin must equal the side border of the track element */
+}
+
+.RadSlider .rslDisabled .rslLiveDragHandle {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
+
+.RadSlider .rslVertical a.rslHandle,
+.RadSlider .rslVertical a.rslDraghandle {
+  width: 22px;
+}
+
+.RadSlider .rslVertical a.rslHandle {
+  height: 25px;
+  line-height: 25px;
+  background-repeat: no-repeat;
+}
+
+.RadSlider .rslVertical .rslDecrease {
+  background-position: 0 0;
+}
+
+.RadSlider .rslVertical .rslDecrease:hover {
+  background-position: 0 -28px;
+}
+
+.RadSlider .rslVertical .rslIncrease {
+  background-position: -22px 3px;
+}
+
+.RadSlider .rslVertical .rslIncrease:hover {
+  background-position: -22px -25px;
+}
+
+.RadSlider .rslVertical .rslTrack,
+.RadSlider .rslVertical .rslSelectedregion {
+  width: 6px;
+}
+
+.RadSlider .rslVertical .rslTrack {
+  border-width: 1px 0;
+}
+
+.RadSlider .rslVertical .rslItemsWrapper {
+  margin: 1px 0;
+  /* The margin must equal the side border of the track element */
+}
+
+.RadSlider .rslVertical a.rslDraghandle {
+  height: 9px;
+  line-height: 8px;
+  margin-left: -8px;
+  *margin-left: 0;
+  *margin-right: -8px;
+  *left: auto !important;
+  /* use important in order to override the left inline style; it is always 0 in vertical slider */
+  *right: 0;
+}
+
+.RadSlider .rslVertical a.rslDraghandle:hover {
+  background-position: 0 -9px;
+}
+
+.RadSlider .rslVertical a.rslDraghandle:focus,
+.RadSlider .rslVertical a.rslDraghandle:active {
+  background-position: 0 -18px;
+}
+
+.RadSlider .rslItemsWrapper,
+.RadSlider .rslItem,
+.RadSlider .rslLargeTick,
+.RadSlider .rslSmallTick {
+  margin: 0;
+  padding: 0;
+  list-style: none !important;
+}
+
+.RadSlider .rslItem span,
+.RadSlider .rslLargeTick span {
+  font-size: 11px;
+}
+
+.RadSlider .rslVertical .rslItemsWrapper .rslItemFirst,
+.RadSlider .rslHorizontal .rslItemsWrapper .rslItemFirst {
+  background-image: none;
+}
+
+.RadSlider .rslItem {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: default;
+  background-repeat: no-repeat;
+}
+
+.RadSlider .rslHorizontal .rslItem {
+  text-align: center;
+}
+
+.RadSlider .RadSlider .rslItemsWrapper li.rslItemDisabled {
+  color: #d0d0ce;
+}
+
+.RadSlider .rslMiddle .rslItem,
+.RadSlider .rslLeft .rslLargeTick,
+.RadSlider .rslLeft .rslSmallTick {
+  background-position: left center;
+}
+
+.RadSlider .rslTop .rslItem {
+  background-position: left top;
+}
+
+.RadSlider .rslBottom .rslItem {
+  background-position: left bottom;
+}
+
+.RadSlider .rslCenter .rslItem,
+.RadSlider .rslTop .rslLargeTick,
+.RadSlider .rslTop .rslSmallTick {
+  background-position: center top;
+}
+
+.RadSlider .rslLeft .rslItem {
+  background-position: left top;
+}
+
+.RadSlider .rslRight .rslItem {
+  background-position: right top;
+}
+
+.RadSlider .rslLargeTick,
+.RadSlider .rslSmallTick {
+  cursor: default;
+  /* We need this in order to position the SPAN holding the text. */
+  position: relative;
+  background-repeat: no-repeat;
+}
+
+.RadSlider .rslCenter .rslLargeTick,
+.RadSlider .rslCenter .rslSmallTick,
+.RadSlider .rslMiddle .rslLargeTick,
+.RadSlider .rslMiddle .rslSmallTick {
+  background-position: center center;
+}
+
+.RadSlider .rslRight .rslLargeTick,
+.RadSlider .rslRight .rslSmallTick {
+  background-position: right center;
+}
+
+.RadSlider .rslBottom .rslLargeTick,
+.RadSlider .rslBottom .rslSmallTick {
+  background-position: center bottom;
+}
+
+.RadSlider .rslLiveDragHandleActive {
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+}
+
+.RadSlider .rslLiveDragHandle {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+}
+
+.RadSlider .rslHandle,
+.RadSlider .rslDraghandle,
+.RadSlider .rslTrack,
+.RadSlider .rslSelectedregion,
+.RadSlider .rslItemsWrapper,
+.RadSlider .rslLargeTick span {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.RadSlider .rslHorizontal .rslTrack,
+.RadSlider .rslHorizontal .rslItemsWrapper {
+  left: 25px;
+}
+
+.RadSlider .rslVertical .rslTrack,
+.RadSlider .rslVertical .rslItemsWrapper {
+  top: 25px;
+}
+
+.RadSlider .rslHorizontal .rslIncrease,
+.RadSlider .rslRight .rslHandle,
+.RadSlider .rslLeft .rslItemsWrapper,
+.RadSlider .rslLeft .rslLargeTick span,
+.RadSlider .rslVertical .rslLargeTick span.rslBRItemText {
+  left: auto;
+  right: 0;
+}
+
+.RadSlider .rslTop .rslItemsWrapper,
+.RadSlider .rslBottom .rslHandle,
+.RadSlider .rslVertical .rslIncrease,
+.RadSlider .rslTop .rslLargeTick span,
+.RadSlider .rslHorizontal .rslLargeTick span.rslBRItemText {
+  top: auto;
+  bottom: 0;
+}
+
+.RadSlider .rslHorizontal .rslTrack {
+  top: 8px;
+}
+
+.RadSlider .rslBottom div.rslTrack {
+  top: auto;
+  bottom: 8px;
+}
+
+.RadSlider .rslVertical .rslTrack {
+  left: 8px;
+}
+
+.RadSlider .rslRight div.rslTrack {
+  left: auto;
+  right: 8px;
+}
+
+.RadSlider .rslMiddle .rslTrack,
+.RadSlider .rslMiddle .rslHandle {
+  top: 50%;
+}
+
+.RadSlider .rslCenter .rslTrack,
+.RadSlider .rslCenter .rslHandle {
+  left: 50%;
+}
+
+.RadSlider .rslMiddle a.rslHandle {
+  /* half of the height of the handle */
+  margin-top: -11px;
+}
+
+.RadSlider .rslMiddle div.rslTrack {
+  /* half of the height of the track */
+  margin-top: -3px;
+}
+
+.RadSlider .rslCenter a.rslHandle {
+  /* half of the width of the handle */
+  margin-left: -11px;
+}
+
+.RadSlider .rslCenter div.rslTrack {
+  /* half of the width of the track */
+  margin-left: -3px;
+}
+
+.RadSlider .rslHorizontal .rslItem,
+.RadSlider .rslHorizontal .rslLargeTick,
+.RadSlider .rslHorizontal .rslSmallTick {
+  float: left;
+}
+
+.RadSlider .rslLargeTick span {
+  white-space: nowrap;
+}
+
+.RadSlider .rslHorizontal .rslLargeTick span {
+  width: 100%;
+  text-align: center;
+}
+
+.RadSlider .rslVertical .rslLargeTick span {
+  height: 100%;
+}
+
+.RadSlider .rslHorizontal .rslSmallTick,
+.RadSlider .rslHorizontal .rslLargeTick {
+  width: 1px;
+}
+
+.RadSlider .rslVertical .rslSmallTick,
+.RadSlider .rslVertical .rslLargeTick {
+  height: 1px;
+  *vertical-align: middle;
+}
+
+/* Fix the positioning problem in IE6 and IE7 in rtl mode */
+.RadSliderRTL .rslCenter .rslTrack,
+.RadSliderRTL .rslCenter .rslHandle {
+  *right: 50%;
+}
+
+/* Fix the positioning problem in IE6 and IE7 in rtl mode */
+.RadSliderRTL .rslCenter a.rslHandle {
+  *margin-left: 0;
+  *margin-right: -11px;
+}
+
+/* Fix the positioning problem in IE6 and IE7 in rtl mode */
+.RadSliderRTL .rslCenter div.rslTrack {
+  *margin-left: 0;
+  *margin-right: -3px;
+}
+
+.RadSlider_MetroTouch {
+  /* horizontal slider */
+  /* end horizontal slider */
+  /* vertical slider */
+  /* end vertical slider */
+  /* horizontal slider - TrackPosition=Top/Bottom */
+  /* vertical slider - TrackPosition=Left/Right */
+  /* horizontal slider - TrackPosition=Center */
+  /* vertical slider - TrackPosition=Center */ }
+  .RadSlider_Default .rslTrack {
+    border-color: #b9b9b9 #939393 #939393 #b9b9b9; }
+  .RadSlider_Default div.rslHorizontal .rslTrack {
+    /*margin: 0 12px;*/
+    left: 30px; }
+  .RadSlider_Default div.rslHorizontal .rslItemsWrapper {
+    left: 30px;
+    margin: 0 12px; }
+  .RadSlider_Default div.rslHorizontal a.rslHandle {
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    border: 1px solid #cdcdcd;
+    border-radius: 45px;
+    background-image: url('../Images/Slider/metrotouch-sprite.png');
+    background-color: #f9f9f9; }
+  .RadSlider_Default div.rslHorizontal a.rslHandle:hover {
+    background-color: #e8e8e8; }
+  .RadSlider_Default div.rslHorizontal a.rslHandle:active, .RadSlider_Default div.rslHorizontal a.rslHandle:focus {
+    background-color: #e8e8e8;
+    background-color: #25a0da;
+    border: 1px solid #25a0da; }
+  .RadSlider_Default div.rslHorizontal a.rslDecrease {
+    margin: -3px 0 0;
+    background-position: -11px -111px; }
+  .RadSlider_Default div.rslHorizontal a.rslDecrease:hover {
+    background-position: -11px -111px; }
+  .RadSlider_Default div.rslHorizontal a.rslDecrease:active, .RadSlider_Default div.rslHorizontal a.rslDecrease:focus {
+    background-position: -111px -111px; }
+  .RadSlider_Default div.rslHorizontal a.rslIncrease {
+    margin: -3px 0 0;
+    background-position: -11px -161px;
+    right: 0; }
+  .RadSlider_Default div.rslHorizontal a.rslIncrease:hover {
+    background-position: -11px -161px; }
+  .RadSlider_Default div.rslHorizontal a.rslIncrease:active, .RadSlider_Default div.rslHorizontal a.rslIncrease:focus {
+    background-position: -111px -161px; }
+  .RadSlider_Default div.rslHorizontal a.rslDraghandle {
+    width: 15px;
+    height: 15px;
+    border-radius: 45px;
+    background-image: none;
+    background-color: #666;
+    top: 4px !important; }
+
+  .RadSlider_Default div.rslHorizontal a.rslDraghandle span {
+    width: 22px;
+    height: 22px;
+    border-radius: 45px;
+    overflow: hidden; }
+  .RadSlider_Default div.rslHorizontal div.rslTrack {
+    height: 6px;
+    line-height: 6px;
+    background-color: #cdcdcd;
+    border: 0; 
+  }
+
+  .RadSlider_Default div.rslHorizontal div.rslSelectedregion {
+    height: 9px;
+    line-height: 9px; }
+  .RadSlider_Default div.rslHorizontal .rslItem {
+    background-image: url('../Images/Slider/ItemHorizontalBgr.png'); }
+  .RadSlider_Default div.rslHorizontal.rslMiddle .rslHandle {
+    margin-top: -15px; }
+  .RadSlider_Default div.rslHorizontal li.rslItem span {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    font-size: 13px; }
+  .RadSlider_Default div.rslHorizontal.rslMiddle div.rslTrack {
+    margin-top: -5px; }
+  .RadSlider_Default div.rslVertical .rslTrack {
+    margin: 12px 0;
+    top: 30px; }
+  .RadSlider_Default div.rslVertical .rslItemsWrapper {
+    top: 30px;
+    margin: 12px 0; }
+  .RadSlider_Default div.rslVertical a.rslHandle {
+    width: 29px;
+    height: 29px;
+    line-height: 29px;
+    border: 1px solid #cdcdcd;
+    border-radius: 45px;
+    background-image: url('../Images/Slider/metrotouch-sprite.png');
+    background-color: #f9f9f9; }
+  .RadSlider_Default div.rslVertical a.rslHandle:hover {
+    background-color: #e8e8e8; }
+  .RadSlider_Default div.rslVertical a.rslHandle:active, .RadSlider_Default div.rslVertical a.rslHandle:focus {
+    background-color: #e8e8e8;
+    background-color: #25a0da;
+    border: 1px solid #25a0da; }
+  .RadSlider_Default div.rslVertical a.rslDecrease {
+    margin: 0;
+    background-position: -11px -11px; }
+  .RadSlider_Default div.rslVertical a.rslDecrease:hover {
+    background-position: -11px -11px; }
+  .RadSlider_Default div.rslVertical a.rslDecrease:active, .RadSlider_Default div.rslVertical a.rslDecrease:focus {
+    background-position: -111px -11px; }
+  .RadSlider_Default div.rslVertical a.rslIncrease {
+    margin: 0;
+    background-position: -11px -61px; }
+  .RadSlider_Default div.rslVertical a.rslIncrease:hover {
+    background-position: -11px -61px; }
+  .RadSlider_Default div.rslVertical a.rslIncrease:active, .RadSlider_Default div.rslVertical a.rslIncrease:focus {
+    background-position: -111px -61px; }
+  .RadSlider_Default div.rslVertical div.rslTrack {
+    width: 8px;
+    background-color: #cdcdcd;
+    border: 0;
+    left: 11px; }
+  .RadSlider_Default div.rslVertical.rslRight div.rslTrack {
+    left: auto;
+    right: 11px; }
+  .RadSlider_Default div.rslVertical.rslCenter div.rslTrack {
+    left: 50%;
+    margin-left: -4px; }
+  .RadSlider_Default div.rslVertical.rslCenter a.rslHandle {
+    left: 50%;
+    margin-left: -15px; }
+  .RadSlider_Default div.rslVertical .rslSelectedregion {
+    width: 8px;
+    background-color: #25a0da; }
+  .RadSlider_Default div.rslVertical a.rslDraghandle {
+    width: 23px;
+    height: 23px;
+    border-radius: 45px;
+    background-image: none;
+    border: 2px solid #ffffff;
+    background-color: #25a0da;
+    left: -1px !important;
+    *left: -8px !important; }
+  .RadSlider_Default div.rslVertical a.rslDraghandle:hover {
+    width: 22px;
+    height: 22px;
+    border: 3px solid #ffffff; }
+  .RadSlider_Default div.rslVertical a.rslDraghandle:active, .RadSlider_Default div.rslVertical a.rslDraghandle:focus {
+    width: 22px;
+    height: 22px;
+    border: 3px solid #25a0da;
+    background-color: #ffffff; }
+  .RadSlider_Default div.rslVertical a.rslDraghandle span {
+    width: 22px;
+    height: 22px;
+    border-radius: 45px;
+    overflow: hidden; }
+  .RadSlider_Default div.rslVertical .rslItem {
+    background-image: url('../Images/Slider/ItemVerticalBgr.png'); }
+  .RadSlider_Default div.rslVertical li.rslItem span {
+    font-size: 13px;
+    padding: 1px 3px; }
+  .RadSlider_Default .rslItem, .RadSlider_Default .rslLargeTick span {
+    color: #767676; }
+  .RadSlider_Default .rslItemsWrapper .rslItemSelected {
+    color: #000000; }
+  .RadSlider_Default .rslTop .rslSmallTick, .RadSlider_Default .rslBottom .rslSmallTick {
+    background-image: url('../Images/Slider/SmallChangeHorizontal.png'); }
+  .RadSlider_Default .rslTop .rslLargeTick, .RadSlider_Default .rslBottom .rslLargeTick {
+    background-image: url('../Images/Slider/LargeChangeHorizontal.png'); }
+  .RadSlider_Default .rslLeft .rslSmallTick, .RadSlider_Default .rslRight .rslSmallTick {
+    background-image: url('../Images/Slider/SmallChangeVertical.png'); }
+  .RadSlider_Default .rslLeft .rslLargeTick, .RadSlider_Default .rslRight .rslLargeTick {
+    background-image: url('../Images/Slider/LargelChangeVertical.png'); }
+  .RadSlider_Default .rslMiddle .rslSmallTick {
+    background-image: url('../Images/Slider/SmallChangeMiddleHorizontal.png'); }
+  .RadSlider_Default .rslLargeTick {
+    background-image: url('../Images/Slider/LargeChangeMiddleHorizontal.png'); }
+  .RadSlider_Default .rslCenter .rslSmallTick {
+    background-image: url('../Images/Slider/SmallChangeCenterVertical.png'); }
+  .RadSlider_Default .rslCenter .rslLargeTick {
+    background-image: url('../Images/Slider/LargelChangeCenterVertical.png'); }
+

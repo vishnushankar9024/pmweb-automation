@@ -1,0 +1,20 @@
+﻿@model Trinergy.ViewModel.DashboardViewModel
+<ul>
+    @foreach (var groupMenu in Model.GroupMenus)
+    {
+        var projects = Model.Projects.Where(w => w.GroupProperty == groupMenu);
+        <li>
+            <a href='#'><span>@groupMenu</span><span class="cnt">@projects.Count()</span></a>
+            <ul>
+                @foreach (var project in projects)
+                {
+                    <li>
+                        <div><a href="javascript:void(0)" data-pid="@project.Id" class="dashboard projectLinks">@project.Name</a></div>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+</ul>
+
+

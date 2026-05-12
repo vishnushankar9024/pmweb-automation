@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnChangeOrders.Text" xml:space="preserve">
+    <value>变更单</value>
+  </data>
+  <data name="ckbUseUnits.Text" xml:space="preserve">
+    <value>使用单位</value>
+  </data>
+  <data name="ddlCompanies.EmptyMessage" xml:space="preserve">
+    <value>选择公司...</value>
+  </data>
+  <data name="GridColumn_Adjustment1" xml:space="preserve">
+    <value>调整1</value>
+  </data>
+  <data name="GridColumn_Adjustment2" xml:space="preserve">
+    <value>调整2</value>
+  </data>
+  <data name="GridColumn_AssignedTo" xml:space="preserve">
+    <value>分配给</value>
+  </data>
+  <data name="GridColumn_BalanceToInvoice" xml:space="preserve">
+    <value>发票余额</value>
+  </data>
+  <data name="GridColumn_CCONumber" xml:space="preserve">
+    <value>CCO＃</value>
+  </data>
+  <data name="GridColumn_CostCode" xml:space="preserve">
+    <value>成本代码</value>
+  </data>
+  <data name="GridColumn_CostType" xml:space="preserve">
+    <value>成本类型</value>
+  </data>
+  <data name="GridColumn_CurrentInvoice" xml:space="preserve">
+    <value>当前发票</value>
+  </data>
+  <data name="GridColumn_CurrentMaterialsRetainAmount" xml:space="preserve">
+    <value>当前材料保留金额</value>
+  </data>
+  <data name="GridColumn_CurrentPayment" xml:space="preserve">
+    <value>当前合计应付</value>
+  </data>
+  <data name="GridColumn_CurrentQuantity" xml:space="preserve">
+    <value>当前数量</value>
+  </data>
+  <data name="GridColumn_CurrentServicesRetainAmount" xml:space="preserve">
+    <value>当前服务保留金额</value>
+  </data>
+  <data name="GridColumn_CurrentStoredMaterial" xml:space="preserve">
+    <value>当前存储材料</value>
+  </data>
+  <data name="GridColumn_Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="GridColumn_Funded" xml:space="preserve">
+    <value>资金</value>
+  </data>
+  <data name="GridColumn_LineNumber" xml:space="preserve">
+    <value>行＃</value>
+  </data>
+  <data name="GridColumn_Location" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="GridColumn_MaterialsRetainAmount" xml:space="preserve">
+    <value>材料保留量</value>
+  </data>
+  <data name="GridColumn_Notes" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="GridColumn_PctComplete" xml:space="preserve">
+    <value>完成％</value>
+  </data>
+  <data name="GridColumn_PctMaterialsRetain" xml:space="preserve">
+    <value>物料保留％</value>
+  </data>
+  <data name="GridColumn_PctServicesRetain" xml:space="preserve">
+    <value>服务保留％</value>
+  </data>
+  <data name="GridColumn_Phase" xml:space="preserve">
+    <value>阶段</value>
+  </data>
+  <data name="GridColumn_PostAs" xml:space="preserve">
+    <value>原始 /调整</value>
+  </data>
+  <data name="GridColumn_PriorInvoices" xml:space="preserve">
+    <value>前期发票</value>
+  </data>
+  <data name="GridColumn_PriorMaterialsRetainAmount" xml:space="preserve">
+    <value>前期材料保留金额</value>
+  </data>
+  <data name="GridColumn_PriorQuantity" xml:space="preserve">
+    <value>前期数量</value>
+  </data>
+  <data name="GridColumn_PriorServicesRetainAmount" xml:space="preserve">
+    <value>前期服务保留金额</value>
+  </data>
+  <data name="GridColumn_PriorStoredMaterial" xml:space="preserve">
+    <value>前期存储材料</value>
+  </data>
+  <data name="GridColumn_ReqCode" xml:space="preserve">
+    <value>申请代码</value>
+  </data>
+  <data name="GridColumn_ScheduledQuantity" xml:space="preserve">
+    <value>计划数量</value>
+  </data>
+  <data name="GridColumn_ScheduledValue" xml:space="preserve">
+    <value>计划值</value>
+  </data>
+  <data name="GridColumn_ServicesRetainAmount" xml:space="preserve">
+    <value>服务保留量</value>
+  </data>
+  <data name="GridColumn_StoredMaterial" xml:space="preserve">
+    <value>存储材料</value>
+  </data>
+  <data name="GridColumn_Task" xml:space="preserve">
+    <value>任务</value>
+  </data>
+  <data name="GridColumn_Tax" xml:space="preserve">
+    <value>税费</value>
+  </data>
+  <data name="GridColumn_TotalInvoiced" xml:space="preserve">
+    <value>总发票</value>
+  </data>
+  <data name="GridColumn_TotalMaterialsRetainAmount" xml:space="preserve">
+    <value>总材料保留量</value>
+  </data>
+  <data name="GridColumn_TotalQuantity" xml:space="preserve">
+    <value>总数量</value>
+  </data>
+  <data name="GridColumn_TotalRetained" xml:space="preserve">
+    <value>总保留</value>
+  </data>
+  <data name="GridColumn_TotalServices" xml:space="preserve">
+    <value>总服务</value>
+  </data>
+  <data name="GridColumn_TotalServicesRetainAmount" xml:space="preserve">
+    <value>总服务保留量</value>
+  </data>
+  <data name="GridColumn_TotalStoredMaterial" xml:space="preserve">
+    <value>总计存储材料</value>
+  </data>
+  <data name="GridColumn_TotalThisInvoice" xml:space="preserve">
+    <value>总计发票</value>
+  </data>
+  <data name="GridColumn_UnitCost" xml:space="preserve">
+    <value>单位成本</value>
+  </data>
+  <data name="GridColumn_UOM" xml:space="preserve">
+    <value>单位</value>
+  </data>
+  <data name="GridColumn_WBS" xml:space="preserve">
+    <value>WBS</value>
+  </data>
+  <data name="lblExpandCollapse.Text" xml:space="preserve">
+    <value>展开/折叠</value>
+  </data>
+  <data name="WarningMsg_InvoiceDetailDeleting" xml:space="preserve">
+    <value>您无法删除此发票行！</value>
+  </data>
+  <data name="WarningMsg_MaxBilling" xml:space="preserve">
+    <value>最大开票额不能被超过！</value>
+  </data>
+</root>

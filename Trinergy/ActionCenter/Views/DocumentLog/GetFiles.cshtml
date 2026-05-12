@@ -1,0 +1,32 @@
+﻿@model Trinergy.Wrapper.AttachedFiles
+@{
+    Layout = null;
+}
+@if (Model.Files.Count > 0)
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h5>@Model.Title</h5></div>
+        <div class="panel-body">
+            <ul>
+                @foreach (var file in Model.Files)
+                {
+                    <li><a href="@file.DownloadLink" target="_blank">@file.Name</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+@if (Model.OtherFiles.Count > 0)
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h5>@Model.OtherTitle</h5></div>
+        <div class="panel-body">
+            <ul>
+                @foreach (var file in Model.OtherFiles)
+                {
+                    <li><a href="@file.DownloadLink" target="_blank">@file.Name</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+}

@@ -1,0 +1,87 @@
+﻿@model WorkOrderForm.Models.IntermediateModels.WorkOrderModel
+@using WorkOrderForm.Constants
+@{
+    Layout = null;
+}
+<style>
+    textarea {
+        max-width: 100% !important;
+    }
+
+    li {
+        list-style-type: none;
+    }
+   
+
+</style>
+<link href="pmwebhelper/Content/Chatbox.css" rel="stylesheet" />
+<link href="pmwebhelper/Content/font-awesome.min.css" rel="stylesheet" />
+<div class="col-md-12">
+
+    <div class="chat col-md-12">
+        <div class="chat-header clearfix">
+            <div class="chat-about">
+                <div class="chat-with"><h3>Conversations</h3></div>
+            </div>
+            <i class="fa fa-star"></i>
+        </div> <!-- end chat-header -->
+
+        <div class="chat-history col-md-12" style="overflow:visible;">
+            <ul>
+
+                @foreach (var task in Model.AllTaskComments.Where(x => !string.IsNullOrEmpty(x.Comments)))
+                {
+                    if (task.UpdatedBy != ViewBag.UserId)
+                    {
+                        <li>
+                            <div class="message-data">
+                                <span class="message-data-name"><i class="fa fa-circle online"></i> @task.CreatedByName @Html.Raw(task.SendTo)</span>
+                                <span class="message-data-time">@task.CreatedDate.ToString("dd-MMM-yy")</span>
+                            </div>
+                            <div class="message my-message">
+                                @task.Comments                                
+                            </div>
+                            <div class="col-md-12" style="margin-bottom:15px">
+                                @if (task.TaskAttachments != null)
+                                {
+                                    foreach (var fileName in task.TaskAttachments.Select((value, i) => new { i, value }))
+                                    {
+                                        <div class="col-md-1 pull-left" style="width:150px">
+                                            @Html.ActionLink("Attachment" + Convert.ToInt32(fileName.i + 1), "Preview", @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), new { @fileName = fileName.value }, new { @target = "_blank",@style= "color:#86bb71" })<span>&nbsp&nbsp&nbsp</span><span class="glyphicon glyphicon-file" style="color:#86bb71"></span>
+                                        </div>
+                                    }
+                                }
+                                        </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="clearfix">
+                            <div class="message-data align-right">
+                                <span class="message-data-time">@task.CreatedDate.ToString("dd-MMM-yy")</span> &nbsp; &nbsp;
+                                <span class="message-data-name">@task.CreatedByName</span> <i class="fa fa-circle me"></i>
+
+                            </div>
+                            <div class="message other-message float-right">
+                                @task.Comments
+                            </div>
+                            <div class="col-md-12" style="margin-bottom:15px">
+                                @if (task.TaskAttachments != null)
+                                {
+                                    foreach (var fileName in task.TaskAttachments.Select((value, i) => new { i, value }))
+                                    {
+                                        <div class="col-md-1 pull-right" style="width:150px">
+                                            @Html.ActionLink("Attachment" + Convert.ToInt32(fileName.i + 1), "Preview", @HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString(), new { @fileName = fileName.value }, new { @target = "_blank" })<span>&nbsp&nbsp&nbsp</span><span class="glyphicon glyphicon-file" style="color:#337ab7"></span>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+    </div> <!-- end chat -->
+
+</div> <!-- end container -->

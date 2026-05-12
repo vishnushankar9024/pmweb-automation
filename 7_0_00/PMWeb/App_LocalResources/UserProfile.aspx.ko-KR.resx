@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="chkPromptToSave.Text" xml:space="preserve">
+    <value>저장하라는 메시지가 나타</value>
+  </data>
+  <data name="GridColumn_Content" xml:space="preserve">
+    <value>내용</value>
+  </data>
+  <data name="GridColumn_Control" xml:space="preserve">
+    <value>제어</value>
+  </data>
+  <data name="GridColumn_PMWebReport" xml:space="preserve">
+    <value>PMWeb 보고서</value>
+  </data>
+  <data name="GridColumn_Show" xml:space="preserve">
+    <value>표시</value>
+  </data>
+  <data name="GridColumn_SQLReport" xml:space="preserve">
+    <value>SQL 보고서</value>
+  </data>
+  <data name="GridColumn_TabName" xml:space="preserve">
+    <value>탭 라벨 *</value>
+  </data>
+  <data name="GridColumn_TabNumber" xml:space="preserve">
+    <value>순서</value>
+  </data>
+  <data name="GridColumn_TabType" xml:space="preserve">
+    <value>탭 타입</value>
+  </data>
+  <data name="GridColumn_visible" xml:space="preserve">
+    <value>표시</value>
+  </data>
+  <data name="lblConfigureControls.Text" xml:space="preserve">
+    <value>컨트롤 탭을 구성</value>
+  </data>
+  <data name="lblConfirmPassword.Text" xml:space="preserve">
+    <value>비밀번호 확인</value>
+  </data>
+  <data name="lblEmail.Text" xml:space="preserve">
+    <value>이메일 *</value>
+  </data>
+  <data name="lblEnterNewPassword.Text" xml:space="preserve">
+    <value>새 암호를 입력합니다.</value>
+  </data>
+  <data name="lblFirstName.Text" xml:space="preserve">
+    <value>이름 *</value>
+  </data>
+  <data name="lblHomePageTabs.Text" xml:space="preserve">
+    <value>홈 페이지 탭</value>
+  </data>
+  <data name="lblInvalidPassword.Text" xml:space="preserve">
+    <value>비밀번호가 잘못되었습니다.</value>
+  </data>
+  <data name="lblLastLogin.Text" xml:space="preserve">
+    <value>마지막 로그인</value>
+  </data>
+  <data name="lblLastName.Text" xml:space="preserve">
+    <value>성</value>
+  </data>
+  <data name="lblLogin.Text" xml:space="preserve">
+    <value>로그인</value>
+  </data>
+  <data name="lblLogout.Text" xml:space="preserve">
+    <value>로그 아웃</value>
+  </data>
+  <data name="lblLogoutInformation.Text" xml:space="preserve">
+    <value>제가 선택한 경우는 PMWeb에서 로그 아웃하면 로그인시에 &amp;quot;기억&amp;quot;</value>
+  </data>
+  <data name="lblMyProfile.Text" xml:space="preserve">
+    <value>내 프로필</value>
+  </data>
+  <data name="lblNewPasswordNotConfirmed.Text" xml:space="preserve">
+    <value>새 비밀번호 확인 수 없습니다.</value>
+  </data>
+  <data name="lblOldPassword.Text" xml:space="preserve">
+    <value>이전 암호</value>
+  </data>
+  <data name="lblOptions.Text" xml:space="preserve">
+    <value>옵션</value>
+  </data>
+  <data name="lblPassword.Text" xml:space="preserve">
+    <value>새 암호</value>
+  </data>
+  <data name="lblProfile.Text" xml:space="preserve">
+    <value>프로필</value>
+  </data>
+  <data name="lblPromptToSave.Text" xml:space="preserve">
+    <value>기록에서 멀리 탐색 할 때 저장하라는 메시지가 나타</value>
+  </data>
+  <data name="lblUserName.Text" xml:space="preserve">
+    <value>사용자 이름</value>
+  </data>
+  <data name="LinkBox" xml:space="preserve">
+    <value>링크</value>
+  </data>
+  <data name="MyAssignmentsBox" xml:space="preserve">
+    <value>내 할당</value>
+  </data>
+  <data name="NewsBox" xml:space="preserve">
+    <value>뉴스</value>
+  </data>
+  <data name="NotificationBox" xml:space="preserve">
+    <value>알림</value>
+  </data>
+  <data name="RadToolBarButton_Save.Text" xml:space="preserve">
+    <value>저장</value>
+  </data>
+  <data name="RadToolBarButton_SaveAndExit.Text" xml:space="preserve">
+    <value>저장 및 종료</value>
+  </data>
+  <data name="rblFrequency_DeleteCookie.Text" xml:space="preserve">
+    <value>내 인증 쿠키 삭제</value>
+  </data>
+  <data name="rblFrequency_Prompt.Text" xml:space="preserve">
+    <value>자극하다</value>
+  </data>
+  <data name="rblFrequency_SaveCookie.Text" xml:space="preserve">
+    <value>내 인증 쿠키를 저장</value>
+  </data>
+  <data name="revEmail.ErrorMessage" xml:space="preserve">
+    <value>유효하지 이메일입니다.</value>
+  </data>
+  <data name="rfvEmail.ErrorMessage" xml:space="preserve">
+    <value>이메일을 입력합니다.</value>
+  </data>
+  <data name="rfvFirstName.ErrorMessage" xml:space="preserve">
+    <value>첫 번째 이름을 입력합니다.</value>
+  </data>
+  <data name="WeatherBox" xml:space="preserve">
+    <value>날씨</value>
+  </data>
+  <data name="WorkflowInboxBox" xml:space="preserve">
+    <value>워크 플로우는받은 편지함</value>
+  </data>
+</root>

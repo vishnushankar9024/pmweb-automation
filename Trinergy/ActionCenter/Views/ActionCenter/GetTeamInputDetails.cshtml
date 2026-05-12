@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Trinergy.Model.TeamInput>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped">
+    <thead>
+        <tr>
+            <th nowrap>Reviewed By</th>
+            <th>Comments</th>
+            <th>Actioned On</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var teamInput in Model)
+        {
+            <tr>
+                <td>
+                    @teamInput.FullName
+                </td>
+                <td>
+                    @Html.Raw(teamInput.Comments.ToHtml())
+                </td>
+                <td nowrap>
+                    @teamInput.ActionDate.Value.ToString("dd-MMM-yyyy")<br />
+                    @teamInput.ActionDate.Value.ToString("hh:mm:ss tt")
+                </td>
+                <td nowrap>
+                    @teamInput.Status
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

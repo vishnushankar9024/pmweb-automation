@@ -1,0 +1,8 @@
+﻿.RadGrid .rgRow td,
+.RadGrid .rgAltRow td
+{
+	border-color:#d0d7e5;
+	overflow:hidden;
+	word-wrap: break-word;
+}
+

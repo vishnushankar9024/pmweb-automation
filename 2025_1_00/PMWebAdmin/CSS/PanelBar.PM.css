@@ -1,0 +1,63 @@
+﻿.RadPanelBar_PM
+{
+    background: #fff;
+}
+
+.RadPanelBar_PM .rpText
+{
+	padding: 0px 0px 0px 50px; /* vertical - horizontal */
+	font: bold 11px Arial, Verdana, Sans-serif;
+	line-height: 31px;
+	text-align: left;
+}
+
+.RadPanelBar_PM .rpRootGroup
+{
+	width: 99% !important;
+}
+
+.RadPanelBar_PM .rpLink,
+.RadPanelBar_PM .rpTemplate
+{
+	color: #000;
+	font: normal 12px/24px "Segoe UI", Arial, sans-serif;
+}
+
+.RadPanelBar_PM .rpLink
+{
+	background-color: #7da5e0;
+	background-image: url('PanelBar/ItemBg.gif');
+	border-color: #89AEE5;
+	
+}
+
+.RadPanelBar_PM .rpRootGroup .rpLink:hover,
+.RadPanelBar_PM .rpRootGroup .rpFirst .rpLink:hover
+{
+	background: #ee9515 url(PanelBar/ItemHovered.gif) repeat-x;
+}
+
+.RadPanelBar_PM .rpRootGroup .rpSelected,
+.RadPanelBar_PM .rpRootGroup .rpSelected:hover,
+.RadPanelBar_PM .rpRootGroup .rpFirst .rpSelected,
+.RadPanelBar_PM .rpRootGroup .rpFirst .rpSelected:hover
+{
+	background: #ee9515 url(PanelBar/ItemHovered.gif) repeat-x bottom;
+}
+
+.RadPanelBar_PM .rpOut
+{
+	border-color: #89aee5;
+}
+
+.RadPanelBar_PM .rpFocused .rpOut,
+.RadPanelBar_PM .rpLink:hover .rpOut
+{
+	border-color: #ffca5e;
+}
+
+.RadPanelBar_PM .rpExpanded
+{
+	border-color: #002D96;
+}
+

@@ -1,0 +1,104 @@
+﻿/** TimeLine View Scheduler ***/
+
+
+.RadScheduler .rsVertical .rsColumnHeaderTable *
+{
+	color:Black !important;
+	border-bottom:0px transparent none;
+	white-space:nowrap;
+	font-weight:normal;
+}
+
+.RadScheduler .rsVertical .rsColumnHeaderTable th
+{
+	/*width:50px !important;*/
+}
+
+.RadScheduler .rsVertical .rsColumnHeaderSpacerCell
+{
+	padding-right:1px;
+}
+
+.RadScheduler .rsVertical .rsColumnHeaderLastSpacerCell
+{
+	border-right:0px transparent none;
+	
+}
+
+.RadScheduler .rsVertical .rsColumnHeaderSpacerCell div
+{ 
+	width:148px !important;
+}
+.RadScheduler .rsVertical .rsColumnHeaderLastSpacerCell, .RadScheduler .rsVertical .rsColumnHeaderLastSpacerCell *
+{
+	width:0px !important;
+	display:none;
+}
+
+.RadScheduler .rsVertical .rsHoursTable
+{
+	background:#D9EEF6; 
+	width:150px !important;
+}
+.RadScheduler .rsVertical .rsHoursTable th
+{
+	vertical-align:middle;
+}
+
+.RadScheduler .rsVertical .rsHoursTable .rsSubHeaderHidden, 
+.RadScheduler .rsVertical .rsHoursTable .rsSubHeaderHidden .rsHoursWrapper,
+.RadScheduler .rsVertical .rsHoursTable .rsSubHeaderHidden .rsHoursWrapper .rsHoursContent
+{
+	width:0px !important;
+}
+
+.RadScheduler .rsVertical .rsHoursTable .rsSubHeaderLast
+{
+	height:0px !important;
+}
+
+.RadScheduler .rsVertical .rsMainHeader
+{
+	white-space:nowrap;
+	height:25px !important;   
+    width:100%;
+    border-bottom:1px gray solid !important;
+    text-align:left !important;
+    padding-left:5px;
+}
+
+.RadScheduler .rsVertical .rsHoursWrapper
+{
+	height:0px !important;
+}
+
+.RadScheduler .rsVertical .rsTimelineTable .rsAllDayCell .rsWrap
+{
+	height:45% !important;
+}
+
+.RadScheduler .rsVertical .rsTimelineTable .rsAllDayCell,
+.RadScheduler .rsVertical .rsTimelineTable .rsAllDayCell .rsApt,
+.RadScheduler .rsVertical .rsTimelineTable .rsAllDayCell .rsApt *
+{
+	height:25px !important; 
+	/*width:50px !important;*/
+}
+
+.RadScheduler .rsVertical .rsTimelineTable .rsAllDayCell .rsAptContent
+{
+	background-color:#add8e6;
+}
+
+.RadScheduler .rsVertical .rsTimelineTable .rsAllDayCell .rsAptWrap, .RadScheduler .rsVertical .rsTimelineTable .rsAllDayCell .rsWArrowLeft
+{
+	background: url('/Images/Global/Sheduler_Appointment.gif')
+}
+
+.RadScheduler .rsVertical .rsTimelineTable .rsAllDayCell .rsAptContent
+{
+	width:100%;
+	height:100%;
+	margin-left: 10px;
+	padding-top:3px;
+}

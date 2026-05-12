@@ -1,0 +1,1248 @@
+﻿@model IEnumerable<Trinergy.Model.ActiveWFDocumentModel>
+@using Trinergy.Model
+@{
+    Layout = null;
+    var docStatus = ((IEnumerable<DocumentStatus>)Session["DocumentStatus"]).ToList();
+}
+
+<!DOCTYPE html>
+
+
+
+<head>
+    <style>
+        .group-header-td {
+            background-color: #007FC9;
+            cursor: pointer;
+        }
+
+        .group-header-form-td {
+            /*background-color: #357fbe;*/
+            background-color: LightBlue;
+            cursor: pointer;
+            color: #000000 !important;
+        }
+
+
+
+        .headspan {
+            color: white !important;
+        }
+
+        html, body {
+            font-family: Calibri !important;
+            font-size: 13px !important;
+        }
+
+        #tableaalldocs thead th {
+            width: 200px;
+            vertical-align: top !important;
+        }
+
+        .table > thead > tr > th {
+            vertical-align: middle !important;
+        }
+
+        #tableaalldocs * {
+            font-size: 14px !important;
+        }
+
+        #tableuserdocs * {
+            font-size: 14px !important;
+        }
+
+        .subReportHeader {
+            background-color: cadetblue !important;
+            color: #ffffff;
+        }
+
+        .subReportHeader1 {
+            background-color: #63b7a2 !important;
+            color: #ffffff;
+        }
+
+        table.dataTable {
+            margin: 0 auto;
+            width: 100%;
+            clear: both;
+            border-collapse: collapse;
+            table-layout: fixed !important;
+            word-wrap: break-word;
+        }
+
+        .top {
+            vertical-align: top;
+        }
+
+        .leg-cont {
+            margin-left: auto;
+            margin-right: auto;
+            width: 600px;
+            margin-bottom: 75px;
+        }
+
+        .leg-box {
+            height: 15px;
+            width: 40px;
+            float: left;
+            margin-right: 5px;
+            margin-top: 2px;
+        }
+
+        .leg_title {
+            text-align: left;
+            min-width: 120px;
+            margin-right: 20px;
+            float: left;
+        }
+    </style>
+    <script type="text/javascript">
+        var modelData = [];
+    </script>
+    @foreach (var document in Model)
+    {
+        string status = "";
+        if (docStatus.Any())
+        {
+            if (document.StatusId == 2)
+            {
+                status = "Submitted";
+            }
+            else if (document.StatusId == 3)
+            {
+                status = "Returned";
+            }
+            else if (document.StatusId == 4)
+            {
+                status = "Resubmitted";
+            }
+            else
+            {
+                status = docStatus.Find(x => x.Id == document.StatusId).Name;
+            }
+            if (status == "Submitted") { status = "In Progress"; }
+        }
+        string cssClasstrd = "";
+        double dys = 0;
+        if (!String.IsNullOrEmpty(document.ReviewDays))
+        {
+            dys = (document.DocumentDate.AddDays(Convert.ToDouble(document.ReviewDays)) - DateTime.Today).TotalDays;
+            if (dys < 0)
+            {
+                cssClasstrd = "tdRed";
+            }
+            else if (dys >= 0 && dys <= 5)
+            {
+                cssClasstrd = "tdYellow";
+            }
+            else
+            {
+                cssClasstrd = "tdGreen";
+            }
+        }
+
+        string status2 = "";
+
+        if (docStatus.Any())
+        {
+            if (document.StatusId == 2)
+            {
+                status2 = "Submitted";
+            }
+            else if (document.StatusId == 3)
+            {
+                status2 = "Returned";
+            }
+            else if (document.StatusId == 4)
+            {
+                status2 = "Resubmitted";
+            }
+            else
+            {
+                status2 = docStatus.Find(x => x.Id == document.StatusId).Name;
+            }
+        }
+
+
+        string prelbl = string.Empty;
+        if (status2 != "Withdrawn" || status != "Approved" || status != "Rejected") { prelbl = "STEP "; }
+
+        string curstepOwner1 = string.Empty;
+        string curstepOwnerTemp = document.CurrStepOwner.Trim();
+        if (curstepOwnerTemp != string.Empty)
+        {
+            if (curstepOwnerTemp[0] == ',')
+            {
+                curstepOwnerTemp.Remove(0, 1);
+
+            }
+            //curstepOwner1 = curstepOwnerTemp.Remove(curstepOwnerTemp.IndexOf(","), (",").ToString().Length);
+            curstepOwner1 = curstepOwnerTemp;
+        }
+        else
+        {
+            curstepOwner1 = "";
+        }
+        string dt = "";
+        if (!string.IsNullOrEmpty(document.CalcDueDate))
+        {
+            dt = (DateTime.Parse(document.CalcDueDate).ToString("dd-MMM-yy"));
+        }
+
+        string cssClass = string.Empty;
+        if (!string.IsNullOrEmpty(document.CalcDueDate))
+        {
+            if (Convert.ToDecimal(document.RemainingDays) < 0)
+            {
+                cssClass = "tdRed";
+            }
+            else if (Convert.ToDecimal(document.RemainingDays) >= 0 && Convert.ToDecimal(document.RemainingDays) <= 5)
+            {
+                cssClass = "tdYellow";
+            }
+            else
+            {
+                cssClass = "tdGreen";
+            }
+
+        }
+        else
+        {
+            cssClasstrd = "tdTransparent";
+        }
+
+        string curstepOwner2 = string.Empty;
+        string curstepOwnerTemp2 = document.CurrStepOwner.Trim();
+        string userStepTemp2 = document.UserStep.Trim();
+        if (curstepOwnerTemp2 != string.Empty)
+        {
+            if (curstepOwnerTemp2[0] == ',')
+            {
+                curstepOwnerTemp2.Remove(0, 1);
+
+            }
+            if (userStepTemp2 != "" && userStepTemp2[0] == ',')
+            {
+                userStepTemp2 = userStepTemp2.Remove(0, 1);
+
+            }
+
+            curstepOwner2 = userStepTemp2 + " of " + document.NumberOfSteps;
+        }
+        else
+        {
+            curstepOwner2 = "";
+        }
+
+        <text>
+            <script type="text/javascript">
+                var data = {
+                    Project : '@document.Project',
+                    RecordType: '@document.RecordType',
+                    FileNames: '@document.FileNames',
+                    RecordNumber: '@document.RecordNumber',
+                    DocumentDate:'@document.DocumentDate.ToString("dd-MMM-yy")',
+                    Description: '<a href="@document.Recordurl" target="_top">@document.Description</a>',
+                    IssueDate:'@document.IssueDate.ToString("dd-MMM-yy")',
+                    ReviewDays:'@document.ReviewDays',
+                    Attachments:'<a href="javascript:void(0)" onclick="GetAttachments(@document.DocumentId, this)">Attachments</a>',
+                    Workflow : '<a href="javascript:void(0)" onclick="GetWorkflowStatus(@document.DocumentId, this)">@status</a>',
+                    DueDate: '@((document.DocumentDate.AddDays(String.IsNullOrEmpty(document.ReviewDays) == true ? 0 : Convert.ToDouble(document.ReviewDays))).ToString("dd-MMM-yy"))',
+                    Due : "<div class='@cssClasstrd'>@(Math.Abs(dys) + " Day(s) " + (dys < 0 ? "Overdue" : "Remaining"))</div>",
+                    StepNumber : '@(prelbl + document.StepNumber + " of " + document.NumberOfSteps)',
+                    curstepOwner1 : '@curstepOwner1',
+                    DelStepOwner : '@document.DelStepOwner',
+                    WorkflowComments : "@Html.Raw(document.WorkflowComments.Replace("\"", "\\\""))",
+                    dt: '@dt',
+                    Overdue:"<div class='@cssClass'>@(Math.Abs(Convert.ToDecimal(document.RemainingDays)) + " Day(s) " + (Convert.ToDecimal(document.RemainingDays) < 0 ? "Overdue" : "Remaining"))</div>",
+                    curstepOwner2: '@curstepOwner2',
+                    ActStepOwner : '@document.ActStepOwner',
+
+                    IsDelegate : '@document.IsDelegate',
+
+                    IsPending : '@document.IsPending',
+                    IsPendingTeamInput:'@document.IsPendingTeamInput',
+                    IsPendingDelegate:'@document.IsPendingDelegate',
+
+                    IsOverdue:'@document.IsOverdue',
+                    IsOverdueTeamInput:'@document.IsOverdueTeamInput',
+                    IsOverdueDelegate:'@document.IsOverdueDelegate'
+                };
+                modelData.push(data);
+            </script>
+        </text>
+    }
+</head>
+
+<body>
+    <table class="table table-bordered table-striped grid" id="tableaalldocs">
+        <thead>
+            @*<tr class="subReportHeader1">
+                    <th colspan="2"></th>
+                    <th colspan="10" style="text-align:center">DOCUMENT STATUS FROM AN <strong><u>OVERALL WORKFLOW</u></strong> PERSPECTIVE </th>
+                    <th colspan="5" style="text-align:center">LOOKING CLOSER AT THE <strong><u>CURRENT STEP</u></strong>….</th>
+                </tr>*@
+            <tr class="subReportHeader">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="text-center">Doc ID</th>
+                <th class="text-center">HFD Received Date (Stamped)</th>
+                <th style="text-align:center;">Subject</th>
+                <th class="text-center">Entered Into Workflow</th>
+                <th class="text-center">Total Days Allowed</th>
+                <th class="text-center">Attachments</th>
+                <th class="text-center">Workflow Status</th>
+                <th class="text-center">HFD Due Date</th>
+                <th class="text-center">Overall Status Time</th>
+                <th class="text-center">Current Workflow Step</th>
+                <th style="text-align:center;">Who is the "Action" Pending With</th>
+                <th class="text-center">Previous Step Workflow Comments</th>
+                <th class="text-center">Current Step Due Date</th>
+                <th class="text-center">Current Step Status (Time)</th>
+                <th class="text-center">My Action Required in Steps</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var document in Model)
+            {
+                <tr>
+                    <td>@document.Project</td>
+                    <td>@document.RecordType</td>
+                    <td>@document.FileNames</td>
+                    <td>@document.RecordNumber</td>
+                    <td>@document.DocumentDate.ToString("dd-MMM-yy")</td>
+                    <td><a href="@document.Recordurl" target="_top">@document.Description</a></td>
+                    <td>@document.IssueDate.ToString("dd-MMM-yy")</td>
+                    <td>@document.ReviewDays</td>
+                    <td><a href="javascript:void(0)" onclick="GetAttachments(@document.DocumentId, this)">Attachments</a></td>
+                    <td>
+                        @{
+
+                            string status = "";
+                            if (docStatus.Any())
+                            {
+                                if (document.StatusId == 2)
+                                {
+                                    status = "Submitted";
+                                }
+                                else if (document.StatusId == 3)
+                                {
+                                    status = "Returned";
+                                }
+                                else if (document.StatusId == 4)
+                                {
+                                    status = "Resubmitted";
+                                }
+                                else
+                                {
+                                    status = docStatus.Find(x => x.Id == document.StatusId).Name;
+                                }
+                                if (status == "Submitted") { status = "In Progress"; }
+                            }
+                        }
+
+                        <a href="javascript:void(0)" onclick="GetWorkflowStatus(@document.DocumentId, this)">@status</a>
+                    </td>
+                    <td>@((document.DocumentDate.AddDays(String.IsNullOrEmpty(document.ReviewDays) == true ? 0 : Convert.ToDouble(document.ReviewDays))).ToString("dd-MMM-yy"))</td>
+
+                    @{
+                        string cssClasstrd = "";
+                        double dys = 0;
+                        if (!String.IsNullOrEmpty(document.ReviewDays))
+                        {
+                            dys = (document.DocumentDate.AddDays(Convert.ToDouble(document.ReviewDays)) - DateTime.Today).TotalDays;
+                            if (dys < 0)
+                            {
+                                cssClasstrd = "tdRed";
+                            }
+                            else if (dys >= 0 && dys <= 5)
+                            {
+                                cssClasstrd = "tdYellow";
+                            }
+                            else
+                            {
+                                cssClasstrd = "tdGreen";
+                            }
+                        }
+                        //double trd = (DateTime.Today - document.DocumentDate.AddDays(String.IsNullOrEmpty(document.ReviewDays) == true ? 0 : Convert.ToDouble(document.ReviewDays))).TotalDays;
+                    }
+                    <td class="@cssClasstrd">
+                        @(Math.Abs(dys) + " Day(s) " + (dys < 0 ? "Overdue" : "Remaining")
+                        )
+                    </td>
+                    @{
+                        string status2 = "";
+
+                        if (docStatus.Any())
+                        {
+                            if (document.StatusId == 2)
+                            {
+                                status2 = "Submitted";
+                            }
+                            else if (document.StatusId == 3)
+                            {
+                                status2 = "Returned";
+                            }
+                            else if (document.StatusId == 4)
+                            {
+                                status2 = "Resubmitted";
+                            }
+                            else
+                            {
+                                status2 = docStatus.Find(x => x.Id == document.StatusId).Name;
+                            }
+                        }
+
+
+                        string prelbl = string.Empty;
+                        if (status2 != "Withdrawn" || status != "Approved" || status != "Rejected") { prelbl = "STEP "; }
+                    }
+                    <td>@(prelbl + document.StepNumber + " of " + document.NumberOfSteps)</td>
+                    @{
+                        string curstepOwner1 = string.Empty;
+                        string curstepOwnerTemp = document.CurrStepOwner.Trim();
+                        if (curstepOwnerTemp != string.Empty)
+                        {
+                            if (curstepOwnerTemp[0] == ',')
+                            {
+                                curstepOwnerTemp.Remove(0, 1);
+
+                            }
+                            //curstepOwner1 = curstepOwnerTemp.Remove(curstepOwnerTemp.IndexOf(","), (",").ToString().Length);
+                            curstepOwner1 = curstepOwnerTemp;
+                        }
+                        else
+                        {
+                            curstepOwner1 = "";
+                        }
+                    }
+                    <td>@curstepOwner1</td>
+                    <td style="text-align:left"><div class="comments"><span class="more">@Html.Raw(document.WorkflowComments)</span></div></td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(document.CalcDueDate))
+                        {
+                            @(DateTime.Parse(document.CalcDueDate).ToString("dd-MMM-yy"));
+                        }
+                    </td>
+                    @{
+                        string cssClass = string.Empty;
+                        if (!string.IsNullOrEmpty(document.CalcDueDate))
+                        {
+                            if (Convert.ToDecimal(document.RemainingDays) < 0)
+                            {
+                                cssClass = "tdRed";
+                            }
+                            else if (Convert.ToDecimal(document.RemainingDays) >= 0 && Convert.ToDecimal(document.RemainingDays) <= 5)
+                            {
+                                cssClass = "tdYellow";
+                            }
+                            else
+                            {
+                                cssClass = "tdGreen";
+                            }
+
+                        }
+                        else
+                        {
+                            cssClasstrd = "tdTransparent";
+                        }
+                    }
+                    <td class="@cssClass">
+
+                        @(Math.Abs(Convert.ToDecimal(document.RemainingDays)) + " Day(s) " + (Convert.ToDecimal(document.RemainingDays) < 0 ? "Overdue" : "Remaining")
+                        )
+
+                    </td>
+                    @{
+                        string curstepOwner2 = string.Empty;
+                        string curstepOwnerTemp2 = document.CurrStepOwner.Trim();
+                        string userStepTemp2 = document.UserStep.Trim();
+                        if (curstepOwnerTemp2 != string.Empty)
+                        {
+                            if (curstepOwnerTemp2[0] == ',')
+                            {
+                                curstepOwnerTemp2.Remove(0, 1);
+
+                            }
+                            if (userStepTemp2 != "" && userStepTemp2[0] == ',')
+                            {
+                                userStepTemp2 = userStepTemp2.Remove(0, 1);
+
+                            }
+
+                            curstepOwner2 = userStepTemp2 + " of " + document.NumberOfSteps;
+                        }
+                        else
+                        {
+                            curstepOwner2 = "";
+                        }
+                    }
+                    <td>@curstepOwner2</td>
+                </tr>
+                        }
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BAR CHART -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Documents Pending With</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="leg-cont">
+                            <div class="row">
+                                <div class="col-md-4"><div class="leg-box" style="background-color:#0178BA;"></div> Pending</div>
+                                <div class="col-md-4"><div class="leg-box" style="background-color:#98FB98;"></div> Pending Team Input</div>
+                                <div class="col-md-4"><div class="leg-box" style="background-color:#FFFF00;"></div> Pending Delegate</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"><div class="leg-box" style="background-color:#FF0000;"></div> Overdue</div>
+                                <div class="col-md-4"><div class="leg-box" style="background-color:#800000;"></div> Overdue Team Input</div>
+                                <div class="col-md-4"><div class="leg-box" style="background-color:#FF7F50;"></div> Overdue Delegate</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="chart">
+                            <canvas id="bar-chart" height="600"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+
+    <div class="row" id="chart_delegate">
+        <div class="col-md-12">
+            <!-- BAR CHART -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Documents Pending With "<span id="pendingwith"></span>" delegated by "<span id="delegatedBy"></span>"</h3>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="box box-success">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="leg-cont">
+                                    <div class="row">
+                                        <div class="col-md-4"><div class="leg-box" style="background-color:#0178BA;"></div> Pending</div>
+                                        <div class="col-md-4"><div class="leg-box" style="background-color:#98FB98;"></div> Pending Team Input</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4"><div class="leg-box" style="background-color:#FF0000;"></div> Overdue</div>
+                                        <div class="col-md-4"><div class="leg-box" style="background-color:#800000;"></div> Overdue Team Input</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="chart" style="height:350px;">
+                                    <canvas id="bar-chart-delegate" height="350"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped grid" id="tableuserdocs">
+        <thead>
+            @*<tr class="subReportHeader1">
+                    <th colspan="2"></th>
+                    <th colspan="10" style="text-align:center">DOCUMENT STATUS FROM AN <strong><u>OVERALL WORKFLOW</u></strong> PERSPECTIVE </th>
+                    <th colspan="5" style="text-align:center">LOOKING CLOSER AT THE <strong><u>CURRENT STEP</u></strong>….</th>
+                </tr>*@
+            <tr class="subReportHeader">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="text-center">Doc ID</th>
+                <th class="text-center">HFD Received Date (Stamped)</th>
+                <th style="text-align:center;">Subject</th>
+                <th class="text-center">Entered Into Workflow</th>
+                <th class="text-center">Total Days Allowed</th>
+                <th class="text-center">Attachments</th>
+                <th class="text-center">Workflow Status</th>
+                <th class="text-center">HFD Due Date</th>
+                <th class="text-center">Overall Status Time</th>
+                <th class="text-center">Current Workflow Step</th>
+                <th style="text-align:center;">Who is the "Action" Pending With</th>
+                <th class="text-center">Previous Step Workflow Comments</th>
+                <th class="text-center">Current Step Due Date</th>
+                <th class="text-center">Current Step Status (Time)</th>
+                <th class="text-center">My Action Required in Steps</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>No data</td></tr>
+        </tbody>
+    </table>
+</body>
+@*<script src="~/Scripts/shorten.js"></script>*@
+<script src="~/Scripts/readmore.min.js"></script>
+<script type="text/javascript">
+    var chart;
+    var chart_delegate;
+
+    var uTable;
+    $(document).ready(function () {
+        $("#chart_delegate").hide();
+        //$(".comment").shorten({
+        //    showChars: 100,
+        //});
+        var table = $('#tableaalldocs').DataTable({
+            "language": {
+                "emptyTable": "No Documents Available."
+            },
+            responsive: true,
+            dom: "<'row'<'col-sm-3'<'row'<'text-center'l><'text-center'B>>><'col-sm-6 text-center toolbarAD'T><'col-sm-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+            //"sDom": '<"toolbar">frtip',
+            buttons: [
+
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'A3',
+                title: 'Workflow Status of All Documents',
+                filename: 'AllDocuments',
+                exportOptions: {
+                    columns: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+                },
+                customize: function (doc) {
+                    doc.defaultStyle.fontSize = 7;
+                }
+
+            }, {
+                extend: 'excel',
+                title: 'Workflow Status of All Documents',
+                filename: 'AllDocuments',
+                exportOptions: {
+                    columns: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+                },
+
+
+            }],
+            "scrollX": true,
+            "scrollY": '40vh',
+            "bAutoWidth": true,
+            //"columns": [
+            //        { width: '100%' },
+            //        { width: '100%' },
+            //        { width: '100%' },
+            //        { width: '20px' }, //Doc ID
+            //        { width: '100px' }, //HFD Received Date (Stamped)
+            //        { width: '180px' },//Subject
+            //        { width: '70px' }, //Entered Into Workflow
+            //        { width: '50px' }, //Total Days Allowed
+            //        { width: '70px' }, //Attachments
+            //        { width: '70px' },// Workflow Status
+            //        { width: '70px' },// HFD Due Date
+            //        { width: '80px' },//Overall Status Time
+            //        { width: '80px' },//Current Workflow Step
+            //        { width: '60px' },//Who is the "Action" Pending With
+            //        { width: '60px' },//Current Step Due Date
+            //        { width: '80px' },//CURRENT STEP STATUS (TIME)
+            //        { width: '90px' }//My Action required in STEPS
+
+            //],
+            "columnDefs": [
+                { "visible": false, "targets": [0, 1, 2] }
+                , {
+                    "targets": [3, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17],
+                    "className": "text-center",
+                }
+            ],
+            fixedColumns: true,
+            "pageLength": 10,
+            "order": [[0, 'asc'], [1, 'asc']],
+            "displayLength": 10,
+            "drawCallback": function (settings) {
+                $('.comments').readmore({
+                    moreLink: '<a href="#">More</a>',
+                    collapsedHeight: 60,
+                    afterToggle: function (trigger, element, expanded) {
+                        if (!expanded) { // The "Close" link was clicked
+                            $('html, body').animate({ scrollTop: element.offset().top }, { duration: 100 });
+                        }
+                    }
+                });
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+                api.column(0, { page: 'current' }).data().each(function (group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group-header group-header-form projectname"><td colspan="17" class="group-header-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4 headspan">&nbsp;&nbsp;<strong>' + group + '</strong></span></td></tr>'
+                        );
+                        last = group;
+                    }
+                });
+                api.column(1, { page: 'current' }).data().each(function (group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group-header-form formname"><td colspan="17" class="group-header-form-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4">&nbsp;&nbsp;<strong>' + group + '</strong></span></td></tr>'
+                        );
+                        last = group;
+                    }
+                });
+
+            }
+        });
+
+        uTable = $('#tableuserdocs').DataTable({
+            "data" : [],
+            "language": {
+                "emptyTable": "No Documents Available."
+            },
+            responsive: true,
+            dom: "<'row'<'col-sm-3'<'row'<'text-center'l><'text-center'B>>><'col-sm-6 text-center toolbarAD'T><'col-sm-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+            //"sDom": '<"toolbar">frtip',
+            buttons: [
+
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'A3',
+                title: 'Workflow Status of All Documents',
+                filename: 'AllDocuments',
+                exportOptions: {
+                    columns: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+                },
+                customize: function (doc) {
+                    doc.defaultStyle.fontSize = 7;
+                }
+
+            }, {
+                extend: 'excel',
+                title: 'Workflow Status of All Documents',
+                filename: 'AllDocuments',
+                exportOptions: {
+                    columns: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+                },
+
+
+            }],
+            "scrollX": true,
+            "scrollY": '40vh',
+            "bAutoWidth": true,
+            "columnDefs": [
+                { "visible": false, "targets": [0, 1, 2] }
+                , {
+                    "targets": [3, 4, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17],
+                    "className": "text-center",
+                }
+            ],
+            fixedColumns: true,
+            "pageLength": 10,
+            "order": [[0, 'asc'], [1, 'asc']],
+            "displayLength": 10,
+            "drawCallback": function (settings) {
+                $('.comments').readmore({
+                    moreLink: '<a href="#">More</a>',
+                    collapsedHeight: 60,
+                    afterToggle: function (trigger, element, expanded) {
+                        if (!expanded) { // The "Close" link was clicked
+                            $('html, body').animate({ scrollTop: element.offset().top }, { duration: 100 });
+                        }
+                    }
+                });
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+                var lastsub = null;
+                api.rows({ page: 'current' }).data().each(function (row, i) {
+                    group = row[0];
+                    subgroup = row[1];
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group-header group-header-form projectname"><td colspan="17" class="group-header-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4 headspan">&nbsp;&nbsp;<strong>' + group + '</strong></span></td></tr>'
+                        );
+                        last = group;
+                        lastsub = null;
+                    }
+
+                    if (lastsub !== subgroup) {
+                        $(rows).eq(i).before(
+                            '<tr class="group-header-form formname"><td colspan="17" class="group-header-form-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4">&nbsp;&nbsp;<strong>' + subgroup + '</strong></span></td></tr>'
+                        );
+                        lastsub = subgroup;
+                    }
+                });
+            }
+        });
+
+        //$("div.toolbarAD").html('<h3 style="color:#007FC9"><b>Current status of All Documents in the workflow process</b></h3>');
+        $('#tableaalldocs').DataTable().columns.adjust();
+        $('#tableaalldocs tbody').on('click', 'tr.projectname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $('#tableaalldocs tbody').on('click', 'tr.formname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header-form').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header-form').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $('#tableuserdocs tbody').on('click', 'tr.projectname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $('#tableuserdocs tbody').on('click', 'tr.formname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header-form').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header-form').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+
+
+    });
+    function GetWorkflowStatus(RecordId, Obj) {
+        $(".tempRow").remove();
+        $.ajax({
+            url: '@Url.Action("GetWorkflowStatus", "DocumentLog")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { RecordId: RecordId, "_": Math.random() },
+            //beforeSend: function () {
+            //    $('#pleaseWaitDialog').modal();
+            //},
+            //complete: function () {
+            //    $('#pleaseWaitDialog').modal('hide');
+            //},
+            async: true,
+            cache: false,
+            success: function (data) {
+                var tr = '<tr class="tempRow"><td colspan="16">' + data + '</td></tr>'
+                $(Obj).closest("tr").after(tr);
+            },
+            error: function (xhr) {
+                //alert("failed");
+            }
+        });
+    }
+    function GetAttachments(DocId, Obj) {
+
+        $(".tempRow").remove();
+        $.ajax({
+            url: '@Url.Action("GetAttachments", "ActionCenter")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { DocId: DocId },
+            beforeSend: function () {
+
+            },
+            complete: function () {
+
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+
+                var tr = '<tr class="tempRow"><td colspan="16">' + data + '</td></tr>'
+                $(Obj).closest("tr").after(tr);
+                AttachmentsCallBack(DocId);
+            },
+            error: function (xhr) {
+                alert(xhr);
+            }
+        });
+    }
+
+    function AttachmentsCallBack(DocId) {
+
+        $("#accordion").accordion({
+            header: "h3",
+            collapsible: true,
+            autoHeight: false,
+            navigation: true,
+            heightStyle: "content"
+        });
+    }
+
+
+    var chartData = @Html.Raw(Json.Encode(ViewBag.chartData));
+    console.log(modelData);
+    // Bar chart
+    var ctx = document.getElementById("bar-chart").getContext("2d");
+    var ctx_delegate = document.getElementById("bar-chart-delegate").getContext("2d");
+
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        tooltipTemplate: "<%= value %> Files",
+        options: {
+            legend: {
+                display: false,
+                labels: {
+                    padding: 50
+                }
+            },
+            title: {
+                display: false,
+                text: 'Pending With'
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true,
+                        userCallback: function(label, index, labels) {
+                            // when the floored value is the same as the value we have a whole number
+                            if (Math.floor(label) === label) {
+                                return label;
+                            }
+
+                        },
+                        fontColor: "#0178BA"
+                    }
+                }],
+                xAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: "#0178BA",
+                        autoSkip: false
+                    }
+                }]
+            },
+            onClick: handleClick,
+            animation: {
+                duration: 1,
+                onComplete: function () {
+                    var chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    dataset = this.data.datasets[0];
+                    dataset1 = this.data.datasets[1];
+                    dataset2 = this.data.datasets[2];
+                    dataset3 = this.data.datasets[3];
+                    dataset4 = this.data.datasets[4];
+                    dataset5 = this.data.datasets[5];
+
+                    var meta = chartInstance.controller.getDatasetMeta(0);
+                    var meta1 = chartInstance.controller.getDatasetMeta(1);
+                    var meta2 = chartInstance.controller.getDatasetMeta(2);
+                    var meta3 = chartInstance.controller.getDatasetMeta(3);
+                    var meta4 = chartInstance.controller.getDatasetMeta(4);
+                    var meta5 = chartInstance.controller.getDatasetMeta(5);
+
+                    meta5.data.forEach(function (bar, index) {
+                        var data = dataset.data[index] + dataset1.data[index] + dataset2.data[index] + dataset3.data[index] + dataset4.data[index] + dataset5.data[index];
+                        ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                    });
+
+                    //this.data.datasets.forEach(function (dataset, i) {
+                    //    var meta = chartInstance.controller.getDatasetMeta(i);
+                    //    meta.data.forEach(function (bar, index) {
+                    //        var data = dataset.data[index];
+                    //        ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                    //    });
+                    //});
+                }
+            }
+        }
+    });
+
+    chart_delegate = new Chart(ctx_delegate, {
+        type: 'bar',
+        data:  {
+            labels : [""],
+            datasets : [{
+                label:"Pending",
+                backgroundColor: ["#e7b416"],
+                data: [0]
+            },
+            {
+                label:"Pending Team Input",
+                backgroundColor: ["#e7b416"],
+                data: [0]
+            },
+            {
+                label:"Overdue",
+                backgroundColor: ["#e7b416"],
+                data: [0]
+            },
+            {
+                label:"Overdue Team Input",
+                backgroundColor: ["#e7b416"],
+                data: [0]
+            }
+            ]
+        },
+        tooltipTemplate: "<%= value %> Files",
+        options: {
+            legend: {
+                display: false,
+                labels: {
+                    padding: 50
+                }
+            },
+            title: {
+                display: false,
+                text: 'Pending With'
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true,
+                        userCallback: function(label, index, labels) {
+                            // when the floored value is the same as the value we have a whole number
+                            if (Math.floor(label) === label) {
+                                return label;
+                            }
+
+                        },
+                        fontColor: "#0178BA"
+                    }
+                }],
+                xAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: "#0178BA"
+                    }
+                }]
+            },
+            onClick: delegate_handleClick,
+            animation: {
+                duration: 1,
+                onComplete: function () {
+                    var chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    dataset = this.data.datasets[0];
+                    dataset1 = this.data.datasets[1];
+                    dataset2 = this.data.datasets[2];
+                    dataset3 = this.data.datasets[3];
+
+                    var meta = chartInstance.controller.getDatasetMeta(0);
+                    var meta1 = chartInstance.controller.getDatasetMeta(1);
+                    var meta2 = chartInstance.controller.getDatasetMeta(2);
+                    var meta3 = chartInstance.controller.getDatasetMeta(3);
+
+                    meta3.data.forEach(function (bar, index) {
+                        var data = dataset.data[index] + dataset1.data[index] + dataset2.data[index] + dataset3.data[index];
+                        ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                    });
+
+                    //this.data.datasets.forEach(function (dataset, i) {
+                    //    var meta = chartInstance.controller.getDatasetMeta(i);
+                    //    meta.data.forEach(function (bar, index) {
+                    //        var data = dataset.data[index];
+                    //        ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                    //    });
+                    //});
+                }
+            }
+        }
+    });
+
+    var user = '';
+    function handleClick(evt)
+    {
+        $("#chart_delegate").hide();
+        chart_delegate.data.labels = []
+        chart_delegate.data.datasets = [];
+
+
+        var activeElement = chart.getElementAtEvent(evt);
+
+        user = activeElement[0]._model.label;
+        var filteredData = $.grep(modelData, function(g) {
+            return g.curstepOwner1.indexOf(user) >= 0
+        });
+
+        var delegatedData = $.grep(filteredData, function(g) {
+            return (g.IsDelegate == "True" && g.DelStepOwner == user);
+        });
+        if(delegatedData.length > 0)
+        {
+            var chartDataObj = {
+                datasets : [{
+                    label:"Pending",
+                    backgroundColor: [],
+                    data: []
+                },
+                {
+                    label:"Pending Team Input",
+                    backgroundColor: [],
+                    data: []
+                },
+                {
+                    label:"Overdue",
+                    backgroundColor: [],
+                    data: []
+                },
+                {
+                    label:"Overdue Team Input",
+                    backgroundColor: [],
+                    data: []
+                }
+                ]
+            }
+            var UniqueNames= $.unique(filteredData.map(function (d) {
+                return d.ActStepOwner;
+            }));
+            UniqueNames = $.unique(UniqueNames);
+            console.log(UniqueNames);
+            //UniqueNames = UniqueNames[0].split(",");
+            var pendingwith ="";
+            UniqueNames = $.grep(UniqueNames, function(u){
+                return u != user;
+            });
+            for(var i = 0; i < UniqueNames.length; i++)
+            {
+                if(pendingwith == "")
+                {
+                    pendingwith = UniqueNames[i];
+                }
+                else if( UniqueNames.length == i + 1)
+                {
+                    pendingwith = pendingwith + " and " + UniqueNames[i];
+                }
+                else
+                {
+                    pendingwith = pendingwith + ", " + UniqueNames[i];
+                }
+                chart_delegate.data.labels.push(UniqueNames[i]);
+
+                var records = $.grep(filteredData, function(g){
+                    return g.ActStepOwner.indexOf(UniqueNames[i]) >= 0;
+                });
+
+                var pendingRecords = $.grep(records, function(r){
+                    return (r.IsPending == "True" || r.IsPendingDelegate == "True");
+                });
+
+                chartDataObj.datasets[0].backgroundColor.push("#0178BA");
+                chartDataObj.datasets[0].data.push(pendingRecords.length);
+
+                var pendingTIRecords = $.grep(records, function(r){
+                    return r.IsPendingTeamInput == "True";
+                });
+
+                chartDataObj.datasets[1].backgroundColor.push("#98FB98");
+                chartDataObj.datasets[1].data.push(pendingTIRecords.length);
+
+                var overdueRecords = $.grep(records, function(r){
+                    return (r.IsOverdue == "True" || r.IsOverdueDelegate == "True");
+                });
+
+                chartDataObj.datasets[2].backgroundColor.push("#FF0000");
+                chartDataObj.datasets[2].data.push(overdueRecords.length);
+
+                var overdueTIRecords = $.grep(records, function(r){
+                    return r.IsOverdueTeamInput == "True";
+                });
+
+                chartDataObj.datasets[3].backgroundColor.push("#800000");
+                chartDataObj.datasets[3].data.push(overdueTIRecords.length);
+            }
+            $("#pendingwith").empty();
+            $("#delegatedBy").empty();
+            $("#pendingwith").html(user);
+            $("#delegatedBy").html(pendingwith);
+            chartDataObj.datasets.forEach(function(dataset){
+                chart_delegate.data.datasets.push(dataset);
+            });
+            chart_delegate.update();
+            $("#chart_delegate").show();
+        }
+
+        $(".toolbarAD", "#tableuserdocs_wrapper").html("<h3>Documents Pending With \"" + user + "\"</h3>");
+        console.log(filteredData);
+        PrepareData(filteredData);
+    }
+
+    function delegate_handleClick(evt)
+    {
+        debugger;
+        var activeElement = chart_delegate.getElementAtEvent(evt);
+
+        var act_user = activeElement[0]._model.label;
+        var filteredData = $.grep(modelData, function(g) {
+            return (g.curstepOwner1.indexOf(user) >= 0 && g.ActStepOwner.indexOf(act_user) >= 0);
+        });
+        console.log(filteredData);
+        $(".toolbarAD", "#tableuserdocs_wrapper").html("<h3>Documents Pending With \"" + act_user + "\"</h3>");
+        PrepareData(filteredData);
+    }
+
+    function PrepareData(filteredData)
+    {
+        var dataSet = [];
+        filteredData.forEach(function(d, i){
+            var data =
+                [
+                    d.Project,
+                    d.RecordType,
+                    d.FileNames,
+                    d.RecordNumber,
+                    d.DocumentDate,
+                    d.Description,
+                    d.IssueDate,
+                    d.ReviewDays,
+                    d.Attachments,
+                    d.Workflow,
+                    d.DueDate,
+                    d.Due,
+                    d.StepNumber,
+                    d.curstepOwner1,
+                    '<div class="comments"><span class="more">' + d.WorkflowComments + '</span></div>',
+                    d.dt,
+                    d.Overdue,
+                    d.curstepOwner2
+                ];
+
+            dataSet.push(data);
+        });
+
+        uTable.clear();
+        uTable.rows.add(dataSet);
+        uTable.draw();
+
+    }
+</script>

@@ -1,0 +1,1956 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Activate" xml:space="preserve">
+    <value>设为激活</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="AddAssembly" xml:space="preserve">
+    <value>添加大会</value>
+  </data>
+  <data name="AddBidders" xml:space="preserve">
+    <value>加入投标人</value>
+  </data>
+  <data name="AddCharges" xml:space="preserve">
+    <value>添加取费</value>
+  </data>
+  <data name="AddClauses" xml:space="preserve">
+    <value>添加条款</value>
+  </data>
+  <data name="AddEquipment" xml:space="preserve">
+    <value>添加设备</value>
+  </data>
+  <data name="AddItems" xml:space="preserve">
+    <value>添加条目</value>
+  </data>
+  <data name="AddLink" xml:space="preserve">
+    <value>添加链接</value>
+  </data>
+  <data name="AddLinked" xml:space="preserve">
+    <value>添加链接</value>
+  </data>
+  <data name="AddRootNode" xml:space="preserve">
+    <value>添加根节点</value>
+  </data>
+  <data name="AddScoring" xml:space="preserve">
+    <value>添加评分</value>
+  </data>
+  <data name="AddSubmittalItems" xml:space="preserve">
+    <value>送审条目</value>
+  </data>
+  <data name="Adjustment_CurrentInvoice" xml:space="preserve">
+    <value>当前发票</value>
+  </data>
+  <data name="Adjustment_ScheduledValue" xml:space="preserve">
+    <value>计划值</value>
+  </data>
+  <data name="Adjustment1" xml:space="preserve">
+    <value>调整1</value>
+  </data>
+  <data name="Adjustment2" xml:space="preserve">
+    <value>调整2</value>
+  </data>
+  <data name="AdjustmentGrid" xml:space="preserve">
+    <value>调整网格</value>
+  </data>
+  <data name="All_Lines" xml:space="preserve">
+    <value>所有行</value>
+  </data>
+  <data name="AllAdjustments" xml:space="preserve">
+    <value>所有调整</value>
+  </data>
+  <data name="ALLFIELD_DEFAULTNAMES" xml:space="preserve">
+    <value>*所有字段 - 默认名称*</value>
+  </data>
+  <data name="AllLaborResources" xml:space="preserve">
+    <value>所有人工资源</value>
+  </data>
+  <data name="AllLocations" xml:space="preserve">
+    <value>所有位置</value>
+  </data>
+  <data name="AllLocationsPrograms" xml:space="preserve">
+    <value>所有位置项目群</value>
+  </data>
+  <data name="AllNonProgramLocations" xml:space="preserve">
+    <value>所有非项目群位置</value>
+  </data>
+  <data name="AllNonProgramProjects" xml:space="preserve">
+    <value>所有非项目群项目</value>
+  </data>
+  <data name="AllProjects" xml:space="preserve">
+    <value>所有项目</value>
+  </data>
+  <data name="AllProjectsPrograms" xml:space="preserve">
+    <value>所有项目及项目群</value>
+  </data>
+  <data name="AnalyzeLease" xml:space="preserve">
+    <value>分析租赁</value>
+  </data>
+  <data name="ANY" xml:space="preserve">
+    <value>*任何*</value>
+  </data>
+  <data name="AppendIssue" xml:space="preserve">
+    <value>附加到现有问题</value>
+  </data>
+  <data name="ApplyPayments" xml:space="preserve">
+    <value>支付申请</value>
+  </data>
+  <data name="Approved_And_Pending" xml:space="preserve">
+    <value>批准及待批</value>
+  </data>
+  <data name="APPROVEDASNOTED" xml:space="preserve">
+    <value>有备注批准</value>
+  </data>
+  <data name="AttachmentOption_EMAIL" xml:space="preserve">
+    <value>电子邮件</value>
+  </data>
+  <data name="AttachmentOption_FILEMANAGER" xml:space="preserve">
+    <value>文档管理器</value>
+  </data>
+  <data name="AttachmentOption_LinkToPMWebRecord" xml:space="preserve">
+    <value>链接- </value>
+  </data>
+  <data name="AttachmentOption_PMWebWord" xml:space="preserve">
+    <value>PMWeb Word</value>
+  </data>
+  <data name="AttachmentOption_UPLOAD" xml:space="preserve">
+    <value>上传</value>
+  </data>
+  <data name="AttachmentOption_URL" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="AttachmentOption_WSS" xml:space="preserve">
+    <value>SharePoint</value>
+  </data>
+  <data name="AutoApply" xml:space="preserve">
+    <value>自动应用</value>
+  </data>
+  <data name="Award" xml:space="preserve">
+    <value>授予</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CancelAll" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CancelCheckout" xml:space="preserve">
+    <value>取消签出</value>
+  </data>
+  <data name="CANCELED" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="Category_CommonArea" xml:space="preserve">
+    <value>公共区域</value>
+  </data>
+  <data name="Category_Shared" xml:space="preserve">
+    <value>共享</value>
+  </data>
+  <data name="Category_Standard" xml:space="preserve">
+    <value>标准</value>
+  </data>
+  <data name="ChangeOrders" xml:space="preserve">
+    <value>变更单</value>
+  </data>
+  <data name="CheckIn" xml:space="preserve">
+    <value>签入</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>签出</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="Companies" xml:space="preserve">
+    <value>公司</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>联系人</value>
+  </data>
+  <data name="Contract" xml:space="preserve">
+    <value>合同</value>
+  </data>
+  <data name="CopyRecords" xml:space="preserve">
+    <value>复制记录</value>
+  </data>
+  <data name="CopySelected" xml:space="preserve">
+    <value>复制选中</value>
+  </data>
+  <data name="CopyToExcel" xml:space="preserve">
+    <value>复制到 Excel</value>
+  </data>
+  <data name="CreateProjects" xml:space="preserve">
+    <value>创建项目</value>
+  </data>
+  <data name="CreateRecords" xml:space="preserve">
+    <value>创建记录</value>
+  </data>
+  <data name="Custom_Forms" xml:space="preserve">
+    <value>自定义表单</value>
+  </data>
+  <data name="CustomFormRequiredMsg" xml:space="preserve">
+    <value>必填。</value>
+  </data>
+  <data name="CustomFormTableRequiredFieldsMsg" xml:space="preserve">
+    <value>{0} 必填。</value>
+  </data>
+  <data name="Customized" xml:space="preserve">
+    <value>*自定义*</value>
+  </data>
+  <data name="DashFixedAmount" xml:space="preserve">
+    <value>-- 固定总额 --</value>
+  </data>
+  <data name="DashFixedPercent" xml:space="preserve">
+    <value>-- 固定 % --</value>
+  </data>
+  <data name="DASHNOFILTER" xml:space="preserve">
+    <value>-- 无过滤器 --</value>
+  </data>
+  <data name="DASHSELECT" xml:space="preserve">
+    <value>-- 选择--</value>
+  </data>
+  <data name="datePicker_CancelButton" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="datePicker_OkButton" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="datePicker_OpenCalenderToolTip" xml:space="preserve">
+    <value>打开日历弹出框</value>
+  </data>
+  <data name="datePicker_OutOfRage" xml:space="preserve">
+    <value>日期超出范围</value>
+  </data>
+  <data name="datePicker_TodayButton" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="dateTimePicker_OpenTimeToolTip" xml:space="preserve">
+    <value>打开时间视图弹出框。</value>
+  </data>
+  <data name="dateTimePicker_TimePicker" xml:space="preserve">
+    <value>时间选择器</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteLink" xml:space="preserve">
+    <value>删除链接</value>
+  </data>
+  <data name="DeleteRecords" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteRows" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteSelectedLine" xml:space="preserve">
+    <value>删除选中行</value>
+  </data>
+  <data name="DetailGrid" xml:space="preserve">
+    <value>详情网格</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>下载</value>
+  </data>
+  <data name="EditRows" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="EditSelectedAlt" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="EditSelectedLines" xml:space="preserve">
+    <value>编辑选中行</value>
+  </data>
+  <data name="EmailPasswords" xml:space="preserve">
+    <value>邮件口令</value>
+  </data>
+  <data name="EMPTY_TEXTS_ARE_NOT_ALLOWED" xml:space="preserve">
+    <value>空条目未能保存。</value>
+  </data>
+  <data name="EndSession" xml:space="preserve">
+    <value>结束会话</value>
+  </data>
+  <data name="Err_PasswordHigh" xml:space="preserve">
+    <value>Password must contain:Minimum 8 characters, 1 uppercase letter, 1 number and 1 special character</value>
+  </data>
+  <data name="Err_PasswordLow" xml:space="preserve">
+    <value>Password must contain:minimum 6 characters and minimum 1 number</value>
+  </data>
+  <data name="Err_PasswordMedium" xml:space="preserve">
+    <value>Password must contain:minimum 8 characters and 1 Uppercase letter and minimum 1 number</value>
+  </data>
+  <data name="Err_PasswordUsed" xml:space="preserve">
+    <value>The Password you entered has already been used for this account. Please enter a unique password.</value>
+  </data>
+  <data name="ErrorMsg_ErrorImportingRecord" xml:space="preserve">
+    <value>导入文件时出错</value>
+  </data>
+  <data name="ErrorMsg_ErrorUploadingFile" xml:space="preserve">
+    <value>上传文件时出错。</value>
+  </data>
+  <data name="ErrorMsg_UniqueID" xml:space="preserve">
+    <value>代码必须唯一</value>
+  </data>
+  <data name="ExpiredLicense" xml:space="preserve">
+    <value>许可过期</value>
+  </data>
+  <data name="ExpToExel" xml:space="preserve">
+    <value>导出到 Excel</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>过滤器</value>
+  </data>
+  <data name="Full" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>生成</value>
+  </data>
+  <data name="GenerateConfirm_Title" xml:space="preserve">
+    <value>确认创建记录</value>
+  </data>
+  <data name="GenerateMsg_budget" xml:space="preserve">
+    <value>预算</value>
+  </data>
+  <data name="GenerateMsg_conclusion" xml:space="preserve">
+    <value>This process may take some time and cannot be undone.Click Ok to automatically create records or click Cancel to return to the Generate dialog</value>
+  </data>
+  <data name="GenerateMsg_Continue" xml:space="preserve">
+    <value>要继续吗?</value>
+  </data>
+  <data name="GenerateMsg_costCode" xml:space="preserve">
+    <value>成本代码</value>
+  </data>
+  <data name="GenerateMsg_estimate" xml:space="preserve">
+    <value>估算</value>
+  </data>
+  <data name="GenerateMsg_funding" xml:space="preserve">
+    <value>资金记录</value>
+  </data>
+  <data name="GenerateMsg_ifContinueFromInitiative" xml:space="preserve">
+    <value>If you continue,these records will be automatically created.</value>
+  </data>
+  <data name="GenerateMsg_ifContinueFromPortfolio" xml:space="preserve">
+    <value>If you continue,these records will be automatically created for each initiative.</value>
+  </data>
+  <data name="GenerateMsg_period" xml:space="preserve">
+    <value>周期</value>
+  </data>
+  <data name="GenerateMsg_project" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="GenerateMsg_projectcodes" xml:space="preserve">
+    <value>项目分类码</value>
+  </data>
+  <data name="GenerateMsg_schedule" xml:space="preserve">
+    <value>进度计划</value>
+  </data>
+  <data name="GenerateNext" xml:space="preserve">
+    <value>生成下一个</value>
+  </data>
+  <data name="GenerateSubmittal" xml:space="preserve">
+    <value>生成送件记录</value>
+  </data>
+  <data name="Grid_DragToGroupOrReorder" xml:space="preserve">
+    <value>Drag to group or reorder</value>
+  </data>
+  <data name="Grid_DragToResize" xml:space="preserve">
+    <value>Drag to resize</value>
+  </data>
+  <data name="Grid_DropHereToReorder" xml:space="preserve">
+    <value>Drop here to reorder</value>
+  </data>
+  <data name="Grid_FirstPage" xml:space="preserve">
+    <value>首页</value>
+  </data>
+  <data name="Grid_GroupingSettings_CollapseTooltip" xml:space="preserve">
+    <value>折叠分组</value>
+  </data>
+  <data name="Grid_GroupingSettings_ExpandTooltip" xml:space="preserve">
+    <value>展开分组</value>
+  </data>
+  <data name="Grid_GroupingSettings_GroupContinuedFormatString" xml:space="preserve">
+    <value>... group continued from the previous page. </value>
+  </data>
+  <data name="Grid_GroupingSettings_GroupContinuesFormatString" xml:space="preserve">
+    <value> Group continues on the next page.</value>
+  </data>
+  <data name="Grid_GroupingSettings_GroupSplitDisplayFormat" xml:space="preserve">
+    <value>Showing {0} of {1} items.</value>
+  </data>
+  <data name="Grid_GroupingSettings_UnGroupButtonTooltip" xml:space="preserve">
+    <value>Click here to ungroup</value>
+  </data>
+  <data name="Grid_GroupingSettings_UnGroupTooltip" xml:space="preserve">
+    <value>Drag out of the bar to ungroup</value>
+  </data>
+  <data name="Grid_GroupPanel" xml:space="preserve">
+    <value>Drag a column header and drop it here to group by that column</value>
+  </data>
+  <data name="Grid_GroupResult" xml:space="preserve">
+    <value>Showing {0} of {1} items.</value>
+  </data>
+  <data name="Grid_HierarchySettings_CollapseTooltip" xml:space="preserve">
+    <value>折叠</value>
+  </data>
+  <data name="Grid_HierarchySettings_ExpandTooltip" xml:space="preserve">
+    <value>展开</value>
+  </data>
+  <data name="Grid_HierarchySettings_SelfCollapseTooltip" xml:space="preserve">
+    <value>Self reference collapse</value>
+  </data>
+  <data name="Grid_HierarchySettings_SelfExpandTooltip" xml:space="preserve">
+    <value>Self reference expand</value>
+  </data>
+  <data name="Grid_LastPage" xml:space="preserve">
+    <value>末页</value>
+  </data>
+  <data name="Grid_NextPage" xml:space="preserve">
+    <value>下一页</value>
+  </data>
+  <data name="Grid_NextPages" xml:space="preserve">
+    <value>下几页</value>
+  </data>
+  <data name="Grid_NoDetailRecordsText" xml:space="preserve">
+    <value>无子记录显示。</value>
+  </data>
+  <data name="Grid_NoMasterRecordsText" xml:space="preserve">
+    <value>无记录显示。</value>
+  </data>
+  <data name="Grid_PagerPageSize" xml:space="preserve">
+    <value>页面大小</value>
+  </data>
+  <data name="Grid_PagerTextFormat" xml:space="preserve">
+    <value>{4} Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, Items &lt;strong&gt;{2}&lt;/strong&gt; of &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;</value>
+  </data>
+  <data name="Grid_PagerTooltipFormatString" xml:space="preserve">
+    <value>Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;</value>
+  </data>
+  <data name="Grid_PreviousPage" xml:space="preserve">
+    <value>上一页</value>
+  </data>
+  <data name="Grid_PreviousPages" xml:space="preserve">
+    <value>上几页</value>
+  </data>
+  <data name="Grid_SortingSettings_SortedAscToolTip" xml:space="preserve">
+    <value>升序排列</value>
+  </data>
+  <data name="Grid_SortingSettings_SortedDescToolTip" xml:space="preserve">
+    <value> 降序排列</value>
+  </data>
+  <data name="Grid_SortingSettings_SortToolTip" xml:space="preserve">
+    <value>单击这里排序</value>
+  </data>
+  <data name="Grid_StatusBar_SettingsLoadingText" xml:space="preserve">
+    <value>载入中...</value>
+  </data>
+  <data name="Grid_StatusBar_SettingsReadyText" xml:space="preserve">
+    <value>准备就绪</value>
+  </data>
+  <data name="GroupBy_CostCode" xml:space="preserve">
+    <value>成本代码: </value>
+  </data>
+  <data name="GroupBy_Location" xml:space="preserve">
+    <value>位置: </value>
+  </data>
+  <data name="GroupBy_Phase" xml:space="preserve">
+    <value>阶段: </value>
+  </data>
+  <data name="Guest" xml:space="preserve">
+    <value>访客</value>
+  </data>
+  <data name="History_Authorized" xml:space="preserve">
+    <value>授权</value>
+  </data>
+  <data name="History_Balance" xml:space="preserve">
+    <value>尚需</value>
+  </data>
+  <data name="History_Funded" xml:space="preserve">
+    <value>到位资金</value>
+  </data>
+  <data name="Inactivate" xml:space="preserve">
+    <value>标记为未激活</value>
+  </data>
+  <data name="InitNewIssue" xml:space="preserve">
+    <value>另存为问题</value>
+  </data>
+  <data name="InitNewRecord" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="InitNewRisk" xml:space="preserve">
+    <value>添加风险</value>
+  </data>
+  <data name="InitNewRow" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="INVALID_DATA" xml:space="preserve">
+    <value>无效数据</value>
+  </data>
+  <data name="InvalidLicense" xml:space="preserve">
+    <value>无效许可</value>
+  </data>
+  <data name="InvalidOperation_Msg" xml:space="preserve">
+    <value>Invalid operation occurred. Please review the structure of the assembly and formula being used.</value>
+  </data>
+  <data name="Item_Master" xml:space="preserve">
+    <value>* 主 *</value>
+  </data>
+  <data name="ItemAllCostCodes" xml:space="preserve">
+    <value>所有成本代码</value>
+  </data>
+  <data name="Label_BudgetYear" xml:space="preserve">
+    <value>预算年份</value>
+  </data>
+  <data name="Label_RecordNumber" xml:space="preserve">
+    <value>记录#*</value>
+  </data>
+  <data name="Labor" xml:space="preserve">
+    <value>人工</value>
+  </data>
+  <data name="LANG_BY" xml:space="preserve">
+    <value>由</value>
+  </data>
+  <data name="LANG_BY2" xml:space="preserve">
+    <value>由</value>
+  </data>
+  <data name="LANG_OF" xml:space="preserve">
+    <value>于</value>
+  </data>
+  <data name="LANG_ONN" xml:space="preserve">
+    <value>于</value>
+  </data>
+  <data name="Layout" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="linkAsset" xml:space="preserve">
+    <value>链接到资产</value>
+  </data>
+  <data name="LinkCommitments" xml:space="preserve">
+    <value>链接到承诺</value>
+  </data>
+  <data name="LinkPayments" xml:space="preserve">
+    <value>链接到支付</value>
+  </data>
+  <data name="LinkPMWebRecords" xml:space="preserve">
+    <value>链接 PMWeb 记录</value>
+  </data>
+  <data name="ListColumn_Company" xml:space="preserve">
+    <value>公司</value>
+  </data>
+  <data name="ListColumn_Contact" xml:space="preserve">
+    <value>联系人</value>
+  </data>
+  <data name="ListColumn_CostCodes" xml:space="preserve">
+    <value>成本代码</value>
+  </data>
+  <data name="ListColumn_Periods" xml:space="preserve">
+    <value>周期</value>
+  </data>
+  <data name="ListColumn_Tasks" xml:space="preserve">
+    <value>任务</value>
+  </data>
+  <data name="ListColumn_Tasks_Finish" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="ListColumn_Tasks_Start" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="ListColumn_Tasks_Task" xml:space="preserve">
+    <value>任务</value>
+  </data>
+  <data name="ListContactEmptyMsg" xml:space="preserve">
+    <value>选择一个联系人...</value>
+  </data>
+  <data name="ListItem_AddNew" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="ListItem_ALL" xml:space="preserve">
+    <value>*所有*</value>
+  </data>
+  <data name="ListItem_ALL_COMPANIES" xml:space="preserve">
+    <value>所有公司</value>
+  </data>
+  <data name="ListItem_NO_COMPANY" xml:space="preserve">
+    <value>(无公司)</value>
+  </data>
+  <data name="ListItem_NONE" xml:space="preserve">
+    <value>(无)</value>
+  </data>
+  <data name="ListWBSEmptyMsg" xml:space="preserve">
+    <value>选择 WBS...</value>
+  </data>
+  <data name="LoadDefaultState" xml:space="preserve">
+    <value>载入默认视图</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>载入中...</value>
+  </data>
+  <data name="LOD_Folders" xml:space="preserve">
+    <value>文件夹</value>
+  </data>
+  <data name="LOD_PROGRAM" xml:space="preserve">
+    <value>项目群</value>
+  </data>
+  <data name="LOD_PROJECT" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="LOD_PROPERTIES" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="LOD_Resources" xml:space="preserve">
+    <value>资源</value>
+  </data>
+  <data name="LOD_Tasks" xml:space="preserve">
+    <value>任务</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="Merge_ArchitectFields" xml:space="preserve">
+    <value>建筑师</value>
+  </data>
+  <data name="Merge_Attachments" xml:space="preserve">
+    <value>附件</value>
+  </data>
+  <data name="Merge_Clauses" xml:space="preserve">
+    <value>条款</value>
+  </data>
+  <data name="Merge_ClientFields" xml:space="preserve">
+    <value>客户</value>
+  </data>
+  <data name="Merge_CoCompanyFields" xml:space="preserve">
+    <value>承诺公司</value>
+  </data>
+  <data name="Merge_Columns" xml:space="preserve">
+    <value>列</value>
+  </data>
+  <data name="Merge_CustomFields" xml:space="preserve">
+    <value>自定义字段</value>
+  </data>
+  <data name="Merge_Fields" xml:space="preserve">
+    <value>字段</value>
+  </data>
+  <data name="Merge_GCFields" xml:space="preserve">
+    <value>总承包商</value>
+  </data>
+  <data name="Merge_LocationFields" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="Merge_Notes" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="Merge_OperatingProjectFields" xml:space="preserve">
+    <value>正在操作项目</value>
+  </data>
+  <data name="Merge_OwnerFields" xml:space="preserve">
+    <value>业主</value>
+  </data>
+  <data name="Merge_ProjectFields" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="Merge_SpecFields" xml:space="preserve">
+    <value>技术规范</value>
+  </data>
+  <data name="Merge_StaticFields" xml:space="preserve">
+    <value>静态字段</value>
+  </data>
+  <data name="Merge_Workflow" xml:space="preserve">
+    <value>工作流</value>
+  </data>
+  <data name="MicrosoftExcel" xml:space="preserve">
+    <value>Microsoft Excel</value>
+  </data>
+  <data name="Msg_ConfirmCalculateForecast" xml:space="preserve">
+    <value>This will calculate the Forecast to Complete based on the schedule percentage complete and the actual cost and it will override the current values.Continue?</value>
+  </data>
+  <data name="Msg_ConfirmCopyPercentage" xml:space="preserve">
+    <value>Are you sure you wish to copy percentages from schedule? This will override the current percentages. </value>
+  </data>
+  <data name="Msg_DeleteLinkedVendorApproval" xml:space="preserve">
+    <value>Caution! There is an Application linked to this record.If you continue this Vendor Approval record will be deleted as well as the linked Application. This process cannot be undone.Do you wish to continue?</value>
+  </data>
+  <data name="Msg_DeletePaymentBatchDetails" xml:space="preserve">
+    <value>Warning! Deleting lines from this spreadsheet removes them from this batch and deletes the linked Payment records. Use "Unlink Payment" if you wish to remove them from this batch but keep the Payment records. This action cannot be undone.Do you wish to continue?</value>
+  </data>
+  <data name="Msg_ImportSuccessfully" xml:space="preserve">
+    <value>File imported successfully.</value>
+  </data>
+  <data name="Msg_OverPayment" xml:space="preserve">
+    <value>Save cannot be completed because it would result in the overpayment of a linked invoice.</value>
+  </data>
+  <data name="Msg_PromptToSave" xml:space="preserve">
+    <value>You have unsaved data changes.If you continue\nnavigating away you will lose your unsaved Changes.\nAre you sure you want to continue?</value>
+  </data>
+  <data name="Msg_Rating" xml:space="preserve">
+    <value>评价该记录</value>
+  </data>
+  <data name="Msg_RemoveCommitmentLink" xml:space="preserve">
+    <value>移除链接?</value>
+  </data>
+  <data name="Msg_SentAt" xml:space="preserve">
+    <value>Sent at</value>
+  </data>
+  <data name="Multiple" xml:space="preserve">
+    <value>多人</value>
+  </data>
+  <data name="NewAssembly" xml:space="preserve">
+    <value>New Assembly</value>
+  </data>
+  <data name="NewGroup" xml:space="preserve">
+    <value>新分组</value>
+  </data>
+  <data name="NewItem" xml:space="preserve">
+    <value>新条目</value>
+  </data>
+  <data name="NewLanguage" xml:space="preserve">
+    <value>新语言</value>
+  </data>
+  <data name="NewLine" xml:space="preserve">
+    <value>(新行)</value>
+  </data>
+  <data name="NO_COST_TYPE" xml:space="preserve">
+    <value>(无成本类型)</value>
+  </data>
+  <data name="NOACTION" xml:space="preserve">
+    <value>无行动</value>
+  </data>
+  <data name="NoLicense" xml:space="preserve">
+    <value>PMWeb is not licensed for this domain.&lt;br /&gt;Please upload a license.</value>
+  </data>
+  <data name="NOMATCH" xml:space="preserve">
+    <value>无匹配项</value>
+  </data>
+  <data name="NOT_IN_BUDGET" xml:space="preserve">
+    <value>(不在预算中)</value>
+  </data>
+  <data name="NotDefined" xml:space="preserve">
+    <value>(未定义)</value>
+  </data>
+  <data name="Notification_Attachment" xml:space="preserve">
+    <value>附件</value>
+  </data>
+  <data name="Notification_BiddersRecordLinkDescription" xml:space="preserve">
+    <value>Hyperlinks to Online Bids (bidders)</value>
+  </data>
+  <data name="Notification_MergeTemplate" xml:space="preserve">
+    <value>合并模板</value>
+  </data>
+  <data name="Notification_NonBiddersRecordLinkDescription" xml:space="preserve">
+    <value>Hyperlinks to Procurement (non-bidders)</value>
+  </data>
+  <data name="Notification_Note" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="Notification_RecordLink" xml:space="preserve">
+    <value>-- 记录链接 --</value>
+  </data>
+  <data name="Notification_Report" xml:space="preserve">
+    <value>报告</value>
+  </data>
+  <data name="Notification_UnconfiguredReport" xml:space="preserve">
+    <value>One or more attached reports must be configured before attaching to email.</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="OpenAssembly" xml:space="preserve">
+    <value>Open Assembly</value>
+  </data>
+  <data name="OpenContainingFolder" xml:space="preserve">
+    <value>Open Containing Folder</value>
+  </data>
+  <data name="OpenItem" xml:space="preserve">
+    <value>打开条目</value>
+  </data>
+  <data name="OpenTheCalendarPopup" xml:space="preserve">
+    <value>打开日历弹出框。</value>
+  </data>
+  <data name="Original" xml:space="preserve">
+    <value>原始</value>
+  </data>
+  <data name="OriginalBudget" xml:space="preserve">
+    <value>原始预算</value>
+  </data>
+  <data name="OriginalFunding" xml:space="preserve">
+    <value>原始资金</value>
+  </data>
+  <data name="OriginalScope" xml:space="preserve">
+    <value>原始范围</value>
+  </data>
+  <data name="PasteClipBoard" xml:space="preserve">
+    <value>从 Excel 中复制</value>
+  </data>
+  <data name="PayInvoices" xml:space="preserve">
+    <value>发票支付</value>
+  </data>
+  <data name="Payment_Asset" xml:space="preserve">
+    <value>(资产)</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>待批</value>
+  </data>
+  <data name="PendingApproved" xml:space="preserve">
+    <value>待批/已批准</value>
+  </data>
+  <data name="PerformInsert" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="PerformUpdate" xml:space="preserve">
+    <value>更新记录</value>
+  </data>
+  <data name="PMWebViewer" xml:space="preserve">
+    <value>PMWeb 浏览器</value>
+  </data>
+  <data name="Portfolio" xml:space="preserve">
+    <value>(组合)</value>
+  </data>
+  <data name="Portfolio_SecurityRights" xml:space="preserve">
+    <value>Your current security rights do not allow you access to Portfolio level records.</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>(项目群)</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>(项目)</value>
+  </data>
+  <data name="PurchaseOrder" xml:space="preserve">
+    <value>采购单</value>
+  </data>
+  <data name="RadToolBarButton_ActiveToggle" xml:space="preserve">
+    <value>激活开关</value>
+  </data>
+  <data name="RadToolBarButton_AttachALL" xml:space="preserve">
+    <value>所有</value>
+  </data>
+  <data name="RadToolBarButton_Attachements" xml:space="preserve">
+    <value>记录附件</value>
+  </data>
+  <data name="RadToolBarButton_AutoCAD" xml:space="preserve">
+    <value>AutoCAD</value>
+  </data>
+  <data name="RadToolBarButton_CancelSendMail" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="RadToolBarButton_Commitment" xml:space="preserve">
+    <value>承诺</value>
+  </data>
+  <data name="RadToolBarButton_Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="RadToolBarButton_CopyProject" xml:space="preserve">
+    <value>复制项目</value>
+  </data>
+  <data name="RadToolBarButton_CopyWBS" xml:space="preserve">
+    <value>复制 WBS</value>
+  </data>
+  <data name="RadToolBarButton_CreateChangeOrder" xml:space="preserve">
+    <value>创建承诺变更单</value>
+  </data>
+  <data name="RadToolBarButton_CreateCompany" xml:space="preserve">
+    <value>创建公司</value>
+  </data>
+  <data name="RadToolBarButton_CreateProgressInvoice" xml:space="preserve">
+    <value>创建进展发票</value>
+  </data>
+  <data name="RadToolBarButton_CreateRevision" xml:space="preserve">
+    <value>创建修订</value>
+  </data>
+  <data name="RadToolBarButton_Cut" xml:space="preserve">
+    <value>剪切</value>
+  </data>
+  <data name="RadToolBarButton_Delete" xml:space="preserve">
+    <value>删除 (Alt+d)</value>
+  </data>
+  <data name="RadToolBarButton_Email" xml:space="preserve">
+    <value>发送</value>
+  </data>
+  <data name="RadToolBarButton_EmailReply" xml:space="preserve">
+    <value>回复</value>
+  </data>
+  <data name="RadToolBarButton_Estimate" xml:space="preserve">
+    <value>估算</value>
+  </data>
+  <data name="RadToolBarButton_EstimatesDetail" xml:space="preserve">
+    <value>估算详情</value>
+  </data>
+  <data name="RadToolBarButton_ExportAllToExcel" xml:space="preserve">
+    <value>导出所有记录</value>
+  </data>
+  <data name="RadToolBarButton_ExportPDF" xml:space="preserve">
+    <value>发送到 PDF</value>
+  </data>
+  <data name="RadToolBarButton_ExportQuery" xml:space="preserve">
+    <value>导出队列</value>
+  </data>
+  <data name="RadToolBarButton_ExportToExcel" xml:space="preserve">
+    <value>导出到 Excel</value>
+  </data>
+  <data name="RadToolBarButton_ExportToFile" xml:space="preserve">
+    <value>发送到文件</value>
+  </data>
+  <data name="RadToolBarButton_Forecast" xml:space="preserve">
+    <value>Forecast From Earned Value:                                           Forecast To Complete=(Actual Cost / % Complete) - Actual Cost</value>
+  </data>
+  <data name="RadToolBarButton_Generate" xml:space="preserve">
+    <value>生成</value>
+  </data>
+  <data name="RadToolBarButton_GenerateAuthorization" xml:space="preserve">
+    <value>生成资金授权</value>
+  </data>
+  <data name="RadToolBarButton_GenerateBudget" xml:space="preserve">
+    <value>生成预算</value>
+  </data>
+  <data name="RadToolBarButton_GenerateBudgets" xml:space="preserve">
+    <value>生成预算</value>
+  </data>
+  <data name="RadToolBarButton_GenerateBuyoutItems" xml:space="preserve">
+    <value>Generate Buyout Items</value>
+  </data>
+  <data name="RadToolBarButton_GenerateCE" xml:space="preserve">
+    <value>变更事件</value>
+  </data>
+  <data name="RadToolBarButton_GenerateChangeOrders" xml:space="preserve">
+    <value>变更单</value>
+  </data>
+  <data name="RadToolBarButton_GenerateContracts" xml:space="preserve">
+    <value>生成合同</value>
+  </data>
+  <data name="RadToolBarButton_GenerateFundingRequest" xml:space="preserve">
+    <value>生成资金请求</value>
+  </data>
+  <data name="RadToolBarButton_GenerateFundings" xml:space="preserve">
+    <value>生成资金</value>
+  </data>
+  <data name="RadToolBarButton_GenerateMultipleRevisions" xml:space="preserve">
+    <value>多次修订</value>
+  </data>
+  <data name="RadToolBarButton_GeneratePMBudgets" xml:space="preserve">
+    <value>生成预算</value>
+  </data>
+  <data name="RadToolBarButton_GeneratePMContracts" xml:space="preserve">
+    <value>生成承诺</value>
+  </data>
+  <data name="RadToolBarButton_GeneratePMProcurements" xml:space="preserve">
+    <value>生成采购</value>
+  </data>
+  <data name="RadToolBarButton_GenerateProject" xml:space="preserve">
+    <value>生成项目</value>
+  </data>
+  <data name="RadToolBarButton_GenerateProjectRecords" xml:space="preserve">
+    <value>生成项目记录</value>
+  </data>
+  <data name="RadToolBarButton_GeneratePurchaseOrders" xml:space="preserve">
+    <value>生成采购单</value>
+  </data>
+  <data name="RadToolBarButton_GenerateSchedule" xml:space="preserve">
+    <value>生成进度计划</value>
+  </data>
+  <data name="RadToolBarButton_GenerateSubmittals" xml:space="preserve">
+    <value>送审件</value>
+  </data>
+  <data name="RadToolBarButton_GenerateTemplates" xml:space="preserve">
+    <value>生成模板</value>
+  </data>
+  <data name="RadToolBarButton_GenerateTransmittal" xml:space="preserve">
+    <value>送件记录</value>
+  </data>
+  <data name="RadToolBarButton_GenerateWorkOrder" xml:space="preserve">
+    <value>工单</value>
+  </data>
+  <data name="RadToolBarButton_GenerateWorkOrders" xml:space="preserve">
+    <value>工单</value>
+  </data>
+  <data name="RadToolBarButton_help" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="RadToolBarButton_ImportRecords" xml:space="preserve">
+    <value>记录</value>
+  </data>
+  <data name="RadToolBarButton_InactiveToggle" xml:space="preserve">
+    <value>不激活开关</value>
+  </data>
+  <data name="RadToolBarButton_Items" xml:space="preserve">
+    <value>条目</value>
+  </data>
+  <data name="RadToolBarButton_LinkSchedule" xml:space="preserve">
+    <value>链接到进度计划</value>
+  </data>
+  <data name="RadToolBarButton_LinkTasks" xml:space="preserve">
+    <value>链接到进度计划</value>
+  </data>
+  <data name="RadToolBarButton_LoadDefaultState" xml:space="preserve">
+    <value>载入默认视图</value>
+  </data>
+  <data name="RadToolBarButton_MergeTemplates" xml:space="preserve">
+    <value>合并模板</value>
+  </data>
+  <data name="RadToolBarButton_MSWord" xml:space="preserve">
+    <value>MS Word</value>
+  </data>
+  <data name="RadToolBarButton_Navisworks" xml:space="preserve">
+    <value>Navisworks</value>
+  </data>
+  <data name="RadToolBarButton_New" xml:space="preserve">
+    <value>新增 (Alt+n)</value>
+  </data>
+  <data name="RadToolBarButton_NewEmail" xml:space="preserve">
+    <value>编写新邮件</value>
+  </data>
+  <data name="RadToolBarButton_Notes" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="RadToolBarButton_Notification" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="RadToolBarButton_Paste" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="RadToolBarButton_PaymentSchedule" xml:space="preserve">
+    <value>支付计划</value>
+  </data>
+  <data name="RadToolBarButton_PctComplete" xml:space="preserve">
+    <value>完成% 取自进度计划</value>
+  </data>
+  <data name="RadToolBarButton_Planview" xml:space="preserve">
+    <value>计划视图</value>
+  </data>
+  <data name="RadToolBarButton_PlanViewSetup" xml:space="preserve">
+    <value>计划视图设置。</value>
+  </data>
+  <data name="RadToolBarButton_Post" xml:space="preserve">
+    <value>Post to Cost Ledger</value>
+  </data>
+  <data name="RadToolBarButton_Print" xml:space="preserve">
+    <value>打印</value>
+  </data>
+  <data name="RadToolBarButton_PurchaseOrder" xml:space="preserve">
+    <value>采购单</value>
+  </data>
+  <data name="RadToolBarButton_Recalculate" xml:space="preserve">
+    <value>重新计算</value>
+  </data>
+  <data name="RadToolBarButton_ReceiveEmail" xml:space="preserve">
+    <value>接收</value>
+  </data>
+  <data name="RadToolBarButton_Reports" xml:space="preserve">
+    <value>报告</value>
+  </data>
+  <data name="RadToolBarButton_Revit" xml:space="preserve">
+    <value>Revit</value>
+  </data>
+  <data name="RadToolBarButton_Save" xml:space="preserve">
+    <value>保存 (Alt+s)</value>
+  </data>
+  <data name="RadToolBarButton_SaveLayout" xml:space="preserve">
+    <value>保存视图</value>
+  </data>
+  <data name="RadToolBarButton_Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="RadToolBarButton_SendMail" xml:space="preserve">
+    <value>发送邮件</value>
+  </data>
+  <data name="RadToolBarButton_Subcontract" xml:space="preserve">
+    <value>分包合同</value>
+  </data>
+  <data name="RadToolBarButton_TakeSnapshot" xml:space="preserve">
+    <value>保存快照</value>
+  </data>
+  <data name="RadToolBarButton_Templates" xml:space="preserve">
+    <value>模板</value>
+  </data>
+  <data name="RadToolBarButton_Test" xml:space="preserve">
+    <value>测试</value>
+  </data>
+  <data name="RadToolBarButton_Toggle" xml:space="preserve">
+    <value>Toggle Page Setup</value>
+  </data>
+  <data name="RadToolBarButton_Unpost" xml:space="preserve">
+    <value>Unpost</value>
+  </data>
+  <data name="RadToolBarButton_ViewPMWebReports" xml:space="preserve">
+    <value>PMWeb Reporting</value>
+  </data>
+  <data name="RadToolBarButton_ViewReports" xml:space="preserve">
+    <value>BI 报告</value>
+  </data>
+  <data name="RadToolBarButton_ViewTemplates" xml:space="preserve">
+    <value>PMWeb Word</value>
+  </data>
+  <data name="RadToolBarButton_Void" xml:space="preserve">
+    <value>Void (Alt+v)</value>
+  </data>
+  <data name="RadToolBarSplitButton_Assign" xml:space="preserve">
+    <value>分配</value>
+  </data>
+  <data name="RadToolBarSplitButton_Attach" xml:space="preserve">
+    <value>附加</value>
+  </data>
+  <data name="RadToolBarSplitButton_BIM" xml:space="preserve">
+    <value>BIM</value>
+  </data>
+  <data name="RadToolBarSplitButton_Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="RadToolBarSplitButton_Generate" xml:space="preserve">
+    <value>生成...</value>
+  </data>
+  <data name="RadToolBarSplitButton_Import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="RadToolBarSplitButton_Layout" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="RadToolBarSplitButton_Print" xml:space="preserve">
+    <value>打印</value>
+  </data>
+  <data name="RadToolBarSplitButton_WordMerge" xml:space="preserve">
+    <value>PMWeb Word</value>
+  </data>
+  <data name="RadUploadAdd" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="RadUploadClear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="RadUploadDelete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="RadUploadRemove" xml:space="preserve">
+    <value>移除</value>
+  </data>
+  <data name="RadUploadSelect" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="RebindGrid" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="RecalculateCostLines" xml:space="preserve">
+    <value>重新计算选中行</value>
+  </data>
+  <data name="RecordNumber_Location" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="RecordNumber_LocationProgram" xml:space="preserve">
+    <value>位置 + 项目群</value>
+  </data>
+  <data name="RecordNumber_Portfolio" xml:space="preserve">
+    <value>组合</value>
+  </data>
+  <data name="RecordNumber_Program" xml:space="preserve">
+    <value>项目群</value>
+  </data>
+  <data name="RecordNumber_Project" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="RecordNumber_ProjectPhase" xml:space="preserve">
+    <value>项目+ 阶段</value>
+  </data>
+  <data name="RemoveCommitmentLink" xml:space="preserve">
+    <value>移除链接</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="ReportErrorMsg" xml:space="preserve">
+    <value>报告未能载入</value>
+  </data>
+  <data name="REQUISITIONCODELIST_CONTRACT" xml:space="preserve">
+    <value>合同</value>
+  </data>
+  <data name="REQUISITIONCODELIST_CONTRACTCO" xml:space="preserve">
+    <value>合同变更单</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="ResourceType_Equipment" xml:space="preserve">
+    <value>设备</value>
+  </data>
+  <data name="ResourceType_Labor" xml:space="preserve">
+    <value>人工</value>
+  </data>
+  <data name="ReverseSelection" xml:space="preserve">
+    <value>反向选择</value>
+  </data>
+  <data name="Revised" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="RevisedBudget" xml:space="preserve">
+    <value>修改预算</value>
+  </data>
+  <data name="RevisedFunding" xml:space="preserve">
+    <value>修改资金</value>
+  </data>
+  <data name="RevisedScope" xml:space="preserve">
+    <value>修改范围</value>
+  </data>
+  <data name="REVISERESUBMIT" xml:space="preserve">
+    <value>修改 &amp; 重新提交</value>
+  </data>
+  <data name="REVISION" xml:space="preserve">
+    <value>修订</value>
+  </data>
+  <data name="Revit" xml:space="preserve">
+    <value>Autodesk Revit Architecture 2011</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SaveClose" xml:space="preserve">
+    <value>保存并关闭</value>
+  </data>
+  <data name="SavePermissions" xml:space="preserve">
+    <value>保存权限</value>
+  </data>
+  <data name="SaveState" xml:space="preserve">
+    <value>保存视图</value>
+  </data>
+  <data name="SaveToRecord" xml:space="preserve">
+    <value>保存到记录</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="Search_Portfolio" xml:space="preserve">
+    <value>组合</value>
+  </data>
+  <data name="Sent_Lines_Only" xml:space="preserve">
+    <value>仅发送行</value>
+  </data>
+  <data name="ShowAllVersions" xml:space="preserve">
+    <value>显示所有版本</value>
+  </data>
+  <data name="ShowLastVersion" xml:space="preserve">
+    <value>仅显示最终版本</value>
+  </data>
+  <data name="Spell_And" xml:space="preserve">
+    <value>与</value>
+  </data>
+  <data name="Spell_Billion" xml:space="preserve">
+    <value>十亿</value>
+  </data>
+  <data name="Spell_Eight" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="Spell_Eighteen" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="Spell_Eighty" xml:space="preserve">
+    <value>80</value>
+  </data>
+  <data name="Spell_Eleven" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="Spell_Fifteen" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="Spell_Fifty" xml:space="preserve">
+    <value>50</value>
+  </data>
+  <data name="Spell_Five" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="Spell_Forty" xml:space="preserve">
+    <value>40</value>
+  </data>
+  <data name="Spell_Four" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="Spell_Fourteen" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="Spell_Hundred" xml:space="preserve">
+    <value>百</value>
+  </data>
+  <data name="Spell_Million" xml:space="preserve">
+    <value>百万</value>
+  </data>
+  <data name="Spell_Negative" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="Spell_Nine" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="Spell_Nineteen" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="Spell_Ninety" xml:space="preserve">
+    <value>90</value>
+  </data>
+  <data name="Spell_One" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Spell_Seven" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="Spell_Seventeen" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="Spell_Seventy" xml:space="preserve">
+    <value>70</value>
+  </data>
+  <data name="Spell_Six" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="Spell_Sixteen" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="Spell_Sixty" xml:space="preserve">
+    <value>60</value>
+  </data>
+  <data name="Spell_Ten" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="Spell_Thirteen" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="Spell_Thirty" xml:space="preserve">
+    <value>30</value>
+  </data>
+  <data name="Spell_Thousand" xml:space="preserve">
+    <value>千</value>
+  </data>
+  <data name="Spell_Three" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Spell_Trillion" xml:space="preserve">
+    <value>万亿</value>
+  </data>
+  <data name="Spell_Twelve" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="Spell_Twenty" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="Spell_Two" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Spell_Zero" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SPLIT" xml:space="preserve">
+    <value>*拆分*</value>
+  </data>
+  <data name="Splitter_CollapseExpandPaneText" xml:space="preserve">
+    <value>Collapse/expand the left pane</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="StatusMessage" xml:space="preserve">
+    <value>{0} &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{1}&lt;/b&gt; out of &lt;b&gt;{2}&lt;/b&gt;</value>
+  </data>
+  <data name="Subcontract" xml:space="preserve">
+    <value>分包合同</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>(系统)</value>
+  </data>
+  <data name="tab_Abstract" xml:space="preserve">
+    <value>Abstract</value>
+  </data>
+  <data name="tab_AdditionalApplications" xml:space="preserve">
+    <value>额外应用程序</value>
+  </data>
+  <data name="tab_Addresses" xml:space="preserve">
+    <value>地址</value>
+  </data>
+  <data name="tab_Adjustments" xml:space="preserve">
+    <value>调整</value>
+  </data>
+  <data name="tab_Advanced" xml:space="preserve">
+    <value>高级</value>
+  </data>
+  <data name="tab_Applications" xml:space="preserve">
+    <value>应用程序</value>
+  </data>
+  <data name="tab_Attachments" xml:space="preserve">
+    <value>附件</value>
+  </data>
+  <data name="tab_AuditTrailSettings" xml:space="preserve">
+    <value>审计痕迹</value>
+  </data>
+  <data name="tab_BidderMatrix" xml:space="preserve">
+    <value>投标人矩阵</value>
+  </data>
+  <data name="tab_BidItems" xml:space="preserve">
+    <value>投标条目</value>
+  </data>
+  <data name="tab_Body" xml:space="preserve">
+    <value>主体</value>
+  </data>
+  <data name="tab_Budget" xml:space="preserve">
+    <value>预算</value>
+  </data>
+  <data name="tab_Buildings" xml:space="preserve">
+    <value>建筑</value>
+  </data>
+  <data name="tab_Calendar" xml:space="preserve">
+    <value>日历</value>
+  </data>
+  <data name="tab_ChangeOrders" xml:space="preserve">
+    <value>变更单</value>
+  </data>
+  <data name="tab_Charges" xml:space="preserve">
+    <value>取费</value>
+  </data>
+  <data name="tab_Chart" xml:space="preserve">
+    <value>图表</value>
+  </data>
+  <data name="tab_Checklists" xml:space="preserve">
+    <value>核对清单</value>
+  </data>
+  <data name="tab_CheckListSettings" xml:space="preserve">
+    <value>核对清单设置</value>
+  </data>
+  <data name="tab_Clauses" xml:space="preserve">
+    <value>条款</value>
+  </data>
+  <data name="tab_ClauseSettings" xml:space="preserve">
+    <value>条款设置</value>
+  </data>
+  <data name="tab_Codes" xml:space="preserve">
+    <value>分类码</value>
+  </data>
+  <data name="tab_Commitments" xml:space="preserve">
+    <value>承诺</value>
+  </data>
+  <data name="tab_Companies" xml:space="preserve">
+    <value>公司</value>
+  </data>
+  <data name="tab_Configure" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="tab_Contacts" xml:space="preserve">
+    <value>联系人</value>
+  </data>
+  <data name="tab_Controls" xml:space="preserve">
+    <value>控制人员</value>
+  </data>
+  <data name="tab_CostTotalsMarkups" xml:space="preserve">
+    <value>成本总计</value>
+  </data>
+  <data name="tab_CostWorkSheet" xml:space="preserve">
+    <value>成本工作表</value>
+  </data>
+  <data name="tab_Dashboard" xml:space="preserve">
+    <value>仪表板</value>
+  </data>
+  <data name="tab_Departments" xml:space="preserve">
+    <value>部门</value>
+  </data>
+  <data name="tab_Destination" xml:space="preserve">
+    <value>目的地</value>
+  </data>
+  <data name="tab_Details" xml:space="preserve">
+    <value>详情</value>
+  </data>
+  <data name="tab_Equipment" xml:space="preserve">
+    <value>设备</value>
+  </data>
+  <data name="tab_Estimate" xml:space="preserve">
+    <value>估算</value>
+  </data>
+  <data name="tab_Floors" xml:space="preserve">
+    <value>楼层</value>
+  </data>
+  <data name="tab_Footer" xml:space="preserve">
+    <value>页脚</value>
+  </data>
+  <data name="tab_General" xml:space="preserve">
+    <value>常用</value>
+  </data>
+  <data name="tab_GeneralSettings" xml:space="preserve">
+    <value>常用设置</value>
+  </data>
+  <data name="tab_Header" xml:space="preserve">
+    <value>页眉</value>
+  </data>
+  <data name="tab_History" xml:space="preserve">
+    <value>历史</value>
+  </data>
+  <data name="tab_ImportedUsers" xml:space="preserve">
+    <value>导入的用户</value>
+  </data>
+  <data name="tab_Insurance" xml:space="preserve">
+    <value>保险</value>
+  </data>
+  <data name="tab_Integration" xml:space="preserve">
+    <value>集成</value>
+  </data>
+  <data name="tab_Issues" xml:space="preserve">
+    <value>问题</value>
+  </data>
+  <data name="tab_Labor" xml:space="preserve">
+    <value>人工</value>
+  </data>
+  <data name="tab_Leases" xml:space="preserve">
+    <value>租赁</value>
+  </data>
+  <data name="tab_Ledger" xml:space="preserve">
+    <value>总账</value>
+  </data>
+  <data name="tab_LinkedSchedule" xml:space="preserve">
+    <value>链接的进度计划</value>
+  </data>
+  <data name="tab_Locations" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="tab_Log" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="tab_Maintenance" xml:space="preserve">
+    <value>维修</value>
+  </data>
+  <data name="tab_ManageBids" xml:space="preserve">
+    <value>管理投标</value>
+  </data>
+  <data name="tab_ManagerLayout" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="tab_MapView" xml:space="preserve">
+    <value>地图</value>
+  </data>
+  <data name="tab_Markup" xml:space="preserve">
+    <value>Markup</value>
+  </data>
+  <data name="tab_Moves" xml:space="preserve">
+    <value>移动</value>
+  </data>
+  <data name="tab_Notes" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="tab_NotificationLog" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="tab_NotificationSettings" xml:space="preserve">
+    <value>通知设置</value>
+  </data>
+  <data name="tab_Occupants" xml:space="preserve">
+    <value>Occupants</value>
+  </data>
+  <data name="tab_OtherCosts" xml:space="preserve">
+    <value>材料成本</value>
+  </data>
+  <data name="tab_PasswordSetup" xml:space="preserve">
+    <value>口令设置</value>
+  </data>
+  <data name="tab_Permissions" xml:space="preserve">
+    <value>权限</value>
+  </data>
+  <data name="tab_Phases" xml:space="preserve">
+    <value>阶段</value>
+  </data>
+  <data name="tab_PortfolioView" xml:space="preserve">
+    <value>组合视图</value>
+  </data>
+  <data name="tab_Predecessors" xml:space="preserve">
+    <value>紧前</value>
+  </data>
+  <data name="tab_Preventive" xml:space="preserve">
+    <value>Preventive</value>
+  </data>
+  <data name="tab_PrintingSetup" xml:space="preserve">
+    <value>打印设置</value>
+  </data>
+  <data name="tab_ProgressInvoices" xml:space="preserve">
+    <value>进展发票</value>
+  </data>
+  <data name="tab_Projects" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="tab_Rating" xml:space="preserve">
+    <value>评价</value>
+  </data>
+  <data name="tab_RecordNumber" xml:space="preserve">
+    <value>记录编号</value>
+  </data>
+  <data name="tab_RejectionLogs" xml:space="preserve">
+    <value>拒绝日志</value>
+  </data>
+  <data name="tab_ReleaseRecordsForExport" xml:space="preserve">
+    <value>Release Records for Export</value>
+  </data>
+  <data name="tab_Report" xml:space="preserve">
+    <value>报告</value>
+  </data>
+  <data name="tab_RequiredFields" xml:space="preserve">
+    <value>字段</value>
+  </data>
+  <data name="tab_Resources" xml:space="preserve">
+    <value>资源</value>
+  </data>
+  <data name="tab_Result" xml:space="preserve">
+    <value>结果</value>
+  </data>
+  <data name="tab_Results" xml:space="preserve">
+    <value>结果</value>
+  </data>
+  <data name="tab_Results2" xml:space="preserve">
+    <value>正在分组</value>
+  </data>
+  <data name="tab_Schedule" xml:space="preserve">
+    <value>进度计划</value>
+  </data>
+  <data name="tab_Scoring" xml:space="preserve">
+    <value>正在排序</value>
+  </data>
+  <data name="tab_Spaces" xml:space="preserve">
+    <value>空间</value>
+  </data>
+  <data name="tab_Spec" xml:space="preserve">
+    <value>技术规范</value>
+  </data>
+  <data name="tab_Specifications" xml:space="preserve">
+    <value>技术规范</value>
+  </data>
+  <data name="tab_Standard" xml:space="preserve">
+    <value>标准</value>
+  </data>
+  <data name="tab_Stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="tab_Submission" xml:space="preserve">
+    <value>送审</value>
+  </data>
+  <data name="tab_Successors" xml:space="preserve">
+    <value>后续</value>
+  </data>
+  <data name="tab_TaskNotes" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="tab_Tasks" xml:space="preserve">
+    <value>任务</value>
+  </data>
+  <data name="tab_Template" xml:space="preserve">
+    <value>设计师</value>
+  </data>
+  <data name="tab_Timesheet" xml:space="preserve">
+    <value>工时单</value>
+  </data>
+  <data name="tab_ToolboxSettings" xml:space="preserve">
+    <value>工具箱设置</value>
+  </data>
+  <data name="tab_ViewExportedFiles" xml:space="preserve">
+    <value>查看已导出文件</value>
+  </data>
+  <data name="tab_WBS" xml:space="preserve">
+    <value>WBS</value>
+  </data>
+  <data name="tab_Workflow" xml:space="preserve">
+    <value>工作流</value>
+  </data>
+  <data name="tab_WorkOrders" xml:space="preserve">
+    <value>工单</value>
+  </data>
+  <data name="tabCount_Attachments" xml:space="preserve">
+    <value>附件 ({0})</value>
+  </data>
+  <data name="tabCount_Notes" xml:space="preserve">
+    <value>备注 ({0})</value>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>税费</value>
+  </data>
+  <data name="TextCommaDelimited" xml:space="preserve">
+    <value>Text (Comma Delimited)</value>
+  </data>
+  <data name="Title_NoRecordsCreated" xml:space="preserve">
+    <value>No records created</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>总计</value>
+  </data>
+  <data name="Totals" xml:space="preserve">
+    <value>总计</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>撤销</value>
+  </data>
+  <data name="UnlinkAsset" xml:space="preserve">
+    <value>取消链接资产</value>
+  </data>
+  <data name="UnlinkPayments" xml:space="preserve">
+    <value>取消链接支付</value>
+  </data>
+  <data name="Unsent_Lines_Only" xml:space="preserve">
+    <value>仅取消发送行</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="UpdateEdited" xml:space="preserve">
+    <value>更新记录</value>
+  </data>
+  <data name="UpdateTasks" xml:space="preserve">
+    <value>更新任务</value>
+  </data>
+  <data name="UploadFile" xml:space="preserve">
+    <value>上传文件</value>
+  </data>
+  <data name="Use_Default" xml:space="preserve">
+    <value>(使用默认值)</value>
+  </data>
+  <data name="UserDefineFields_Records" xml:space="preserve">
+    <value>记录</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>用户</value>
+  </data>
+  <data name="Void" xml:space="preserve">
+    <value>Void</value>
+  </data>
+  <data name="VoidLines" xml:space="preserve">
+    <value>Void Lines</value>
+  </data>
+  <data name="Warining_MaxUsers" xml:space="preserve">
+    <value>Maximum number of users was exceeded!</value>
+  </data>
+  <data name="Warning_InvalidDatabases" xml:space="preserve">
+    <value>Invalid PMWebDatabases</value>
+  </data>
+  <data name="WarningMsg_AccountDisabled" xml:space="preserve">
+    <value>Your account has been disabled.</value>
+  </data>
+  <data name="WarningMsg_ApplicationSubmitted" xml:space="preserve">
+    <value>Your vendor application has been successfully submitted.\n\nYou can continue to view your application as often as you wish but you may no longer edit it.\n\nThank you.</value>
+  </data>
+  <data name="WarningMsg_ConditionalSecurityDisabledList" xml:space="preserve">
+    <value>This list is disabled due to Conditional Security rules.</value>
+  </data>
+  <data name="WarningMsg_ConfirmDeleteDocument" xml:space="preserve">
+    <value>Are you sure you wish to delete? This will delete all related records. This process cannot be undone.</value>
+  </data>
+  <data name="WarningMsg_ConfirmDeleteRecords" xml:space="preserve">
+    <value>Delete all selected record(s)?</value>
+  </data>
+  <data name="WarningMsg_ConfirmReleaseRecords" xml:space="preserve">
+    <value>Release all selected record(s)?</value>
+  </data>
+  <data name="WarningMsg_ConfirmSubmitApplication" xml:space="preserve">
+    <value>You clicked the button to submit your vendor application.\nOnce the application has been submitted, you cannnot edit it.\n\nAre you sure you wish to continue?</value>
+  </data>
+  <data name="WarningMsg_ConfirmUpdateTasks" xml:space="preserve">
+    <value>Are you sure you wish to update task dates from the schedule? This process cannot be undone.</value>
+  </data>
+  <data name="WarningMsg_ContractOverbilling" xml:space="preserve">
+    <value>The record cannot be saved. Saving would violate overbilling settings for this contract.</value>
+  </data>
+  <data name="WarningMsg_CostCodeRequired" xml:space="preserve">
+    <value>Select the Cost Code</value>
+  </data>
+  <data name="WarningMsg_DummyData" xml:space="preserve">
+    <value>Dummy characters exist!</value>
+  </data>
+  <data name="WarningMsg_EmailsSentSuccesfully" xml:space="preserve">
+    <value>Emails Sent Successfully</value>
+  </data>
+  <data name="WarningMsg_ExceedBudget" xml:space="preserve">
+    <value>This record cannot be saved because it violates the "Do Not Exceed Anticipated Project Budget" rule.Edit the record and try saving again or see your system administrator for assistance.</value>
+  </data>
+  <data name="WarningMsg_ExceededMaxFileSize" xml:space="preserve">
+    <value>You have exceeded the maximum file size (max. size : {0})</value>
+  </data>
+  <data name="WarningMsg_ExceedFunding" xml:space="preserve">
+    <value>This record cannot be saved because it violates the "Do Not Exceed Funding" rule.Edit the record and try saving again or see your system administrator for assistance.</value>
+  </data>
+  <data name="WarningMsg_ExceedFundingAuthorization" xml:space="preserve">
+    <value>This record cannot be saved because it violates the "Do Not Exceed Funding Authorizations" rule.Edit the record and try saving again or see your system administrator for assistance.</value>
+  </data>
+  <data name="WarningMsg_Failed" xml:space="preserve">
+    <value>The action was failed.</value>
+  </data>
+  <data name="WarningMsg_FileExtension" xml:space="preserve">
+    <value>Contains A Restricted File Type. Valid File Types Include ( {0} ). Please Contact Your System Administrator If You Need To Upload A File Type Which Is Not Supported.</value>
+  </data>
+  <data name="WarningMsg_FileNameExists" xml:space="preserve">
+    <value>A file with this name exists in this folder. Your file cannot be uploaded at this time.</value>
+  </data>
+  <data name="WarningMsg_FileNameLength" xml:space="preserve">
+    <value>Error: Filenames are limited to 150 characters, rename the file and try again.</value>
+  </data>
+  <data name="WarningMsg_FileNotFound" xml:space="preserve">
+    <value>File Not Found!</value>
+  </data>
+  <data name="WarningMsg_FundingCodeRequired" xml:space="preserve">
+    <value>Select the Funding Code</value>
+  </data>
+  <data name="WarningMsg_ImageRatio" xml:space="preserve">
+    <value>Logo should be in the proportion of 3:1 - for example 3 inch wide and 1 inch high</value>
+  </data>
+  <data name="WarningMsg_InitiativeNoRecordsCreated" xml:space="preserve">
+    <value>No records will be created. Please select one or more checkboxes to create and click Create Records again.</value>
+  </data>
+  <data name="WarningMsg_InvalidOperation" xml:space="preserve">
+    <value>Invalid Operation!</value>
+  </data>
+  <data name="WarningMsg_ItemAlreadyExists" xml:space="preserve">
+    <value>Item {0} name already used.</value>
+  </data>
+  <data name="WarningMsg_LatestRevisionSubmitted" xml:space="preserve">
+    <value>Only latest revision can be submitted to workflow</value>
+  </data>
+  <data name="WarningMsg_LinkCECostCodeRequired" xml:space="preserve">
+    <value>Cost Code is required. The lines without cost codes will not be saved.</value>
+  </data>
+  <data name="WarningMsg_NoRecordsCreated" xml:space="preserve">
+    <value>No records will be created. Please select one or more rows linked to initiative and click Create Records again.</value>
+  </data>
+  <data name="WarningMsg_NotExist" xml:space="preserve">
+    <value>does not exist!</value>
+  </data>
+  <data name="WarningMsg_Overbilling" xml:space="preserve">
+    <value>The record cannot be saved. Saving would violate overbilling settings for this commitment.</value>
+  </data>
+  <data name="WarningMsg_RecordNumberAlreadyExists" xml:space="preserve">
+    <value>Record Number already used.</value>
+  </data>
+  <data name="WarningMsg_Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="WarningMsg_RequiredCostCode" xml:space="preserve">
+    <value>Cost Code is required.</value>
+  </data>
+  <data name="WarningMsg_RequiredFields" xml:space="preserve">
+    <value>&amp;nbsp;Required</value>
+  </data>
+  <data name="WarningMsg_Succeed" xml:space="preserve">
+    <value>The action was completed successfully.</value>
+  </data>
+  <data name="WarningMsg_TextField" xml:space="preserve">
+    <value>is a text field!</value>
+  </data>
+  <data name="WarningMsg_UseCtrl_V" xml:space="preserve">
+    <value>Use Ctrl+V to paste your data.</value>
+  </data>
+  <data name="WBS_Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="WBS_Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+</root>

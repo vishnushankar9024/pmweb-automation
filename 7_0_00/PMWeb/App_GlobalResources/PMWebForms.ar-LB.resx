@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BudgetRequests" xml:space="preserve">
+    <value> طلبات الميزانيّة</value>
+  </data>
+  <data name="Budgets" xml:space="preserve">
+    <value>الميزانيّات</value>
+  </data>
+  <data name="Buildings" xml:space="preserve">
+    <value>المباني</value>
+  </data>
+  <data name="ChangeEvents" xml:space="preserve">
+    <value>أحداث التغيير</value>
+  </data>
+  <data name="CommitmentCOs" xml:space="preserve">
+    <value>التزام أوامر التغيير</value>
+  </data>
+  <data name="Commitments" xml:space="preserve">
+    <value>الالتزامات</value>
+  </data>
+  <data name="ContractCos" xml:space="preserve">
+    <value>عقد أوامر التغيير</value>
+  </data>
+  <data name="Contracts" xml:space="preserve">
+    <value>العقود</value>
+  </data>
+  <data name="Correspondence" xml:space="preserve">
+    <value>المراسلة</value>
+  </data>
+  <data name="CostControlProductions" xml:space="preserve">
+    <value>الإنتاج</value>
+  </data>
+  <data name="CostManagementProductions" xml:space="preserve">
+    <value>الإنتاج</value>
+  </data>
+  <data name="DailyReport" xml:space="preserve">
+    <value>التقارير</value>
+  </data>
+  <data name="DOCUMENTSUBMITTALS" xml:space="preserve">
+    <value>التقديمات </value>
+  </data>
+  <data name="Drawings" xml:space="preserve">
+    <value>المخططات</value>
+  </data>
+  <data name="DrawingSets" xml:space="preserve">
+    <value>مجموعات المخططات</value>
+  </data>
+  <data name="Equipments" xml:space="preserve">
+    <value>المعدّات</value>
+  </data>
+  <data name="Estimates" xml:space="preserve">
+    <value>التقديرات</value>
+  </data>
+  <data name="Floors" xml:space="preserve">
+    <value>الطوابق</value>
+  </data>
+  <data name="Forecasts" xml:space="preserve">
+    <value>التوقّعات</value>
+  </data>
+  <data name="FundingAuthorizations" xml:space="preserve">
+    <value>تصاريح التمويل</value>
+  </data>
+  <data name="FundingRecords" xml:space="preserve">
+    <value>تمويل الوثائق</value>
+  </data>
+  <data name="FundingRequests" xml:space="preserve">
+    <value>طلبات التمويل</value>
+  </data>
+  <data name="InitiativesBudget" xml:space="preserve">
+    <value>المبادرات</value>
+  </data>
+  <data name="INVENTORYLOCATIONS" xml:space="preserve">
+    <value>مواقع المخزون</value>
+  </data>
+  <data name="JournalEntries" xml:space="preserve">
+    <value>إدخالات دفتر اليوميّة</value>
+  </data>
+  <data name="Leases" xml:space="preserve">
+    <value>عقد الإيجار</value>
+  </data>
+  <data name="MAINTENANCECONTRACT" xml:space="preserve">
+    <value>عقد الصيانة</value>
+  </data>
+  <data name="MasterCommitments" xml:space="preserve">
+    <value>الالتزامات الرئيسيّة</value>
+  </data>
+  <data name="MeetingMinutes" xml:space="preserve">
+    <value>محضر الاجتماع</value>
+  </data>
+  <data name="MiscellaneousInvoices" xml:space="preserve">
+    <value>الفواتير المتنوّعة</value>
+  </data>
+  <data name="MOVEMANAGEMENT" xml:space="preserve">
+    <value>نقل الخطط</value>
+  </data>
+  <data name="PortfolioPlans" xml:space="preserve">
+    <value>خطط الاستثمارات</value>
+  </data>
+  <data name="ProcurementBid" xml:space="preserve">
+    <value>العروض عبر الإنترنت</value>
+  </data>
+  <data name="Procurements" xml:space="preserve">
+    <value>الصفقات</value>
+  </data>
+  <data name="ProgressInvoices" xml:space="preserve">
+    <value>تقدم الفواتير</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>المشاريع</value>
+  </data>
+  <data name="Properties" xml:space="preserve">
+    <value>الخصائص</value>
+  </data>
+  <data name="PunchLists" xml:space="preserve">
+    <value>قائمة بالأعمال المطلوب استكمالها</value>
+  </data>
+  <data name="Requisition" xml:space="preserve">
+    <value>طلبات الشراء</value>
+  </data>
+  <data name="RESERVATIONREQUEST" xml:space="preserve">
+    <value>طلب الحجز</value>
+  </data>
+  <data name="RFI" xml:space="preserve">
+    <value>مشاكل المشروع</value>
+  </data>
+  <data name="RiskAnalysis" xml:space="preserve">
+    <value>تحليل المخاطر</value>
+  </data>
+  <data name="Schedules" xml:space="preserve">
+    <value>الجداول</value>
+  </data>
+  <data name="Spaces" xml:space="preserve">
+    <value>المسافات</value>
+  </data>
+  <data name="StageGate" xml:space="preserve">
+    <value>Stage Gates</value>
+  </data>
+  <data name="Submittals" xml:space="preserve">
+    <value>مجموعات التسليم</value>
+  </data>
+  <data name="Timesheets" xml:space="preserve">
+    <value>الجداول الزمنيّة</value>
+  </data>
+  <data name="TODOLIST" xml:space="preserve">
+    <value>المهام</value>
+  </data>
+  <data name="Transmittal" xml:space="preserve">
+    <value>الإحالات</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>الوحدات</value>
+  </data>
+  <data name="WorkOrders" xml:space="preserve">
+    <value>أوامر العمل</value>
+  </data>
+</root>

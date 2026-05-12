@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="chkAllowEdit.text" xml:space="preserve">
+    <value>Allow User(s) to Edit Settings</value>
+  </data>
+  <data name="ddlGrid.EmptyMessage" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="ddlRecordType.EmptyMessage" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="GridColumn_Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Grid_Details" xml:space="preserve">
+    <value>Details Grid</value>
+  </data>
+  <data name="lblAssignUserGroups.text" xml:space="preserve">
+    <value>Assign To User Groups</value>
+  </data>
+  <data name="lblDefineLayouts.text" xml:space="preserve">
+    <value>Define Layouts</value>
+  </data>
+  <data name="lblError.text" xml:space="preserve">
+    <value>Layout name must be unique.</value>
+  </data>
+  <data name="lblFreezeColumns.text" xml:space="preserve">
+    <value>Freeze Columns</value>
+  </data>
+  <data name="lblFreezeHeader.text" xml:space="preserve">
+    <value>Freeze Header</value>
+  </data>
+  <data name="lblGrid.text" xml:space="preserve">
+    <value>Grid/Sub-grid *</value>
+  </data>
+  <data name="lblGridHeight.text" xml:space="preserve">
+    <value>Grid Height</value>
+  </data>
+  <data name="lblGridsLayout.text" xml:space="preserve">
+    <value>Grid &amp; Sub-grid Layouts</value>
+  </data>
+  <data name="lblGridWidth.text" xml:space="preserve">
+    <value>Grid Width</value>
+  </data>
+  <data name="lblLayoutName.text" xml:space="preserve">
+    <value>Layout Name *</value>
+  </data>
+  <data name="lblOptions.text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="lblPublicLayout.text" xml:space="preserve">
+    <value>Public Layout</value>
+  </data>
+  <data name="lblRecordType.text" xml:space="preserve">
+    <value>Record Type *</value>
+  </data>
+  <data name="lblShownColWidth.text" xml:space="preserve">
+    <value>Shown Columns Width</value>
+  </data>
+  <data name="lblVirtualScrolling.text" xml:space="preserve">
+    <value>Virtual Scrolling</value>
+  </data>
+  <data name="Tab_Details" xml:space="preserve">
+    <value>Details Tab</value>
+  </data>
+  <data name="WarningMsg_RequiredField" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="Grid_BidderMatrix" xml:space="preserve">
+    <value>Bidder Matrix Grid</value>
+  </data>
+  <data name="Grid_ChangeOrders" xml:space="preserve">
+    <value>Change Orders Grid</value>
+  </data>
+  <data name="Grid_Charges" xml:space="preserve">
+    <value>Charges Grid</value>
+  </data>
+  <data name="Grid_Commitments" xml:space="preserve">
+    <value>Commitments Grid</value>
+  </data>
+  <data name="Grid_DetailBudget" xml:space="preserve">
+    <value>Budget Details Grid</value>
+  </data>
+  <data name="Grid_DetailCost" xml:space="preserve">
+    <value>Cost Details Grid</value>
+  </data>
+  <data name="Grid_Escalations" xml:space="preserve">
+    <value>Escalations Grid</value>
+  </data>
+  <data name="Grid_Estimate" xml:space="preserve">
+    <value>Estimate Grid</value>
+  </data>
+  <data name="Grid_Header" xml:space="preserve">
+    <value>Header Grid</value>
+  </data>
+  <data name="Grid_Leases" xml:space="preserve">
+    <value>Leases Grid</value>
+  </data>
+  <data name="Grid_Ledger" xml:space="preserve">
+    <value>Ledger Grid</value>
+  </data>
+  <data name="Grid_Locations" xml:space="preserve">
+    <value>Locations Grid</value>
+  </data>
+  <data name="Grid_Log" xml:space="preserve">
+    <value>Log Grid</value>
+  </data>
+  <data name="Grid_Overages" xml:space="preserve">
+    <value>Overages Grid</value>
+  </data>
+  <data name="Grid_ProgressInvoices" xml:space="preserve">
+    <value>Progress Invoices Grid</value>
+  </data>
+  <data name="Grid_Recoveries" xml:space="preserve">
+    <value>Recoveries Grid</value>
+  </data>
+  <data name="Grid_Resources" xml:space="preserve">
+    <value>Resources Grid</value>
+  </data>
+  <data name="Grid_ScheduledCharges" xml:space="preserve">
+    <value>Scheduled Charges Grid</value>
+  </data>
+  <data name="Grid_Serviced" xml:space="preserve">
+    <value>Serviced Grid</value>
+  </data>
+  <data name="Grid_Stock" xml:space="preserve">
+    <value>Stock Grid</value>
+  </data>
+  <data name="Grid_Timesheet" xml:space="preserve">
+    <value>Timesheet Grid</value>
+  </data>
+  <data name="Tab_BidderMatrix" xml:space="preserve">
+    <value>Bidder Matrix Tab</value>
+  </data>
+  <data name="Tab_ChangeOrders" xml:space="preserve">
+    <value>Change Orders Tab</value>
+  </data>
+  <data name="Tab_Charges" xml:space="preserve">
+    <value>Charges Tab</value>
+  </data>
+  <data name="Tab_Commitments" xml:space="preserve">
+    <value>Commitments Tab</value>
+  </data>
+  <data name="Tab_Escalations" xml:space="preserve">
+    <value>Escalations Tab</value>
+  </data>
+  <data name="Tab_Estimate" xml:space="preserve">
+    <value>Estimate Tab</value>
+  </data>
+  <data name="Tab_Header" xml:space="preserve">
+    <value>Header</value>
+  </data>
+  <data name="Tab_Leases" xml:space="preserve">
+    <value>Leases Tab</value>
+  </data>
+  <data name="Tab_LeaseLedger" xml:space="preserve">
+    <value>Ledger Tab</value>
+  </data>
+  <data name="Tab_Locations" xml:space="preserve">
+    <value>Locations Tab</value>
+  </data>
+  <data name="Tab_Log" xml:space="preserve">
+    <value>Log Tab</value>
+  </data>
+  <data name="Tab_Overages" xml:space="preserve">
+    <value>Overages Tab</value>
+  </data>
+  <data name="Tab_ProgressInvoices" xml:space="preserve">
+    <value>Progress Invoices Tab</value>
+  </data>
+  <data name="Tab_Recoveries" xml:space="preserve">
+    <value>Recoveries Tab</value>
+  </data>
+  <data name="Tab_Resources" xml:space="preserve">
+    <value>Resources Tab</value>
+  </data>
+  <data name="Tab_ScheduledCharges" xml:space="preserve">
+    <value>Scheduled Charges Tab</value>
+  </data>
+  <data name="Tab_Serviced" xml:space="preserve">
+    <value>Serviced Tab</value>
+  </data>
+  <data name="Tab_Stock" xml:space="preserve">
+    <value>Stock Tab</value>
+  </data>
+  <data name="Tab_Timesheet" xml:space="preserve">
+    <value>Timesheet Tab</value>
+  </data>
+  <data name="Grid_RecordTypes" xml:space="preserve">
+    <value>Record Types Grid</value>
+  </data>
+  <data name="Tab_Assignments" xml:space="preserve">
+    <value>Record Types Tab</value>
+  </data>
+  <data name="Grid_Addresses" xml:space="preserve">
+    <value>Addresses Grid</value>
+  </data>
+  <data name="Grid_Adjustments" xml:space="preserve">
+    <value>Adjustments Grid</value>
+  </data>
+  <data name="Grid_Attachments" xml:space="preserve">
+    <value>Attachments Grid</value>
+  </data>
+  <data name="Grid_Checklist" xml:space="preserve">
+    <value>Checklist Grid</value>
+  </data>
+  <data name="Grid_Clauses" xml:space="preserve">
+    <value>Clauses Grid</value>
+  </data>
+  <data name="Grid_Companies" xml:space="preserve">
+    <value>Companies Grid</value>
+  </data>
+  <data name="Grid_Components" xml:space="preserve">
+    <value>Components Grid</value>
+  </data>
+  <data name="Grid_Contacts" xml:space="preserve">
+    <value>Contacts Grid</value>
+  </data>
+  <data name="Grid_DefineUsers" xml:space="preserve">
+    <value>Define Users Grid</value>
+  </data>
+  <data name="Grid_Departments" xml:space="preserve">
+    <value>Departments Grid</value>
+  </data>
+  <data name="Grid_Equipment" xml:space="preserve">
+    <value>Equipment Grid</value>
+  </data>
+  <data name="Grid_Insurance" xml:space="preserve">
+    <value>Insurance Grid</value>
+  </data>
+  <data name="Grid_Labor" xml:space="preserve">
+    <value>Labor Grid</value>
+  </data>
+  <data name="Grid_LinearComponents" xml:space="preserve">
+    <value>Linear Components Grid</value>
+  </data>
+  <data name="Grid_Notes" xml:space="preserve">
+    <value>Notes Grid</value>
+  </data>
+  <data name="Grid_Notification" xml:space="preserve">
+    <value>Notification Grid</value>
+  </data>
+  <data name="Grid_PurchaseHistory" xml:space="preserve">
+    <value>Purchase History Grid</value>
+  </data>
+  <data name="Grid_Rating" xml:space="preserve">
+    <value>Rating Grid</value>
+  </data>
+  <data name="Grid_Scoring" xml:space="preserve">
+    <value>Scoring Grid</value>
+  </data>
+  <data name="Grid_WBS" xml:space="preserve">
+    <value>WBS Grid</value>
+  </data>
+  <data name="lblPageSize.text" xml:space="preserve">
+    <value>Page Size</value>
+  </data>
+  <data name="Tab_Addresses" xml:space="preserve">
+    <value>Addresses Tab</value>
+  </data>
+  <data name="Tab_Adjustments" xml:space="preserve">
+    <value>Adjustments Tab</value>
+  </data>
+  <data name="Tab_Attachments" xml:space="preserve">
+    <value>Attachments Tab</value>
+  </data>
+  <data name="Tab_Checklists" xml:space="preserve">
+    <value>Checklist Tab</value>
+  </data>
+  <data name="Tab_Clauses" xml:space="preserve">
+    <value>Clauses Tab</value>
+  </data>
+  <data name="Tab_Companies" xml:space="preserve">
+    <value>Companies Tab</value>
+  </data>
+  <data name="Tab_Components" xml:space="preserve">
+    <value>Components Tab</value>
+  </data>
+  <data name="Tab_Contacts" xml:space="preserve">
+    <value>Contacts Tab</value>
+  </data>
+  <data name="Tab_Users" xml:space="preserve">
+    <value>Define Users Tab</value>
+  </data>
+  <data name="Tab_Departments" xml:space="preserve">
+    <value>Departments Tab</value>
+  </data>
+  <data name="Tab_Equipment" xml:space="preserve">
+    <value>Equipment Tab</value>
+  </data>
+  <data name="Tab_Insurance" xml:space="preserve">
+    <value>Insurance Tab</value>
+  </data>
+  <data name="Tab_Labor" xml:space="preserve">
+    <value>Labor Tab</value>
+  </data>
+  <data name="Tab_LinearComponents" xml:space="preserve">
+    <value>Linear Components Tab</value>
+  </data>
+  <data name="Tab_Notes" xml:space="preserve">
+    <value>Notes Tab</value>
+  </data>
+  <data name="Tab_NotificationLog" xml:space="preserve">
+    <value>Notification Tab</value>
+  </data>
+  <data name="Tab_ItemPurchaseHistory" xml:space="preserve">
+    <value>Purchase History Tab</value>
+  </data>
+  <data name="Tab_Rating" xml:space="preserve">
+    <value>Rating Tab</value>
+  </data>
+  <data name="Tab_RecordTypes" xml:space="preserve">
+    <value>Record Types Tab</value>
+  </data>
+  <data name="Tab_Scoring" xml:space="preserve">
+    <value>Scoring Tab</value>
+  </data>
+  <data name="Tab_WBS" xml:space="preserve">
+    <value>WBS Tab</value>
+  </data>
+  <data name="MenuItem_AddLayout.Text" xml:space="preserve">
+    <value>Add Layout</value>
+  </data>
+  <data name="MenuItem_DeleteLayout.Text" xml:space="preserve">
+    <value>Delete Layout</value>
+  </data>
+  <data name="MenuItem_EditLayout.Text" xml:space="preserve">
+    <value>Edit Layout</value>
+  </data>
+  <data name="MenuItem_DuplicateLayout.Text" xml:space="preserve">
+    <value>Duplicate Layout</value>
+  </data>
+  <data name="Grid_ManageBids" xml:space="preserve">
+    <value>Manage Bids Grid</value>
+  </data>
+  <data name="Grid_Payments" xml:space="preserve">
+    <value>Payments Grid</value>
+  </data>
+  <data name="Grid_ProjectProgramAPPayments" xml:space="preserve">
+    <value>AP Payments Grid</value>
+  </data>
+  <data name="Grid_ProjectProgramARPayments" xml:space="preserve">
+    <value>AR Payments Grid</value>
+  </data>
+  <data name="Grid_Projects" xml:space="preserve">
+    <value>Projects Grid</value>
+  </data>
+  <data name="Grid_Requisitions" xml:space="preserve">
+    <value>Requisitions Grid</value>
+  </data>
+  <data name="Grid_ViewExportedFiles" xml:space="preserve">
+    <value>View Exported Files Grid</value>
+  </data>
+  <data name="Tab_ManageBids" xml:space="preserve">
+    <value>Manage Bids Tab</value>
+  </data>
+  <data name="Tab_Payments" xml:space="preserve">
+    <value>Payments Tab</value>
+  </data>
+  <data name="Tab_PreBidDetails" xml:space="preserve">
+    <value>Details Tab</value>
+  </data>
+  <data name="Tab_ProjectProgramPayments" xml:space="preserve">
+    <value>Payments (Projects/Programs) tab</value>
+  </data>
+  <data name="Tab_Projects" xml:space="preserve">
+    <value>Projects Tab</value>
+  </data>
+  <data name="Tab_Requisitions" xml:space="preserve">
+    <value>Requisitions Tab</value>
+  </data>
+  <data name="Tab_ViewExportedFiles" xml:space="preserve">
+    <value>View Exported Files Tab</value>
+  </data>
+  <data name="GridColumn_Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="GridColumn_GroupBy" xml:space="preserve">
+    <value>Group By</value>
+  </data>
+  <data name="GridColumn_Column" xml:space="preserve">
+    <value>Column</value>
+  </data>
+  <data name="GridColumn_IsDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="GridColumn_SortBy" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="GridColumn_UserGroup" xml:space="preserve">
+    <value>User Group</value>
+  </data>
+  <data name="GridColumn_Width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="Grid_Drawing" xml:space="preserve">
+    <value>Drawing Grid</value>
+  </data>
+  <data name="Tab_Drawing" xml:space="preserve">
+    <value>Drawing Tab</value>
+  </data>
+  <data name="Grid_WorkflowLog" xml:space="preserve">
+    <value>Workflow Log Grid</value>
+  </data>
+  <data name="Tab_Workflow" xml:space="preserve">
+    <value>Workflow Tab</value>
+  </data>
+  <data name="Grid_RequirementAssignments" xml:space="preserve">
+    <value>Assignments Grid</value>
+  </data>
+  <data name="Tab_RequirementAssignments" xml:space="preserve">
+    <value>Assignments Tab</value>
+  </data>
+  <data name="Grid_Roles" xml:space="preserve">
+    <value>Roles Grid</value>
+  </data>
+  <data name="Tab_Roles" xml:space="preserve">
+    <value>Roles Tab</value>
+  </data>
+  <data name="Grid_DocumentTeamLog" xml:space="preserve">
+    <value>Collaborate Log Grid </value>
+  </data>
+  <data name="Tab_DocumentTeam" xml:space="preserve">
+    <value>Collaborate Tab</value>
+  </data>
+</root>

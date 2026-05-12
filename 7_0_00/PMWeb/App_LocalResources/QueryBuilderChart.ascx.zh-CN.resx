@@ -1,0 +1,563 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ListItem_Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="ListItem_Area_ToolTip" xml:space="preserve">
+    <value>The Area chart consists of a series of data points joined by a line and where the area below the line is filled</value>
+  </data>
+  <data name="ListItem_Bar" xml:space="preserve">
+    <value>Bar</value>
+  </data>
+  <data name="ListItem_Bar_ToolTip" xml:space="preserve">
+    <value>Bar charts graphically display values in vertical and horizontal bars across categories.Bar charts are useful for comparing multiple series of data  (i.e. providing snapshots of data at particular points in time).</value>
+  </data>
+  <data name="ListItem_Bezier" xml:space="preserve">
+    <value>Bezier</value>
+  </data>
+  <data name="ListItem_Bezier_ToolTip" xml:space="preserve">
+    <value>The Bezier chart displays a series of points on a curved line.  Two "control points" determine the position and amount of curvature in the line between end points. The Bezier chart is often used for data modelling by taking a limited number of data points and interpolating or estimating the intervening values. 
+</value>
+  </data>
+  <data name="ListItem_Black" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="ListItem_BlueStripes" xml:space="preserve">
+    <value>Blue Stripes</value>
+  </data>
+  <data name="ListItem_Bubble" xml:space="preserve">
+    <value>Bubble</value>
+  </data>
+  <data name="ListItem_Bubble_ToolTip" xml:space="preserve">
+    <value>The Bubble chart is an extension of the Point chart but each point can be a circle or oval of any size or dimension. The bubble size may be used to convey larger values.</value>
+  </data>
+  <data name="ListItem_CandleStick" xml:space="preserve">
+    <value>Candle Stick</value>
+  </data>
+  <data name="ListItem_CandleStick_ToolTip" xml:space="preserve">
+    <value>The CandleStick chart combines bar and line chart styles to show a range of value movement over time. Dark colored bars show downward trends, light colored bars show upward trends and the line through the center (the "wick") shows the extreme high and low values.</value>
+  </data>
+  <data name="ListItem_DeepBlue" xml:space="preserve">
+    <value>Deep Blue</value>
+  </data>
+  <data name="ListItem_DeepGray" xml:space="preserve">
+    <value>Deep Gray</value>
+  </data>
+  <data name="ListItem_DeepGreen" xml:space="preserve">
+    <value>Deep Green</value>
+  </data>
+  <data name="ListItem_DeepRed" xml:space="preserve">
+    <value>Deep Red</value>
+  </data>
+  <data name="ListItem_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="ListItem_Gantt" xml:space="preserve">
+    <value>Gantt</value>
+  </data>
+  <data name="ListItem_Gantt_ToolTip" xml:space="preserve">
+    <value>Gantt charts, also known as Time charts, display separate events as bars along a time scale. These charts are often used for project/time planning, where data can be plotted using a date-time scale or other numeric scale.</value>
+  </data>
+  <data name="ListItem_Gray" xml:space="preserve">
+    <value>Gray</value>
+  </data>
+  <data name="ListItem_GrayStripes" xml:space="preserve">
+    <value>Gray Stripes</value>
+  </data>
+  <data name="ListItem_GreenStripes" xml:space="preserve">
+    <value>Green Stripes</value>
+  </data>
+  <data name="ListItem_Hay" xml:space="preserve">
+    <value>Hay</value>
+  </data>
+  <data name="ListItem_Inox" xml:space="preserve">
+    <value>Inox</value>
+  </data>
+  <data name="ListItem_LightBlue" xml:space="preserve">
+    <value>Light Blue</value>
+  </data>
+  <data name="ListItem_LightBrown" xml:space="preserve">
+    <value>Light Brown</value>
+  </data>
+  <data name="ListItem_LightGreen" xml:space="preserve">
+    <value>Light Green</value>
+  </data>
+  <data name="ListItem_Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="ListItem_Line_ToolTip" xml:space="preserve">
+    <value>This chart type displays a set of data points connected by a line.A common use for the line chart is to show trends over a period of time.</value>
+  </data>
+  <data name="ListItem_Marble" xml:space="preserve">
+    <value>Marble</value>
+  </data>
+  <data name="ListItem_Metal" xml:space="preserve">
+    <value>Metal</value>
+  </data>
+  <data name="ListItem_Pie" xml:space="preserve">
+    <value>Pie</value>
+  </data>
+  <data name="ListItem_Pie_ToolTip" xml:space="preserve">
+    <value>The Pie chart shows slices representing fractional parts of a whole.When you need to display the contribution of fractional parts to a whole.</value>
+  </data>
+  <data name="ListItem_Point" xml:space="preserve">
+    <value>Point</value>
+  </data>
+  <data name="ListItem_Point_ToolTip" xml:space="preserve">
+    <value>Point or "Scatter" charts are used to show correlations between two sets of values. The Point chart is often used for scientific data modeling or financial data.  Typically not used used with time dependent data where a Line chart is more suited. </value>
+  </data>
+  <data name="ListItem_SplineArea" xml:space="preserve">
+    <value>Spline Area</value>
+  </data>
+  <data name="ListItem_SplineArea_ToolTip" xml:space="preserve">
+    <value>The Spline Area chart type defines one or more spline curves and fills in the area defined by the spline.  Also can be used for data modelling in that it takes a limited number of data points and interpolates the intervening values. This chart type also emphasizes the area between the spline curve and a mid-point of the spline. </value>
+  </data>
+  <data name="ListItem_Spline" xml:space="preserve">
+    <value>Spline Line</value>
+  </data>
+  <data name="ListItem_Spline_ToolTip" xml:space="preserve">
+    <value>Spline charts allow you to take a limited set of known data points and approximate intervening values. The Spline chart, like the Bezier, is often used for data modelling by taking a limited number of data points and interpolating or estimating the intervening values. 
+</value>
+  </data>
+  <data name="ListItem_StackedArea" xml:space="preserve">
+    <value>Stacked Area</value>
+  </data>
+  <data name="ListItem_StackedArea100" xml:space="preserve">
+    <value>Stacked Area 100</value>
+  </data>
+  <data name="ListItem_StackedArea100_ToolTip" xml:space="preserve">
+    <value>Stacked Areas 100% charts are a variation of Stacked Area charts that present values for trends as percentages, totaling to 100% for each category. </value>
+  </data>
+  <data name="ListItem_StackedArea_ToolTip" xml:space="preserve">
+    <value>The Stacked Area chart is a variation of the Area chart that display trends of the contribution of each value over time (or across categories). The areas are stacked so that each series adjoins but does not overlap the preceding series.</value>
+  </data>
+  <data name="ListItem_StackedBar" xml:space="preserve">
+    <value>StackedBar</value>
+  </data>
+  <data name="ListItem_StackedBar100" xml:space="preserve">
+    <value>Stacked Bar100</value>
+  </data>
+  <data name="ListItem_StackedBar100_ToolTip" xml:space="preserve">
+    <value>Stacked Bar 100% shows the combined contribution of values as percentages where the combined total for each category is 100 percent. Use when the relationship between values in a category is more significant than the amounts.</value>
+  </data>
+  <data name="ListItem_StackedBar_ToolTip" xml:space="preserve">
+    <value>Stacked Bar charts are used to compare contributions of values to a total across categories. Use the Stacked Bar chart when you need visibility to the combined values for each category.</value>
+  </data>
+  <data name="ListItem_StackedLine" xml:space="preserve">
+    <value>Stacked Line</value>
+  </data>
+  <data name="ListItem_StackedLine_ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListItem_StackedSplineArea" xml:space="preserve">
+    <value>Stacked Spline Area</value>
+  </data>
+  <data name="ListItem_StackedSplineArea100" xml:space="preserve">
+    <value>Stacked Spline Area 100</value>
+  </data>
+  <data name="ListItem_StackedSplineArea100_ToolTip" xml:space="preserve">
+    <value>The Stacked Spline Area 100% chart is a variation of the Spline Area chart. The areas are stacked so that each series adjoins but does not overlap the preceding series and where the combined total for each category. Also can be used for data modelling in that it takes a limited number of data points and interpolates the intervening values. This chart type allows the entire surface area for all sequences to be displayed at one time. Use this chart type when the relationship between values in a category is more significant than the amounts. is 100 percent.</value>
+  </data>
+  <data name="ListItem_StackedSplineArea_ToolTip" xml:space="preserve">
+    <value>The Stacked Spline Area chart is a variation of the Spline Area chart. The areas are stacked so that each series adjoins but does not overlap the preceding series. Also can be used for data modelling in that it takes a limited number of data points and interpolates the intervening values. This chart type allows the entire surface area for all sequences to be displayed at one time.</value>
+  </data>
+  <data name="ListItem_StackedSpline" xml:space="preserve">
+    <value>Stacked Spline Line</value>
+  </data>
+  <data name="ListItem_StackedSpline_ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListItem_Sunset" xml:space="preserve">
+    <value>Sunset</value>
+  </data>
+  <data name="ListItem_Web20" xml:space="preserve">
+    <value>Web 2.0</value>
+  </data>
+  <data name="ListItem_WebBlue" xml:space="preserve">
+    <value>Web Blue</value>
+  </data>
+  <data name="ListItem_Wood" xml:space="preserve">
+    <value>Wood</value>
+  </data>
+  <data name="ListItem_YAxisType_Primary" xml:space="preserve">
+    <value>Primary</value>
+  </data>
+  <data name="ListItem_YAxisType_Secondary" xml:space="preserve">
+    <value>Secondary</value>
+  </data>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="chkLegendVisible.Text" xml:space="preserve">
+    <value>Legend Visible</value>
+  </data>
+  <data name="chkTitleVisible.Text" xml:space="preserve">
+    <value>Title Visible</value>
+  </data>
+  <data name="chkVisible.Text" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="chkXShowLabels.Text" xml:space="preserve">
+    <value>Show Labels</value>
+  </data>
+  <data name="chkXShowTicks.Text" xml:space="preserve">
+    <value>Show Ticks</value>
+  </data>
+  <data name="chkXVisible.Text" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="chkY2ShowLabels.Text" xml:space="preserve">
+    <value>Show Labels</value>
+  </data>
+  <data name="chkY2ShowTicks.Text" xml:space="preserve">
+    <value>Show Ticks</value>
+  </data>
+  <data name="chkY2Visible.Text" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="chkYShowLabels.Text" xml:space="preserve">
+    <value>Show Labels</value>
+  </data>
+  <data name="chkYShowTicks.Text" xml:space="preserve">
+    <value>Show Ticks</value>
+  </data>
+  <data name="chkYVisible.Text" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="GridColumn_ChartTypeId" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="GridColumn_LabelRotationAngle" xml:space="preserve">
+    <value>Labels Rotation Angle</value>
+  </data>
+  <data name="GridColumn_LabelsField" xml:space="preserve">
+    <value>Labels Field</value>
+  </data>
+  <data name="GridColumn_LabelVisible" xml:space="preserve">
+    <value>Visible Labels</value>
+  </data>
+  <data name="GridColumn_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="GridColumn_X2Field" xml:space="preserve">
+    <value>X2 Field</value>
+  </data>
+  <data name="GridColumn_XField" xml:space="preserve">
+    <value>X Field</value>
+  </data>
+  <data name="GridColumn_Y2Field" xml:space="preserve">
+    <value>Y2 Field</value>
+  </data>
+  <data name="GridColumn_YAxisTypeId" xml:space="preserve">
+    <value>Y Axis Type</value>
+  </data>
+  <data name="GridColumn_YField" xml:space="preserve">
+    <value>Y Field</value>
+  </data>
+  <data name="lblChart.Text" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="lblHeight.Text" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="lblLegendAlignment.Text" xml:space="preserve">
+    <value>Legend Alignment</value>
+  </data>
+  <data name="lblMarker.Text" xml:space="preserve">
+    <value>Marker</value>
+  </data>
+  <data name="lblSeries.Text" xml:space="preserve">
+    <value>Series</value>
+  </data>
+  <data name="lblSeriesOrientation.Text" xml:space="preserve">
+    <value>Orientation</value>
+  </data>
+  <data name="lblSkin.Text" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="lblTitle.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="lblTitleAlignment.Text" xml:space="preserve">
+    <value>Title Alignment</value>
+  </data>
+  <data name="lblWidth.Text" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="lblXAlignment.Text" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="lblXAxis.Text" xml:space="preserve">
+    <value>X Axis</value>
+  </data>
+  <data name="lblXLabelDataColumn.Text" xml:space="preserve">
+    <value>Label Data Column</value>
+  </data>
+  <data name="lblXRotation.Text" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="lblXTitle.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="lblXValueFormat.Text" xml:space="preserve">
+    <value>Value Format</value>
+  </data>
+  <data name="lblXVisibleValues.Text" xml:space="preserve">
+    <value>Visible Values</value>
+  </data>
+  <data name="lblY2Alignment.Text" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="lblY2Axis.Text" xml:space="preserve">
+    <value>Y2 Axis</value>
+  </data>
+  <data name="lblY2Rotation.Text" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="lblY2Title.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="lblY2ValueFormat.Text" xml:space="preserve">
+    <value>Value Format</value>
+  </data>
+  <data name="lblY2VisibleValues.Text" xml:space="preserve">
+    <value>Visible Values</value>
+  </data>
+  <data name="lblYAlignment.Text" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="lblYAxis.Text" xml:space="preserve">
+    <value>Y Axis</value>
+  </data>
+  <data name="lblYRotation.Text" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="lblYTitle.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="lblYValueFormat.Text" xml:space="preserve">
+    <value>Value Format</value>
+  </data>
+  <data name="lblYVisibleValues.Text" xml:space="preserve">
+    <value>Visible Values</value>
+  </data>
+  <data name="ListItem_Alignment_Bottom" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="ListItem_Alignment_BottomLeft" xml:space="preserve">
+    <value>Bottom Left</value>
+  </data>
+  <data name="ListItem_Alignment_BottomRight" xml:space="preserve">
+    <value>Bottom Right</value>
+  </data>
+  <data name="ListItem_Alignment_Center" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="ListItem_Alignment_Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="ListItem_Alignment_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="ListItem_Alignment_Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="ListItem_Alignment_Top" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="ListItem_Alignment_TopLeft" xml:space="preserve">
+    <value>Top Left</value>
+  </data>
+  <data name="ListItem_Alignment_TopRight" xml:space="preserve">
+    <value>Top Right</value>
+  </data>
+  <data name="ListItem_Horizontal" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+  <data name="ListItem_Marker_Circle" xml:space="preserve">
+    <value>Circle</value>
+  </data>
+  <data name="ListItem_Marker_Cross" xml:space="preserve">
+    <value>Cross</value>
+  </data>
+  <data name="ListItem_Marker_Diamond" xml:space="preserve">
+    <value>Diamond</value>
+  </data>
+  <data name="ListItem_Marker_Ellipse" xml:space="preserve">
+    <value>Ellipse</value>
+  </data>
+  <data name="ListItem_Marker_Rectangle" xml:space="preserve">
+    <value>Rectangle</value>
+  </data>
+  <data name="ListItem_Marker_Triangle" xml:space="preserve">
+    <value>Triangle</value>
+  </data>
+  <data name="ListItem_Office2007" xml:space="preserve">
+    <value>Office2007</value>
+  </data>
+  <data name="ListItem_Outlook" xml:space="preserve">
+    <value>Outlook</value>
+  </data>
+  <data name="ListItem_ValueFormat_Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="ListItem_ValueFormat_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="ListItem_ValueFormat_LongDate" xml:space="preserve">
+    <value>Long Date</value>
+  </data>
+  <data name="ListItem_ValueFormat_LongTime" xml:space="preserve">
+    <value>Long Time</value>
+  </data>
+  <data name="ListItem_ValueFormat_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="ListItem_ValueFormat_Number" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="ListItem_ValueFormat_Percent" xml:space="preserve">
+    <value>Percent</value>
+  </data>
+  <data name="ListItem_ValueFormat_Scientific" xml:space="preserve">
+    <value>Scientific</value>
+  </data>
+  <data name="ListItem_ValueFormat_ShortDate" xml:space="preserve">
+    <value>Short Date</value>
+  </data>
+  <data name="ListItem_ValueFormat_ShortTime" xml:space="preserve">
+    <value>Short Time</value>
+  </data>
+  <data name="ListItem_Vertical" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="ListItem_VisibleValues_All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="ListItem_VisibleValues_Negative" xml:space="preserve">
+    <value>Negative</value>
+  </data>
+  <data name="ListItem_VisibleValues_Positive" xml:space="preserve">
+    <value>Positive</value>
+  </data>
+  <data name="ListItem_Vista" xml:space="preserve">
+    <value>Vista</value>
+  </data>
+</root>

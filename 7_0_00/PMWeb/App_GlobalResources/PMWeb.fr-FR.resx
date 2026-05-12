@@ -1,0 +1,1260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="AddAssembly" xml:space="preserve">
+    <value>Ajouter un Ensemble</value>
+  </data>
+  <data name="AddEquipment" xml:space="preserve">
+    <value>Ajouter de l'Equipement</value>
+  </data>
+  <data name="AddItems" xml:space="preserve">
+    <value>Ajouter les Articles</value>
+  </data>
+  <data name="AddLink" xml:space="preserve">
+    <value>Ajouter un lien</value>
+  </data>
+  <data name="Adjustment1" xml:space="preserve">
+    <value>Adjustement 1</value>
+  </data>
+  <data name="Adjustment2" xml:space="preserve">
+    <value>Adjustement 2</value>
+  </data>
+  <data name="AdjustmentGrid" xml:space="preserve">
+    <value>Adjustements des Grilles</value>
+  </data>
+  <data name="All_Lines" xml:space="preserve">
+    <value>Toutes les Lignes</value>
+  </data>
+  <data name="AllAdjustments" xml:space="preserve">
+    <value>Tous les ajustements</value>
+  </data>
+  <data name="ALLFIELD_DEFAULTNAMES" xml:space="preserve">
+    <value>*Tous les champs - Noms par Défauts*</value>
+  </data>
+  <data name="AllLocations" xml:space="preserve">
+    <value>Toutes les Localisations</value>
+  </data>
+  <data name="AllProjects" xml:space="preserve">
+    <value>tous les Projets</value>
+  </data>
+  <data name="ANY" xml:space="preserve">
+    <value>* Tout *</value>
+  </data>
+  <data name="AppendIssue" xml:space="preserve">
+    <value>Ajouter au Problème Existant</value>
+  </data>
+  <data name="Approved_And_Pending" xml:space="preserve">
+    <value>Approuvé &amp;amp; En Attente</value>
+  </data>
+  <data name="APPROVEDASNOTED" xml:space="preserve">
+    <value>Approuvé comme Noté</value>
+  </data>
+  <data name="Award" xml:space="preserve">
+    <value>Récompense</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="CancelAll" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="CancelCheckout" xml:space="preserve">
+    <value>Annuler Déménagement</value>
+  </data>
+  <data name="CANCELED" xml:space="preserve">
+    <value>Annulé</value>
+  </data>
+  <data name="ChangeOrders" xml:space="preserve">
+    <value>Ordres de modification</value>
+  </data>
+  <data name="CheckIn" xml:space="preserve">
+    <value>Emménagement</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Déménagement</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="Companies" xml:space="preserve">
+    <value>Sociétés</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Contract" xml:space="preserve">
+    <value>Contrat</value>
+  </data>
+  <data name="CopyRecords" xml:space="preserve">
+    <value>Copier Enregistrement</value>
+  </data>
+  <data name="CreateProjects" xml:space="preserve">
+    <value>Copier Projet</value>
+  </data>
+  <data name="CreateRecords" xml:space="preserve">
+    <value>Copier enregistrement</value>
+  </data>
+  <data name="Customized" xml:space="preserve">
+    <value>*Personnalisé*</value>
+  </data>
+  <data name="DASHNOFILTER" xml:space="preserve">
+    <value>-- Sans Filtre --</value>
+  </data>
+  <data name="DASHSELECT" xml:space="preserve">
+    <value>- Sélectionner --</value>
+  </data>
+  <data name="datePicker_CancelButton" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="datePicker_OkButton" xml:space="preserve">
+    <value>OK </value>
+  </data>
+  <data name="datePicker_OpenCalenderToolTip" xml:space="preserve">
+    <value>Ouvrir Calendrier</value>
+  </data>
+  <data name="datePicker_OutOfRage" xml:space="preserve">
+    <value>La date est hors Limite</value>
+  </data>
+  <data name="datePicker_TodayButton" xml:space="preserve">
+    <value>Aujourd&amp;#39;hui</value>
+  </data>
+  <data name="dateTimePicker_OpenTimeToolTip" xml:space="preserve">
+    <value>Ouvrir l'Echelle de Temps</value>
+  </data>
+  <data name="dateTimePicker_TimePicker" xml:space="preserve">
+    <value>Selectionner le Temps</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="DeleteLink" xml:space="preserve">
+    <value>Supprimer le lien</value>
+  </data>
+  <data name="DeleteRecords" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="DeleteRows" xml:space="preserve">
+    <value>Supprimer Lignes</value>
+  </data>
+  <data name="DeleteSelectedLine" xml:space="preserve">
+    <value>Supprimer la ligne sélectionnée</value>
+  </data>
+  <data name="DetailGrid" xml:space="preserve">
+    <value>Details des Grilles</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Télécharger</value>
+  </data>
+  <data name="EditRows" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="EditSelectedAlt" xml:space="preserve">
+    <value>Modifier</value>
+  </data>
+  <data name="EditSelectedLines" xml:space="preserve">
+    <value>Modifier les Lignes Sélectionnées</value>
+  </data>
+  <data name="EMPTY_TEXTS_ARE_NOT_ALLOWED" xml:space="preserve">
+    <value>Les Textes vides ne sont pas permis!</value>
+  </data>
+  <data name="EndSession" xml:space="preserve">
+    <value>Fin de Session</value>
+  </data>
+  <data name="ErrorMsg_ErrorUploadingFile" xml:space="preserve">
+    <value>Erreur pendant l'Envoie de Fichier.</value>
+  </data>
+  <data name="ErrorMsg_UniqueID" xml:space="preserve">
+    <value>l'ID doit être Unique</value>
+  </data>
+  <data name="ExpiredLicense" xml:space="preserve">
+    <value>Licence est expiré</value>
+  </data>
+  <data name="ExpToExel" xml:space="preserve">
+    <value>Exporter vers Excel</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtre</value>
+  </data>
+  <data name="Full" xml:space="preserve">
+    <value>Complet</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Générer</value>
+  </data>
+  <data name="GenerateConfirm_Title" xml:space="preserve">
+    <value>Confirmer la Création d'Enregistrement</value>
+  </data>
+  <data name="GenerateMsg_budget" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="GenerateMsg_conclusion" xml:space="preserve">
+    <value>Ce processus peut prendre un certain temps et ne pourra être annulé. Cliquez sur OK pour créer les enregistrements ou sur Annuler pour retourner à la page générale.</value>
+  </data>
+  <data name="GenerateMsg_Continue" xml:space="preserve">
+    <value>Continuer ?</value>
+  </data>
+  <data name="GenerateMsg_costCode" xml:space="preserve">
+    <value>Code de Coûit</value>
+  </data>
+  <data name="GenerateMsg_estimate" xml:space="preserve">
+    <value>Estimation</value>
+  </data>
+  <data name="GenerateMsg_funding" xml:space="preserve">
+    <value>Enregistrement Financier</value>
+  </data>
+  <data name="GenerateMsg_ifContinueFromInitiative" xml:space="preserve">
+    <value>Si vous continuez, ces enregistrements seront créés automatiquement.</value>
+  </data>
+  <data name="GenerateMsg_ifContinueFromPortfolio" xml:space="preserve">
+    <value>Si vous continuez, ces enregistrements seront créés automatiquement pour chaque Activité.</value>
+  </data>
+  <data name="GenerateMsg_period" xml:space="preserve">
+    <value>Periode</value>
+  </data>
+  <data name="GenerateMsg_project" xml:space="preserve">
+    <value>Projet</value>
+  </data>
+  <data name="GenerateMsg_projectcodes" xml:space="preserve">
+    <value>Codes Projet</value>
+  </data>
+  <data name="GenerateMsg_schedule" xml:space="preserve">
+    <value>Horaire</value>
+  </data>
+  <data name="Grid_DragToGroupOrReorder" xml:space="preserve">
+    <value>Faites glisser le groupe ou retrier</value>
+  </data>
+  <data name="Grid_DragToResize" xml:space="preserve">
+    <value>Faites glisser pour redimensionner</value>
+  </data>
+  <data name="Grid_DropHereToReorder" xml:space="preserve">
+    <value>Déposez ici pour retrier</value>
+  </data>
+  <data name="Grid_FirstPage" xml:space="preserve">
+    <value>Première Page</value>
+  </data>
+  <data name="Grid_GroupingSettings_CollapseTooltip" xml:space="preserve">
+    <value>Réduire le groupe</value>
+  </data>
+  <data name="Grid_GroupingSettings_ExpandTooltip" xml:space="preserve">
+    <value>Élargir le groupe</value>
+  </data>
+  <data name="Grid_GroupingSettings_GroupContinuedFormatString" xml:space="preserve">
+    <value>... suite des groupes de la page précédente.</value>
+  </data>
+  <data name="Grid_GroupingSettings_GroupContinuesFormatString" xml:space="preserve">
+    <value>suite des groupes sur la page suivante.</value>
+  </data>
+  <data name="Grid_GroupingSettings_GroupSplitDisplayFormat" xml:space="preserve">
+    <value>Articles de {0} à {1}</value>
+  </data>
+  <data name="Grid_GroupingSettings_UnGroupButtonTooltip" xml:space="preserve">
+    <value>Cliquer ici pour dégrouper</value>
+  </data>
+  <data name="Grid_GroupingSettings_UnGroupTooltip" xml:space="preserve">
+    <value>Faites glisser en dehors de la Barre pour dégrouper</value>
+  </data>
+  <data name="Grid_GroupPanel" xml:space="preserve">
+    <value>Glissez/déposez l'entête de colonne pour regrouper</value>
+  </data>
+  <data name="Grid_GroupResult" xml:space="preserve">
+    <value>Articles de {0} à {1}</value>
+  </data>
+  <data name="Grid_HierarchySettings_CollapseTooltip" xml:space="preserve">
+    <value>Réduire</value>
+  </data>
+  <data name="Grid_HierarchySettings_ExpandTooltip" xml:space="preserve">
+    <value>Développer</value>
+  </data>
+  <data name="Grid_HierarchySettings_SelfCollapseTooltip" xml:space="preserve">
+    <value>Réduire Automatiquement</value>
+  </data>
+  <data name="Grid_HierarchySettings_SelfExpandTooltip" xml:space="preserve">
+    <value>Développer Automatiquement</value>
+  </data>
+  <data name="Grid_LastPage" xml:space="preserve">
+    <value>Dernière page</value>
+  </data>
+  <data name="Grid_NextPage" xml:space="preserve">
+    <value>Page suivante</value>
+  </data>
+  <data name="Grid_NextPages" xml:space="preserve">
+    <value>Pages suivantes</value>
+  </data>
+  <data name="Grid_NoDetailRecordsText" xml:space="preserve">
+    <value>Aucun enregistrement enfant à afficher.</value>
+  </data>
+  <data name="Grid_NoMasterRecordsText" xml:space="preserve">
+    <value>Aucun enregistrement à afficher.</value>
+  </data>
+  <data name="Grid_PagerPageSize" xml:space="preserve">
+    <value>Taille de la page</value>
+  </data>
+  <data name="Grid_PagerTextFormat" xml:space="preserve">
+    <value>{4} Page &lt;STRONG&gt;{0}&lt;/strong&gt; de &lt;STRONG&gt;{1}, {2}&lt;/strong&gt; objets de &lt;STRONG&gt;{3}&lt;/strong&gt; à &lt;STRONG&gt;{5}&lt;/strong&gt;</value>
+  </data>
+  <data name="Grid_PagerTooltipFormatString" xml:space="preserve">
+    <value>Page &lt;STRONG&gt;{0}&lt;/strong&gt; de &lt;STRONG&gt;{1}&lt;/strong&gt;</value>
+  </data>
+  <data name="Grid_PreviousPage" xml:space="preserve">
+    <value>Page Précédente</value>
+  </data>
+  <data name="Grid_PreviousPages" xml:space="preserve">
+    <value>Pages Précédentes</value>
+  </data>
+  <data name="Grid_SortingSettings_SortedAscToolTip" xml:space="preserve">
+    <value>Tri asc</value>
+  </data>
+  <data name="Grid_SortingSettings_SortedDescToolTip" xml:space="preserve">
+    <value>Tri desc</value>
+  </data>
+  <data name="Grid_SortingSettings_SortToolTip" xml:space="preserve">
+    <value>Cliquez ici pour trier</value>
+  </data>
+  <data name="Grid_StatusBar_SettingsLoadingText" xml:space="preserve">
+    <value>Chargement ...</value>
+  </data>
+  <data name="Grid_StatusBar_SettingsReadyText" xml:space="preserve">
+    <value>Prêt</value>
+  </data>
+  <data name="Guest" xml:space="preserve">
+    <value>Invité</value>
+  </data>
+  <data name="History_Authorized" xml:space="preserve">
+    <value>Autorisé</value>
+  </data>
+  <data name="History_Balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="History_Funded" xml:space="preserve">
+    <value>Finacé</value>
+  </data>
+  <data name="InitNewIssue" xml:space="preserve">
+    <value>Sauvegarder comme question</value>
+  </data>
+  <data name="InitNewRecord" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="InitNewRisk" xml:space="preserve">
+    <value>Ajouter des risques</value>
+  </data>
+  <data name="InitNewRow" xml:space="preserve">
+    <value>Ajouter une ligne</value>
+  </data>
+  <data name="INVALID_DATA" xml:space="preserve">
+    <value>Données Incorrectes</value>
+  </data>
+  <data name="InvalidLicense" xml:space="preserve">
+    <value>Licence Invalide</value>
+  </data>
+  <data name="InvalidOperation_Msg" xml:space="preserve">
+    <value>Opération incorrecte détectée. Revoyez la structure d'Ensemble et de Formule utilisée.</value>
+  </data>
+  <data name="Item_Master" xml:space="preserve">
+    <value>* Maitre* </value>
+  </data>
+  <data name="Label_BudgetYear" xml:space="preserve">
+    <value>Exercice budgétaire</value>
+  </data>
+  <data name="Label_RecordNumber" xml:space="preserve">
+    <value>Enregistrement #*</value>
+  </data>
+  <data name="Labor" xml:space="preserve">
+    <value>Main d'Oeuvre</value>
+  </data>
+  <data name="Layout" xml:space="preserve">
+    <value>Disposition</value>
+  </data>
+  <data name="LinkCommitments" xml:space="preserve">
+    <value>Engagements Liés</value>
+  </data>
+  <data name="ListColumn_Company" xml:space="preserve">
+    <value>Société</value>
+  </data>
+  <data name="ListColumn_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="ListColumn_CostCodes" xml:space="preserve">
+    <value>Codes de Coûts</value>
+  </data>
+  <data name="ListColumn_Periods" xml:space="preserve">
+    <value>Periodes</value>
+  </data>
+  <data name="ListColumn_Tasks" xml:space="preserve">
+    <value>Tâches</value>
+  </data>
+  <data name="ListColumn_Tasks_Finish" xml:space="preserve">
+    <value>Terminer</value>
+  </data>
+  <data name="ListColumn_Tasks_Start" xml:space="preserve">
+    <value>Démarrer</value>
+  </data>
+  <data name="ListColumn_Tasks_Task" xml:space="preserve">
+    <value>Tâche</value>
+  </data>
+  <data name="ListContactEmptyMsg" xml:space="preserve">
+    <value>Sélectionner un contact ...</value>
+  </data>
+  <data name="ListItem_AddNew" xml:space="preserve">
+    <value>Ajouter Nouveau</value>
+  </data>
+  <data name="ListItem_ALL" xml:space="preserve">
+    <value>* Toutes *</value>
+  </data>
+  <data name="ListItem_ALL_COMPANIES" xml:space="preserve">
+    <value>Toutes les Sociétés</value>
+  </data>
+  <data name="ListItem_NO_COMPANY" xml:space="preserve">
+    <value>(Pas de Société)</value>
+  </data>
+  <data name="ListItem_NONE" xml:space="preserve">
+    <value>(Aucun)</value>
+  </data>
+  <data name="LoadDefaultState" xml:space="preserve">
+    <value>Charger la Disposition par Défaut</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Chargement ...</value>
+  </data>
+  <data name="LOD_PROJECT" xml:space="preserve">
+    <value>Projets</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Déconnecter</value>
+  </data>
+  <data name="Merge_Columns" xml:space="preserve">
+    <value>Colonne</value>
+  </data>
+  <data name="Merge_CustomFields" xml:space="preserve">
+    <value>Champs Personnalisés</value>
+  </data>
+  <data name="Merge_Fields" xml:space="preserve">
+    <value>Champs</value>
+  </data>
+  <data name="Merge_SpecFields" xml:space="preserve">
+    <value>Specifications</value>
+  </data>
+  <data name="Merge_StaticFields" xml:space="preserve">
+    <value>Champs Fixes</value>
+  </data>
+  <data name="MicrosoftExcel" xml:space="preserve">
+    <value>Microsoft Excel </value>
+  </data>
+  <data name="Msg_ConfirmCalculateForecast" xml:space="preserve">
+    <value>Calculera la Prévision finale en fonction du pourcentage du calendrier restant et le coût réel. Cela écrasera les valeurs actuelles. Voulez-vous continuer ?</value>
+  </data>
+  <data name="Msg_ConfirmCopyPercentage" xml:space="preserve">
+    <value>Voulez-vous copier les pourcentages à partir du calendrier ? Cela effacera les pourcentages actuels.</value>
+  </data>
+  <data name="Msg_RemoveCommitmentLink" xml:space="preserve">
+    <value>Supprimer le lien ?</value>
+  </data>
+  <data name="Multiple" xml:space="preserve">
+    <value>Multiples</value>
+  </data>
+  <data name="NewAssembly" xml:space="preserve">
+    <value>Nouvel Ensemble</value>
+  </data>
+  <data name="NewGroup" xml:space="preserve">
+    <value>Nouveau groupe</value>
+  </data>
+  <data name="NewItem" xml:space="preserve">
+    <value>Nouvel Article</value>
+  </data>
+  <data name="NewLanguage" xml:space="preserve">
+    <value>Nouveau Langage</value>
+  </data>
+  <data name="NewLine" xml:space="preserve">
+    <value>(Nouvelle Ligne)</value>
+  </data>
+  <data name="NO_COST_TYPE" xml:space="preserve">
+    <value>(Aucun type de coût)</value>
+  </data>
+  <data name="NOACTION" xml:space="preserve">
+    <value>Aucune Action</value>
+  </data>
+  <data name="NoLicense" xml:space="preserve">
+    <value>PMWeb n'a pas de licence pour ce domaine.&lt;br /&gt; Chargez une licence SVP.</value>
+  </data>
+  <data name="NOMATCH" xml:space="preserve">
+    <value>Pas de correspondance</value>
+  </data>
+  <data name="NOT_IN_BUDGET" xml:space="preserve">
+    <value>(Non Budgeté)</value>
+  </data>
+  <data name="NotDefined" xml:space="preserve">
+    <value>(Non défini)</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OpenAssembly" xml:space="preserve">
+    <value>Ouvrir un Ensemble</value>
+  </data>
+  <data name="OpenContainingFolder" xml:space="preserve">
+    <value>Ouvrir le dossier contenant</value>
+  </data>
+  <data name="OpenItem" xml:space="preserve">
+    <value>Ouvrir l&amp;#39;élément</value>
+  </data>
+  <data name="OpenTheCalendarPopup" xml:space="preserve">
+    <value>Ouvrir le Calendrier.</value>
+  </data>
+  <data name="Original" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="OriginalBudget" xml:space="preserve">
+    <value>Budget initial</value>
+  </data>
+  <data name="OriginalFunding" xml:space="preserve">
+    <value>Financement initial</value>
+  </data>
+  <data name="OriginalScope" xml:space="preserve">
+    <value>Périmètre d'Origine</value>
+  </data>
+  <data name="PasteClipBoard" xml:space="preserve">
+    <value>Coller depuis Excel</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>En attente</value>
+  </data>
+  <data name="PendingApproved" xml:space="preserve">
+    <value>En l&amp;#39;attente / Approuvé</value>
+  </data>
+  <data name="PerformInsert" xml:space="preserve">
+    <value>Sauver</value>
+  </data>
+  <data name="PerformUpdate" xml:space="preserve">
+    <value>Actualiser les enregistrements</value>
+  </data>
+  <data name="Portfolio" xml:space="preserve">
+    <value>(Portefeuille)</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Prévisualiser</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>(Programme)</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>(Projet)</value>
+  </data>
+  <data name="PurchaseOrder" xml:space="preserve">
+    <value>Ordre d'Achat</value>
+  </data>
+  <data name="RadToolBarButton_ActiveToggle" xml:space="preserve">
+    <value>Bascullement Actif</value>
+  </data>
+  <data name="RadToolBarButton_AttachALL" xml:space="preserve">
+    <value>TOUT</value>
+  </data>
+  <data name="RadToolBarButton_Attachements" xml:space="preserve">
+    <value>Enregistrements attachés</value>
+  </data>
+  <data name="RadToolBarButton_AutoCAD" xml:space="preserve">
+    <value>AutoCAD </value>
+  </data>
+  <data name="RadToolBarButton_Copy" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  <data name="RadToolBarButton_CopyProject" xml:space="preserve">
+    <value>Copie de Projet</value>
+  </data>
+  <data name="RadToolBarButton_CreateChangeOrder" xml:space="preserve">
+    <value>Créer un ordre de modification d'engagement</value>
+  </data>
+  <data name="RadToolBarButton_CreateProgressInvoice" xml:space="preserve">
+    <value>Créer une Facture Encours</value>
+  </data>
+  <data name="RadToolBarButton_CreateRevision" xml:space="preserve">
+    <value>Créer Révision</value>
+  </data>
+  <data name="RadToolBarButton_Cut" xml:space="preserve">
+    <value>Couper</value>
+  </data>
+  <data name="RadToolBarButton_Delete" xml:space="preserve">
+    <value>Supprimer (Alt + d)</value>
+  </data>
+  <data name="RadToolBarButton_EmailReply" xml:space="preserve">
+    <value>Répondre</value>
+  </data>
+  <data name="RadToolBarButton_Estimate" xml:space="preserve">
+    <value>Devis</value>
+  </data>
+  <data name="RadToolBarButton_EstimatesDetail" xml:space="preserve">
+    <value>Détail des Devis</value>
+  </data>
+  <data name="RadToolBarButton_ExportToExcel" xml:space="preserve">
+    <value>Exporter vers Excel</value>
+  </data>
+  <data name="RadToolBarButton_Forecast" xml:space="preserve">
+    <value>Marge Nette prévisionnelle : Prévision jusqu’à l’achèvement = (Coût Réel / % achevé) – Coût Réel</value>
+  </data>
+  <data name="RadToolBarButton_Generate" xml:space="preserve">
+    <value>Générer</value>
+  </data>
+  <data name="RadToolBarButton_GenerateAuthorization" xml:space="preserve">
+    <value>Générer l'autorisation de Financement</value>
+  </data>
+  <data name="RadToolBarButton_GenerateBudget" xml:space="preserve">
+    <value>Générer le Budget</value>
+  </data>
+  <data name="RadToolBarButton_GenerateBudgets" xml:space="preserve">
+    <value>Générer les budgets</value>
+  </data>
+  <data name="RadToolBarButton_GenerateBuyoutItems" xml:space="preserve">
+    <value>Générer les Articles de Rachat</value>
+  </data>
+  <data name="RadToolBarButton_GenerateChangeOrders" xml:space="preserve">
+    <value>Ordres de Modification</value>
+  </data>
+  <data name="RadToolBarButton_GenerateContracts" xml:space="preserve">
+    <value>Générer les Contrats</value>
+  </data>
+  <data name="RadToolBarButton_GenerateFundingRequest" xml:space="preserve">
+    <value>Générer les Demandes de Financement</value>
+  </data>
+  <data name="RadToolBarButton_GenerateFundings" xml:space="preserve">
+    <value>Générer les Financements</value>
+  </data>
+  <data name="RadToolBarButton_GeneratePMBudgets" xml:space="preserve">
+    <value>Générer les budgets</value>
+  </data>
+  <data name="RadToolBarButton_GeneratePMContracts" xml:space="preserve">
+    <value>Générer les Engagements</value>
+  </data>
+  <data name="RadToolBarButton_GenerateProject" xml:space="preserve">
+    <value>Générer le Projet</value>
+  </data>
+  <data name="RadToolBarButton_GenerateProjectRecords" xml:space="preserve">
+    <value>Générer les enregistrements de Projet</value>
+  </data>
+  <data name="RadToolBarButton_GeneratePurchaseOrders" xml:space="preserve">
+    <value>Générer les commandes d&amp;#39;achat</value>
+  </data>
+  <data name="RadToolBarButton_GenerateSchedule" xml:space="preserve">
+    <value>Générer les Ho</value>
+  </data>
+  <data name="RadToolBarButton_GenerateSubmittals" xml:space="preserve">
+    <value>Documents à soumettre</value>
+  </data>
+  <data name="RadToolBarButton_GenerateTemplates" xml:space="preserve">
+    <value>Générer les modèles</value>
+  </data>
+  <data name="RadToolBarButton_GenerateTransmittal" xml:space="preserve">
+    <value>Transmission</value>
+  </data>
+  <data name="RadToolBarButton_GenerateWorkOrder" xml:space="preserve">
+    <value>Ordre de Travail</value>
+  </data>
+  <data name="RadToolBarButton_GenerateWorkOrders" xml:space="preserve">
+    <value>Ordres de Travail</value>
+  </data>
+  <data name="RadToolBarButton_help" xml:space="preserve">
+    <value>Aide</value>
+  </data>
+  <data name="RadToolBarButton_InactiveToggle" xml:space="preserve">
+    <value>Bascullement inactif</value>
+  </data>
+  <data name="RadToolBarButton_Items" xml:space="preserve">
+    <value>Articles</value>
+  </data>
+  <data name="RadToolBarButton_LinkSchedule" xml:space="preserve">
+    <value>Lien Horaire</value>
+  </data>
+  <data name="RadToolBarButton_LoadDefaultState" xml:space="preserve">
+    <value>Charger la Disposition par Défaut</value>
+  </data>
+  <data name="RadToolBarButton_MergeTemplates" xml:space="preserve">
+    <value>Fusion des Modèles</value>
+  </data>
+  <data name="RadToolBarButton_Navisworks" xml:space="preserve">
+    <value>NavisWorks</value>
+  </data>
+  <data name="RadToolBarButton_New" xml:space="preserve">
+    <value>Nouveau (Alt + n)</value>
+  </data>
+  <data name="RadToolBarButton_NewEmail" xml:space="preserve">
+    <value>Rédiger un nouvel email</value>
+  </data>
+  <data name="RadToolBarButton_Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="RadToolBarButton_Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="RadToolBarButton_Paste" xml:space="preserve">
+    <value>Coller</value>
+  </data>
+  <data name="RadToolBarButton_PctComplete" xml:space="preserve">
+    <value>% Réalisé depuis le Calendrier</value>
+  </data>
+  <data name="RadToolBarButton_Planview" xml:space="preserve">
+    <value>Vue du Plan</value>
+  </data>
+  <data name="RadToolBarButton_PlanViewSetup" xml:space="preserve">
+    <value>Paramètres de Vue du Plan.</value>
+  </data>
+  <data name="RadToolBarButton_Post" xml:space="preserve">
+    <value>Envoyer vers le Grand Livre</value>
+  </data>
+  <data name="RadToolBarButton_Print" xml:space="preserve">
+    <value>Imprimer</value>
+  </data>
+  <data name="RadToolBarButton_PurchaseOrder" xml:space="preserve">
+    <value>Ordre d 'Achat</value>
+  </data>
+  <data name="RadToolBarButton_Recalculate" xml:space="preserve">
+    <value>Recalculer</value>
+  </data>
+  <data name="RadToolBarButton_Reports" xml:space="preserve">
+    <value>Rapports</value>
+  </data>
+  <data name="RadToolBarButton_Revit" xml:space="preserve">
+    <value>Revit</value>
+  </data>
+  <data name="RadToolBarButton_Save" xml:space="preserve">
+    <value>Enregistrer (Alt + s)</value>
+  </data>
+  <data name="RadToolBarButton_SaveLayout" xml:space="preserve">
+    <value>Sauvegarder la Disposition</value>
+  </data>
+  <data name="RadToolBarButton_Search" xml:space="preserve">
+    <value>Recherche</value>
+  </data>
+  <data name="RadToolBarButton_SendMail" xml:space="preserve">
+    <value>Envoyer Email</value>
+  </data>
+  <data name="RadToolBarButton_Subcontract" xml:space="preserve">
+    <value>sous Contrat</value>
+  </data>
+  <data name="RadToolBarButton_Templates" xml:space="preserve">
+    <value>Modèles</value>
+  </data>
+  <data name="RadToolBarButton_Unpost" xml:space="preserve">
+    <value>**Ne pas envoyer</value>
+  </data>
+  <data name="RadToolBarButton_ViewReports" xml:space="preserve">
+    <value>Vue Rapport</value>
+  </data>
+  <data name="RadToolBarButton_ViewTemplates" xml:space="preserve">
+    <value>Modèles</value>
+  </data>
+  <data name="RadToolBarButton_Void" xml:space="preserve">
+    <value>Vide (Alt + V)</value>
+  </data>
+  <data name="RadToolBarSplitButton_Assign" xml:space="preserve">
+    <value>Attribuer</value>
+  </data>
+  <data name="RadToolBarSplitButton_Attach" xml:space="preserve">
+    <value>Attacher</value>
+  </data>
+  <data name="RadToolBarSplitButton_BIM" xml:space="preserve">
+    <value>BIM</value>
+  </data>
+  <data name="RadToolBarSplitButton_Generate" xml:space="preserve">
+    <value>Générer ...</value>
+  </data>
+  <data name="RadToolBarSplitButton_Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="RadToolBarSplitButton_Layout" xml:space="preserve">
+    <value>Disposition</value>
+  </data>
+  <data name="RadToolBarSplitButton_Print" xml:space="preserve">
+    <value>Imprimer</value>
+  </data>
+  <data name="RadToolBarSplitButton_WordMerge" xml:space="preserve">
+    <value>Fusionner vers  MS Office</value>
+  </data>
+  <data name="RadUploadAdd" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+  <data name="RadUploadClear" xml:space="preserve">
+    <value>Effacer</value>
+  </data>
+  <data name="RadUploadDelete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="RadUploadRemove" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="RadUploadSelect" xml:space="preserve">
+    <value>Sélectionner</value>
+  </data>
+  <data name="RebindGrid" xml:space="preserve">
+    <value>Rafraichier</value>
+  </data>
+  <data name="RemoveCommitmentLink" xml:space="preserve">
+    <value>Supprimer le lien</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Renommer</value>
+  </data>
+  <data name="REQUISITIONCODELIST_CONTRACT" xml:space="preserve">
+    <value>Contrats</value>
+  </data>
+  <data name="REQUISITIONCODELIST_CONTRACTCO" xml:space="preserve">
+    <value>**Contrat Sociétés</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reinitialiser</value>
+  </data>
+  <data name="ResourceType_Equipment" xml:space="preserve">
+    <value>Equipement</value>
+  </data>
+  <data name="ResourceType_Labor" xml:space="preserve">
+    <value>Travail</value>
+  </data>
+  <data name="Revised" xml:space="preserve">
+    <value>Révisé</value>
+  </data>
+  <data name="RevisedBudget" xml:space="preserve">
+    <value>Budget Révisé</value>
+  </data>
+  <data name="RevisedFunding" xml:space="preserve">
+    <value>Financement Révisé</value>
+  </data>
+  <data name="RevisedScope" xml:space="preserve">
+    <value>Périmètre Révisé</value>
+  </data>
+  <data name="REVISERESUBMIT" xml:space="preserve">
+    <value>Réviser &amp;amp; Resoumis</value>
+  </data>
+  <data name="REVISION" xml:space="preserve">
+    <value>Revision </value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Sauvegarder</value>
+  </data>
+  <data name="SaveClose" xml:space="preserve">
+    <value>Enregistrer et fermer</value>
+  </data>
+  <data name="SaveState" xml:space="preserve">
+    <value>Enregistrer la fenêtre</value>
+  </data>
+  <data name="SaveToRecord" xml:space="preserve">
+    <value>Sauver Enregistrement</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Recherche</value>
+  </data>
+  <data name="Search_Portfolio" xml:space="preserve">
+    <value>Portfolio</value>
+  </data>
+  <data name="Sent_Lines_Only" xml:space="preserve">
+    <value>Envoyé uniquement les lignes</value>
+  </data>
+  <data name="ShowAllVersions" xml:space="preserve">
+    <value>Show All Versions</value>
+  </data>
+  <data name="ShowLastVersion" xml:space="preserve">
+    <value>Show Last Versions Only</value>
+  </data>
+  <data name="SPLIT" xml:space="preserve">
+    <value>* Split *</value>
+  </data>
+  <data name="Splitter_CollapseExpandPaneText" xml:space="preserve">
+    <value>Réduire / agrandir le volet de gauche</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>État</value>
+  </data>
+  <data name="StatusMessage" xml:space="preserve">
+    <value>{0} &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{1}&lt;/b&gt; à &lt;b&gt;{2}&lt;/b&gt;</value>
+  </data>
+  <data name="Subcontract" xml:space="preserve">
+    <value>Sous Contrat</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>(Système)</value>
+  </data>
+  <data name="tab_Abstract" xml:space="preserve">
+    <value>Résumé</value>
+  </data>
+  <data name="tab_Adjustments" xml:space="preserve">
+    <value>Adustements</value>
+  </data>
+  <data name="tab_Advanced" xml:space="preserve">
+    <value>Avancé</value>
+  </data>
+  <data name="tab_Attachments" xml:space="preserve">
+    <value>Pièces Jointes</value>
+  </data>
+  <data name="tab_Budget" xml:space="preserve">
+    <value>Budget</value>
+  </data>
+  <data name="tab_Buildings" xml:space="preserve">
+    <value>Bâtiments</value>
+  </data>
+  <data name="tab_ChangeOrders" xml:space="preserve">
+    <value>Ordres de Modifications</value>
+  </data>
+  <data name="tab_Codes" xml:space="preserve">
+    <value>Codes</value>
+  </data>
+  <data name="tab_Commitments" xml:space="preserve">
+    <value>Engagements</value>
+  </data>
+  <data name="tab_Configure" xml:space="preserve">
+    <value>Configurer</value>
+  </data>
+  <data name="tab_CostTotalsMarkups" xml:space="preserve">
+    <value>Coût totaux</value>
+  </data>
+  <data name="tab_Details" xml:space="preserve">
+    <value>Détails</value>
+  </data>
+  <data name="tab_Equipment" xml:space="preserve">
+    <value>Equipement</value>
+  </data>
+  <data name="tab_Estimate" xml:space="preserve">
+    <value>Estimation</value>
+  </data>
+  <data name="tab_Floors" xml:space="preserve">
+    <value>Etages</value>
+  </data>
+  <data name="tab_General" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="tab_Header" xml:space="preserve">
+    <value>Entête</value>
+  </data>
+  <data name="tab_Insurance" xml:space="preserve">
+    <value>Assurance</value>
+  </data>
+  <data name="tab_Issues" xml:space="preserve">
+    <value>Problèmes</value>
+  </data>
+  <data name="tab_LinkedSchedule" xml:space="preserve">
+    <value>Horaires Liés</value>
+  </data>
+  <data name="tab_Locations" xml:space="preserve">
+    <value>Localisations</value>
+  </data>
+  <data name="tab_Log" xml:space="preserve">
+    <value>Journal</value>
+  </data>
+  <data name="tab_Maintenance" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
+  <data name="tab_Markup" xml:space="preserve">
+    <value>Marge</value>
+  </data>
+  <data name="tab_Moves" xml:space="preserve">
+    <value>Déplacements</value>
+  </data>
+  <data name="tab_Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="tab_NotificationLog" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="tab_OtherCosts" xml:space="preserve">
+    <value>Coûts matériels</value>
+  </data>
+  <data name="tab_Phases" xml:space="preserve">
+    <value>Phases</value>
+  </data>
+  <data name="tab_Predecessors" xml:space="preserve">
+    <value>Prédécesseurs</value>
+  </data>
+  <data name="tab_Preventive" xml:space="preserve">
+    <value>Préventive</value>
+  </data>
+  <data name="tab_ProgressInvoices" xml:space="preserve">
+    <value>Factures en Cours</value>
+  </data>
+  <data name="tab_Projects" xml:space="preserve">
+    <value>Projets</value>
+  </data>
+  <data name="tab_RejectionLogs" xml:space="preserve">
+    <value>Journaux Rejettés</value>
+  </data>
+  <data name="tab_ReleaseRecordsForExport" xml:space="preserve">
+    <value>Enregistrements pour Export</value>
+  </data>
+  <data name="tab_Resources" xml:space="preserve">
+    <value>Ressources</value>
+  </data>
+  <data name="tab_Result" xml:space="preserve">
+    <value>Resultat</value>
+  </data>
+  <data name="tab_Schedule" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="tab_Spaces" xml:space="preserve">
+    <value>Espaces</value>
+  </data>
+  <data name="tab_Spec" xml:space="preserve">
+    <value>Spécifications</value>
+  </data>
+  <data name="tab_Specifications" xml:space="preserve">
+    <value>Spécifications</value>
+  </data>
+  <data name="tab_Standard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="tab_Successors" xml:space="preserve">
+    <value>Successeurs</value>
+  </data>
+  <data name="tab_Tasks" xml:space="preserve">
+    <value>Tâches</value>
+  </data>
+  <data name="tab_Timesheet" xml:space="preserve">
+    <value>Feuilles de Temps</value>
+  </data>
+  <data name="tab_ViewExportedFiles" xml:space="preserve">
+    <value>Visualiser les Fichiers Exportés</value>
+  </data>
+  <data name="tab_Workflow" xml:space="preserve">
+    <value>Workflow</value>
+  </data>
+  <data name="tab_WorkOrders" xml:space="preserve">
+    <value>Ordres de Travaux</value>
+  </data>
+  <data name="Tax" xml:space="preserve">
+    <value>Taxe</value>
+  </data>
+  <data name="TextCommaDelimited" xml:space="preserve">
+    <value>Texte (délimité par des virgules)</value>
+  </data>
+  <data name="Title_NoRecordsCreated" xml:space="preserve">
+    <value>aucun enregistrement créé</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Aujourd'hui</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Totals" xml:space="preserve">
+    <value>Totaux</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="Unsent_Lines_Only" xml:space="preserve">
+    <value>Seulement les Lignes non Envoyées</value>
+  </data>
+  <data name="UpdateEdited" xml:space="preserve">
+    <value>Actualiser les dossiers</value>
+  </data>
+  <data name="UploadFile" xml:space="preserve">
+    <value>Envoyer un fichier</value>
+  </data>
+  <data name="Use_Default" xml:space="preserve">
+    <value>(Par Défaut)</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Utilisateurs</value>
+  </data>
+  <data name="Void" xml:space="preserve">
+    <value>Vide</value>
+  </data>
+  <data name="VoidLines" xml:space="preserve">
+    <value>Lignes Vides</value>
+  </data>
+  <data name="Warining_MaxUsers" xml:space="preserve">
+    <value>Nombre Maximum d'Utilisateurs dépassé!</value>
+  </data>
+  <data name="Warning_InvalidDatabases" xml:space="preserve">
+    <value>PMWebDatabases Invalide</value>
+  </data>
+  <data name="WarningMsg_AccountDisabled" xml:space="preserve">
+    <value>Votre compte a été désactivé.</value>
+  </data>
+  <data name="WarningMsg_ConfirmDeleteDocument" xml:space="preserve">
+    <value>Êtes-vous sûr de vouloir supprimer? Ceci supprimera tous les dossiers connexes. Ce processus ne peut pas être annulée.</value>
+  </data>
+  <data name="WarningMsg_ConfirmDeleteRecords" xml:space="preserve">
+    <value>Supprimer tous les enregistrements sélectionnés?</value>
+  </data>
+  <data name="WarningMsg_ConfirmReleaseRecords" xml:space="preserve">
+    <value>Rétablir tous les enregistrement Sélectionnés ?</value>
+  </data>
+  <data name="WarningMsg_ContractOverbilling" xml:space="preserve">
+    <value>Enregistrement Impossible. Les Plafonds de Facturations seront dépassés pour ce Contrat.</value>
+  </data>
+  <data name="WarningMsg_CostCodeRequired" xml:space="preserve">
+    <value>Sélectionner le code de coût</value>
+  </data>
+  <data name="WarningMsg_DummyData" xml:space="preserve">
+    <value>Caractère Factice existe déjà!</value>
+  </data>
+  <data name="WarningMsg_ExceededMaxFileSize" xml:space="preserve">
+    <value>Vous avez dépassé la taille maximale autorisée pour le fichier (max : {0})</value>
+  </data>
+  <data name="WarningMsg_Failed" xml:space="preserve">
+    <value>Echec</value>
+  </data>
+  <data name="WarningMsg_FileExtension" xml:space="preserve">
+    <value>Type de Fichier non supporté. Types de fichiers actuellement valides ( {0} ). Contactez un Administrateur si vous avez besoin de charger un fichier dont le type n'est pas dans la liste précédente.</value>
+  </data>
+  <data name="WarningMsg_FileNameExists" xml:space="preserve">
+    <value>Un autre fichier avec le même nom existe déjà dans le dossier. Votre Fichier ne peut pas être chargé pour le moment.</value>
+  </data>
+  <data name="WarningMsg_FileNameLength" xml:space="preserve">
+    <value>Erreur: Noms de Fichiers limités à 150 caractères, renomez le et essayer à nouveau.</value>
+  </data>
+  <data name="WarningMsg_FileNotFound" xml:space="preserve">
+    <value>Fichier Non Trouvé!</value>
+  </data>
+  <data name="WarningMsg_FundingCodeRequired" xml:space="preserve">
+    <value>Sélectionnez le Code de financement</value>
+  </data>
+  <data name="WarningMsg_ImageRatio" xml:space="preserve">
+    <value>Les proportions de l'image doivent être 3:1 - Par exemple 3 cm de larger sur 1 cm de hauteur.</value>
+  </data>
+  <data name="WarningMsg_InitiativeNoRecordsCreated" xml:space="preserve">
+    <value>L'enregistrement ne sera pas créé. Sélectionnez une ou plusieurs case pour créer et cliquez sur "Créer Enregistrement" à nouveau.</value>
+  </data>
+  <data name="WarningMsg_InvalidOperation" xml:space="preserve">
+    <value>Operation non Valide!</value>
+  </data>
+  <data name="WarningMsg_ItemAlreadyExists" xml:space="preserve">
+    <value>Nom d'Article (0) déjà utilisé.</value>
+  </data>
+  <data name="WarningMsg_NoRecordsCreated" xml:space="preserve">
+    <value>L'enregistrement ne sera pas créé. Sélectionnez en un ou plusieurs lié(s) à une Activité et cliquez sur "Créer Enregistrement" à nouveau.</value>
+  </data>
+  <data name="WarningMsg_NotExist" xml:space="preserve">
+    <value>N'existe pas!</value>
+  </data>
+  <data name="WarningMsg_Overbilling" xml:space="preserve">
+    <value>L'enregistrement ne sera pas créé. Les limites de surfacturations sur cet engagement seraient dépassées.</value>
+  </data>
+  <data name="WarningMsg_RecordNumberAlreadyExists" xml:space="preserve">
+    <value>Ce numéro d'Enregistrement est déjà utilisé.</value>
+  </data>
+  <data name="WarningMsg_Required" xml:space="preserve">
+    <value>Obligatoire</value>
+  </data>
+  <data name="WarningMsg_Succeed" xml:space="preserve">
+    <value>Réussi</value>
+  </data>
+  <data name="WarningMsg_TextField" xml:space="preserve">
+    <value>C'est un champs Texte !</value>
+  </data>
+  <data name="WarningMsg_UseCtrl_V" xml:space="preserve">
+    <value>Utilisez Ctrl + V pour coller vos données.</value>
+  </data>
+</root>

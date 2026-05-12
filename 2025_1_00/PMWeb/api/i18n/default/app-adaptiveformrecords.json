@@ -1,0 +1,12 @@
+﻿{
+  "grid-column.entity": "Level",
+  "grid-column.recordNumber": "Record Number",
+  "grid-column.description": "Description",
+  "grid-column.statuscolor": "Status Color",
+  "grid-column.status": "Status",
+  "grid-column.updatedBy": "Edited By",
+  "grid-column.lastUpdateDateD": "Edited Date",
+  "grid-column.createdBy": "Created By",
+  "grid-column.createdDateD": "Created Date",
+  "grid-column.attachments": "Attachments"
+}

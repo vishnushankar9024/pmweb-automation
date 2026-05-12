@@ -1,0 +1,292 @@
+﻿@model Trinergy.Model.User
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Action Center</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Scripts/tree/themes/proton/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" />
+    <style>
+        .attachments {
+            font-size: 12px !important;
+        }
+
+            .attachments .panel-heading {
+                padding: 2px 15px !important;
+            }
+
+                .attachments .panel-heading h4 {
+                    margin-top: 2px;
+                    margin-bottom: 2px;
+                }
+
+            .attachments .col-md-6 {
+                padding: 2px;
+            }
+
+            .attachments ul {
+                padding: 0px;
+                list-style: none;
+            }
+
+            .attachments .panel-body {
+                padding: 5px 5px 5px 15px;
+            }
+
+                .attachments .panel-body .panel-body {
+                    padding-left: 5px;
+                }
+
+            .attachments a {
+                color: blue;
+                text-decoration: underline;
+            }
+
+        .tdRed {
+            background-color: red;
+        }
+
+        .tdGreen {
+            background-color: green;
+        }
+
+        .tdTransparent {
+            background-color: transparent;
+        }
+
+        .tdYellow {
+            background-color: #e7b416;
+        }
+
+        .panel-heading {
+            cursor: pointer;
+        }
+
+        .panel-title:after {
+            /* symbol for "opening" panels */
+            font-family: 'Glyphicons Halflings'; /* essential for enabling glyphicon */
+            content: "\e113"; /* adjust as needed, taken from bootstrap.css */
+            float: right; /* adjust as needed */
+            color: grey; /* adjust as needed */
+        }
+
+        .panel-title.collapsed:after {
+            /* symbol for "collapsed" panels */
+            content: "\e114"; /* adjust as needed, taken from bootstrap.css */
+        }
+    </style>
+    <style class="cp-pen-styles">
+        ul.css-treeview {
+            /*margin: 0px 0px 0px 20px;*/
+            list-style: none;
+            line-height: 2em;
+            font-family: Arial;
+        }
+
+            ul.css-treeview li {
+                font-size: 16px;
+                position: relative;
+            }
+
+                ul.css-treeview li:before {
+                    position: absolute;
+                    left: -15px;
+                    top: 0px;
+                    content: '';
+                    display: block;
+                    border-left: 1px solid #ccc;
+                    height: 1em;
+                    border-bottom: 1px solid #ccc;
+                    width: 10px;
+                }
+
+                ul.css-treeview li:after {
+                    position: absolute;
+                    left: -15px;
+                    bottom: -7px;
+                    content: '';
+                    display: block;
+                    border-left: 1px solid #ccc;
+                    height: 100%;
+                }
+
+                ul.css-treeview li.root {
+                    margin: 0px 0px 0px -20px;
+                }
+
+                    ul.css-treeview li.root:before {
+                        display: none;
+                    }
+
+                    ul.css-treeview li.root:after {
+                        display: none;
+                    }
+
+                ul.css-treeview li:last-child:after {
+                    display: none;
+                }
+
+        .folder {
+            margin-left: 0px !important;
+            background-color: lightgrey;
+            border: 1px solid #ffffff;
+        }
+
+        .actionhead {
+            color: red;
+            font-weight: bold;
+        }
+
+        button.dt-button, div.dt-button, a.dt-button {
+            margin-right: 0px !important;
+            margin-left: 5px !important;
+            height: 25px;
+        }
+
+        .blink {
+            animation: blink-animation 1s steps(5, start) infinite;
+            -webkit-animation: blink-animation 1s steps(5, start) infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="padding:10px;margin:10px">
+
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Project</label>
+                        @Html.DropDownList("ddlProject", new SelectList(ViewBag.UserProjects, "Id", "Name"), "Select Project", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <input type="button" class="btn btn-primary" value="Get Status" onclick="LoadActiveDocs()" />
+                </div>
+            </div>
+            <div id="divListAD" style="margin-bottom:30px;"></div>
+        </div>
+    </div>
+    <div id="pleaseWaitDialog" class="modal" style="display: none">
+        <div class="center">
+
+            <img src="~/Content/Images/hamadwait.gif" alt="Loading, please wait" />
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/formstyles.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<link href="~/Content/buttons.dataTables.css" rel="stylesheet" />
+
+<link href="~/Content/Documents.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+
+<link rel="stylesheet" type="text/css" href="~/Content/datatables.min.css" />
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/tree/jstree.min.js"></script>
+
+<script type="text/javascript" src="~/Scripts/datatables.min.js"></script>
+
+
+
+
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>*@
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="~/Scripts/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //LoadActiveDocs();
+    });
+    function LoadActiveDocs() {
+        var projectId = $("#ddlProject").val();
+        if (projectId == "")
+        {
+            alert("Please select project");
+            return;
+        }
+        $.ajax({
+            url: '@Url.Action("GetActiveDocs", "ActionCenter")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { projectId: projectId },
+            beforeSend: function () {
+                $('#pleaseWaitDialog').modal();
+            },
+            complete: function () {
+                $('#pleaseWaitDialog').modal('hide');
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+                $('#divListAD').html(data);
+            },
+            error: function (xhr) {
+
+            }
+        });
+    }
+    function DownloadFolder(FolderId, DocId) {
+        debugger;
+        $.ajax({
+            url: '@Url.Action("DownloadFolder", "DocumentLog")',
+            dataType: "html",
+            type: "GET",
+            contentType: 'application/json;charset=utf-8',
+            data: { FolderId: FolderId, DocId: DocId },
+            beforeSend: function () {
+                $('#pleaseWaitDialog').modal();
+            },
+            complete: function () {
+                $('#pleaseWaitDialog').modal('hide');
+            },
+            async: true,
+            cache: false,
+            success: function (data) {
+                debugger;
+                var json = JSON.parse(data)
+                var newWin = window.open(json.downloadLink, "_blank");
+                if (!newWin || newWin.closed || typeof newWin.closed == 'undefined') {
+                    alert('Disable popup blocker to download.');
+                }
+            },
+            error: function (xhr) {
+                //alert("failed");
+            }
+        });
+    }
+
+    function CloseSubReport() {
+        $(".tempRow").remove();
+    }
+    $('#ddlProject').select2({
+        selectOnClose: true
+    });
+</script>

@@ -1,0 +1,167 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
+
+#cssmenu,
+#cssmenu ul,
+#cssmenu li,
+#cssmenu a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    font-weight: normal;
+    text-decoration: none;
+    line-height: 1;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-family: Calibri font-size: 14px;
+    position: relative;
+}
+
+    #cssmenu a {
+        line-height: 1.3;
+    }
+
+#cssmenu {
+    width: 250px;
+    border-top: 1px solid #ccc;
+}
+
+    #cssmenu > ul > li > a {
+        padding-right: 40px;
+        font-size: 25px;
+        font-weight: bold;
+        display: block;
+        background: #696969;
+        color: #000000;
+        border-bottom: 1px solid #ccc;
+        /*text-transform: uppercase;*/
+        position: relative;
+    }
+
+    #cssmenu > ul > li > ul > li > a {
+        padding-right: 40px;
+        display: block;
+        background: #C0C0C0;
+        color: #000000;
+        border-bottom: 1px solid #ccc;
+        text-transform: uppercase;
+        position: relative;
+    }
+
+.white-bg > ul > li > ul > li > a {
+    background: #FFFFFF !important;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+#cssmenu > ul > li > ul > li > ul > li > a {
+    padding-right: 40px;
+    display: block;
+    background: #dce1e1;
+    color: #000000;
+    border-bottom: 1px solid #ccc;
+    /* text-transform: uppercase;*/
+    position: relative;
+}
+
+#cssmenu > ul > li > a > span {
+    background: #939393;
+    padding: 10px;
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+#cssmenu > ul > li > a:hover {
+    text-decoration: none;
+}
+
+#cssmenu > ul > li.active {
+    border-bottom: none;
+}
+
+    #cssmenu > ul > li.active > a {
+        color: #000000;
+    }
+
+        #cssmenu > ul > li.active > a span {
+            background: #696969;
+            color: #FFFFFF;
+        }
+
+#cssmenu > ul > li > ul > li.active > a span {
+    background: #42b3e5;
+    color: #000000;
+}
+
+#cssmenu > ul > li > ul > li > ul > li.active > a span {
+    background: #97d970;
+    color: #000000;
+}
+
+#cssmenu span.cnt {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    padding: 0;
+    margin: 0;
+    background: #696969 !important;
+    /* background: inherit !important;*/
+    color: #FFFFFF !important;
+}
+#cssmenu .asset-inner span.cnt {
+ background: #C0C0C0 !important;
+}
+
+
+#cssmenu ul ul {
+    display: none;
+}
+
+    #cssmenu ul ul li {
+        border: 1px solid #e0e0e0;
+        border-top: 0;
+    }
+
+    #cssmenu ul ul a {
+        /*padding: 10px;*/
+        display: block;
+        color: #000000;
+        font-size: 15px;
+        font-weight: 300;
+    }
+
+        #cssmenu ul ul a:hover {
+            color: #000000;
+        }
+
+    #cssmenu ul ul li.odd {
+        background: #f4f4f4;
+    }
+
+    #cssmenu ul ul li.even {
+        background: #fff;
+    }
+
+#cssmenu > ul > li > ul > li > a > span {
+    background: #F0F0F0;
+    padding: 10px;
+    display: block;
+    font-size: 15px;
+    font-weight: 300;
+    color: #000000;
+}
+
+.asset-inner span.cnt {
+    color: #000;
+}
+
+#cssmenu > ul > li > ul > li > ul > li > a > span {
+    padding: 10px;
+    display: block;
+    background: #FFFFFF;
+    color: #000000 !important;
+    /*border-bottom: 1px solid #ccc;*/
+    text-transform: uppercase;
+    position: relative;
+}

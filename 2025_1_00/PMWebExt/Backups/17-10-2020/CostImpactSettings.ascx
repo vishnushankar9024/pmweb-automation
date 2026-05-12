@@ -1,0 +1,92 @@
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="CostImpactSettings.ascx.vb" Inherits="Website.CostImpactSettings" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+    <telerik:RadAjaxManagerProxy ID="AjaxManagerProxy1" runat="server">
+        <ajaxsettings>
+            <telerik:AjaxSetting AjaxControlID="rdgCostImpact">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rdgCostImpact" LoadingPanelID="ldpPM" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </ajaxsettings>
+    </telerik:RadAjaxManagerProxy>
+<telerik:RadGrid ID="rdgCostImpact" runat="server"   HeaderStyle-Font-Size="8"
+                            AutoGenerateColumns="False" ShowStatusBar="true" Width="600px" AllowPaging="true" PageSize="10"
+                            AllowMultiRowEdit="True"  AllowFilteringByColumn="true" ShowGroupPanel="true" AllowMultiRowSelection="true" FilterType ="HeaderContext" EnableHeaderContextMenu ="true" EnableHeaderContextFilterMenu="true">
+                            <PagerStyle Mode="NextPrevAndNumeric" AlwaysVisible="true"  />
+                            <MasterTableView NoMasterRecordsText="<%$Resources:PMWeb, Grid_NoMasterRecordsText %>"
+                                DataKeyNames="Id" Width="100%" TableLayout="Fixed" CommandItemDisplay="Top" InsertItemDisplay="Top"
+                                InsertItemPageIndexAction="ShowItemOnFirstPage"  AllowSorting="true" EditMode="InPlace">
+                                <Columns>
+                                       <telerik:GridTemplateColumn HeaderText="Record Type"  Groupable="false" 
+                                       DataField="RecordType" AutoPostBackOnFilter="true" DataType="System.String" SortExpression="RecordType" UniqueName="RecordType">
+                                            <ItemTemplate>
+                                                <%#IIf(Container.DataItem("RecordType") = String.Empty, "&nbsp;", Container.DataItem("RecordType"))%>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <span><%#Eval("RecordType")%></span>
+                                            </EditItemTemplate>
+                                            <HeaderStyle Width="180px" />
+                                        </telerik:GridTemplateColumn>
+                                            <telerik:GridTemplateColumn HeaderText="Module" GroupByExpression="Module [GridColumn_Module] Group By Module ASC"
+                                             DataField="Module" AutoPostBackOnFilter="true" DataType="System.String" SortExpression="Module" UniqueName="Module">
+                                            <ItemTemplate>
+                                                <%#IIf(Container.DataItem("Module") = String.Empty, "&nbsp;", Container.DataItem("Module"))%>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <span><%#Eval("Module")%></span>
+                                            </EditItemTemplate>
+                                            <HeaderStyle Width="180px" />
+                                        </telerik:GridTemplateColumn>
+                       <telerik:GridTemplateColumn HeaderText="Show Cost Impact" DataField="ShowCostImpact"  AutoPostBackOnFilter="true" DataType="System.Boolean"
+                         UniqueName="ShowCostImpact"   HeaderStyle-Width="120px"  ItemStyle-Wrap="false" 
+SortExpression="ShowCostImpact" ItemStyle-HorizontalAlign="Center" HeaderStyle-Wrap="false" GroupByExpression="ShowCostImpact [GridColumn_ShowCostImpact] Group By ShowCostImpact ASC">
+<ItemTemplate>
+<img src="Images/Global/<%#CStr(IIF(Cbool(Eval("ShowCostImpact"))=Cbool(1),"checked.png" , "unchecked.png"))%>" alt="" />
+</ItemTemplate>
+<EditItemTemplate>
+<asp:CheckBox ID="chbShowCostImpact" Checked='<%# Cbool(IIF(Eval("ShowCostImpact") is system.DBNULL.value, 0,Eval("ShowCostImpact")))%>' runat="server" CssClass="mobile-switch"  />
+</EditItemTemplate>
+</telerik:GridTemplateColumn>    
+                                         
+                                </Columns>             
+                                <SortExpressions>
+                            </SortExpressions>
+                            <CommandItemTemplate>
+                                <div style="padding:2px">
+                                   
+                                    <asp:LinkButton ID="btnEditSelected" runat="server" CausesValidation="false"
+                                        SecurityButtonType="ItemMode_Edit"
+                                        CommandName="EditRows"  CssClass="GridCmdEditRows" Visible='<%# rdgCostImpact.EditIndexes.Count = 0 AND (Not rdgCostImpact.MasterTableView.IsItemInserted) %>'>
+                                        <span class="Icon"></span>
+                                        <asp:Label runat="server" ID="lblEdit" Text="Edit selected lines"></asp:Label>&nbsp;&nbsp;
+                                    </asp:LinkButton>                        
+                                    <asp:LinkButton ID="btnUpdateEdited" runat="server" CausesValidation="true" 
+                                        SecurityButtonType="AddEditMode_Edit"
+                                        CommandName="UpdateEdited" CssClass="GridCmdUpdateEdited" Visible='<%# rdgCostImpact.EditIndexes.Count > 0 %>'>
+                                        <span class="Icon"></span>
+                                        <asp:Label Text="Update records" runat="server" ID="lblUpdateRecords"></asp:Label>&nbsp;&nbsp;
+                                    </asp:LinkButton>
+                           
+                                    
+                                    <asp:LinkButton ID="btnCancel" runat="server" CausesValidation="false" 
+                                        SecurityButtonType="AddEditMode"
+                                        CommandName="CancelAll" CssClass="GridCmdCancelAll" Visible='<%# rdgCostImpact.EditIndexes.Count > 0 Or rdgCostImpact.MasterTableView.IsItemInserted %>'>
+                                        <span class="Icon"></span>
+                                        <asp:Label Text="Cancel" runat="server" ID="lblCancel"></asp:Label>
+                                        &nbsp;&nbsp;
+                                    </asp:LinkButton>
+                                   
+                                 
+                                    
+                          
+                                    
+                                </div>
+                            </CommandItemTemplate>
+                            </MasterTableView>
+                            <ClientSettings EnableRowHoverStyle="true" AllowDragToGroup="true" AllowRowsDragDrop="true">
+                                <Selecting AllowRowSelect="True" EnableDragToSelectRows="True" />
+                          <Resizing EnableRealTimeResize="false" ResizeGridOnColumnResize="true" ClipCellContentOnResize="true"
+                          AllowColumnResize="True"></Resizing>
+                            </ClientSettings>
+                          <ValidationSettings ValidationGroup="Equipment" EnableValidation="true" CommandsToValidate="UpdateEdited" />
+                        </telerik:RadGrid>

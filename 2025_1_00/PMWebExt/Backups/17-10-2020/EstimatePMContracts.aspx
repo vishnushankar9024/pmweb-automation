@@ -1,0 +1,360 @@
+﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="EstimatePMContracts.aspx.vb"
+    Inherits="Website.EstimatePMContracts" Culture="auto" meta:resourcekey="Page"
+    UICulture="auto" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <%--<link href="CSS/PMCss.css" rel="stylesheet" type="text/css" />
+    <link href="CSS/Grid.PM.css" rel="stylesheet" type="text/css" />--%>
+    <title>Commitments</title>
+</head>
+     
+<script language="javascript" type="text/javascript">
+
+    function CalculateTotals(ddlTypes) {
+        var tr = ddlTypes.parentNode.parentNode;
+        if (tr.id) {
+            var chkIsInclude = $("#" + tr.id).find("input[type='checkbox']")[0];
+            if (!chkIsInclude.checked) return;
+            var amount = CDbl($($("#" + tr.id).find("input[id$='txtTotal']")[0]).val());
+            var totalContracts = CDbl($($("#txtContracts")[0]).val());
+            var totalPurchaseOrders = CDbl($($("#txtPurchaseOrders")[0]).val());
+            var type = ddlTypes.options[ddlTypes.selectedIndex].value;
+            if (type == "1") {
+                totalContracts += amount;
+                totalPurchaseOrders -= amount;
+            } else {
+                totalPurchaseOrders += amount;
+                totalContracts -= amount;
+            }
+            $($("#txtContracts")[0]).val(CCur(totalContracts));
+            $($("#txtPurchaseOrders")[0]).val(CCur(totalPurchaseOrders));
+        }
+
+    }
+
+    function SelectAll(chk) {
+        var totalContracts = 0;
+        var totalPurchaseOrders = 0;
+        $("#rdgContractDetails").find("input[type='checkbox']").each(function () {
+            var tr = this.parentNode.parentNode;
+            var IsDisabled = $(this).prop('disabled')
+            if (!IsDisabled)
+                this.checked = chk.checked;
+            if (!IsDisabled && chk.checked && tr.id) {
+                var amount = CDbl($($("#" + tr.id).find("input[id$='txtTotal']")[0]).val());
+                var ddlTypes = $("#" + tr.id).find("select[id$='ddlTypes']")[0];
+                var type = ddlTypes.options[ddlTypes.selectedIndex].value;
+                if (type == "1") {
+                    totalContracts += amount;
+                } else {
+                    totalPurchaseOrders += amount;
+                }
+            }
+        });
+        $($("#txtContracts")[0]).val(CCur(totalContracts));
+        $($("#txtPurchaseOrders")[0]).val(CCur(totalPurchaseOrders));
+        $($("#txtBuyoutTotal")[0]).val(CCur(totalContracts + totalPurchaseOrders));
+    }
+
+    function SelectParent(chk) {
+        var chkPArent = $("#rdgContractDetails").find("input[type='checkbox']")[0];
+        var txtContracts = $($("#txtContracts")[0]);
+        var txtPurchaseOrders = $($("#txtPurchaseOrders")[0]);
+        var txtBuyoutTotal = $($("#txtBuyoutTotal")[0]);
+        var totalContracts = 0;
+        var totalPurchaseOrders = 0;
+
+        var i = 0;
+        var isChecked = true;
+        $("#rdgContractDetails").find("input[type='checkbox']").each(function () {
+            if (i != 0) {
+                if (chk.checked) {
+                    if (!this.checked) isChecked = false;
+                }
+                var tr = this.parentNode.parentNode;
+                if (tr.id) {
+                    var amount = CDbl($($("#" + tr.id).find("input[id$='txtTotal']")[0]).val());
+                    var ddlTypes = $("#" + tr.id).find("select[id$='ddlTypes']")[0];
+                    var type = ddlTypes.options[ddlTypes.selectedIndex].value;
+                    if (type == "1") {
+                        totalContracts = totalContracts + ((this.checked) ? amount : 0);
+                    } else {
+                        totalPurchaseOrders = totalPurchaseOrders + ((this.checked) ? amount : 0);
+                    }
+                }
+            }
+            i++;
+        });
+
+        if (!chk.checked) {
+            chkPArent.checked = false;
+        } else {
+            chkPArent.checked = isChecked;
+        }
+
+        txtContracts.val(CCur(totalContracts));
+        txtPurchaseOrders.val(CCur(totalPurchaseOrders));
+        txtBuyoutTotal.val(CCur(totalContracts + totalPurchaseOrders));
+
+        return false;
+    }
+    function maintoolbarClick(sender, args) {
+        switch (args.get_item().get_commandName()) {
+            case 'Generate':
+                var btnBudgets = $('#btnContracts')
+                btnBudgets.click();
+                break;
+            default:
+                break;
+        }
+    }
+    window.onload = function () {
+        var ReadOnly = document.querySelectorAll('[readonly="readonly"]');
+        var ReadOnlyArr = Array.prototype.slice.call(ReadOnly);
+        ReadOnlyArr.forEach(function (el) {
+            el.style.backgroundColor = "RGB(237,237,237)";
+        });
+    }
+</script>
+<style>
+    .labelWidth {
+        width: 160px !important;
+    }
+
+    .SmallWarning {
+        padding-right: 24px;
+    }
+</style>
+<body style="background: White !important;">
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="PMScriptManager" runat="server"></asp:ScriptManager>
+        <telerik:RadAjaxManager ID="PMAjaxManager" runat="server" DefaultLoadingPanelID="ldpEstimateContracts">
+            <AjaxSettings>
+                <telerik:AjaxSetting AjaxControlID="btnContracts">
+                    <UpdatedControls>
+                        <telerik:AjaxUpdatedControl ControlID="pnlGenerate" />
+                        <telerik:AjaxUpdatedControl ControlID="rdgContractDetails" />
+                    </UpdatedControls>
+                </telerik:AjaxSetting>
+                <telerik:AjaxSetting AjaxControlID="rdgContractDetails">
+                    <UpdatedControls>
+                        <telerik:AjaxUpdatedControl ControlID="rdgContractDetails" />
+                        <telerik:AjaxUpdatedControl ControlID="txtContracts" />
+                        <telerik:AjaxUpdatedControl ControlID="txtPurchaseOrders" />
+                        <telerik:AjaxUpdatedControl ControlID="txtBuyoutTotal" />
+                    </UpdatedControls>
+                </telerik:AjaxSetting>
+            </AjaxSettings>
+        </telerik:RadAjaxManager>
+        <telerik:RadAjaxLoadingPanel ID="ldpEstimateContracts" runat="server" Skin="Default" />
+        <table class="ToolBar" style="width: 100%;" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="ToolbarTd">
+                    <telerik:RadToolBar ID="mainToolBar" Style="width: 100%" runat="server" Skin="Default" AutoPostBack="true" OnClientButtonClicked="maintoolbarClick">
+                        <Items>
+                            <telerik:RadToolBarButton ValidationGroup="Generate" EnableImageSprite="true" CssClass="ToolbarGenerate" CommandName="Generate">
+                            </telerik:RadToolBarButton>
+                        </Items>
+                    </telerik:RadToolBar>
+                </td>
+            </tr>
+        </table>
+
+        <div class="PMMainPage PMPopupMainPage documentSinglePage">
+            <div class="row">
+                <div class="col-4">
+                    <telerik:RadAjaxPanel ID="pnlDetailPane" runat="server" Width="100%" HorizontalAlign="NotSet">
+                        <table class="colTable">
+                            <tr>
+                                <td class="labelWidth">
+                                    <asp:Label ID="lblProject" runat="server" meta:resourcekey="lblProject"></asp:Label>
+                                </td>
+                                <td class="controlWidth">
+                                    <asp:TextBox ID="txtProject" runat="server" ReadOnly="True"></asp:TextBox>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="labelWidth">
+                                    <asp:Label ID="lblEstimateDescription" runat="server" meta:resourcekey="lblEstimateDescription"></asp:Label>
+                                </td>
+                                <td class="controlWidth">
+                                    <asp:TextBox ID="txtEstimateDescription" runat="server" ReadOnly="True"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelWidth">
+                                    <asp:Label ID="lblDateRevision" runat="server" meta:resourcekey="lblDateRevision" Text="Date / Revision"></asp:Label>
+                                </td>
+                                <td class="controlWidth">
+                                    <table class="TableNoSpacingNoBorder">
+                                        <tr>
+                                            <td style="width: 182px; padding-right: 8px">
+                                                <asp:TextBox ID="txtRevisionDate" runat="server" ReadOnly="True"></asp:TextBox>
+                                            </td>
+                                            <td style="width: 50px" align="right">
+                                                <asp:TextBox ID="txtRevisionNumber" CssClass="Right" runat="server"
+                                                    ReadOnly="True"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelWidth">
+                                    <asp:Label ID="lblContracts" runat="server" meta:resourcekey="lblContracts"></asp:Label>
+                                </td>
+                                <td class="controlWidth">
+                                    <asp:TextBox ID="txtContracts" CssClass="Currency" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelWidth">
+                                    <asp:Label ID="lblPurchaseOrders" runat="server" meta:resourcekey="lblPurchaseOrders"></asp:Label>
+                                </td>
+                                <td class="controlWidth">
+                                    <asp:TextBox ID="txtPurchaseOrders" CssClass="Currency" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelWidth">
+                                    <asp:Label ID="lblBuyoutTotal" runat="server" meta:resourcekey="lblBuyoutTotal"></asp:Label>
+                                </td>
+                                <td class="controlWidth">
+                                    <asp:TextBox ID="txtBuyoutTotal" CssClass="Currency" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="right">
+                                    <asp:Panel ID="pnlGenerate" runat="server"
+                                        Style="float: right; margin-top: 20px; text-align: center; width: 170px;" meta:resourcekey="pnlGenerateResource1">
+                                        <asp:Button ID="btnContracts" runat="server" Text="<%$ Resources:PMWeb, Generate %>" CssClass="Hide" />
+                                        <div style="text-align: center;">
+                                            <asp:Label ID="lblCommIDUnique" runat="server" Text="<%$ Resources:CostManagement, WarningMsg_IDUnique %>"
+                                                Visible="False" Class="Validator"></asp:Label>
+                                            <asp:Label ID="lblSucceed" runat="server" Text="<%$ Resources:PMWeb, WarningMsg_Succeed %>"
+                                                Visible="False" Class="Success"></asp:Label>
+                                            <asp:Label ID="lblFailed" runat="server" Text="<%$ Resources:PMWeb, WarningMsg_Failed %>"
+                                                Visible="False" Class="Failure"></asp:Label>
+                                        </div>
+                                    </asp:Panel>
+                                </td>
+                            </tr>
+                        </table>
+                    </telerik:RadAjaxPanel>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <telerik:RadGrid ID="rdgContractDetails" runat="server" SetWidth="true" FitParentContainer="true" ClientSettings-Scrolling-AllowScroll="true" FitPageHeightOffset="24"
+                        AutoGenerateColumns="False" ShowStatusBar="True" CellPadding="0" Width="100%"
+                        GridLines="None">
+                        <HeaderContextMenu EnableViewState="false">
+                        </HeaderContextMenu>
+                        <PagerStyle Mode="NextPrevAndNumeric" Position="TopAndBottom" AlwaysVisible="true"></PagerStyle>
+                        <MasterTableView NoMasterRecordsText="<%$Resources:PMWeb, Grid_NoMasterRecordsText %>"
+                            DataKeyNames="Id" CommandItemDisplay="Top" Width="100%" TableLayout="Fixed">
+                            <Columns>
+                                <telerik:GridTemplateColumn>
+                                    <ItemTemplate>
+                                        <asp:CheckBox ID="chkIsIncluded" runat="server" Checked="True" onclick="SelectParent(this);" />
+                                    </ItemTemplate>
+                                    <HeaderTemplate>
+                                        <asp:Label ID="lblInclude" runat="server" Text="Include<br />" meta:resourcekey="lblInclude"></asp:Label>
+                                        <asp:CheckBox ID="chkIsIncluded" runat="server" Checked="True" TextAlign="Left" onclick="SelectAll(this);" />
+                                    </HeaderTemplate>
+                                    <ItemStyle Wrap="false" HorizontalAlign="Center" />
+                                    <HeaderStyle Width="100px" HorizontalAlign="Center" />
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridTemplateColumn HeaderText="Company" UniqueName="Company">
+                                    <ItemTemplate>
+                                        <telerik:RadComboBox ID="ddlCompanies" runat="server" Width="100%" DropDownWidth="300px"
+                                            Skin="Default" CloseDropDownOnBlur="true" EmptyMessage="Select Company..."
+                                            NoWrap="True" AllowCustomText="true" meta:Resourcekey="ddlCompanies"
+                                            EnableLoadOnDemand="True" ShowMoreResultsBox="true" EnableVirtualScrolling="true"
+                                            OnItemsRequested="ddl_ItemsRequested"
+                                            Style="font-size: 11px" Height="250px">
+                                        </telerik:RadComboBox>
+                                    </ItemTemplate>
+                                    <ItemStyle Wrap="false" HorizontalAlign="Left" />
+                                    <HeaderStyle Width="210px" HorizontalAlign="Center" />
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridTemplateColumn HeaderText="Generate" UniqueName="Generate">
+                                    <ItemTemplate>
+                                        <telerik:RadComboBox ID="ddlTypes" runat="server" Width="100%" onchange="CalculateTotals(this); return false;">
+                                        </telerik:RadComboBox>
+                                    </ItemTemplate>
+                                    <ItemStyle Wrap="false" HorizontalAlign="Left" />
+                                    <HeaderStyle Width="200px" HorizontalAlign="Center" />
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridTemplateColumn HeaderText="Description" UniqueName="Description">
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="txtDescription" runat="server" Text='<%# Eval("Description") %>'
+                                            Width="100%"></asp:TextBox>
+                                    </ItemTemplate>
+                                    <ItemStyle Wrap="true" HorizontalAlign="Left" />
+                                    <HeaderStyle Width="150px" HorizontalAlign="Center" />
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridTemplateColumn HeaderText="# of <br/>Lines" UniqueName="NumberOfLines">
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="txtLines" runat="server" Style="text-align: right;" Text='<%# CDbl(IIf(Eval("Lines") Is System.DBNull.Value, 0, Eval("Lines"))).ToString("") %>'
+                                            Width="100%" ReadOnly="True"></asp:TextBox>
+                                    </ItemTemplate>
+                                    <ItemStyle Wrap="false" HorizontalAlign="Right" />
+                                    <HeaderStyle Width="50px" HorizontalAlign="Center" />
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridTemplateColumn HeaderText="Total" UniqueName="Total">
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="txtTotal" runat="server" Style="text-align: right;" Text='<%# FormatCurrency(CDbl(IIf(Eval("Total") Is System.DBNull.Value, 0, Eval("Total")))) %>'
+                                            Width="100%" ReadOnly="True"></asp:TextBox>
+                                    </ItemTemplate>
+                                    <ItemStyle Wrap="false" HorizontalAlign="Right" />
+                                    <HeaderStyle Width="55px" HorizontalAlign="Center" />
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridTemplateColumn HeaderText="">
+                                    <ItemTemplate>
+                                        <div id="imgIsSent" class="EmptyButton" runat="server"><span class="Icon"></span></div>
+                                        <asp:HiddenField ID="hdnCommitmentId" runat="server" />
+                                    </ItemTemplate>
+                                    <ItemStyle Wrap="false" HorizontalAlign="Center" />
+                                    <HeaderStyle Width="50px" HorizontalAlign="Center" />
+                                </telerik:GridTemplateColumn>
+                            </Columns>
+                            <EditFormSettings>
+                                <EditColumn InsertImageUrl="Update.gif" UpdateImageUrl="Update.gif" EditImageUrl="Edit.gif"
+                                    CancelImageUrl="Cancel.gif">
+                                </EditColumn>
+                            </EditFormSettings>
+                            <CommandItemTemplate>
+                                <table width="100%" style="padding: 0px; border: 0px transparent none; height: 30px;" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>&nbsp;&nbsp;
+                                            <asp:LinkButton ID="btnRefresh" runat="server" CausesValidation="False" CommandName="Undo" CssClass="GridCmdUndo"
+                                                Visible='<%# rdgContractDetails.EditIndexes.Count = 0 And (Not rdgContractDetails.MasterTableView.IsItemInserted) %>'>
+                                                <span class="Icon"></span>
+                                                <asp:Label ID="lblUndo" runat="server"></asp:Label>
+                                            </asp:LinkButton>
+                                        </td>
+                                        <td align="right">
+                                            <div class="SmallWarning">
+                                                <span class="Icon"></span>
+                                                <asp:Label ID="lblWarningExp" runat="server" Font-Bold="true" Text=": Already sent"></asp:Label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </CommandItemTemplate>
+                        </MasterTableView>
+                        <ClientSettings EnableRowHoverStyle="false">
+                            <Selecting AllowRowSelect="false" />
+                        </ClientSettings>
+                    </telerik:RadGrid>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

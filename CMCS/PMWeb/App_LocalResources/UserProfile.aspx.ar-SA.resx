@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BackgroundImage" xml:space="preserve">
+    <value>صورة الخلفية</value>
+  </data>
+  <data name="Budget" xml:space="preserve">
+    <value>ميزانية</value>
+  </data>
+  <data name="chkAdvancedGridFiltering.Text" xml:space="preserve">
+    <value>مرشحات الشبكة المتقدمة</value>
+  </data>
+  <data name="chkOpenWithMenuCollapsed.Text" xml:space="preserve">
+    <value>افتح مع القائمة المنهارة</value>
+  </data>
+  <data name="chkPromptToSave.Text" xml:space="preserve">
+    <value>مطالبة بالحفظ</value>
+  </data>
+  <data name="CustomFields" xml:space="preserve">
+    <value>الحقول المخصصة</value>
+  </data>
+  <data name="DocumentTeamInboxBox" xml:space="preserve">
+    <value>التعاون في البريد الوارد</value>
+  </data>
+  <data name="EventsBox" xml:space="preserve">
+    <value>الأحداث</value>
+  </data>
+  <data name="GridColumn_Content" xml:space="preserve">
+    <value>محتوى</value>
+  </data>
+  <data name="GridColumn_Control" xml:space="preserve">
+    <value>يتحكم</value>
+  </data>
+  <data name="GridColumn_Navigator" xml:space="preserve">
+    <value>الملاح</value>
+  </data>
+  <data name="GridColumn_PMWebReport" xml:space="preserve">
+    <value>تقرير PMWeb</value>
+  </data>
+  <data name="GridColumn_Show" xml:space="preserve">
+    <value>يعرض</value>
+  </data>
+  <data name="GridColumn_SQLReport" xml:space="preserve">
+    <value>تقرير SQL</value>
+  </data>
+  <data name="GridColumn_Summaries" xml:space="preserve">
+    <value>ملخصات فقط</value>
+  </data>
+  <data name="GridColumn_TabName" xml:space="preserve">
+    <value>علامة التبويب*</value>
+  </data>
+  <data name="GridColumn_TabNumber" xml:space="preserve">
+    <value>طلب</value>
+  </data>
+  <data name="GridColumn_TabType" xml:space="preserve">
+    <value>نوع علامة التبويب</value>
+  </data>
+  <data name="GridColumn_Trigger" xml:space="preserve">
+    <value>مشغل</value>
+  </data>
+  <data name="GridColumn_visible" xml:space="preserve">
+    <value>يعرض</value>
+  </data>
+  <data name="ItemValue_Day.Text" xml:space="preserve">
+    <value>يوم</value>
+  </data>
+  <data name="ItemValue_Friday.Text" xml:space="preserve">
+    <value>جمعة</value>
+  </data>
+  <data name="ItemValue_Monday.Text" xml:space="preserve">
+    <value>الاثنين</value>
+  </data>
+  <data name="ItemValue_Saturday.Text" xml:space="preserve">
+    <value>السبت</value>
+  </data>
+  <data name="ItemValue_Sunday.Text" xml:space="preserve">
+    <value>الأحد</value>
+  </data>
+  <data name="ItemValue_Thursday.Text" xml:space="preserve">
+    <value>يوم الخميس</value>
+  </data>
+  <data name="ItemValue_Tuesday.Text" xml:space="preserve">
+    <value>يوم الثلاثاء</value>
+  </data>
+  <data name="ItemValue_Wednesday.Text" xml:space="preserve">
+    <value>الأربعاء</value>
+  </data>
+  <data name="ItemValue_Weeks.Text" xml:space="preserve">
+    <value>أسبوع</value>
+  </data>
+  <data name="lblCell.Text" xml:space="preserve">
+    <value>خلية</value>
+  </data>
+  <data name="lblConfigureControls.Text" xml:space="preserve">
+    <value>علامة التبويب &amp;quot;تكوين عناصر التحكم&amp;quot;</value>
+  </data>
+  <data name="lblConfigureProjectCenter.Text" xml:space="preserve">
+    <value>تكوين مركز المشروع</value>
+  </data>
+  <data name="lblConfirmPassword.Text" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="lblEmail.Text" xml:space="preserve">
+    <value>بريد إلكتروني*</value>
+  </data>
+  <data name="lblEnterNewPassword.Text" xml:space="preserve">
+    <value>أدخل كلمة المرور الجديدة.</value>
+  </data>
+  <data name="lblEvents.Text" xml:space="preserve">
+    <value>الأحداث</value>
+  </data>
+  <data name="lblFirstName.Text" xml:space="preserve">
+    <value>الاسم الأول*</value>
+  </data>
+  <data name="lblHomePageTabs.Text" xml:space="preserve">
+    <value>علامات تبويب الصفحة الرئيسية</value>
+  </data>
+  <data name="lblInvalidPassword.Text" xml:space="preserve">
+    <value>كلمة المرور غير صالحة.</value>
+  </data>
+  <data name="lblInvalidPwd.Text" xml:space="preserve">
+    <value>كلمة المرور القديمة غير صحيحة. يرجى المحاولة مرة أخرى.</value>
+  </data>
+  <data name="lblLastLogin.Text" xml:space="preserve">
+    <value>أخر تسجيل دخول</value>
+  </data>
+  <data name="lblLastName.Text" xml:space="preserve">
+    <value>اسم العائلة</value>
+  </data>
+  <data name="lblLogin.Text" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="lblLogout.Text" xml:space="preserve">
+    <value>تسجيل الخروج</value>
+  </data>
+  <data name="lblLogoutInfo.Text" xml:space="preserve">
+    <value>عندما أقوم بتسجيل الخروج من PMWeb، إذا اخترت &amp;quot;تذكرني&amp;quot; عند تسجيل الدخول:</value>
+  </data>
+  <data name="lblMyProfile.Text" xml:space="preserve">
+    <value>الملف الشخصي الخاص بي</value>
+  </data>
+  <data name="lblNewPasswordNotConfirmed.Text" xml:space="preserve">
+    <value>لم يتم تأكيد كلمة المرور الجديدة.</value>
+  </data>
+  <data name="lblNewPwdNotConfirmed.Text" xml:space="preserve">
+    <value>كلمة المرور المؤكدة لا تتطابق مع كلمة المرور الجديدة. يرجى المحاولة مرة أخرى.</value>
+  </data>
+  <data name="lblOldPassword.Text" xml:space="preserve">
+    <value>كلمة المرور القديمة</value>
+  </data>
+  <data name="lblOptions.Text" xml:space="preserve">
+    <value>خيارات</value>
+  </data>
+  <data name="lblPassword.Text" xml:space="preserve">
+    <value>كلمة المرور الجديدة</value>
+  </data>
+  <data name="lblProfile.Text" xml:space="preserve">
+    <value>حساب تعريفي</value>
+  </data>
+  <data name="lblPromptToSave.Text" xml:space="preserve">
+    <value>المطالبة بالحفظ عند التنقل بعيدًا عن السجلات</value>
+  </data>
+  <data name="lblSummarizeEvery.Text" xml:space="preserve">
+    <value>تلخيص كل شيء</value>
+  </data>
+  <data name="lblSummaryDay.Text" xml:space="preserve">
+    <value>ملخص اليوم</value>
+  </data>
+  <data name="lblUserName.Text" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="LinkBox" xml:space="preserve">
+    <value>الروابط</value>
+  </data>
+  <data name="MyAssignmentsBox" xml:space="preserve">
+    <value>مهاماتي</value>
+  </data>
+  <data name="Navigator" xml:space="preserve">
+    <value>مستكشف السجلات</value>
+  </data>
+  <data name="NewsBox" xml:space="preserve">
+    <value>أخبار</value>
+  </data>
+  <data name="NotificationBox" xml:space="preserve">
+    <value>إشعارات</value>
+  </data>
+  <data name="RadToolBarButton_Delegate.Text" xml:space="preserve">
+    <value>مندوب</value>
+  </data>
+  <data name="RadToolBarButton_Save.Text" xml:space="preserve">
+    <value>يحفظ</value>
+  </data>
+  <data name="RadToolBarButton_SaveAndExit.Text" xml:space="preserve">
+    <value>حفظ وخروج</value>
+  </data>
+  <data name="rblFrequency_DeleteCookie.Text" xml:space="preserve">
+    <value>حذف ملف تعريف الارتباط للمصادقة الخاص بي</value>
+  </data>
+  <data name="rblFrequency_Prompt.Text" xml:space="preserve">
+    <value>اِسْتَدْعَى</value>
+  </data>
+  <data name="rblFrequency_SaveCookie.Text" xml:space="preserve">
+    <value>حفظ ملف تعريف الارتباط الخاص بالمصادقة</value>
+  </data>
+  <data name="revEmail.ErrorMessage" xml:space="preserve">
+    <value>البريد الإلكتروني غير صالح.</value>
+  </data>
+  <data name="rfvEmail.ErrorMessage" xml:space="preserve">
+    <value>أدخل البريد الإلكتروني.</value>
+  </data>
+  <data name="rfvFirstName.ErrorMessage" xml:space="preserve">
+    <value>أدخل الاسم الأول.</value>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>جدول</value>
+  </data>
+  <data name="tab_Delegate.Text" xml:space="preserve">
+    <value>المندوبون</value>
+  </data>
+  <data name="tab_Events.Text" xml:space="preserve">
+    <value>الأحداث</value>
+  </data>
+  <data name="Trigger_Alert" xml:space="preserve">
+    <value>تنبيهات</value>
+  </data>
+  <data name="Trigger_DocumentTeam" xml:space="preserve">
+    <value>التعاون</value>
+  </data>
+  <data name="Trigger_Reminders" xml:space="preserve">
+    <value>تذكيرات</value>
+  </data>
+  <data name="Trigger_Subscriptions" xml:space="preserve">
+    <value>الاشتراكات</value>
+  </data>
+  <data name="Trigger_Workflow" xml:space="preserve">
+    <value>سير العمل</value>
+  </data>
+  <data name="WarningMsg_InvalidFile" xml:space="preserve">
+    <value>ملحق الملف غير صالح</value>
+  </data>
+  <data name="WeatherBox" xml:space="preserve">
+    <value>طقس</value>
+  </data>
+  <data name="WorkflowInboxBox" xml:space="preserve">
+    <value>صندوق الوارد لسير العمل</value>
+  </data>
+</root>

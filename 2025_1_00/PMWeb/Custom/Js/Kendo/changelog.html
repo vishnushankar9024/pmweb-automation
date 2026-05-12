@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Changelog for Kendo UI Professional v2024.4.1112 (Tue Nov 12 2024)</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font: .75em/1.5 Tahoma, sans-serif;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            font-size: normal;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: normal;
+            margin: 1.2em 0 .3em;
+            padding-bottom: .2em;
+        }
+
+        .breaking {
+            background-color: #e10c01;
+            color: #fff;
+            border-radius: 3px;
+            padding: 3px 4px;
+            display: inline-block;
+            font-size: 11px;
+            line-height: 1;
+            font-weight: bold;
+        }
+
+        #page {
+            width: 50em;
+            margin: 0 auto 2em;
+            border-radius: 0 0 1em 1em;
+            box-shadow: 0 0 10px #ccc;
+            padding: 1em 2em 2em;
+        }
+
+        .poBoxIcon {
+            float: left;
+            font-size: 2em;
+            margin: 1.2em .5em 0 0;
+        }
+
+        .poTopLine {
+            border-top: 2px solid #e1e1e1;
+            margin: 17px 0 40px 0;
+        }
+    </style>
+    <base href="https://www.telerik.com/support/whats-new/kendo-ui-web/release-history">
+</head>
+
+<body>
+    <div id="page">
+        <h1 class="title">Release notes</h1>
+        <div class="tClear poTopLine"></div>
+        <h1>Common</h1>
+        <div class="tClear poTopLine">
+            <div class="poBoxIconText">
+                <p><strong>What's new</strong></p>
+                <ul>
+                    <li>Fluent Theme Package <a href="https://github.com/telerik/kendo-themes/blob/master/packages/fluent/CHANGELOG.md#1001-2024-11-08"> (v.10.0.1) </a></li>
+                    <li>Classic Theme Package <a href="https://github.com/telerik/kendo-themes/blob/master/packages/classic/CHANGELOG.md#1001-2024-11-08"> (v.10.0.1) </a></li>
+                    <li>Bootstrap Theme Package <a href="https://github.com/telerik/kendo-themes/blob/master/packages/bootstrap/CHANGELOG.md#1001-2024-11-08"> (v.10.0.1) </a></li>
+                    <li>Default Theme Package <a href="https://github.com/telerik/kendo-themes/blob/master/packages/default/CHANGELOG.md#1001-2024-11-08"> (v.10.0.1) </a></li>
+                    <li>Material Theme Package <a href="https://github.com/telerik/kendo-themes/blob/master/packages/material/CHANGELOG.md#1001-2024-11-08"> (v.10.0.1) </a></li>
+                </ul>
+            </div>
+        </div>
+        <h1>Features and Updates</h1>
+        <div class="tClear poTopLine">
+            <h2>AIPrompt</h2>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> AIPrompt rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>AutoComplete</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>AutoComplete with enabled suggestion and multiple separators shows additional garbage characters <a href="https://github.com/telerik/kendo-ui-core/issues/5880">(#5880)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Calendar</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Calendar does not update componentType when setOptions is called <a href="https://github.com/telerik/kendo-ui-core/issues/8016">(#8016)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Chart</h2>
+            <p><strong>What's new</strong></p>
+            <ul>
+                <li>Chart series patterns</li>
+                <li>Chart "No data" template</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>ColumnMenu</h2>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> Column menu rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a> <a href="https://github.com/telerik/kendo-ui-core/issues/7679">(#7679)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>ComboBox</h2>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> DropDownList and ComboBox rendering mismatch when loading is enabled <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>ContextMenu</h2>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> ContextMenu rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>DateInput</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Error is thrown when value is entered through the browser`s autofill in the DateInput <a href="https://github.com/telerik/kendo-ui-core/issues/7832">(#7832)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>DatePicker</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>DatePicker does not update componentType when setOptions is called <a href="https://github.com/telerik/kendo-ui-core/issues/8018">(#8018)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>DateRangePicker</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>DateRangePicker inputs' clear button does not trigger change event <a href="https://github.com/telerik/kendo-ui-core/issues/7997">(#7997)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Drawer</h2>
+            <p><strong>What's new</strong></p>
+            <ul>
+                <li>Extend Drawer template options to accept a function</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>DropDownList</h2>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> DropDownList and ComboBox rendering mismatch when loading is enabled <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>FileManager</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Sort icons are missing in the FileManager's Grid view when you sort by date <a href="https://github.com/telerik/kendo-ui-core/issues/7986">(#7986)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>FilterMenu</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Search icon not aligned in the filter menu since svg icons introduced. <a href="https://github.com/telerik/kendo-ui-core/issues/7440">(#7440)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Gantt</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Wrong position of TreeList in RTL Gantt</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Grid</h2>
+            <p><strong>What's new</strong></p>
+            <ul>
+                <li>Grid scrollToItem method</li>
+            </ul>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Grid Checkbox Menu Items Misaligned <a href="https://github.com/telerik/kendo-ui-core/issues/8028">(#8028)</a></li>
+                <li>Grid's groupHeaderTemplate does not render html elements as expected <a href="https://github.com/telerik/kendo-ui-core/issues/8013">(#8013)</a></li>
+                <li>Grid locked column is resized after grouping <a href="https://github.com/telerik/kendo-ui-core/issues/8009">(#8009)</a></li>
+                <li>Group column width incorrect after drag resize on locked grid <a href="https://github.com/telerik/kendo-ui-core/issues/8003">(#8003)</a></li>
+                <li>Focus is applied to hidden cells in Groupable Navigatable Grid <a href="https://github.com/telerik/kendo-ui-core/issues/7998">(#7998)</a></li>
+                <li>Column Menu closes automatically after scrolling when filterable mode is enabled in Grid <a href="https://github.com/telerik/kendo-ui-core/issues/7984">(#7984)</a></li>
+                <li>Grid with media column throws error on window resize <a href="https://github.com/telerik/kendo-ui-core/issues/7973">(#7973)</a></li>
+                <li>Blocked aria-hidden on an anchor element with the Grid <a href="https://github.com/telerik/kendo-ui-core/issues/7960">(#7960)</a></li>
+                <li>Editing mode not entered in Chrome and Edge on Apple mobile devices <a href="https://github.com/telerik/kendo-ui-core/issues/7817">(#7817)</a></li>
+                <li>Search icon not aligned in the filter menu since svg icons introduced. <a href="https://github.com/telerik/kendo-ui-core/issues/7440">(#7440)</a></li>
+            </ul>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> Grid rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+                <li><span class="breaking">Breaking</span> Unify popup edit form rendering for Adaptive Grid <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>ImageEditor</h2>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> ImageEditor rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>ListBox</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>ListBox clearSelection method doesn't disable toolbar buttons <a href="https://github.com/telerik/kendo-ui-core/issues/7217">(#7217)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Map</h2>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> Map rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>MediaPlayer</h2>
+            <p><strong>What's new</strong></p>
+            <ul>
+                <li>Improved MediaPlayer keyboard navigation</li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Menu</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Vertical Menu with multi-level sub-menus and specified height for the sub-menu does not render the items correctly. <a href="https://github.com/telerik/kendo-ui-core/issues/8019">(#8019)</a></li>
+            </ul>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> Menu rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>PDFViewer</h2>
+            <p><strong>What's new</strong></p>
+            <ul>
+                <li>Provide support for latest pdf.js 4.X version in PDFViewer <a href="https://github.com/telerik/kendo-ui-core/issues/7725">(#7725)</a></li>
+            </ul>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>PDFViewer throws js exceptions and becomes unusable after a failed attempt to load a file <a href="https://github.com/telerik/kendo-ui-core/issues/7776">(#7776)</a></li>
+                <li>Zooming a file in the PDFViewer beyond 200% + results in a blank page on mobile devices <a href="https://github.com/telerik/kendo-ui-core/issues/7638">(#7638)</a></li>
+                <li>JavaScript exceptions when using the PDFViewer with the latest PDF.js version <a href="https://github.com/telerik/kendo-ui-core/issues/7468">(#7468)</a></li>
+                <li>PDFViewer scaling is broken for some files <a href="https://github.com/telerik/kendo-ui-core/issues/7389">(#7389)</a></li>
+                <li>Print function of Viewer adds additional blank page before and after pdf pages regardless of printer selected <a href="https://github.com/telerik/kendo-ui-core/issues/7367">(#7367)</a></li>
+                <li>Unable to print PDFViewer's PDF on Safari <a href="https://github.com/telerik/kendo-ui-core/issues/7243">(#7243)</a></li>
+            </ul>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> PDFViewer rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>PanelBar</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>method _expanded not exist <a href="https://github.com/telerik/kendo-ui-core/issues/5727">(#5727)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>PivotGridV2</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Calling the PivotGridV2 refresh method throws an error</li>
+            </ul>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> PivotGridV2 rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Scheduler</h2>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> Scheduler rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+                <li><span class="breaking">Breaking</span> Unify popup edit form rendering for Adaptive Scheduler <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Splitter</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Wrong resized height of splitter when its height is expanded to 100% <a href="https://github.com/telerik/kendo-ui-core/issues/7226">(#7226)</a></li>
+            </ul>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> Splitter rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+                <li><span class="breaking">Breaking</span> Splitter now uses flex based sizing and positioning <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Spreadsheet</h2>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> Spreadsheet revamp <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>TabStrip</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>TabStrip scroll right arrow not disabled in Chrome <a href="https://github.com/telerik/kendo-ui-core/issues/7321">(#7321)</a></li>
+            </ul>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> TabStrip rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>TimePicker</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>TimePicker does not update object interval settings when setOptions is called <a href="https://github.com/telerik/kendo-ui-core/issues/8007">(#8007)</a></li>
+                <li>TimePicker with min setting does not change correctly initially selected value <a href="https://github.com/telerik/kendo-ui-core/issues/7985">(#7985)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>ToolBar</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>ToolBar overflowOpen and overflowClose are fired twice on opening the overflow via Enter</li>
+            </ul>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> ToolBar rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>TreeList</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>TreeList showColumn method removes classes set via headerAttributes</li>
+            </ul>
+            <p><strong>What's changed</strong></p>
+            <ul>
+                <li><span class="breaking">Breaking</span> TreeList rendering mismatch <a href="https://docs.telerik.com/kendo-ui/backwards-compatibility/2024-backward-compatibility"> more info here </a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>TreeView</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Binding kendo.Observable based ont TreeView selection throws an error. <a href="https://github.com/telerik/kendo-ui-core/issues/8036">(#8036)</a></li>
+            </ul>
+        </div>
+        <div class="tClear poTopLine">
+            <h2>Window</h2>
+            <p><strong>What's fixed</strong></p>
+            <ul>
+                <li>Window modal is not working if there's an open Dialog <a href="https://github.com/telerik/kendo-ui-core/issues/7983">(#7983)</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

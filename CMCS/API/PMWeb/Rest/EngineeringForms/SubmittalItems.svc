@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="VB" Debug="true" Service="API.RestSubmittalItems" CodeBehind="SubmittalItems.svc.vb" %>

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="VB" Debug="true" Service="API.RestPMWebLists" CodeBehind="PMWebLists.svc.vb" %>

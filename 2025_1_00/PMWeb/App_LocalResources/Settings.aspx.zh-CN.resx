@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ADD_OWNERBUDGET_TO_COST" xml:space="preserve">
+    <value>业主预算扣减</value>
+  </data>
+  <data name="ALLOWMULTIPLEWORKFLOWININVOICE" xml:space="preserve">
+    <value>允许进展发票中并发发票记录</value>
+  </data>
+  <data name="ALLOWMULTIPLEWORKFLOWINREQUISITION" xml:space="preserve">
+    <value>允许支付申请中并发发票记录</value>
+  </data>
+  <data name="BUDGET" xml:space="preserve">
+    <value>预算</value>
+  </data>
+  <data name="CANEDITPREVIOUSINVOICES" xml:space="preserve">
+    <value>允许编辑前期进展发票</value>
+  </data>
+  <data name="CANEDITPREVIOUSREQUISTIONS" xml:space="preserve">
+    <value>允许编辑前期支付申请</value>
+  </data>
+  <data name="CHANGEMANAGEMENT" xml:space="preserve">
+    <value>变更管理</value>
+  </data>
+  <data name="CONTRACTS" xml:space="preserve">
+    <value>合同</value>
+  </data>
+  <data name="DONT_EXCEED_ANTICIPATED_BUDGET_BY_COSTCODE" xml:space="preserve">
+    <value>不能超过成本代码的期望预算</value>
+  </data>
+  <data name="DONT_EXCEED_ANTICIPATED_BUDGET_BY_TOTAL" xml:space="preserve">
+    <value>不能超过预期总预算</value>
+  </data>
+  <data name="DONT_EXCEED_FUNDING" xml:space="preserve">
+    <value>不能超过资金</value>
+  </data>
+  <data name="DONT_EXCEED_FUNDING_AUTHORIZATIONS" xml:space="preserve">
+    <value>不能超过资金授权</value>
+  </data>
+  <data name="ENABLE_FUNDING_ALLOCATION_BUDGET" xml:space="preserve">
+    <value>启用预算中分配资金</value>
+  </data>
+  <data name="ENABLE_FUNDING_ALLOCATION_BUDGETREQUEST" xml:space="preserve">
+    <value>启用预算请求中分配资金</value>
+  </data>
+  <data name="ENABLE_FUNDING_ALLOCATION_CHANGEEVENT" xml:space="preserve">
+    <value>启用变更事件中分配资金</value>
+  </data>
+  <data name="ENABLE_FUNDING_ALLOCATION_COMMITMENT" xml:space="preserve">
+    <value>启用承诺中分配资金</value>
+  </data>
+  <data name="ENABLE_FUNDING_ALLOCATION_COMMITMENTCO" xml:space="preserve">
+    <value>启用承诺变更中分配资金</value>
+  </data>
+  <data name="ENABLE_FUNDING_ALLOCATION_MISCINVOICE" xml:space="preserve">
+    <value>启用杂项发票中分配资金</value>
+  </data>
+  <data name="ENABLE_FUNDING_ALLOCATION_PROGRESSINVOICE" xml:space="preserve">
+    <value>启用进展发票中分配资金</value>
+  </data>
+  <data name="FUNDING" xml:space="preserve">
+    <value>资金</value>
+  </data>
+  <data name="GridColumn_ParamName" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="GridColumn_TranslatedGroup" xml:space="preserve">
+    <value>分组</value>
+  </data>
+  <data name="GridColumn_TranslatedSetting" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="GROUP_TASKLIST_BY" xml:space="preserve">
+    <value>分组任务列表，按</value>
+  </data>
+  <data name="HIDE_COMPLETED_TASKS" xml:space="preserve">
+    <value>在列表中隐藏已完成任务</value>
+  </data>
+  <data name="INCLUDE_PENDING_BUDGET_RECORDS_IN _ANTICIPATED_BUDGET" xml:space="preserve">
+    <value>在预期预算案计算时，包括待批预算记录</value>
+  </data>
+  <data name="INCLUDE_PENDING_FUNDING" xml:space="preserve">
+    <value>包括待批资金记录</value>
+  </data>
+  <data name="INCLUDE_PENDING_FUNDING_AUTHORIZATIONS" xml:space="preserve">
+    <value>包括待批资金授权记录</value>
+  </data>
+  <data name="INVOICES" xml:space="preserve">
+    <value>发票</value>
+  </data>
+  <data name="lblTitle.Text" xml:space="preserve">
+    <value>实体</value>
+  </data>
+  <data name="ListItem_Cost Code" xml:space="preserve">
+    <value>成本代码</value>
+  </data>
+  <data name="ListItem_Location" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="ListItem_None" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="ListItem_Phase" xml:space="preserve">
+    <value>阶段</value>
+  </data>
+  <data name="PROCUREMENT" xml:space="preserve">
+    <value>采购</value>
+  </data>
+  <data name="PROCUREMENT_CHANGESETTINGBYBID" xml:space="preserve">
+    <value>可以更改投标设置</value>
+  </data>
+  <data name="PROCUREMENT_INCLUDE_BID_ITEM_UDFS_IN_ONLINE_BIDS" xml:space="preserve">
+    <value>网上投标时包括投标项目的用户定义字段</value>
+  </data>
+  <data name="PROCUREMENT_INCLUDE_DAYS_COLUMN_IN_Online_BIDS" xml:space="preserve">
+    <value>在网上投标中包含天数列</value>
+  </data>
+  <data name="PROCUREMENT_INCLUDE_MANUFACTURER_COLUMN_IN_ONLINE_BIDS" xml:space="preserve">
+    <value>在网上投标中包含制造商列</value>
+  </data>
+  <data name="PROCUREMENT_INCLUDE_MWDBE_COLUMN_IN_Online_BIDS" xml:space="preserve">
+    <value>在网上投标中包含MWDBE％列</value>
+  </data>
+  <data name="PROCUREMENT_LOCK_ONLINE_BIDS_AFTER_BIDS_DUE" xml:space="preserve">
+    <value>在投标到期后，锁定在线投标</value>
+  </data>
+  <data name="PROCUREMENT_LOCK_QUANTITY_IN_ONLINE_BIDS" xml:space="preserve">
+    <value>锁定网上投标数量</value>
+  </data>
+  <data name="PROCUREMENT_REQUIRE_ACKNOWLEDGEMENTS" xml:space="preserve">
+    <value>需要确认</value>
+  </data>
+  <data name="PROCUREMENT_SHOWBIDDUECOUNTDOWN" xml:space="preserve">
+    <value>显示投标截止倒计时钟</value>
+  </data>
+  <data name="PROGRESSINVOICE_SHOW_AVG_UNITCOST" xml:space="preserve">
+    <value>显示进展发票小计的单位成本平均值</value>
+  </data>
+  <data name="REQUIRED_COSTCODE" xml:space="preserve">
+    <value>要求成本代码：</value>
+  </data>
+  <data name="REQUIRED_COSTCODE_CHANGEEVENTBUDGET" xml:space="preserve">
+    <value>变更事件（预算）处理时要求的成本代码</value>
+  </data>
+  <data name="REQUIRED_COSTCODE_CHANGEEVENTCOST" xml:space="preserve">
+    <value>变更事件（成本）处理时要求的成本代码</value>
+  </data>
+  <data name="REQUIRED_COSTCODE_CHANGEORDER" xml:space="preserve">
+    <value>变更单处理时要求的成本代码</value>
+  </data>
+  <data name="REQUIRED_COSTCODE_COMMITMENT" xml:space="preserve">
+    <value>承诺处理时要求的成本代码</value>
+  </data>
+  <data name="REQUIRED_COSTCODE_MISCINVOICE" xml:space="preserve">
+    <value>杂项发票处理时要求的成本代码</value>
+  </data>
+  <data name="REQUISITION_SHOW_AVG_UNITCOST" xml:space="preserve">
+    <value>显示支付申请小计的单位成本平均值</value>
+  </data>
+  <data name="REVISEDQUANTITY_CARRYINGCOMMITMENTLINEINFO" xml:space="preserve">
+    <value>修订时正在执行承诺行详情</value>
+  </data>
+  <data name="SCHEDULING" xml:space="preserve">
+    <value>进度计算</value>
+  </data>
+  <data name="SEALED_BID" xml:space="preserve">
+    <value>密封投标</value>
+  </data>
+  <data name="SYNC_OWNER_PROJECT_BUDGET" xml:space="preserve">
+    <value>同步业主/项目预算</value>
+  </data>
+  <data name="TIMESHEET" xml:space="preserve">
+    <value>工时单</value>
+  </data>
+  <data name="TIMESHEET_DESCRIPTION_FROM_COSTCODE" xml:space="preserve">
+    <value>基于成本代码填写工时单说明</value>
+  </data>
+</root>

@@ -1,0 +1,258 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SyosysWap.Site" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Apple devices fullscreen -->
+    <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>OCS Management</title>
+
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="App_Themes/Site/css/bootstrap.min.css">
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="App_Themes/Site/css/plugins/jquery-ui/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="App_Themes/Site/css/plugins/jquery-ui/smoothness/jquery.ui.theme.css">
+    <!-- dataTables -->
+    <link rel="stylesheet" href="App_Themes/Site/css/plugins/datatable/TableTools.css">
+    <!-- chosen -->
+    <link rel="stylesheet" href="App_Themes/Site/css/plugins/chosen/chosen.css">
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="App_Themes/Site/css/style.css">
+    <!-- Color CSS -->
+    <link rel="stylesheet" href="App_Themes/Site/css/themes.css">
+
+    <link href="App_Themes/Site/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css" />
+
+    <!-- jQuery -->
+    <script src="App_Themes/Site/js/jquery.min.js"></script>
+
+    <%--<!-- Nice Scroll -->
+    <script src="App_Themes/Site/js/plugins/nicescroll/jquery.nicescroll.min.js"></script>
+    <!-- imagesLoaded -->
+    <script src="App_Themes/Site/js/plugins/imagesLoaded/jquery.imagesloaded.min.js"></script>--%>
+    <!-- jQuery UI -->
+    <%--<script src="App_Themes/Site/js/plugins/jquery-ui/jquery.ui.core.min.js"></script>
+    <script src="App_Themes/Site/js/plugins/jquery-ui/jquery.ui.widget.min.js"></script>
+    <script src="App_Themes/Site/js/plugins/jquery-ui/jquery.ui.mouse.min.js"></script>
+    <script src="App_Themes/Site/js/plugins/jquery-ui/jquery.ui.resizable.min.js"></script>
+    <script src="App_Themes/Site/js/plugins/jquery-ui/jquery.ui.sortable.min.js"></script>
+    <script src="App_Themes/Site/js/plugins/jquery-ui/jquery.ui.datepicker.min.js"></script>
+    <!-- slimScroll -->
+    <script src="App_Themes/Site/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>--%>
+    <!-- Bootstrap -->
+    <script src="App_Themes/Site/js/bootstrap.min.js"></script>
+    <%--<!-- Bootbox -->
+    <script src="App_Themes/Site/js/plugins/bootbox/jquery.bootbox.js"></script>--%>
+    <!-- dataTables -->
+   <%-- <script src="App_Themes/Site/js/plugins/datatable/jquery.dataTables.min.js"></script>
+    <script src="App_Themes/Site/js/plugins/datatable/TableTools.min.js"></script>
+    <script src="App_Themes/Site/js/plugins/datatable/ColReorderWithResize.js"></script>
+    <script src="App_Themes/Site/js/plugins/datatable/ColVis.min.js"></script>
+    <script src="App_Themes/Site/js/plugins/datatable/jquery.dataTables.columnFilter.js"></script>
+    <script src="App_Themes/Site/js/plugins/datatable/jquery.dataTables.grouping.js"></script>
+    <script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js" type="text/javascript"></script>--%>
+    <%--<!-- Chosen -->
+    <script src="App_Themes/Site/js/plugins/chosen/chosen.jquery.min.js"></script>--%>
+
+    <!-- Theme framework -->
+    <%--<script src="App_Themes/Site/js/eakroko.min.js"></script>--%>
+   <%-- <!-- Theme scripts -->
+    <script src="App_Themes/Site/js/application.min.js"></script>
+    <!-- Just for demonstration -->
+    <script src="App_Themes/Site/js/demonstration.min.js"></script>--%>
+
+    <!--[if lte IE 9]>
+		<script src="js/plugins/placeholder/jquery.placeholder.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('input, textarea').placeholder();
+			});
+		</script>
+	<![endif]-->
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <!-- Apple devices Homescreen icon -->
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <div id="navigation">
+                <div class="container-fluid">
+                    <div class="col-md-4">
+                        <ul class='main-nav'>
+                            <li>
+
+                                <asp:LinkButton ID="LinkButton2" runat="server" EnableViewState="false" OnClientClick="lbtnName_Click">
+                                    Welcome,
+                                    <asp:Label ID="lblEmpname1" runat="server"></asp:Label>
+                                </asp:LinkButton>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 text-center" style="color:#FFF; font-weight:bold;font-size:18px;padding-top:5px; text-decoration:underline;">Observations & Comments Sheet (OCS) </div>
+                    <div class="col-md-4">
+                        <div class="user">
+                            <div class="dropdown">
+
+                                <asp:LinkButton ID="LinkButton1" runat="server" EnableViewState="false" OnClick="lbtnLogout_Click">Logout</asp:LinkButton>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid" id="content">
+                <div id="left11" style="display: none;">
+                    <form action="http://www.eakroko.de/flat/search-results.html" method="GET" class='search-form'>
+                    </form>
+                    <div id="divAdminNav" runat="server" style="display: none;">
+                        <div class="subnav" id="divAdministration">
+                            <div class="subnav-title">
+                                <a href="#" class='toggle-subnav'>
+                                    <i class="fa fa-angle-down"></i>
+                                    <span>
+                                        <asp:Label ID="lblHead" runat="server"></asp:Label></span>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="subnav" style="display: none;">
+
+                            <ul class="subnav-menu">
+                                <li id="navAddTeam" runat="server">
+                                    <asp:HyperLink ID="hlnkAddTeam" runat="server" NavigateUrl="AddTeam.aspx">Add Team</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navLeaveManage" runat="server">
+                                    <asp:HyperLink ID="hlnkGradeTypes" runat="server" NavigateUrl="GradeTypes.aspx">Grade Types</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navCompetencies" runat="server">
+                                    <asp:HyperLink ID="hlnkCompetencies" runat="server" NavigateUrl="Competencies.aspx">Competencies</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navGradeLevels" runat="server">
+                                    <asp:HyperLink ID="hlnkGradeLevels" runat="server" NavigateUrl="Levels.aspx">Grade Levels</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navRecommendedLevels" runat="server">
+                                    <asp:HyperLink ID="hlnkRecommendedLevels" runat="server" NavigateUrl="RecommendedLevels.aspx">Recommended Levels</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navDepartments" runat="server">
+                                    <asp:HyperLink ID="hlnkDepartments" runat="server" NavigateUrl="Departments.aspx">Departments</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navAppraisalForm" runat="server">
+                                    <asp:HyperLink ID="hlnkManageEmployee" runat="server" NavigateUrl="AllAppraisal.aspx">View All Appraisal</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navMyHome" runat="server">
+                                    <asp:HyperLink ID="hlnkMyHome" runat="server" NavigateUrl="Home.aspx">Subordinates</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navMyAppraisals" runat="server">
+
+                                    <asp:HyperLink ID="hlnkMyAppraisals" runat="server" NavigateUrl="MyAppraisals.aspx">My Appraisals</asp:HyperLink>
+
+                                </li>
+
+
+                                <li id="navSummaryReports" runat="server">
+
+                                    <asp:HyperLink ID="hlnkSummaryReport" runat="server" NavigateUrl="SummaryReport.aspx">All Staff Summary Report</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navAverageReport" runat="server">
+
+                                    <asp:HyperLink ID="hlnkAverageReport" runat="server" NavigateUrl="AverageReport.aspx">All Staff Average Report</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navTrainingNeeded" runat="server">
+
+                                    <asp:HyperLink ID="hlnkTrainingNeeded" runat="server" NavigateUrl="TrainingNeededReport.aspx">Training Needed Report</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navLicense" runat="server" visible="false">
+
+                                    <asp:HyperLink ID="lnkLicense" runat="server" NavigateUrl="LicenseAgreement.aspx">License Agreement</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navGuideLine" runat="server">
+
+                                    <asp:HyperLink ID="hlnkGuideline" runat="server" NavigateUrl="Guidelines.aspx">Guideline PDF</asp:HyperLink>
+
+                                </li>
+
+
+
+                                <li id="navHomeTitle" runat="server">
+
+                                    <asp:HyperLink ID="hlnkHomeTitle" runat="server" NavigateUrl="HomePageTitle.aspx">Login Page Notes</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navMailSettings" runat="server">
+
+                                    <asp:HyperLink ID="hlnkMail" runat="server" NavigateUrl="MailSettings.aspx">Mail Settings</asp:HyperLink>
+
+                                </li>
+
+                                <li id="navPasswordChange" runat="server">
+
+                                    <asp:HyperLink ID="hlnkPassword" runat="server" NavigateUrl="EditProfile.aspx">Change Password</asp:HyperLink>
+
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="main">
+                    <div class="container-fluid">
+                        <div class="page-header">
+
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+
+                        <asp:ContentPlaceHolder ID="cphMain" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Action Center</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Scripts/tree/themes/proton/style.css" />
+</head>
+
+<body>
+    <div class="container">
+        @using (Html.BeginForm("AdminView", "ContractorActionCenter", FormMethod.Post))
+        {
+            <div class="row" style="padding-top:100px">
+                <div class=" col-md-3">
+                    <h4>Select User</h4>
+                </div>
+                <div class="col-md-6">
+                    @Html.DropDownList("ddlUserID", null, htmlAttributes: new { @class = "form-control " })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-offset-4 col-md-2">
+
+                    @*@using (Ajax.BeginForm("EmployeeMaster", "Home", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "divEmp" }))*@
+
+
+                    <button type="submit" class="btn btn-primary">Go</button>
+
+                </div>
+            </div>
+        }​
+    </div>
+</body>
+</html>

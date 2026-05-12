@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="GridColumn_Award" xml:space="preserve">
+    <value>Award</value>
+  </data>
+  <data name="GridColumn_BidderComments" xml:space="preserve">
+    <value>Bidder Comments</value>
+  </data>
+  <data name="GridColumn_BidExpires" xml:space="preserve">
+    <value>Bid Expires</value>
+  </data>
+  <data name="GridColumn_BidNumber" xml:space="preserve">
+    <value>Bid #</value>
+  </data>
+  <data name="GridColumn_Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="GridColumn_BidderDocStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lblBidCategory.Text" xml:space="preserve">
+    <value>Bid Category</value>
+  </data>
+  <data name="lblBidsDue.Text" xml:space="preserve">
+    <value>Bids Due Date</value>
+  </data>
+  <data name="lblDate.Text" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="lblDescription.Text" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="lblEstimateNumber.Text" xml:space="preserve">
+    <value>Estimate #</value>
+  </data>
+  <data name="lblProcurementCode.Text" xml:space="preserve">
+    <value>Procurement #*</value>
+  </data>
+  <data name="lblProject.Text" xml:space="preserve">
+    <value>Project*</value>
+  </data>
+  <data name="lblRevision.Text" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="lblStatus.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lblTime.Text" xml:space="preserve">
+    <value>Bids Due Time</value>
+  </data>
+  <data name="legend_Bidders.Text" xml:space="preserve">
+    <value>Bidders</value>
+  </data>
+  <data name="WarningMsg_SelectApprovedBid" xml:space="preserve">
+    <value>To Award, select an Approved Bid</value>
+  </data>
+  <data name="WarningMsg_CannotDeleteUsingWorkflow" xml:space="preserve">
+    <value>You cannot delete this bidder, it is being used in workflow</value>
+  </data>
+  <data name="cmpProjects.ErrorMessage" xml:space="preserve">
+    <value>Select a Project</value>
+  </data>
+  <data name="lblCommitmentID.Text" xml:space="preserve">
+    <value>Commitment ID</value>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="cmpBidCateguories.ErrorMessage" xml:space="preserve">
+    <value>Select a Bid Category</value>
+  </data>
+  <data name="LOD_PROCUREMENT" xml:space="preserve">
+    <value>Procurements</value>
+  </data>
+  <data name="ddlCompanies_Load" xml:space="preserve">
+    <value>Companies</value>
+  </data>
+  <data name="lblBiddingCompany.Text" xml:space="preserve">
+    <value>Bidding Company</value>
+  </data>
+  <data name="lblBiddingContact.Text" xml:space="preserve">
+    <value>Bidding Contact</value>
+  </data>
+  <data name="chkIncludeDaysColumn.Text" xml:space="preserve">
+    <value> Include Days Column in Online Bids</value>
+  </data>
+  <data name="chkIncludeMfrColumn.Text" xml:space="preserve">
+    <value> Include Manufacturer Columns in Online Bids</value>
+  </data>
+  <data name="chkIncludeMWDBEColumn.Text" xml:space="preserve">
+    <value> Include MWDBE % Column in Online Bids</value>
+  </data>
+  <data name="chkIncludeUDFS.Text" xml:space="preserve">
+    <value> Include Bid Item UDFs in Online Bids</value>
+  </data>
+  <data name="chkLockBidsAfterDue.Text" xml:space="preserve">
+    <value> Lock Online Bids After Bids Due</value>
+  </data>
+  <data name="chkRequireAcnoledgements.Text" xml:space="preserve">
+    <value> Require Acknowledgements</value>
+  </data>
+  <data name="chkSealdBid.Text" xml:space="preserve">
+    <value> This is a Sealed Bid</value>
+  </data>
+  <data name="lblOptions.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="chkShowCountdown.Text" xml:space="preserve">
+    <value> Show Bid Due Countdown Clock</value>
+  </data>
+  <data name="lblBidClock.Text" xml:space="preserve">
+    <value>Bid Due</value>
+  </data>
+  <data name="CountDown_DaysLablel" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="CountDown_HoursLabel" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="CountDown_MinutesLabel" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="CountDown_SecondsLabel" xml:space="preserve">
+    <value>Seconds</value>
+  </data>
+  <data name="lblUniqueCode.Text" xml:space="preserve">
+    <value>&lt;br/&gt;Procurement # must be unique by Project and Revision #.</value>
+  </data>
+  <data name="rfvProcurementNumberRequired.ErrorMessage" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="chkLockBidQuantity.Text" xml:space="preserve">
+    <value> Lock Quantity in Online Bids</value>
+  </data>
+  <data name="LOD_PREBID" xml:space="preserve">
+    <value>Pre-bids</value>
+  </data>
+  <data name="ddlPreBids.EmptyMessage" xml:space="preserve">
+    <value>Select Pre-bid</value>
+  </data>
+  <data name="lblProgram.Text" xml:space="preserve">
+    <value>Program*</value>
+  </data>
+  <data name="lblHidenRows.Text" xml:space="preserve">
+    <value>Some of the detail lines are hidden for security reasons.</value>
+  </data>
+  <data name="hplCurrency.Text" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="lblRevisionDate.Text" xml:space="preserve">
+    <value>Revision Date </value>
+  </data>
+  <data name="lblStatusRevision.Text" xml:space="preserve">
+    <value>Status / Revision </value>
+  </data>
+  <data name="lblCommitment.Text" xml:space="preserve">
+    <value>Commitment</value>
+  </data>
+  <data name="lblCommitmentType.Text" xml:space="preserve">
+    <value>Commitment Type</value>
+  </data>
+  <data name="rfvProgramRequired.ErrorMessage" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="rfvProjectsRequired.ErrorMessage" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="lblPreBid.Text" xml:space="preserve">
+    <value>Pre-Bid</value>
+  </data>
+  <data name="lblContract.Text" xml:space="preserve">
+    <value>Contract</value>
+  </data>
+  <data name="lblContractId.Text" xml:space="preserve">
+    <value>Contract Id</value>
+  </data>
+</root>

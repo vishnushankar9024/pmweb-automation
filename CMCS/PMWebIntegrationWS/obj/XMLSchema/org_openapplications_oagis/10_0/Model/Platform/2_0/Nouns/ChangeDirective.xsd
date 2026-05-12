@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    The notices below are provided with respect to licensed content incorporated herein:
+    Copyright (c) The Associated General Contractors of America, Inc. 2009-2014. All Rights Reserved. http://www.agc.org and http://www.agcxml.org. Terms of license can be found in LicenseAgreement.pdf included with this download package.
+    Copyright (c) 1997-2014 Open Applications Group, Inc. All Rights Reserved.  http://www.openapplications.org.
+-->
+<xs:schema targetNamespace="http://agcxml.org/2" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://agcxml.org/2" xmlns:gc="http://agcxml.org/2" xmlns:platform="http://www.openapplications.org/oagis/10" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>
+      Name: ChangeDirective.xsd
+      Release: 2.0 Alpha 4(pre)
+      Release Date: 2014-Feb-04
+      Full Name: /org_agcxml/2_0/Model/Nouns/ChangeDirective.xsd
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:include schemaLocation="../Common/Components/Components.xsd">
+    <xs:annotation>
+      <xs:documentation>XML elements and structured types shared across agcXML schemas such as a project participant and a cost impact.</xs:documentation>
+      <xs:documentation>Also includes more general purpose declarations such as reference, attachment and dialog.</xs:documentation>
+    </xs:annotation>
+  </xs:include>
+  <xs:import namespace="http://www.openapplications.org/oagis/10" schemaLocation="../../../../org_openapplications_oagis/10_0/Model/Platform/2_0/Common/Components/Components.xsd">
+    <xs:annotation>
+      <xs:documentation>XML elements and structured types shared across OAGIS schemas such as a business party or a currency exchange rate.</xs:documentation>
+    </xs:annotation>
+  </xs:import>
+</xs:schema>

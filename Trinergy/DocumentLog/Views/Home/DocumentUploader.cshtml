@@ -1,0 +1,136 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HMC HFD - Document Uploader</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/Scripts/Uploader/plupload.full.min.js"></script>
+    <style>
+        .container {
+            width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Centered logo -->
+        <div style="width:350px; margin: 0 auto;">
+            <img src="~/Content/Images/hmc.png.PNG" style="width:350px;" alt="Logo" />
+        </div>
+
+        <!-- Document Uploader Panel -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Document Uploader</h4>
+            </div>
+            <div class="panel-body">
+                <!-- File input group -->
+                <div class="form-group">
+                    @* Corrected the missing @Html.Label syntax *@
+                    @Html.Label("Filename:", null, new { @class = "control-label" })
+                    <input type="file" id="fileInput" class="btn btn-primary" />
+                </div>
+
+                <!-- Upload button -->
+                <div class="form-group">
+                    <input type="button" id="btnUpload" value="Upload a presentation" class="btn btn-success" />
+                </div>
+
+                <!-- Progress bar container -->
+                <div id="progressbar_container" style="width: 100%; height: 30px; position: relative; background-color: grey; display: none;">
+                    <div id="progressbar" style="width: 0%; height: 100%; position: absolute; background-color: green;"></div>
+                    <span id="progressbar_label" style="position: absolute; left: 35%; top: 20%;">Uploading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            // Show the progress bar container
+            var progressBarStart = function () {
+                $("#progressbar_container").show();
+            }
+
+            // Update the progress bar width and label
+            var progressBarUpdate = function (percentage) {
+                $('#progressbar_label').html(percentage + "%");
+                $("#progressbar").css('width', percentage + "%");
+            }
+
+            // Hide the progress bar container after completion
+            var progressBarComplete = function () {
+                $("#progressbar_container").fadeOut(500);
+            }
+
+            var file;
+
+            $('#fileInput').change(function (e) {
+                file = e.target.files[0];
+            });
+
+            var uploadCompleted = function () {
+                var formData = new FormData();
+                formData.append('fileName', file.name);
+                formData.append('completed', true);
+
+                var xhr2 = new XMLHttpRequest();
+                xhr2.onload = function () {
+                    progressBarUpdate(100);
+                    progressBarComplete();
+                }
+                xhr2.open("POST", "/Home/UploadComplete?fileName=" + file.name + "&complete=" + 1, true);
+                xhr2.send(formData);
+            }
+
+            var multiUpload = function (count, counter, blob, completed, start, end, bytesPerChunk) {
+                counter = counter + 1;
+                if (counter <= count) {
+                    var chunk = blob.slice(start, end);
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function () {
+                        start = end;
+                        end = start + bytesPerChunk;
+                        if (count == counter) {
+                            uploadCompleted();
+                        } else {
+                            var percentage = (counter / count) * 100;
+                            progressBarUpdate(percentage);
+                            multiUpload(count, counter, blob, completed, start, end, bytesPerChunk);
+                        }
+                    }
+                    xhr.open("POST", "/Home/MultiUpload?id=" + counter.toString() + "&fileName=" + file.name, true);
+                    xhr.send(chunk);
+                }
+            }
+
+            $("#btnUpload").click(function () {
+                debugger;
+                var blob = file;
+                var bytesPerChunk = 3757000;
+                var size = blob.size;
+
+                var start = 0;
+                var end = bytesPerChunk;
+                var completed = 0;
+                var count = size % bytesPerChunk == 0 ? size / bytesPerChunk : Math.floor(size / bytesPerChunk) + 1;
+                var counter = 0;
+                progressBarStart();
+                multiUpload(count, counter, blob, completed, start, end, bytesPerChunk);
+            });
+        });
+
+    </script>
+</body>
+</html>

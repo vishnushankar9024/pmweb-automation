@@ -1,0 +1,1803 @@
+﻿
+/*******************toolbar**************************************************/
+.RadToolBar {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    white-space: nowrap;
+    cursor: default;
+    vertical-align: middle;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+
+    .RadToolBar .rtbWrap,
+    .RadToolBar .rtbOut,
+    .RadToolBar .rtbMid,
+    .RadToolBar .rtbIn,
+    .RadToolBar .rtbIcon,
+    .RadToolBar .rtbText,
+    .RadToolBar .rtbSplBtnActivator,
+    .RadToolBar .rtbChoiceArrow {
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .RadToolBar .rtbHidden {
+        display: none !important;
+    }
+
+    .RadToolBar .rtbOuter {
+        padding: 0px;
+        background-color: #ededed;
+        background-image: none;
+        border: 0px;
+        box-shadow: none;
+    }
+
+    .RadToolBar .rtbUL {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .RadToolBar .rtbWrap {
+        color: inherit;
+        text-decoration: none;
+        outline: 0;
+        cursor: pointer;
+    }
+
+        .RadToolBar .rtbWrap:hover,
+        .RadToolBar .rtbWrap:focus {
+            outline: 0;
+        }
+
+    .RadToolBar .rtbMid {
+        padding: 0 3px 3px 0;
+    }
+
+    .RadToolBar .rtbIn {
+        padding: 3px 0 0 3px;
+        overflow: hidden;
+    }
+
+    .RadToolBar .rtbText {
+        padding: 0 3px;
+        vertical-align: middle;
+    }
+
+        .RadToolBar .rtbText u {
+            vertical-align: baseline;
+        }
+
+.ModelViewerPopup .rtbIcon {
+    border: 0;
+    padding: 2px;
+    background-image: url('../Images/ResponsiveIcons/16Enabled.png') !important;
+}
+
+.RadToolBar.ModelViewerPopup .rtbItemHovered .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/16Hovered.png') !important;
+}
+
+.RadToolBar.ModelViewerPopup .rtbItemFocused .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/16Hovered.png') !important;
+}
+
+.RadToolBar .ToolbarGenerateNext .rtbIcon {
+    height:16px;
+    width:16px;
+    background-image: url('../Images/ResponsiveIcons/16Enabled.png') !important;
+    background-position: -336px 0px;
+}
+ .RadToolBar .rtbItemHovered .ToolbarGenerateNext  .rtbIcon{
+    background-image: url('../Images/ResponsiveIcons/16Hovered.png') !important;
+    background-position: -336px
+}
+ .RadToolBar .rtbItemFocused .ToolbarGenerateNext .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+     background-position: -336px 0px;
+}
+
+.ToolbarGenerateNext:hover {
+    background-color: #ededed;
+}
+.RadToolBar .rtbIcon {
+    border: 0;
+    padding: 2px;
+    background-image: url(../Images/24Enabled.png);
+}
+
+.RadToolBar.taskDetailToolbar .rtbIcon {
+    border: 0;
+    padding: 2px;
+    background-image: url('../Images/ResponsiveIcons/16Enabled.png');
+}
+
+.RadToolBar .rtbItemHovered .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/24Hovered.png') !important;
+}
+
+.RadToolBar.taskDetailToolbar .rtbItemHovered .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/16Hovered.png') !important;
+}
+
+
+.RadToolBar .rtbItemHovered .ToolbarButtonNewInitiativeFromTemplate .rtbIcon, .RadToolBar .rtbItemHovered .ToolbarNewInit .rtbIcon {
+    border: 0;
+    background-image: none !important;
+}
+
+.RadToolBar .rtbItemFocused .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/24Hovered.png') !important;
+}
+
+.RadToolBar.taskDetailToolbar .rtbItemFocused .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/16Hovered.png') !important;
+}
+
+.RadToolBar .rtbDisabled.rtbItemFocused {
+    opacity: 0.3 !important;
+}
+
+.RadToolBar .rtbItemFocused .ToolbarButtonNewInitiativeFromTemplate .rtbIcon, .RadToolBar .rtbItemFocused .ToolbarNewInit .rtbIcon {
+    border: 0;
+    background-image: none !important;
+}
+
+.RadToolBar span.rtbIcon {
+    padding: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.RadToolBar.taskDetailToolbar span.rtbIcon {
+    padding: 0;
+    width: 16px;
+    height: 16px;
+}
+
+
+.RadToolBar .rtbChoiceArrow {
+    margin: 0 0 0 4px;
+    padding: 0 0 0 2px;
+    width: 18px;
+    height: 20px;
+    background-color: transparent;
+    background-position: 100% 50%;
+    background-repeat: no-repeat;
+}
+
+.RadToolBar .rtbWrap, .RadToolBar .rtbOut, .RadToolBar .rtbMid, .RadToolBar .rtbIn {
+    background-repeat: no-repeat;
+}
+
+.RadToolBar .rtbWrap {
+    background-position: 0 100%;
+}
+
+.RadToolBar .rtbOut {
+    background-position: 100% 0;
+}
+
+.RadToolBar .rtbMid {
+    background-position: 100% 100%;
+}
+
+.RadToolBar .rtbIn {
+    background-position: 0 0;
+}
+
+.RadToolBar .rtbIconOnly .rtbIn:before {
+    content: ".";
+    width: 0;
+    vertical-align: middle;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.RadToolBar .rtbIconOnly span.rtbIcon {
+    margin: 0 2px;
+}
+
+.RadToolBar .rtbIconOnly .rtbText {
+    display: none !important;
+}
+
+.RadToolBar .rtbDropDown .rtbChoiceArrow {
+    width: 16px;
+}
+
+.RadToolBar .rtbDisabled {
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+
+    .RadToolBar .rtbDisabled .rtbWrap {
+        border-color: transparent;
+        background-color: transparent;
+        background-image: none;
+        cursor: default;
+    }
+
+.RadToolBar .rtbSeparator {
+    margin-right: 20px;
+    border-color: rgb(153,153,153);
+    height: 50px;
+}
+
+    .RadToolBar .rtbSeparator .rtbText {
+        display: none;
+    }
+
+/* <items> */
+.RadToolBar .rtbVOriented {
+    text-align: center;
+}
+
+.RadToolBar .rtbDropDown .rtbVOriented {
+    position: relative;
+    padding-right: 20px;
+}
+
+.RadToolBar .rtbSplBtn .rtbVOriented {
+    position: relative;
+    padding-right: 25px;
+}
+
+.RadToolBar .rtbVOriented .rtbIcon {
+    display: block;
+    margin: 0 auto;
+    *margin: 0;
+}
+
+.RadToolBar .rtbVOriented .rtbChoiceArrow {
+    position: absolute;
+    top: 50%;
+    margin-top: -9px;
+    right: 0;
+}
+
+/* Image sprite placeholder size */
+.RadToolBarDropDown span.rtbIcon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+}
+
+/* <background positions> */
+/* </background positions> */
+/* </items> */
+.RadToolBar_Horizontal .rtbUL,
+.RadToolBar_Horizontal .rtbItem,
+.RadToolBar_Horizontal .rtbTemplate,
+.RadToolBar_Horizontal .rtbSeparator {
+    vertical-align: middle;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+
+.RadToolBar_Horizontal .rtbOuter {
+    background-position: 0 0;
+    background-repeat: repeat-x;
+}
+
+.RadToolBar_Horizontal .rtbItem {
+    margin-right: 16px;
+}
+
+    .RadToolBar_Horizontal .rtbItem:first-child {
+        margin-left: 0;
+    }
+
+.RadToolBar_Horizontal .rtbSeparator {
+    margin-right: 20px;
+    width: 1px;
+    height: 50px;
+    border-left-width: 1px;
+    border-left-style: solid;
+}
+
+.RadToolBar_Vertical .rtbUL,
+.RadToolBar_Vertical .rtbItem,
+.RadToolBar_Vertical .rtbTemplate,
+.RadToolBar_Vertical .rtbSeparator,
+.RadToolBar_Vertical .rtbWrap,
+.RadToolBar_Vertical .rtbOut,
+.RadToolBar_Vertical .rtbMid,
+.RadToolBar_Vertical .rtbIn {
+    display: block;
+}
+
+.RadToolBar_Vertical .rtbOuter {
+    background-position: 0 0;
+    background-repeat: repeat-y;
+}
+
+.RadToolBar_Vertical .rtbItem {
+    margin: 2px 0 0 0;
+}
+
+    .RadToolBar_Vertical .rtbItem:first-child {
+        margin-top: 0;
+    }
+
+.RadToolBar_Vertical .rtbSeparator {
+    margin: 2px 0 0 0;
+    *width: 20px;
+    height: 1px;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+.rtbSlide {
+    padding: 0 8px 10px 0;
+    box-sizing: content-box;
+    text-align: left;
+    display: none;
+    position: absolute;
+    overflow: hidden;
+}
+
+.RadToolBarDropDown {
+    margin: 0;
+    padding: 3px;
+    box-sizing: content-box;
+    border-width: 1px;
+    border-style: solid;
+    text-align: left;
+    cursor: default;
+    background-repeat: repeat-y;
+    background-position: -1px 0;
+    position: relative;
+}
+
+    .RadToolBarDropDown.rtbNoBackground {
+        padding: 0;
+        border-width: 0;
+        background-color: transparent;
+        background-image: none;
+    }
+
+    .RadToolBarDropDown .rtbGroup {
+        padding: 0;
+        margin: 0;
+        background-position: 0 0;
+        background-repeat: repeat-y;
+        list-style: none;
+        display: block;
+    }
+
+    .RadToolBarDropDown .rtbShadows .rtbGroup,
+    .RadToolBarDropDown .rtbRoundedCorners .rtbGroup {
+        padding: 0;
+        height: 100%;
+        position: relative;
+        background-position: -4px 0;
+    }
+
+    .RadToolBarDropDown .rtbItem {
+        display: block;
+        position: relative;
+    }
+
+    .RadToolBarDropDown .rtbShadows .rtbItem,
+    .RadToolBarDropDown .rtbRoundedCorners .rtbItem {
+        z-index: 1;
+    }
+
+    .RadToolBarDropDown.RadToolBarDropDown_Default {
+        width: 170px;
+    }
+
+    .RadToolBarDropDown .rtbWrap {
+        padding: 2px 4px 2px 10px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: transparent;
+        color: inherit;
+        outline: 0;
+        background-repeat: repeat-x;
+        background-position: 0 0;
+        text-decoration: none;
+        display: block;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .RadToolBarDropDown .rtbIcon {
+        border: 0;
+        display: block;
+        position: absolute;
+        left: 1px;
+        top: 0;
+    }
+
+    .RadToolBarDropDown .rtbAccessKey {
+        font-size: 10px;
+        font-weight: normal;
+        float: right;
+        padding-right: 8px;
+    }
+
+    .RadToolBarDropDown .rtbDisabled {
+        filter: alpha(opacity=50);
+        opacity: .5;
+    }
+
+        .RadToolBarDropDown .rtbDisabled .rtbWrap {
+            cursor: default;
+        }
+
+    .RadToolBarDropDown .rtbItemHovered .rtbWrap {
+        background-position: 0 -1000px \9;
+    }
+
+    .RadToolBarDropDown .rtbItemClicked .rtbWrap {
+        background-position: 0 -2000px \9;
+    }
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .RadToolBarDropDown .rtbItemHovered .rtbWrap,
+    .RadToolBarDropDown .rtbItemClicked .rtbWrap {
+        background-position: 0 0;
+    }
+}
+
+.RadToolBarDropDown .rtbSeparator {
+    margin: 1px 1px 1px 30px;
+    padding: 0;
+    height: 1px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    *line-height: 0;
+    *font-size: 0;
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+
+.RadToolBarDropDown .rtbTemplate {
+    line-height: 22px;
+    background-image: none;
+}
+
+.RadToolBarDropDown .rtbRoundedCorners {
+    padding: 4px 0 0 4px;
+    height: 100%;
+    border: 0;
+    background-position: 0 0;
+}
+
+.RadToolBarDropDown .rtbTopFix,
+.RadToolBarDropDown .rtbTopRight,
+.RadToolBarDropDown .rtbBottomFix,
+.RadToolBarDropDown .rtbBottomLeft,
+.RadToolBarDropDown .rtbBottomRight {
+    width: 4px;
+    height: 4px;
+    border: 0;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    font-size: 0;
+    position: absolute;
+    overflow: hidden;
+}
+
+.RadToolBarDropDown .rtbTopRight {
+    height: 100%;
+    background-position: 100% 0;
+    top: 0;
+    right: -4px;
+}
+
+.RadToolBarDropDown .rtbBottomLeft {
+    width: 100%;
+    background-position: 0 100%;
+    bottom: -4px;
+    left: 0;
+}
+
+.RadToolBarDropDown .rtbBottomRight {
+    width: 8px;
+    background-position: 100% 100%;
+    bottom: -4px;
+    right: -4px;
+}
+
+.RadToolBarDropDown .rtbBottomFix {
+    width: auto;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    background-position: -5px 0;
+    bottom: -4px;
+    left: 5px;
+    right: 0;
+}
+
+.RadToolBarDropDown .rtbTopFix {
+    width: auto;
+    border-top-width: 1px;
+    border-top-style: solid;
+    background-position: -5px 0;
+    top: 0;
+    left: 5px;
+    right: 0;
+}
+
+.RadToolBarDropDown .rtbShadows .rtbBottomShadowLeft,
+.RadToolBarDropDown .rtbShadows .rtbBottomShadowRight {
+    background-image: url('../Images/Menu/ShadowBottom.png');
+}
+
+.RadToolBarDropDown .rtbShadows .rtbTopShadowRight {
+    background-image: url('../Images/Menu/ShadowRight.png');
+}
+
+.RadToolBarDropDown .rtbShadows .rtbTopShadowRight {
+    right: -5px;
+}
+
+.RadToolBarDropDown .rtbShadows .rtbBottomShadowLeft {
+    bottom: -5px;
+    left: 1px;
+}
+
+.RadToolBarDropDown .rtbShadows .rtbBottomShadowRight {
+    width: 4px;
+    height: 5px;
+    bottom: -5px;
+    right: -5px;
+}
+
+.RadToolBarDropDown .rtbRoundedCorners .rtbBottomShadowLeft,
+.RadToolBarDropDown .rtbRoundedCorners .rtbBottomShadowRight {
+    background-image: url('../Images/Menu/RoundedShadowBottom.png');
+}
+
+.RadToolBarDropDown .rtbRoundedCorners .rtbTopShadowRight {
+    width: 5px;
+    background-image: url('../Images/Menu/RoundedShadowRight.png');
+    right: -8px;
+}
+
+.RadToolBarDropDown .rtbRoundedCorners .rtbBottomShadowLeft {
+    height: 5px;
+    bottom: -8px;
+}
+
+.RadToolBarDropDown .rtbRoundedCorners .rtbBottomShadowRight {
+    bottom: -8px;
+    right: -8px;
+    width: 7px;
+    height: 8px;
+}
+
+.RadToolBarDropDown .rtbTopFix,
+.RadToolBarDropDown .rtbBottomFix,
+.RadToolBarDropDown .rtbGroup {
+    background-repeat: repeat-y;
+}
+
+.RadToolBarDropDown .rtbTopRight,
+.RadToolBarDropDown .rtbBottomLeft,
+.RadToolBarDropDown .rtbBottomRight,
+.RadToolBarDropDown .rtbRoundedCorners {
+    background-color: transparent;
+    background-repeat: no-repeat;
+}
+
+.RadToolBar_rtl {
+    text-align: right;
+    float: right;
+}
+
+    .RadToolBar_rtl .rtbChoiceArrow {
+        margin-left: 0;
+        margin-right: 4px;
+        padding-left: 0;
+        padding-right: 2px;
+        background-position: 0 50%;
+    }
+
+    .RadToolBar_rtl .rtbVOriented .rtbChoiceArrow {
+        right: auto;
+        left: 0;
+    }
+
+    .RadToolBar_rtl .rtbDropDown .rtbVOriented {
+        padding-right: 0;
+        padding-left: 20px;
+    }
+
+    .RadToolBar_rtl .rtbSplBtn .rtbVOriented {
+        padding-right: 0;
+        padding-left: 25px;
+    }
+
+.RadToolBarDropDown_rtl {
+    text-align: right;
+    background-position: 101% 0;
+}
+
+    .RadToolBarDropDown_rtl .rtbSlide {
+        text-align: right;
+    }
+
+    .RadToolBarDropDown_rtl .rtbGroup {
+        background-position: 101% 0;
+    }
+
+    .RadToolBarDropDown_rtl .rtbWrap {
+        padding-left: 30px;
+        padding-right: 32px;
+    }
+
+    .RadToolBarDropDown_rtl .rtbIcon {
+        left: auto;
+        right: 5px;
+    }
+
+    .RadToolBarDropDown_rtl .rtbText {
+        padding: 0 3px 0 30px;
+    }
+
+    .RadToolBarDropDown_rtl .rtbSeparator {
+        margin: 1px 30px 1px 1px;
+    }
+
+    .RadToolBarDropDown_rtl .rtbTopFix,
+    .RadToolBarDropDown_rtl .rtbBottomFix {
+        background-position: 100% 0;
+    }
+
+.RadToolBar_Default {
+    color: #333333;
+    background-color: #fafafa;
+    /*font-size: 12px;*/
+    line-height: 20px;
+    /*font-family: "Segoe UI", Arial, Helvetica, sans-serif; */
+}
+
+    .RadToolBar_Default .rtbWrap {
+        *color: #333333;
+    }
+
+    .RadToolBar_Default .rtbChoiceArrow {
+        background-image: url('../Images/rtbDropArrows.png');
+    }
+
+    .RadToolBar_Default .rtbItemClicked .rtbChoiceArrow,
+    .RadToolBar_Default .rtbSplBtnExpanded .rtbChoiceArrow,
+    .RadToolBar_Default .rtbDropDownExpanded .rtbChoiceArrow {
+        background-image: url('../Images/rtbDropArrows.png');
+    }
+
+    .RadToolBar_Default .rtbItemHovered .rtbWrap,
+    .RadToolBar_Default .rtbItemHovered .rtbOut,
+    .RadToolBar_Default .rtbItemHovered .rtbMid,
+    .RadToolBar_Default .rtbItemHovered .rtbIn {
+        /*color: #000000;
+   background-image: url('../Images/rtbClickedBg.png');*/
+    }
+
+    .RadToolBar_Default .rtbItemFocused .rtbWrap,
+    .RadToolBar_Default .rtbItemFocused .rtbOut,
+    .RadToolBar_Default .rtbItemFocused .rtbMid,
+    .RadToolBar_Default .rtbItemFocused .rtbIn {
+        /*color: #000000;
+     background-image: url('../Images/rtbClickedBg.png');*/
+    }
+
+    .RadToolBar_Default .rtbItemClicked .rtbWrap,
+    .RadToolBar_Default .rtbItemClicked .rtbOut,
+    .RadToolBar_Default .rtbItemClicked .rtbMid,
+    .RadToolBar_Default .rtbItemClicked .rtbIn {
+        color: #000000;
+        background-image: url('../Images/rtbClickedBg.png');
+    }
+
+    .RadToolBar_Default .rtbSplBtnExpanded .rtbWrap,
+    .RadToolBar_Default .rtbSplBtnExpanded .rtbOut,
+    .RadToolBar_Default .rtbSplBtnExpanded .rtbMid,
+    .RadToolBar_Default .rtbSplBtnExpanded .rtbIn,
+    .RadToolBar_Default .rtbDropDownExpanded .rtbWrap,
+    .RadToolBar_Default .rtbDropDownExpanded .rtbOut,
+    .RadToolBar_Default .rtbDropDownExpanded .rtbMid,
+    .RadToolBar_Default .rtbDropDownExpanded .rtbIn,
+    .RadToolBar_Default .rtbChecked .rtbWrap,
+    .RadToolBar_Default .rtbChecked .rtbOut,
+    .RadToolBar_Default .rtbChecked .rtbMid,
+    .RadToolBar_Default .rtbChecked .rtbIn {
+        color: #000000;
+        background-image: none;
+    }
+
+    .RadToolBar_Default .rtbSeparator {
+        border-color: #939393;
+        background-color: #f7f7f7;
+    }
+
+.RadToolBar_Default_Horizontal .rtbOuter {
+    /*background-image: url('../Images/ToolBar/rtbControlBg.png');*/
+    background-position: 0 100%;
+}
+
+.RadToolBar_Default_Vertical .rtbOuter {
+    background-image: url('../Images/ToolBar/rtbVerticalControlBg.png');
+    background-position: 100% 0;
+}
+
+.RadToolBarDropDown_Default {
+    /*font-size: 12px;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;*/
+    color: #333333;
+    border-color: #828282;
+    background-color: #ffffff;
+    /*background-image: url('../Images/ToolBar/rtbDropDownBg.png');*/
+}
+
+    .RadToolBarDropDown_Default .rtbTopFix,
+    .RadToolBarDropDown_Default .rtbBottomFix,
+    .RadToolBarDropDown_Default .rtbGroup {
+        /*background-image: url('../Images/ToolBar/rtbDropDownBg.png');*/
+        background-color: #ffffff;
+    }
+
+    .RadToolBarDropDown_Default .rtbBottomLeft,
+    .RadToolBarDropDown_Default .rtbRoundedCorners {
+        background-image: url('../Images/ToolBar/rtbRoundedLeft.png');
+    }
+
+    .RadToolBarDropDown_Default .rtbTopRight,
+    .RadToolBarDropDown_Default .rtbBottomRight {
+        background-image: url('../Images/ToolBar/rtbRoundedRight.png');
+    }
+
+    .RadToolBarDropDown_Default .rtbTopFix,
+    .RadToolBarDropDown_Default .rtbBottomFix,
+    .RadToolBarDropDown_Default .rtbRoundedCorners .rtbFirst {
+        border-color: #828282;
+    }
+
+    .RadToolBarDropDown_Default .rtbWrap {
+        border-radius: 3px;
+        *color: #333333;
+        background-image: url('../Images/radGradientListSprite.png') \9;
+    }
+
+    .RadToolBarDropDown_Default .rtbItemHovered .rtbWrap {
+        border-color: #b0b0b0;
+        color: #000000;
+        background-color: #c5c5c5;
+        background-image: linear-gradient(#e1e1e1, #c5c5c5);
+    }
+
+    .RadToolBarDropDown_Default .rtbItemClicked .rtbWrap {
+        border-color: #6c6c6c;
+        color: #ffffff;
+        background-color: #828282;
+        background-image: linear-gradient(#969696, #828282);
+    }
+
+    .RadToolBarDropDown_Default .rtbSeparator {
+        border-color: #939393;
+        background-color: #f7f7f7;
+    }
+
+.RadToolBarDropDown_Default_rtl .rtbBottomLeft,
+.RadToolBarDropDown_Default_rtl .rtbRoundedCorners {
+    background-image: url('../Images/ToolBar/rtbRoundedLeft_rtl.png');
+}
+
+.RadToolBarDropDown_Default_rtl .rtbTopRight,
+.RadToolBarDropDown_Default_rtl .rtbBottomRight {
+    background-image: url('../Images/ToolBar/rtbRoundedRight_rtl.png');
+}
+
+.RadToolBarDropDown_Default_rtl .rtbTopFix,
+.RadToolBarDropDown_Default_rtl .rtbBottomFix,
+.RadToolBarDropDown_Default_rtl .rtbGroup,
+.RadToolBarDropDown_Default_rtl .rtbShadows .rtbGroup {
+    background-position: 100% 0;
+}
+
+/*# sourceMappingURL=ToolBar.Default.css.map */
+.rsbButtonSearch .rsbIconSearch {
+    background-image: url('../Images/ResponsiveIcons/24Enabled.png') !important;
+    background-position: -216px 0px !important;
+    display: inline-block !important;
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0;
+    border: 0px solid transparent !important;
+}
+
+input#ctl00_CPH1_OrgChartDetails1_RadSearchBox1_Input {
+    height: 24px !important;
+    vertical-align: text-bottom !important;
+    line-height: 24px !important;
+}
+/*************************************toolbar icons**********************************/
+.ToolbarSave .rtbIcon, .ToolbarTimeSheetSave .rtbIcon, .ToolbarPopUpSave .rtbIcon {
+    background-position: -720px 0px;
+}
+
+.taskDetailToolbar .ToolbarSave .rtbIcon {
+    background-position: -480px 0px;
+}
+
+.ToolbarNew .rtbIcon, .ToolbarNewInitiative .rtbIcon {
+    background-position: -744px 0px;
+}
+
+.taskDetailToolbar .ToolbarNew .rtbIcon {
+    background-position: -496px 0px;
+}
+
+.ToolbarSearch .rtbIcon {
+    background-position: -216px 0px !important;
+}
+
+.ToolbarDMSearch .rtbIcon {
+    background-position: -696px 0px !important;
+}
+
+.ToolbarGallery .rtbIcon {
+    background-position: -1680px 0px !important;
+}
+
+.ToolbarSearchItems .rtbIcon {
+    background-position: -696px 0px !important;
+}
+
+.ToolbarRecent .rtbIcon {
+    background-position: -240px 0px !important;
+}
+
+.ToolbarClear .rtbIcon {
+    background-position: -2472px 0px !important;
+}
+
+.ToolbarDelete .rtbIcon {
+    background-position: -768px 0px !important;
+}
+
+.ToolbarEditReport .rtbIcon {
+    background-position: -888px 0px !important;
+}
+
+.ToolbarLayout .rtbIcon {
+    background-position: -1056px 0px !important;
+}
+
+.ToolbarChart .rtbIcon {
+    background-position: -1080px 0px !important;
+}
+
+.ToolbarGrid .rtbIcon {
+    background-position: -1056px 0px !important;
+}
+
+
+
+.ToolbarEmailReply .rtbIcon {
+    background-position: -1152px 0px !important;
+}
+
+.ToolbarReceiveEmail .rtbIcon {
+    background-position: -1392px 0px !important;
+}
+
+.taskDetailToolbar .ToolbarDelete .rtbIcon {
+    background-position: -512px 0px !important;
+}
+
+
+.ToolbarNotification .rtbIcon {
+    background-position: -792px 0px !important;
+}
+
+.ToolbarCreateRevision .rtbIcon, .ToolbarCopyRevision .rtbIcon {
+    background-position: -600px 0px !important;
+}
+
+.ToolbarBIM .rtbIcon { 
+    background-position: -0px 0px !important;
+}
+
+.ToolbarImport .rtbIcon {
+     background-image: url(../Images/ResponsiveIcons/24newEnabled.png) !important;
+    background-position: -2280px 0px !important;
+}
+
+.rtbItemHovered .ToolbarImport .rtbIcon {
+     background-image: url(../Images/ResponsiveIcons/24newHovered.png) !important;
+    background-position: -2280px 0px !important;
+}
+
+.rtbItemFocused .ToolbarImport .rtbIcon {
+     background-image: url(../Images/ResponsiveIcons/24newHovered.png) !important;
+    background-position: -2280px 0px !important;
+}
+.RadToolBar .ToolbarDeploySettings .rtbIcon {
+    background-position: -336px 0px !important;
+    height: 16px !important;
+    width: 16px !important;
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+}
+
+.RadToolBar .ToolbarCreateNext .rtbIcon {
+    background-position: -336px 0px !important;
+    height: 16px !important;
+    width: 16px !important;
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+}
+
+.RadToolBar .ToolbarCalculate .rtbIcon {
+    background-position: -2568px 0px !important;
+    height: 24px !important;
+    width: 24px !important;
+    background-image: url(../Images/ResponsiveIcons/24newEnabled.png) !important;
+}
+
+.RadToolBar .rtbItemHovered.ToolbarCalculate .rtbIcon {
+    background-position: -2568px 0px !important;
+    height: 24px !important;
+    width: 24px !important;
+    background-image: url(../Images/ResponsiveIcons/24newHovered.png) !important;
+}
+
+.ToolbarUpdUnlockedTemplates .rtbIcon {
+    height: 16px !important;
+    width: 16px !important;
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-position: -336px 0px !important;
+}
+
+.rtbItemHovered .ToolbarUpdUnlockedTemplates .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -336px 0px !important;
+}
+
+.rtbItemFocused .ToolbarUpdUnlockedTemplates .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -336px 0px !important;
+}
+
+.ToolbarUpdUnlockedTemplates:hover {
+    background-color: #ededed;
+}
+
+.RadToolBar .ToolbarCreateNext .rtbOut:hover {
+    background-color: #ededed;
+}
+.RadToolBar .rtbItemHovered .ToolbarCreateNext .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+      background-position: -336px 0px !important;
+}
+.ToolbarTest .rtbIcon {
+    height: 16px !important;
+    width: 16px !important;
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-position: -2000px -1px !important;
+}
+
+.rtbItemHovered .ToolbarTest .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -2000px -1px !important;
+}
+
+.rtbItemFocused .ToolbarTest .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -2000px -1px !important;
+}
+
+.ToolbarTest:hover {
+    background-color: #ededed;
+}
+
+.ToolbarSubmit .rtbIcon {
+    height: 16px !important;
+    width: 16px !important;
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-position: -3040px -1px !important;
+}
+
+.rtbItemHovered .ToolbarSubmit .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -3040px -1px !important;
+}
+
+.rtbItemFocused .ToolbarSubmit .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -3040px -1px !important;
+}
+
+.ToolbarSubmit:hover {
+    background-color: #ededed;
+}
+
+.ToolbarViewNDA:hover {
+    background-color: #ededed;
+}
+
+.ToolbarSubmitBID:hover {
+    background-color: #ededed;
+}
+
+.RadToolBar .rtbItemClicked .rtbIn {
+    background-image: none !important;
+}
+
+.RadToolBar .rtbItemClicked .rtbOut {
+    background-image: none !important;
+}
+
+.RadToolBar .rtbItemClicked .rtbMid {
+    background-image: none !important;
+}
+
+.RadToolBar .rtbItemClicked .rtbWrap {
+    background-image: none !important;
+}
+
+.ToolbarViewNDA .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-position: -288px 0px !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.rtbItemHovered .ToolbarViewNDA .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -288px 0px !important;
+}
+
+.rtbItemFocused .ToolbarViewNDA .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -288px 0px !important;
+}
+
+.ToolbarSubmitBID .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-position: -912px 0px !important;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.rtbItemHovered .ToolbarSubmitBID .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -912px 0px !important;
+}
+
+.rtbItemFocused .ToolbarSubmitBID .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/16Hovered.png) !important;
+    background-position: -912px 0px !important;
+}
+
+.ToolbarGenerate .rtbIcon {
+    background-position: -840px 0px !important;
+}
+
+.ToolbarHelp .rtbIcon {
+    background-position: -816px 0px !important;
+}
+
+.ToolbarPrint .rtbIcon, .ToolbarPrintPreview .rtbIcon {
+    background-position: -816px 0px !important;
+}
+
+.ToolbarCopy .rtbIcon, .ToolbarCopyFromDefault .rtbIcon, .ToolbarCopyWBS .rtbIcon {
+    background-position: -408px 0px !important;
+}
+
+.ToolbarActive .rtbIcon {
+    background-position: -1200px 0px !important;
+}
+
+.ToolbarInActive .rtbIcon {
+    background-position: -1224px 0px !important;
+}
+
+.ToolbarLock .rtbIcon {
+    background-position: -1320px 0px !important;
+}
+
+.ToolbarUnLock .rtbIcon {
+    background-position: -1345px 0px !important;
+}
+
+.item-toolbar .ToolbarSearch .rtbIcon {
+    background-position: -1896px 0px !important;
+}
+
+.RadToolBar .ToolbarTreeSearch .rtbIcon {
+    background-position: -1896px 0px !important;
+}
+
+.ToolbarExportSQL .rtbIcon {
+    background-position: -1704px 0px !important;
+}
+
+.RadToolBar .ToolbarOpenDesigner .rtbIcon {
+    background-position: -1264px 0px !important;
+    height: 16px !important;
+    width: 16px !important;
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+}
+
+.ToolbarLinkTasks .rtbIcon, .ToolbarLinkSchedule .rtbIcon {
+    background-position: -1104px 0px !important;
+}
+
+.ToolbarTakeSnapshot .rtbIcon {
+    background-position: -2016px 0px !important;
+}
+
+.ToolbarUnPost .rtbIcon {
+    background-position: -1824px 0px !important;
+}
+
+.lnkButtonBar {
+    /*background-image: url('Button/btn.gif') !important;*/
+    /*background-position: -2px 130px !important;*/
+    border: 1px solid #666666;
+    text-align: center;
+    text-transform: uppercase;
+    color: #666666;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    vertical-align: central;
+    height: 24px;
+    text-decoration: none;
+    width: 100%;
+    display: table-cell;
+    padding: 4px;
+}
+
+.lnkCreateNext {
+    text-align: center;
+    text-transform: uppercase;
+    color: #999999;
+    vertical-align: central;
+    height: 32px;
+    text-decoration: none;
+    width: 100%;
+    display: table-cell;
+}
+
+    .lnkCreateNext .rtbOut{
+        border: 1px solid #999999;
+        border-radius: 5px;
+        padding: 1px 4px;
+        background-color: #FFFFFF;
+    }
+
+    .RadToolBar .rtbDisabled .ToolbarCreateNext .rtbOut:hover {
+        background-color: #FFFFFF;
+    }
+
+    .lnkCreateNext .rtbOut:hover {
+        background-color: #fafafa;
+    }
+
+    .lnkCreateNext .rtbText {
+        color: #666666;
+    }
+
+.ToolbarPreview .rtbIcon {
+    background-position: -432px !important;
+}
+
+.ToolbarEndSession .rtbIcon {
+    background-position: -2088px 0px !important;
+}
+
+.ToolbarUpload .rtbIcon {
+    background-position: -1368px 0px !important;
+}
+
+.ToolbarPlanview .rtbIcon {
+    background-position: -120px 0px !important;
+}
+
+.ToolbarCancelWorksheet .rtbIcon, .ToolbarVoid .rtbIcon, .ToolbarCancel .rtbIcon {
+    background-position: -2088px 0px !important;
+}
+
+.ToolbarCancel .rtbIcon {
+    background-position: -1248px 0px !important;
+}
+
+.ToolbarClose .rtbIcon {
+    background-position: -1248px 0px !important;
+}
+
+.ToolbarCheck .rtbIcon {
+    background-position: -504px 0px !important;
+}
+
+.ToolbarBold .rtbIcon {
+    background-position: -1440px 0px !important;
+}
+
+.ToolbarItalic .rtbIcon {
+    background-position: -1464px 0px !important;
+}
+
+.ToolbarSaveExit .rtbIcon, ToolbarSaveAndClose .rtbIcon {
+    background-position: -2304px 0px !important;
+}
+
+.ToolbarSaveAndExit .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newEnabled.png');
+    background-position: -2282px 0px !important;
+}
+
+.rtbItemHovered .ToolbarSaveAndExit .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newHovered.png') !important;
+    background-position: -2282px 0px !important;
+}
+
+.rtbItemFocused .ToolbarSaveAndExit .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newHovered.png') !important;
+    background-position: -2282px 0px !important;
+}
+
+
+.ToolbarExcelButton .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newEnabled.png') !important;
+    background-position: -960px 0px !important;
+}
+
+.rtbItemHovered .ToolbarExcelButton:hover .rtbIcon, .rtbItemFocused .ToolbarExcelButton .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newHovered.png') !important;
+    background-position: -960px 0px !important;
+}
+
+.ToolbarWordButton .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newEnabled.png') !important;
+    background-position: -2784px 0px !important;
+}
+
+.rtbItemHovered .ToolbarWordButton .rtbIcon, .rtbItemFocused .ToolbarWordButton .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newHovered.png') !important;
+    background-position: -2784px 0px !important;
+}
+
+.ToolbarMergeWordButton .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newEnabled.png') !important;
+    background-position: -48px 0px !important;
+}
+
+.rtbItemHovered .ToolbarMergeWordButton:hover .rtbIcon, .rtbItemFocused .ToolbarMergeWordButton:hover .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newHovered.png') !important;
+    background-position: -48px 0px !important;
+}
+
+
+.ToolbarPDFButton .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newEnabled.png') !important;
+    background-position: -2760px 0px !important;
+}
+
+.rtbItemHovered .ToolbarPDFButton .rtbIcon, .rtbItemFocused .ToolbarPDFButton .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newHovered.png') !important;
+    background-position: -2760px 0px !important;
+}
+
+.ToolbarSaveAs .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newEnabled.png') !important;
+    background-position: -192px 0px !important;
+}
+
+.rtbItemHovered .ToolbarSaveAs .rtbIcon, .rtbItemFocused .ToolbarSaveAs .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newHovered.png') !important;
+    background-position: -192px 0px !important;
+}
+
+.ToolbarHistory .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newEnabled.png') !important;
+    background-position: -240px 0px !important;
+}
+
+.rtbItemHovered .ToolbarHistory .rtbIcon, .rtbItemFocused .ToolbarHistory .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/24newHovered.png') !important;
+    background-position: -240px 0px !important;
+}
+
+.ToolbarPctCompleteTimesheets .rtbIcon {
+    background-position: -1272px 0px !important;
+}
+
+.ToolbarSaveAsBaseline .rtbIcon {
+    background-position: -504px 0px !important;
+}
+
+.ToolbarButtonNewInitiativeFromTemplate .rtbIcon, .ToolbarNewInit .rtbIcon {
+    background-image: none !important;
+}
+
+.SearchDocumentGrid .ToolbarButtonNewInitiative .rtbIcon {
+    height: 24px !important;
+    background-position: -744px 0;
+}
+
+.ToolbarBluebeamSync .rtbIcon {
+    background-position: -1680px 0px !important;
+}
+
+.ToolbarDelegate .rtbIcon {
+    background-position: -912px 0px !important;
+}
+
+.TaskTabsShown .rtbIcon {
+    background-position: -2112px 0px !important;
+}
+
+.TaskTabsHidden .rtbIcon {
+    background-position: -2112px 0px !important;
+}
+
+.LockedSchedule .rtbIcon {
+    background-position: -1320px 0px !important;
+}
+
+.UnlockedSchedule .rtbIcon {
+    background-position: -1343px 0px !important;
+}
+
+.ToolbarViewer3DTakeSnapshot .rtbIcon {
+    background-position: -2016px 0px !important;
+}
+
+.ToolbarEdit .rtbIcon {
+    background-position: -1632px 0px !important;
+}
+
+.ToolbarEditCost .rtbIcon {
+    background-position: -888px 0px !important;
+}
+.BluebeamSync .rtbIcon {
+    background-position: -24px 0px !important;
+}
+
+.OpenSession_Disabled .rtbIcon {
+    background-position: -1776px 0px !important;
+}
+
+.OpenSession .rtbIcon {
+    background-position: -1776px 0px !important;
+}
+
+.CloseBluebeam_Disabled .rtbIcon {
+    background-position: -1248px 0px !important;
+}
+
+.CloseBluebeam .rtbIcon {
+    background-position: -1248px 0px !important;
+}
+
+.ToolbarExportToExcel .rtbIcon, .ToolbarExportAllToExcel .rtbIcon {
+    background-position: -1056px 0px !important;
+}
+
+.ToolbarNewEmail .rtbIcon {
+    background-position: -744px 0px !important;
+}
+
+.ToolbardoSearch .rtbIcon {
+    background-position: -216px 0px !important;
+}
+
+.ToolbarToggleFlyoutTree .rtbIcon {
+    background-position: -1896px 0px !important;
+}
+
+.ToolbarForecast .rtbIcon {
+    background-position: -1992px 0px !important;
+}
+
+.ToolbarPost .rtbIcon {
+    background-position: -1800px 0px;
+}
+
+.ToolbarUnTakeSnapshot .rtbIcon {
+    background-position: -2088px 0px;
+}
+
+.ToolbarEmail .rtbIcon {
+    background-position: -2064px 0;
+}
+.ToolbarClock .rtbIcon {
+    background-position: -1272px 0;
+}
+
+.ToolbarCancelSendMail .rtbIcon {
+    background-position: -1248px 0;
+}
+
+.popup-toolbar .ToolbarCancel .rtbIcon,
+.popup-toolbar .ToolbarClear .rtbIcon,
+.popup-toolbar .ToolbarClose .rtbIcon, .ToolbarReturnToAccount .rtbIcon {
+    background-position: -1248px 0px !important;
+}
+
+.ToolbarBarcode .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/Barcode.png') !important;
+    width: 24px;
+    height: 24px;
+    background-position: 0 4px;
+    background-repeat: no-repeat;
+}
+
+.ToolbarDone .rtbIcon {
+    border: 0;
+    padding: 2px;
+    background-image: url(../Images/ResponsiveIcons/24Enabled.png);
+    background-position: 1992px 0px;
+}
+
+.rtbItemHovered .ToolbarBarcode .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/Barcode.png') !important;
+    width: 24px;
+    height: 24px;
+    background-position: 0 4px;
+    background-repeat: no-repeat;
+}
+
+.ToolbarHeader .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/header.png') !important;
+    width: 24px;
+    height: 24px;
+    background-position: 0 0;
+}
+
+.rtbItemHovered .ToolbarHeader .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/headerHovered.png') !important;
+    width: 24px;
+    height: 24px;
+    background-position: 0 0;
+}
+
+.rtbItemFocused .ToolbarHeader .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/headerHovered.png') !important;
+    width: 24px;
+    height: 24px;
+    background-position: 0 0;
+}
+
+.rtbItemHovered.ToolbarHeader .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/headerHovered.png') !important;
+    width: 24px;
+    height: 24px;
+    background-position: 0 0;
+}
+
+.rtbItemFocused.ToolbarHeader .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/headerHovered.png') !important;
+    width: 24px;
+    height: 24px;
+    background-position: 0 0;
+}
+
+.barBarcode {
+    background-image: url('../Images/ResponsiveIcons/Barcode.png') !important;
+    width: 24px;
+    height: 24px;
+    background-position: 0 4px;
+    background-repeat: no-repeat;
+}
+
+.ToolbarSettings .rtbIcon {
+    background-position: -2280px 0;
+}
+
+.popup-toolbar .ToolbarCheck .rtbIcon {
+    background-position: -504px 0px !important;
+}
+
+/************Assign Button**********************************************************/
+.DocumentAssign .rmRootGroup.rmHorizontal {
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.RadMenu .assign .rmLeftImage {
+    background-position: -1248px 0;
+}
+
+.assign {
+    border: 0px;
+    padding: 0;
+    background-image: none;
+}
+
+.assign.rmDisabled > span, .assign.rmDisabled > span:hover {
+    background-image: url(../Images/ResponsiveIcons/24Disabled.png) !important;
+    background-position: -1872px 0px !important;
+    display: inline-block !important;
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0;
+    border: 0px solid transparent !important;
+}
+
+    .assign > span {
+        background-image: url('../Images/ResponsiveIcons/24Enabled.png') !important;
+        background-position: -1872px 0px !important;
+        display: inline-block !important;
+        width: 24px !important;
+        height: 24px !important;
+        padding: 0;
+        border: 0px solid transparent !important;
+    }
+
+    .assign:hover > span {
+        background-image: url('../Images/ResponsiveIcons/24Hovered.png') !important;
+        background-position: -1872px 0px !important;
+    }
+
+
+
+.DocumentAssign .rmHorizontal .rmText {
+    padding: 0 !important;
+}
+
+.DocumentAssign .rmLink {
+    padding: 0 !important;
+}
+
+.DocumentAssign .rmSelected {
+    background: none !important;
+}
+
+.RadToolBar .rtbText {
+    padding-left: 3px;
+}
+
+.RadMenu .SubmitBID .rmLeftImage {
+    background-position: -912px 0 !important;
+}
+
+.RadMenu .CreateNext .rmLeftImage {
+    background-position: -336px 0 !important;
+}
+
+/*.TopPageButton .Icon {
+    background-position: -1824px 0px !important;
+    background-image: url('../Images/ResponsiveIcons/24Enabled.png');
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}*/
+
+.RightFlashButton .Icon {
+    background-position: -1777px 0px !important;
+    background-image: url('../Images/ResponsiveIcons/24Enabled.png');
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}
+
+.EditButton .Icon {
+    background-image: url('../Images/ResponsiveIcons/16Enabled.png');
+    background-position: -592px 0px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+}
+
+.smallUnlock {
+    background-image: url('../Images/ResponsiveIcons/16Enabled.png');
+    background-position: -897px 0px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+}
+
+.smalllock {
+    background-image: url('../Images/ResponsiveIcons/16Enabled.png');
+    background-position: -881px 0px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+}
+
+.Warning .Icon {
+    background-image: url('../../Images/Workflow/ExclamationIcon.png');
+    background-position: -2040px 0px;
+    display: inline-block;
+    width: 24px !important;
+    height: 24px;
+}
+
+.warningIcon {
+    background-image: url('../Images/ResponsiveIcons/16Enabled.png');
+    background-position: -1360px 0px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+}
+
+.ToolbarOpenInPopup .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/OpenInPopup.png') !important;
+    background-position: -1px 0px;
+    display: inline-block;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.RadToolBar.ModelViewerPopup .rtbItemHovered .ToolbarOpenInPopup .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/OpenInPopup.png') !important;
+    background-position: -1px 0px;
+    display: inline-block;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.RadToolBar.ModelViewerPopup .rtbItemFocused .ToolbarOpenInPopup .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/OpenInPopup.png') !important;
+    background-position: -1px 0px;
+    display: inline-block;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.ToolbarViewModel_ON .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/ViewModel.png') !important;
+    background-position: -1px 0px;
+    display: inline-block;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.RadToolBar.ModelViewerPopup .rtbItemHovered .ToolbarViewModel_ON .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/ViewModel.png') !important;
+    background-position: -1px 0px;
+    display: inline-block;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.RadToolBar.ModelViewerPopup .rtbItemFocused .ToolbarViewModel_ON .rtbIcon {
+    background-image: url('../Images/ResponsiveIcons/ViewModel.png') !important;
+    background-position: -1px 0px;
+    display: inline-block;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.Wrap .rrButton.rrButtonLeft {
+    left: 0 !important;
+    top: calc(50% - 12px);
+    width: 24px;
+    background: none !important;
+    display: block;
+    position: absolute;
+    height: 24px;
+}
+
+.Wrap .rrButton.rrButtonRight {
+    left: calc(100% - 24px) !important;
+    top: calc(50% - 12px);
+    height: 24px;
+    width: 24px;
+    background: none !important;
+    display: block;
+    position: absolute;
+}
+
+.Wrap .rrButton.rrButtonRight {
+    background-image: url(../Images/ResponsiveIcons/24White.png) !important;
+    background-position: -288px 0 !important;
+    cursor: pointer;
+}
+
+.Wrap .rrButton.rrButtonLeft {
+    background-image: url(../Images/ResponsiveIcons/24White.png) !important;
+    background-position: -264px 0 !important;
+    cursor: pointer;
+}
+
+.PreviewQuantities {
+    background-image: url('../Images/rtbCheck.png');
+    background-position: 18px 9px !important;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    padding-left: 36px !important;
+    padding-right: 30px !important;
+    font-size: 11px !important;
+    border: none !important;
+    border-radius: 12px !important;
+}
+
+.CreateDocNumber {
+    background-image: url(../Images/rtbCheck.png);
+    background-position: 8px 8px !important;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    padding-left: 28px !important;
+    padding-right: 11px !important;
+    font-size: 11px !important;
+    border: none !important;
+    border-radius: 5px !important;
+    border: 1px solid #666666 !important;
+}
+
+.tbsDocumentAdd .rtsUL, .tbsDocumentAdd .rtsFirst {
+    float: none !important;
+}
+
+.tbsDocumentAdd .rtsLink {
+    padding-left: 0px !important;
+}
+
+.tbsDocumentAdd .rtsLevel.rtsLevel1 {
+    width: 100% !important;
+}
+
+.RadToolBar_Horizontal .rtbItem.rtbSplBtn {
+    margin-right: 5px;
+}
+
+.AlarmNotification .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/Alarm.png') !important;
+}
+
+.AlarmNotification.rtbItemHovered .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/AlarmHovered.png') !important;
+}
+
+.AttachmentNotification .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/Attach.png') !important;
+}
+
+.AttachmentNotification.rtbItemHovered .rtbIcon {
+    border: 0;
+    background-image: url('../Images/ResponsiveIcons/AttachHovered.png') !important;
+}
+
+.btnclearimage {
+    background-image: url(../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-position: -208px 0px;
+    display: inline-block !important;
+    background-repeat: no-repeat;
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 8px !important;
+    border: none !important;
+}
+
+    .btnclearimage:hover {
+        background-color: transparent !important;
+    }
+
+.ToolbarCreateReminder .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/24newEnabled.png) !important;
+    background-position: -2808px 0;
+}
+
+.rtbItemHovered .ToolbarCreateReminder .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/24newHovered.png) !important;
+}
+
+.rtbItemFocused .ToolbarCreateReminder .rtbIcon {
+    background-image: url(../Images/ResponsiveIcons/24newHovered.png) !important;
+}

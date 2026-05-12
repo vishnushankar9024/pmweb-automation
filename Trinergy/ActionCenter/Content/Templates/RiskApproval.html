@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Email</title>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        body {
+            font-family: InterVariable, "Work Sans", sans-serif;;
+            font-weight: normal;
+            font-size: 11pt;
+            color: black;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        #emailContainer, #emailContainer th, #emailContainer td {
+            border: 1px solid black;
+        }
+
+            #emailContainer th {
+                background-color: #046399;
+                color: #fff;
+            }
+
+        .button {
+            border: 2px solid #385d8a;
+            background-color: #4f81bd;
+            color: white;
+            text-decoration: none;
+            -moz-background-size: 100%;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+            height: 25px;
+            display: inline-block;
+            width: 100px;
+            text-align: center;
+        }
+
+            .button > span {
+                margin-top: 3px;
+                display: inline-block;
+            }
+    </style>
+    <style>
+        /* Style Definitions */
+        p.MsoNormal, li.MsoNormal, div.MsoNormal {
+            margin: 0in;
+            margin-bottom: .0001pt;
+            font-size: 11.0pt;
+            font-family: "InterVariable, "Work Sans", sans-serif;","sans-serif";
+        }
+    </style>
+
+</head>
+
+<body bgcolor="white">
+    <p>{{project_name}}</p>
+    <p>
+        Dear Project Manager,<br /><br />
+
+        The Risk Register for your project is updated in PMWeb based on the last project risk workshop/meeting. Your review is required on the updates shown below:<br />
+        Upon your review:<br />
+        <ol>
+            <li>Kindly approve the Project Risk Register for this month by clicking on the icon below <strong>latest by 6th of this month.</strong></li>
+            <li>Should you require to make any modifications, click "Modify" link against each risk and make the necessary changes.</li>
+            <li>After making any required changes please come back to this email and click “Approve”.</li>
+        </ol>
+        If you require any support/direction, the HFD–PMO Risk Manager can be reached at <a href="mailto:hanwar1@hamad.qa">hanwar1@hamad.qa</a> or at <a href="tel:40251132">40251132</a>.
+
+
+    </p>
+    <p>
+        <hr />
+        Click the below button to take action<br /><br />
+        <a href="pmwebhelper/task/riskapproval/{{pid}}" class="button"><span>&nbsp;&nbsp;Approve&nbsp;&nbsp;</span></a> &nbsp;&nbsp;&nbsp;
+        <!--<a href="PMWeb/SearchDocument.aspx?C=150" class="button"><span>&nbsp;&nbsp;Modify&nbsp;&nbsp;</span></a>-->
+    </p>
+    <br />
+    <table cellspacing="0" cellpadding="5" border="0" width="100%" id="emailContainer">
+        <thead>
+            <tr>
+                <th width="50">S.No</th>
+                <th width="150">RISK ID - TITLE - CATEGORY</th>
+                <th width="50">DEFINITION</th>
+                <th width="200">DRIVERS / ROOT CAUSE</th>
+                <th width="200">POST MITIGATION CRITICALITY</th>
+                <th width="200">MITIGATION / ACTION PLAN</th>
+                <th width="200">ACTION OWNER</th>
+                <th width="50">COMPLETION DATE</th>
+                <th width="75">STATUS</th>
+                <th width="75">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{body}}
+        </tbody>
+    </table>
+    
+    <br />
+    <div class=WordSection1>
+        <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'>
+            <b><span style='font-size:10.0pt;color:#0079C1'>Risk Module @ PMWeb<br></span></b>
+            <span style='font-size:9.0pt;color:#999999'>
+                System generated notice for your action, Please do not reply to this email<br>
+            </span>
+        </p>
+        <p class=MsoNormal><img border=0 width=294 height=76 id="Picture_x0020_2" src="https://www.hamad.qa/EN/Pages/_layouts/hmcinternet/en/images/hmc_logo124.png" alt="https://www.hamad.qa/EN/Pages/_layouts/hmcinternet/en/images/hmc_logo124.png"><o:p></o:p></p>
+        <p class=MsoNormal><o:p>&nbsp;</o:p></p>
+    </div>
+</body>
+</html>

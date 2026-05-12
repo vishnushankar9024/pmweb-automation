@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dtsRedlining" targetNamespace="http://tempuri.org/dtsRedlining.xsd" xmlns:mstns="http://tempuri.org/dtsRedlining.xsd" xmlns="http://tempuri.org/dtsRedlining.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dtsRedlining" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dtsRedlining" msprop:Generator_UserDSName="dtsRedlining">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblActions" msprop:Generator_TableClassName="tblActionsDataTable" msprop:Generator_TableVarName="tabletblActions" msprop:Generator_TablePropName="tblActions" msprop:Generator_RowDeletingName="tblActionsRowDeleting" msprop:Generator_RowChangingName="tblActionsRowChanging" msprop:Generator_RowEvHandlerName="tblActionsRowChangeEventHandler" msprop:Generator_RowDeletedName="tblActionsRowDeleted" msprop:Generator_UserTableName="tblActions" msprop:Generator_RowChangedName="tblActionsRowChanged" msprop:Generator_RowEvArgName="tblActionsRowChangeEvent" msprop:Generator_RowClassName="tblActionsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:long" />
+              <xs:element name="UserId" msprop:Generator_ColumnVarNameInTable="columnUserId" msprop:Generator_ColumnPropNameInRow="UserId" msprop:Generator_ColumnPropNameInTable="UserIdColumn" msprop:Generator_UserColumnName="UserId" type="xs:long" minOccurs="0" />
+              <xs:element name="User" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnUser" msprop:Generator_ColumnPropNameInRow="User" msprop:Generator_ColumnPropNameInTable="UserColumn" msprop:Generator_UserColumnName="User" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Thickness" msdata:Caption="UserId" msprop:Generator_ColumnVarNameInTable="columnThickness" msprop:Generator_ColumnPropNameInRow="Thickness" msprop:Generator_ColumnPropNameInTable="ThicknessColumn" msprop:Generator_UserColumnName="Thickness" type="xs:long" minOccurs="0" />
+              <xs:element name="Color" msprop:Generator_ColumnVarNameInTable="columnColor" msprop:Generator_ColumnPropNameInRow="Color" msprop:Generator_ColumnPropNameInTable="ColorColumn" msprop:Generator_UserColumnName="Color" type="xs:string" minOccurs="0" />
+              <xs:element name="ActionDate" msprop:Generator_ColumnVarNameInTable="columnActionDate" msprop:Generator_ColumnPropNameInRow="ActionDate" msprop:Generator_ColumnPropNameInTable="ActionDateColumn" msprop:Generator_UserColumnName="ActionDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ActionType" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnActionType" msprop:Generator_ColumnPropNameInRow="ActionType" msprop:Generator_ColumnPropNameInTable="ActionTypeColumn" msprop:Generator_UserColumnName="ActionType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Parameters" msprop:Generator_ColumnVarNameInTable="columnParameters" msprop:Generator_ColumnPropNameInRow="Parameters" msprop:Generator_ColumnPropNameInTable="ParametersColumn" msprop:Generator_UserColumnName="Parameters" type="xs:string" minOccurs="0" />
+              <xs:element name="IsVisible" msprop:Generator_ColumnVarNameInTable="columnIsVisible" msprop:Generator_ColumnPropNameInRow="IsVisible" msprop:Generator_ColumnPropNameInTable="IsVisibleColumn" msprop:Generator_UserColumnName="IsVisible" type="xs:boolean" minOccurs="0" />
+              <xs:element name="PageNumber" msprop:Generator_ColumnVarNameInTable="columnPageNumber" msprop:Generator_ColumnPropNameInRow="PageNumber" msprop:Generator_ColumnPropNameInTable="PageNumberColumn" msprop:Generator_UserColumnName="PageNumber" type="xs:int" minOccurs="0" />
+              <xs:element name="Transform" msprop:Generator_ColumnVarNameInTable="columnTransform" msprop:Generator_ColumnPropNameInRow="Transform" msprop:Generator_ColumnPropNameInTable="TransformColumn" msprop:Generator_UserColumnName="Transform" type="xs:string" minOccurs="0" />
+              <xs:element name="IsNew" msprop:Generator_ColumnVarNameInTable="columnIsNew" msprop:Generator_ColumnPropNameInRow="IsNew" msprop:Generator_ColumnPropNameInTable="IsNewColumn" msprop:Generator_UserColumnName="IsNew" type="xs:string" minOccurs="0" />
+              <xs:element name="MainPage" msprop:Generator_ColumnVarNameInTable="columnMainPage" msprop:Generator_ColumnPropNameInRow="MainPage" msprop:Generator_ColumnPropNameInTable="MainPageColumn" msprop:Generator_UserColumnName="MainPage" type="xs:string" minOccurs="0" />
+              <xs:element name="DrawingCount" msprop:Generator_ColumnVarNameInTable="columnDrawingCount" msprop:Generator_ColumnPropNameInRow="DrawingCount" msprop:Generator_ColumnPropNameInTable="DrawingCountColumn" msprop:Generator_UserColumnName="DrawingCount" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:tblActions" />
+      <xs:field xpath="mstns:Id" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

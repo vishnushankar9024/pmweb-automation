@@ -1,0 +1,45 @@
+﻿@{ 
+    Layout = null;
+}
+@*<h4>Session Expired</h4>*@
+<html>
+<head>
+    <link href="@Url.Content("~/Content/css/loader.css")" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: 'https://cmcs.pmweb.com/9_0_00/pmweb/custom/pmwebhelper.aspx/GetUser',
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json;charset=utf-8',
+                async: false,
+                cache: false,
+                success: function (data) {
+                    data = JSON.parse(data.d);
+                    if (data.Id > 0) {
+                        CreateSession(data.Id,data.Username);
+                    }
+                },
+                error: function (xhr) { }
+            });
+			});
+        function CreateSession(userId, username) {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("CeateSession", "Home")" + "?username=" + username + "&userid=" + userId,
+            success: function (data) {
+                document.location.href = document.location.href;
+            }
+        });
+		}
+        //parent.location.reload();
+    </script>
+
+</head>
+<body>
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EAddrIDReq" xml:space="preserve">
+    <value>Address ID is required.</value>
+  </data>
+  <data name="EAddrNIL" xml:space="preserve">
+    <value>Address not in list.</value>
+  </data>
+  <data name="EAdminUser" xml:space="preserve">
+    <value>Only admin user can be used.</value>
+  </data>
+  <data name="EAttDescReq" xml:space="preserve">
+    <value>Description is required for URL option.</value>
+  </data>
+  <data name="EAttOpAllw" xml:space="preserve">
+    <value>Attachment Option is not allowed.</value>
+  </data>
+  <data name="EAttOpReq" xml:space="preserve">
+    <value>Attachment Option is required.</value>
+  </data>
+  <data name="EBillTrmNIL" xml:space="preserve">
+    <value>Billing Terms not in list.</value>
+  </data>
+  <data name="ECatReq" xml:space="preserve">
+    <value>Category not in list.</value>
+  </data>
+  <data name="ECompIDUnq" xml:space="preserve">
+    <value>Company ID must be unique.</value>
+  </data>
+  <data name="ECompUsed" xml:space="preserve">
+    <value>The company is used; i cannot be deleted.</value>
+  </data>
+  <data name="EConnect" xml:space="preserve">
+    <value>Cannot connect to this database.</value>
+  </data>
+  <data name="EContactDel" xml:space="preserve">
+    <value>This contact cannot be deleted because it is linked to a PMWeb user account. Remove the link in PMWeb security and then try your delete again.</value>
+  </data>
+  <data name="EContactIDUnq" xml:space="preserve">
+    <value>Contact ID must be unique.</value>
+  </data>
+  <data name="ECountryNIL" xml:space="preserve">
+    <value>Country not in list.</value>
+  </data>
+  <data name="ECredentials" xml:space="preserve">
+    <value>Invalid Credentials.</value>
+  </data>
+  <data name="EDepartmentNIL" xml:space="preserve">
+    <value>Department not in list.</value>
+  </data>
+  <data name="EDeptNameReq" xml:space="preserve">
+    <value>Department Name is required.</value>
+  </data>
+  <data name="EDescReq" xml:space="preserve">
+    <value>Description is required.</value>
+  </data>
+  <data name="EFileCntReq" xml:space="preserve">
+    <value>File Content is required for upload type.</value>
+  </data>
+  <data name="EFileExtReq" xml:space="preserve">
+    <value>File extension is required.</value>
+  </data>
+  <data name="EFileNameReq" xml:space="preserve">
+    <value>Filename is required.</value>
+  </data>
+  <data name="EFileTypeInv" xml:space="preserve">
+    <value>Not an allowed File Type. Valid File Types are : {0}</value>
+  </data>
+  <data name="EGrpNamNIL" xml:space="preserve">
+    <value>Group Name not in list.</value>
+  </data>
+  <data name="EInvalidLicense" xml:space="preserve">
+    <value>Invalid License.</value>
+  </data>
+  <data name="EInvalidURL" xml:space="preserve">
+    <value>Invalid URL.</value>
+  </data>
+  <data name="ELocNIL" xml:space="preserve">
+    <value>Location not in list.</value>
+  </data>
+  <data name="EMaxFileName" xml:space="preserve">
+    <value>Exceeds the maximum allowed file name length of 150 characters.</value>
+  </data>
+  <data name="EMaxFileSize" xml:space="preserve">
+    <value>Exceeds the maximum allowed file size of {0}.</value>
+  </data>
+  <data name="EMaxNumbRot" xml:space="preserve">
+    <value>Exceeds the maximum number of files of {0} to show the file in the rotator.</value>
+  </data>
+  <data name="ENameReq" xml:space="preserve">
+    <value>Name is required.</value>
+  </data>
+  <data name="ENotesReq" xml:space="preserve">
+    <value>Notes is required.</value>
+  </data>
+  <data name="EProjectNIL" xml:space="preserve">
+    <value>Project not in list.</value>
+  </data>
+  <data name="EProjectReq" xml:space="preserve">
+    <value>Project is required.</value>
+  </data>
+  <data name="EProjNumbReq" xml:space="preserve">
+    <value>Project Number required.</value>
+  </data>
+  <data name="ERecordIDUnq" xml:space="preserve">
+    <value>Record ID must be unique.</value>
+  </data>
+  <data name="ERecordNumbReq" xml:space="preserve">
+    <value>Record Number is required.</value>
+  </data>
+  <data name="ERecordNumbUnq" xml:space="preserve">
+    <value>Record Number must be unique.</value>
+  </data>
+  <data name="ERecType" xml:space="preserve">
+    <value>Record Type does not exist.</value>
+  </data>
+  <data name="ERespNIL" xml:space="preserve">
+    <value>Responsible not in list.</value>
+  </data>
+  <data name="ESpecNIL" xml:space="preserve">
+    <value>Spec not in list.</value>
+  </data>
+  <data name="EstateNIL" xml:space="preserve">
+    <value>State not in list.</value>
+  </data>
+  <data name="EStatusNIL" xml:space="preserve">
+    <value>Status not in list.</value>
+  </data>
+  <data name="EStatusReq" xml:space="preserve">
+    <value>Status is required.</value>
+  </data>
+  <data name="ETypeNIL" xml:space="preserve">
+    <value>Type not in list.</value>
+  </data>
+  <data name="ETypeReq" xml:space="preserve">
+    <value>Type is required.</value>
+  </data>
+  <data name="EUnauthorizedRequest" xml:space="preserve">
+    <value>Unauthorized request.</value>
+  </data>
+  <data name="EUOMNIL" xml:space="preserve">
+    <value>UOM not in list.</value>
+  </data>
+  <data name="EURLReq" xml:space="preserve">
+    <value>URL is required.</value>
+  </data>
+  <data name="EWBSNIL" xml:space="preserve">
+    <value>WBS not in list.</value>
+  </data>
+</root>

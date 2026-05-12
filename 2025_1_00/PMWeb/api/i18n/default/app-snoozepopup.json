@@ -1,0 +1,8 @@
+{
+    "label.snoozeBy": "Snooze by",
+    "label.snoozeAmount": "Snooze Amount",
+    "label.snoozeUnits": "Snooze Units",
+    "label.snoozeTo": "Snooze to",
+    "label.snoozeDate": "Snooze Date",
+    "msg.dateInPast": "To snooze, you must select days or date in the future."
+}

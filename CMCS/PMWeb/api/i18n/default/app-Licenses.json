@@ -1,0 +1,17 @@
+{
+  "grid-column.licensed": "Licensed",
+  "grid-column.moduleTool": "Module or Tool",
+  "grid-column.licenseType": "License Type",
+  "grid-column.licenses": "Licenses",
+  "grid-column.assigned": "Assigned",
+  "grid-column.available": "Available",
+  "expiryDate": "PMWEB License Expires",
+  "grid-column.assignedDatabase": "Assigned by Database",
+  "grid-column.fullNamed": "Full Named",
+  "grid-column.guestConcurrent": "Guest Concurrent",
+  "grid-column.guestNamed": "Guest Named",
+  "grid-column.projectLicenses": "Project Licenses",
+  "grid-column.used": "Used",
+  "grid-column.availableproject": "Available",
+  "grid-column.apiKeys": "API Keys"
+}

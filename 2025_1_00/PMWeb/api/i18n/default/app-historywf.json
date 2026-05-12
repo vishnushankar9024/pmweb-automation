@@ -1,0 +1,15 @@
+{
+  "toolbar-button.add": "Add",
+  "toolbar-button.delete": "Delete",
+  "toolbar-button.layout": "Layout",
+  "toolbar-button.exportpdf": "PDF",
+  "toolbar-button.exportexcel": "Excel",
+  "toolbar-button.layout.save": "Save",
+  "toolbar-button.layout.savas": "Save as",
+  "toolbar-button.layout.edit": "Edit",
+  "toolbar-button.layout.delete": "Delete",
+  "toolbar-button.layout.system": "System default layout",
+  "layout-saved.message": "Layout saved",
+  "layout-deleted.message": "Layout deleted",
+  "layout-window.title": "Layout"
+}

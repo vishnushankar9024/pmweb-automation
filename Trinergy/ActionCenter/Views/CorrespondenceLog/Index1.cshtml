@@ -1,0 +1,294 @@
+﻿@model IEnumerable<Trinergy.Model.Program>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Corresponce Log</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Scripts/tree/themes/proton/style.css" />
+
+
+    <link href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.aspnetmvc.min.js"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <style>
+        html, body {
+            font-size: 14px;
+            font-family: Calibri;
+        }
+
+        #panelsearch {
+            /*display: none;*/
+            width: 98.9%;
+            z-index: 999;
+            position: absolute;
+        }
+
+        #panelbar {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .teamMate:after {
+            content: ".";
+            display: block;
+            height: 0;
+            line-height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+
+        .teamMate h2 {
+            font-size: 1.4em;
+            font-weight: normal;
+            padding-top: 20px;
+        }
+
+        .teamMate p {
+            margin: 0;
+        }
+
+        .teamMate img {
+            float: left;
+            margin: 5px 15px 5px 5px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+        }
+
+        .k-grid td {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-18 col-md-12">
+                    @(Html.Kendo().Grid(Model)
+                            .Name("grid_Properties")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(d => d.Name).HeaderTemplate("Campus");
+                            })
+                            .Pageable()
+                            .Sortable()
+                            .Scrollable(scr => scr.Height(1000))
+                            .Filterable()
+                            .Groupable(g => g.Enabled(false))
+                            .ColumnMenu()
+                            .ClientDetailTemplateId("template_projects")
+                            .HtmlAttributes(new { style = "height:auto" })
+                            .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(20)
+                            .ServerOperation(false)
+                        )
+                        .Events(events => events.DataBound("dataBound"))
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+    @(Html.Kendo().Window()
+        .Name("winProject")
+        .Title("Project")
+        .Content(() =>
+            Html.Kendo().Grid<Trinergy.Model.DocumentLogModel>()
+            .Name("grid_projects_log")
+             .Columns(columns =>
+                    {
+                        columns.Bound(d => d.ProjectName).HeaderTemplate("Project").Hidden(true);
+                        columns.Bound(d => d.FormName).HeaderTemplate("Form").Hidden(true);
+                        columns.Bound(d => d.RecordNumber).HeaderTemplate("Record No.").Width(150);
+                        columns.Bound(d => d.Reference).HeaderTemplate("Incoming Reference");
+                        columns.Bound(d => d.FormDate).HeaderTemplate("Date");
+                        columns.Bound(d => d.Subject).Encoded(false);
+                        columns.Bound(d => d.DocStatus).HeaderTemplate("Workflow").Encoded(false);
+                        //columns.Bound(d => d.Attachment).HeaderTemplate("Workflow").Encoded(false);
+                        columns.Bound(d => d.PendingUser).HeaderTemplate("Pending With");
+                        columns.Bound(d => d.From);
+                        columns.Bound(d => d.To);
+
+                    }
+            )
+            .Filterable()
+            .HtmlAttributes(new { style = "height:auto" })
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(50)
+            .ServerOperation(false)
+            .Read(read => read.Action("Log_Read", "CorrespondenceLog").Data("GetProjectId"))
+            )
+        )
+    )
+    @*<script id="template_projects" type="text/kendo-tmpl">
+        @(Html.Kendo().Grid<Trinergy.Model.Projects>()
+            .Name("grid_projects_#=Id#") // template expression, to be evaluated in the master context
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.Name).ClientTemplate("<a href='javascript:void(0)' onclick='alert(\\#:Id\\#)'>\\#:Name\\#</a>").HeaderTemplate("Projects").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+            })
+            .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .ServerOperation(false)
+                .Read(read => read.Action("GetProjects", "CorrespondenceLog", new { propertyId = "#=Id#" }))
+            )
+            .Pageable()
+            .Sortable()
+            .Events(e => e.Change("grid_projects_OnChange"))
+            .ToClientTemplate()
+        )
+    </script>*@
+    <script id="template" type="text/kendo-tmpl">
+        @(Html.Kendo().Grid<Trinergy.Model.Form>()
+            .Name("grid_#=Id#") // template expression, to be evaluated in the master context
+            .Columns(columns =>
+            {
+                columns.Bound(f => f.Name).HeaderTemplate("Form");
+            })
+            .ClientDetailTemplateId("template_log")
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(10)
+                .Read(read => read.Action("Log_Form", "CorrespondenceLog", new { projectId = "#=Id#" }))
+            )
+            .Pageable()
+            .Sortable()
+            .ToClientTemplate()
+        )
+    </script>
+    <script id="template_log" type="text/kendo-tmpl">
+        @(Html.Kendo().Grid<Trinergy.Model.DocumentLogModel>()
+                    .Name("grid_#=ProjectId#_#=Id#")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(d => d.ProjectName).HeaderTemplate("Project").Hidden(true);
+                        columns.Bound(d => d.FormName).HeaderTemplate("Form").Hidden(true);
+                        columns.Bound(d => d.RecordNumber).HeaderTemplate("Record No.").Width(150);
+                        columns.Bound(d => d.Reference).HeaderTemplate("Incoming Reference");
+                        columns.Bound(d => d.FormDate).HeaderTemplate("Date");
+                        columns.Bound(d => d.Subject).Encoded(false);
+                        columns.Bound(d => d.DocStatus).HeaderTemplate("Workflow").Encoded(false);
+                        //columns.Bound(d => d.Attachment).HeaderTemplate("Workflow").Encoded(false);
+                        columns.Bound(d => d.PendingUser).HeaderTemplate("Pending With");
+                        columns.Bound(d => d.From);
+                        columns.Bound(d => d.To);
+
+                    })
+                    .Pageable(pageable => pageable
+                        .Input(true)
+                        .Numeric(false)
+                        .Refresh(true)
+                     )
+                    .Sortable()
+                    .Scrollable(scr => scr.Height(500))
+                    .Filterable()
+                    .Groupable(g => g.Enabled(true))
+                    .ColumnMenu()
+                    .HtmlAttributes(new { style = "height:auto" })
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(50)
+                    //.ServerOperation(false)
+                    .Read(read => read.Action("Log_Read", "CorrespondenceLog", new { projectId = "#=ProjectId#", formId = "#=Id#" }))
+                ).ToClientTemplate()
+        )
+    </script>
+    <script type="text/javascript">
+        function dataBound() {
+            this.expandRow(this.tbody.find("tr.k-master-row").first());
+        }
+        function OnSelect(e) {
+            var dataItemValue = e.dataItem.Value;
+            var values = e.sender.value()
+
+            if (dataItemValue !== "-1" && values.includes(dataItemValue)) {
+                return;
+            }
+
+            if (dataItemValue === "-1") {
+                values = [];
+            } else if (values.indexOf("-1") !== -1) {
+                values = $.grep(values, function (value) {
+                    return value !== "-1";
+                });
+            }
+
+            values.push(dataItemValue);
+            this.value(values);
+            this.trigger("change"); //notify others for the updated values
+
+            e.preventDefault();
+        }
+        function grid_projects_OnChange(e) {
+            var selected = $.map(this.select(), function (item) {
+                return $(item).text();
+            });
+        }
+        function GetFilterData() {
+            var _fromDate = $('#txtfromdate').val();
+            var _toDate = $('#txttodate').val();
+
+            var _projects = $('#listboxproj').val();
+            var _forms = $('#listboxforms').val();
+            var _discipline = '';
+            var _workflowstatus = $('#listboxws').val();
+
+            var _subject = $('#txtsubject').val();
+            var _originReg = $('#txtoref').val();
+            var _outref = $('#txtrepref').val();
+            var _recno = $('#txtrecno').val();
+            var _subjectmatter = '';
+            var _category = '';
+            var _from = $('#txtfrom').val();
+            var _to = $('#txtto').val();
+            var _docType = '';
+            var _fileName = $('#txtFileName').val();
+
+            var _createdBy = $('#txtCreatedBy').val();
+
+            var _gateway = '';
+
+            var _pendingWith = $("#txtPendingWith").val();
+
+            var _listboxdepartments = '';
+            return {
+                fromDate: _fromDate, toDate: _toDate, projects: _projects, forms: _forms, workflowstatus: _workflowstatus,
+                subject: _subject, originReg: _originReg, subjectmatter: _subjectmatter, from: _from, to: _to,
+                fileName: _fileName, createdBy: _createdBy, pendingWith: _pendingWith,
+                outref: _outref, recno: _recno
+            };
+        }
+        function CloseSearch() {
+            $("#panelsearch").slideUp();
+        }
+        function toggleFilter() {
+            $("#panelsearch").slideToggle();
+        }
+        $(document).ready(function () {
+            $("#panelsearch").slideUp();
+            $("#btngetreport").click(function (e) {
+                $("#panelsearch").slideUp();
+                $("#grid").data("kendoGrid").dataSource.data([]);
+                $("#grid").data("kendoGrid").dataSource.read();
+                //$("#grid").data("kendoGrid").refresh();
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>

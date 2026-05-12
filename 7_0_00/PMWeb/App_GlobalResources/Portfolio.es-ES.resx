@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ESTIMATE_BIDCATEGORY" xml:space="preserve">
+    <value>Categoría (Licitación)</value>
+  </data>
+  <data name="MAINTENANCECONTRACTBILLING" xml:space="preserve">
+    <value>Facturación (Contrato de Mantenimiento)</value>
+  </data>
+  <data name="BILLINGTERM" xml:space="preserve">
+    <value>Condiciones de Facturación</value>
+  </data>
+  <data name="TODOLISTCATEGORIES" xml:space="preserve">
+    <value>Categoría (Lista de Pendientes)</value>
+  </data>
+  <data name="CORRESPONDENCECATEGORIES" xml:space="preserve">
+    <value>Categoría (Correspondencia)</value>
+  </data>
+  <data name="CATEGORY" xml:space="preserve">
+    <value>Categoría (Detalles del Listado de Planos)</value>
+  </data>
+  <data name="DRAWINGLISTCATEGORIES" xml:space="preserve">
+    <value>Categoría (Encabezado del Listado de Planos)</value>
+  </data>
+  <data name="DRAWINGPACKAGECATEGORIES" xml:space="preserve">
+    <value>Categoría (Paquetes de Planos)</value>
+  </data>
+  <data name="MEETINGMINUTESCATEGORIES" xml:space="preserve">
+    <value>Categoría (Actas Reuniones)</value>
+  </data>
+  <data name="PUNCHLISTCATEGORIES" xml:space="preserve">
+    <value>Categoría (Lista de Observaciones=</value>
+  </data>
+  <data name="RFICATEGORIES" xml:space="preserve">
+    <value>Categoría (Solicitudes de Información)</value>
+  </data>
+  <data name="SUBMITTALCATEGORIES" xml:space="preserve">
+    <value>Categoría (Submittals)</value>
+  </data>
+  <data name="TRANSMITTALCATEGORIES" xml:space="preserve">
+    <value>Categoría (Transmittals)</value>
+  </data>
+  <data name="CE_CAUSES" xml:space="preserve">
+    <value>Causa</value>
+  </data>
+  <data name="CHECKLIST_TYPE" xml:space="preserve">
+    <value>Tipo de Lista de Verificación</value>
+  </data>
+  <data name="RESOURCEEQUIPMENTSCLASSIFICATION" xml:space="preserve">
+    <value>Clasificación (Recursos de Equipo)</value>
+  </data>
+  <data name="COMPANIES" xml:space="preserve">
+    <value>Empresas</value>
+  </data>
+  <data name="DAILYREPORTCONDITIONS" xml:space="preserve">
+    <value>Conditions</value>
+  </data>
+  <data name="COUNTRIES" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="CSICODE" xml:space="preserve">
+    <value>Código de CSI</value>
+  </data>
+  <data name="DOCCSIDIVISION" xml:space="preserve">
+    <value>División de CSI</value>
+  </data>
+  <data name="CUSTOMLISTS" xml:space="preserve">
+    <value>Listados Personalizados</value>
+  </data>
+  <data name="EQUIPMENT_FUNCTIONSTATUS" xml:space="preserve">
+    <value>Estado de la Función</value>
+  </data>
+  <data name="RISKANALYSISIMPACT" xml:space="preserve">
+    <value>Impacto</value>
+  </data>
+  <data name="EQUIPMENT_OWNERSHIP" xml:space="preserve">
+    <value>Propiedad</value>
+  </data>
+  <data name="PRIORITIES" xml:space="preserve">
+    <value>Prioridad</value>
+  </data>
+  <data name="PROGRAMS" xml:space="preserve">
+    <value>Programa</value>
+  </data>
+  <data name="WORKORDERPROGRESS" xml:space="preserve">
+    <value>Progreso</value>
+  </data>
+  <data name="TRANSMITTALREMARKS" xml:space="preserve">
+    <value>Comentarios</value>
+  </data>
+  <data name="RENEWALTERMS" xml:space="preserve">
+    <value>Término de Renovación</value>
+  </data>
+  <data name="MONTHLYRENT" xml:space="preserve">
+    <value>Periodo de Arrendamiento</value>
+  </data>
+  <data name="RESOURCEGROUPS" xml:space="preserve">
+    <value>Grupo de Recursos</value>
+  </data>
+  <data name="RISKANALYSISRESPONSIBLE" xml:space="preserve">
+    <value>Responsable</value>
+  </data>
+  <data name="SHIPPINGCOMPAIES" xml:space="preserve">
+    <value>Empresa de Envío</value>
+  </data>
+  <data name="RESOURCELABORSSKILLS" xml:space="preserve">
+    <value>Habilidades</value>
+  </data>
+  <data name="FUNDINGSOURCES" xml:space="preserve">
+    <value>Fuente (Registros de Financiamiento)</value>
+  </data>
+  <data name="STATES" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="INITIATIVESTATUS" xml:space="preserve">
+    <value>Estado (Iniciativas)</value>
+  </data>
+  <data name="MEETINGMINUTESSTATUSES" xml:space="preserve">
+    <value>Estado (Líneas en Actas de Reuniones)</value>
+  </data>
+  <data name="PROJECTSTATUS" xml:space="preserve">
+    <value>Estado (Proyectos)</value>
+  </data>
+  <data name="CHECKLIST_STEPTYPE" xml:space="preserve">
+    <value>Tipo de Paso</value>
+  </data>
+  <data name="SYSTEMLISTS" xml:space="preserve">
+    <value>Listas del Sistema</value>
+  </data>
+  <data name="CHECKLIST_TASKTYPE" xml:space="preserve">
+    <value>Tipo de Tarea</value>
+  </data>
+  <data name="COMPANYADDRESSESTYPE" xml:space="preserve">
+    <value>Tipo (Direcciones)</value>
+  </data>
+  <data name="COMPANYINSURANCETYPES" xml:space="preserve">
+    <value>Tipo (Seguro de Empresas)</value>
+  </data>
+  <data name="COMPANYTYPES" xml:space="preserve">
+    <value>Tipo (Empresas)</value>
+  </data>
+  <data name="COMPANYCONTACTSTYPE" xml:space="preserve">
+    <value>Tipo (Contactos)</value>
+  </data>
+  <data name="CONTINGENCYTYPE" xml:space="preserve">
+    <value>Tipo (contingencias)</value>
+  </data>
+  <data name="EQUIPMENTTYPES" xml:space="preserve">
+    <value>Tipo (Equipos)</value>
+  </data>
+  <data name="DAILYREPORTINCIDENTSTYPE" xml:space="preserve">
+    <value>Type (Incidentes)</value>
+  </data>
+  <data name="INITIATIVETYPES" xml:space="preserve">
+    <value>Tipo (Iniciativas)</value>
+  </data>
+  <data name="ASSETPROPERTYTYPES" xml:space="preserve">
+    <value>Tipo (Lugares)</value>
+  </data>
+  <data name="MEETINGMINUTESTYPE" xml:space="preserve">
+    <value>Tipo (Actas de la reunión)</value>
+  </data>
+  <data name="PRODUCTIONTYPE" xml:space="preserve">
+    <value>Tipo (Producción)</value>
+  </data>
+  <data name="PROJECTTYPE" xml:space="preserve">
+    <value>Tipo (Proyectos)</value>
+  </data>
+  <data name="RISKTYPE" xml:space="preserve">
+    <value>Tipo (Análisis de Riesgos)</value>
+  </data>
+  <data name="SPACETYPES" xml:space="preserve">
+    <value>Tipo (Espacios)</value>
+  </data>
+  <data name="WORKORDERTYPES" xml:space="preserve">
+    <value>Tipo (Ordenes de Trabajo)</value>
+  </data>
+  <data name="TYPELEASES" xml:space="preserve">
+    <value>Tipo (Arrendamientos)</value>
+  </data>
+  <data name="UOM" xml:space="preserve">
+    <value>UDM</value>
+  </data>
+</root>

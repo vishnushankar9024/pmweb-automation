@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnPastRates.Text" xml:space="preserve">
+    <value>إحصل على الأسعار السابقة</value>
+  </data>
+  <data name="chkUpdateExistingDateRecords.Text" xml:space="preserve">
+    <value>السماح للخدمة بتحديث السجلّات الموجودة</value>
+  </data>
+  <data name="GridColumn_CurrencyCode" xml:space="preserve">
+    <value>*الرمز</value>
+  </data>
+  <data name="GridColumn_CurrencyDefaultRate" xml:space="preserve">
+    <value>السعر الإفتراضي</value>
+  </data>
+  <data name="GridColumn_CurrencyName" xml:space="preserve">
+    <value>*العملة</value>
+  </data>
+  <data name="GridColumn_CurrencySubDivision" xml:space="preserve">
+    <value>*PMWeb Word إسم الخانات العشريّة</value>
+  </data>
+  <data name="GridColumn_CurrencySubDivisionPrecision" xml:space="preserve">
+    <value>*PMWeb Word عدد الخانات العشريّة</value>
+  </data>
+  <data name="GridColumn_CurrencySymbol" xml:space="preserve">
+    <value>*رمز العملة</value>
+  </data>
+  <data name="GridColumn_CurrencySymbolPosition" xml:space="preserve">
+    <value>*موقع الرمز (قبل/بعد العدد)</value>
+  </data>
+  <data name="GridColumn_CurrentRate" xml:space="preserve">
+    <value>السعر الحالي</value>
+  </data>
+  <data name="GridColumn_FromDate" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="GridColumn_IsDefaultCurrency" xml:space="preserve">
+    <value>*الإفتراضي</value>
+  </data>
+  <data name="GridColumn_IsReference" xml:space="preserve">
+    <value>المرجع</value>
+  </data>
+  <data name="hpldefaultCurrency.Text" xml:space="preserve">
+    <value>العملة الإفتراضيّة</value>
+  </data>
+  <data name="lblAdvancedMultiCurrencies.Text" xml:space="preserve">
+    <value>نظام العملات المتعدّدة المتقدّم ليس متاح حالياً</value>
+  </data>
+  <data name="lblCurrencyList.Text" xml:space="preserve">
+    <value>لائحة العملات</value>
+  </data>
+  <data name="lblDefaultCurrency.Text" xml:space="preserve">
+    <value>العملة الأفتراضي</value>
+  </data>
+  <data name="lblDefaultRates" xml:space="preserve">
+    <value>السعر الأفتراضي</value>
+  </data>
+  <data name="lblEndDate.Text" xml:space="preserve">
+    <value>*تاريخ النهاية</value>
+  </data>
+  <data name="lblPassword.Text" xml:space="preserve">
+    <value>كلمة السرّ</value>
+  </data>
+  <data name="lblRates.Text" xml:space="preserve">
+    <value>الأسعار</value>
+  </data>
+  <data name="lblRateServiceSettings.Text" xml:space="preserve">
+    <value>إعدادات خدمة الأسعار</value>
+  </data>
+  <data name="lblRateServiceURL.Text" xml:space="preserve">
+    <value>URL رابط خدمة الأسعار</value>
+  </data>
+  <data name="lblStartDate.Text" xml:space="preserve">
+    <value>*تاريخ البداية</value>
+  </data>
+  <data name="lblTime.Text" xml:space="preserve">
+    <value>*الوقت</value>
+  </data>
+  <data name="lblUserName.Text" xml:space="preserve">
+    <value>إسم المستخدم</value>
+  </data>
+  <data name="lblWeekDays.Text" xml:space="preserve">
+    <value>يوم الأسبوع</value>
+  </data>
+  <data name="Msg_UniqueSymbolAndCode" xml:space="preserve">
+    <value>يجب على رمز ورقم العملة ان يكون فريداً</value>
+  </data>
+  <data name="MsgWarning_CurrencyIsUsed" xml:space="preserve">
+    <value>لا يمكن حذف سطر واحد أو أكثر لأنه يتم استخدامه في السجلات</value>
+  </data>
+  <data name="MsgWarning_RateError" xml:space="preserve">
+    <value>يجب أن يكون السعر الحالي أكبر من الصفر</value>
+  </data>
+  <data name="RadToolBarButton_Save.Text" xml:space="preserve">
+    <value>إحفظ</value>
+  </data>
+  <data name="rdbDaily.Text" xml:space="preserve">
+    <value>يومي</value>
+  </data>
+  <data name="rdbDoNotDownload.Text" xml:space="preserve">
+    <value>لا تنزّل</value>
+  </data>
+  <data name="rdbHourly.Text" xml:space="preserve">
+    <value>بالساعة</value>
+  </data>
+  <data name="rdbMonthly.Text" xml:space="preserve">
+    <value>شهري</value>
+  </data>
+  <data name="rdbWeekly.Text" xml:space="preserve">
+    <value>أسبوعي</value>
+  </data>
+  <data name="rdoMonthlyOnDay.Text" xml:space="preserve">
+    <value>يوم</value>
+  </data>
+  <data name="rdoMonthlyOnThe.Text" xml:space="preserve">
+    <value>ال</value>
+  </data>
+  <data name="rfvCode.ErrorMessage" xml:space="preserve">
+    <value>الرمز مطلوب</value>
+  </data>
+  <data name="rfvCurrency.ErrorMessage" xml:space="preserve">
+    <value>العملة مطلوبة</value>
+  </data>
+  <data name="rfvPassword.ErrorMessage" xml:space="preserve">
+    <value>كلمة السرّ مطلوبة</value>
+  </data>
+  <data name="rfvRateServiceURL.ErrorMessage" xml:space="preserve">
+    <value>URL الرابط مطلوب</value>
+  </data>
+  <data name="rfvSubDivisionPrecision.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="rfvSymbol.ErrorMessage" xml:space="preserve">
+    <value>رمز العملة مطلوب</value>
+  </data>
+  <data name="rfvtxtCurrencySubDivision.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="rfvUserName.ErrorMessage" xml:space="preserve">
+    <value>إسم المستخدم مطلوب</value>
+  </data>
+  <data name="rfvValueDateRequired.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="rnvCurrencySubDivisionPrecision.ErrorMessage" xml:space="preserve">
+    <value>يجب ان يكون الرقم بين ١ و٤</value>
+  </data>
+  <data name="SymbolPosition_LEFT" xml:space="preserve">
+    <value>يسار</value>
+  </data>
+  <data name="SymbolPosition_RIGHT" xml:space="preserve">
+    <value>يمين</value>
+  </data>
+  <data name="Tab_ConversionRates" xml:space="preserve">
+    <value>نسب تحويل العملة</value>
+  </data>
+  <data name="Tab_General" xml:space="preserve">
+    <value>عامّ</value>
+  </data>
+</root>

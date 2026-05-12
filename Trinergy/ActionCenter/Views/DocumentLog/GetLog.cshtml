@@ -1,0 +1,191 @@
+﻿@model Trinergy.Wrapper.DocLogFilter
+@{
+    Layout = null;
+}
+<table class="table table-bordered table-striped grid dataTable" id="tableProjects">
+    <thead>
+        @*<tr class="subReportHeader">
+            <th rowspan="2" style="width:100%"></th>
+            <th rowspan="2" style="width:100%"></th>
+            <th rowspan="2" style="width:100%"></th>
+            <th colspan="11">Incoming</th>
+            <th colspan="3">Outgoing</th>
+            <th colspan="4">Outgoing</th>
+                    </tr>*@
+        <tr class="subReportHeader">
+            <th></th>
+            <th></th>
+            <th></th>
+            <th style="text-align:center;">Record No.</th>
+            <th style="text-align:center;">Incoming Reference</th>
+            <th style="text-align:center;">Date</th>
+            <th style="text-align:center;">Subject</th>
+            @*<th style="text-align:center;">Collaborate</th>*@
+            <th style="text-align:center;">Workflow</th>
+            <th style="text-align:center;">Attachments</th>
+            <th style="text-align:center;">Pending With</th>
+            <th style="text-align:center;">Previous step workflow comments</th>
+            <th style="text-align:center;">Notifications</th>
+            <th style="text-align:center;">From</th>
+            <th style="text-align:center;">To</th>
+            <th style="text-align:center;">Response</th>
+            <th style="text-align:center;">Remarks</th>
+            <th style="text-align:center;">Reply Status</th>
+            <th style="text-align:center;">Reply On</th>
+            <th style="text-align:center;">Outgoing Reference</th>
+            <th style="text-align:center;">Document Type</th>
+            <th style="text-align:center;">Discipline</th>
+            <th style="text-align:center;">Category</th>
+            <th style="text-align:center;">Created By</th>
+        </tr>
+    </thead>
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#tableProjects').DataTable({
+            dom: "<'row'<'col-sm-3'<'row'<'text-center'l><'text-center'B>>><'col-sm-6 text-center toolbar'T><'col-sm-3'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+            //"sDom": '<"toolbar">frtip',
+            buttons: [
+            {
+                text: 'Show / Hide Filter',
+                action: function (e, dt, node, config) {
+                    //$("#panelsearch").toggle();
+                    //$("#panelgrid").toggleClass("col-md-10 col-md-12");
+                    $("#panelsearch").slideToggle();
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'A3',
+                title: 'Documents from ' + getFormattedDate($('#txtfromdate').val()) + " to " + getFormattedDate($('#txttodate').val()),
+                filename: 'Documents' + getFormattedDate($('#txtfromdate').val()) + "to" + getFormattedDate($('#txttodate').val()),
+                exportOptions: {
+                    columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                },
+                customize: function (doc) {
+                    doc.defaultStyle.fontSize = 7;
+
+                }
+
+            }, {
+                extend: 'excel',
+                title: 'Documents from ' + getFormattedDate($('#txtfromdate').val()) + " to " + getFormattedDate($('#txttodate').val()),
+                filename: 'Documents' + getFormattedDate($('#txtfromdate').val()) + "to" + getFormattedDate($('#txttodate').val())
+            }],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url" : '@Url.Action("ShowGrid", "DocumentLog")',
+                "type":"POST",
+                "datatype" : "json",
+                "data": {
+                    fromDate: '@Model.FromDate', toDate: '@Model.ToDate', projects: '@Model.Projects', forms: '@Model.Forms', discipline: '@Model.Discipline', workflowstatus: '@Model._WorkflowStatus',
+                    subject: '@Model.Subject', originReg: '@Model.OriginRef', subjectmatter: '@Model.SubjectMatter', category: '@Model.Category', from: '@Model.From', to: '@Model.To', docType: '@Model.DocType',
+                    fileName: '@Model.FileName', createdBy: '@Model.CreatedBy', Gateway: '@Model.Gateway', pendingWith: '@Model.PendingWith', listboxdepartments: '@Model.Departments',
+                    outref: '@Model.OutRef', recno: '@Model.RecNo'
+                },
+                "complete": function ()
+                {
+                }
+            },
+
+            "scrollX": true,
+            "scrollY": calcDataTableHeight(),
+            "bAutoWidth": false,
+            "columns": [
+                    { "data": "ProjectName", width: '100%' }, //ProjectName
+                    { "data": "FormName", width: '100%' }, //FormName
+                    { "data": "FileNames", width: '100%' }, //FileNames
+                    { "data": "RecordNumber", width: '50px' }, //RecordNumber
+                    { "data": "Reference", width: '125px' }, //Reference
+                    { "data": "FormDate", width: '70px' },//FormDate
+                    { "data": "subject", width: '225px' }, //Subject
+                    //"data": "ProjectName", { width: '80px' }, //Collaborate
+                    { "data": "DocStatus", width: '70px' }, //DocStatus
+                    { "data": "Attachment", width: '85px' }, //Attachments
+                    { "data": "PendingUser", width: '150px' }, //PendingUser
+                    { "data": "WorkflowComments", width: '200px' }, //Comments
+                    { "data": "View", width: '85px' }, //Notifications
+                    { "data": "From", width: '125px' }, //From
+                    { "data": "To", width: '125px' }, //To
+                    { "data": "Response", width: '75px' }, //Response_Required
+                    { "data": "Comments", width: '150px' }, //Remarks
+                    { "data": "ReplyStatus", width: '85px' }, //Reply Status
+                    { "data": "ReplyOn", width: '70px' }, //Reply On
+                    { "data": "ReplyRef", width: '125px' }, //Reply Ref
+                    { "data": "DocumentType", width: '150px' }, //Doc Type
+                     { "data": "Descipline", width: '80px' }, //Descipline
+                    { "data": "Doc_Category", width: '100px' }, //Doc_Category
+                    { "data": "CreatedBy", width: '125px' }, //Created By
+            ],
+
+            "columnDefs": [
+                { "visible": false, "targets": [0, 1, 2] },
+            ],
+            fixedColumns: true,
+            "pageLength": 50,
+            "order": [[0, 'asc'], [1, 'asc']],
+            "displayLength": 10,
+            "drawCallback": function (settings) {
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
+                var last = null;
+                var lastsub = null;
+                api.rows({ page: 'current' }).data().each(function (row, i) {
+                    debugger;
+                    group = row["ProjectName"];
+                    subgroup = row["FormName"];
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group-header group-header-form projectname"><td colspan="20" class="group-header-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4 headspan">&nbsp;&nbsp;<strong>' + group + '</strong></span></td></tr>'
+                        );
+                        last = group;
+                        lastsub = null;
+                    }
+
+                    if (lastsub !== subgroup) {
+                        $(rows).eq(i).before(
+                            '<tr class="group-header-form formname"><td colspan="20" class="group-header-form-td"><span class="glyphicon glyphicon-chevron-up" style="color:white"></span><span class="h4">&nbsp;&nbsp;<strong>' + subgroup + '</strong></span></td></tr>'
+                        );
+                        lastsub = subgroup;
+                    }
+                });
+
+                @*@if(ViewBag.FileName != "" && Model.Any())
+                {
+                    var docId = Model.First().FormId;
+                    <text>
+                    var Obj = $(".attachments:eq(0)");
+                    GetAttachments(@docId, Obj);
+                    </text>
+                }*@
+                //$(".group-header").nextUntil('.group-header').hide();
+                //$(".group-header-form").nextUntil('.group-header-form').hide();
+            }
+        });
+        $("div.toolbar").html('<h1 style="margin-top:0px; margin:bottom:0px;">Documents Log</h1>');
+
+        $('#tableProjects tbody').on('click', 'tr.projectname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $('#tableProjects tbody').on('click', 'tr.formname', function () {
+            if ($(this).find('span:first').hasClass("glyphicon-chevron-up")) {
+                $(this).nextUntil('.group-header-form').hide()
+            }
+            else {
+                $(this).nextUntil('.group-header-form').show()
+            }
+            $(this).find('span:first').toggleClass('glyphicon-chevron-up glyphicon-chevron-down');
+        });
+
+        $(parent).css('overflow', 'hidden');
+    });
+</script>

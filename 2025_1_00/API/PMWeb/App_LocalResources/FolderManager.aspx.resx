@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="lblFolder" xml:space="preserve">
+    <value>Folder:</value>
+  </data>
+  <data name="lblNoAvailableAttributes.Text" xml:space="preserve">
+    <value>No Available Attributes for this folder.</value>
+  </data>
+  <data name="lblNoFileToDisplay.Text" xml:space="preserve">
+    <value>No Files to display.</value>
+  </data>
+  <data name="lblSearchResult" xml:space="preserve">
+    <value>Search Result</value>
+  </data>
+  <data name="legend_Preview.Text" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Msg_CheckedOutBy" xml:space="preserve">
+    <value>Checked Out by</value>
+  </data>
+  <data name="tab_Attributes.Text" xml:space="preserve">
+    <value>Attributes</value>
+  </data>
+  <data name="tab_Files.Text" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="tab_Permissions.Text" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
+  <data name="tab_Revision.Text" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="WarningMsg_DeleteSelectedFile" xml:space="preserve">
+    <value>Delete selected File?</value>
+  </data>
+  <data name="WarningMsg_DeleteSelectedFolder" xml:space="preserve">
+    <value>Delete cannot be restored.\nAre you sure you wish to continue?</value>
+  </data>
+  <data name="WarningMsg_DeleteSelectedFolderWithSubFolders" xml:space="preserve">
+    <value>You are about to delete the selected Folder, their sub-folders and all of the files within those folders. This process cannot be restored.\nAre you sure you wish to continue?</value>
+  </data>
+  <data name="ContextMenu_CopyFolder.Text" xml:space="preserve">
+    <value>Copy Folder</value>
+  </data>
+  <data name="ContextMenu_NewFolder.Text" xml:space="preserve">
+    <value>New Folder</value>
+  </data>
+  <data name="ContextMenu_Open.Text" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="ContextMenu_PasteFolder.Text" xml:space="preserve">
+    <value>Paste Folder</value>
+  </data>
+  <data name="ContextMenu_Rename.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="ContextMenu_UploadFile.Text" xml:space="preserve">
+    <value>Upload File</value>
+  </data>
+  <data name="chkSearchContent.text" xml:space="preserve">
+    <value>Search file contents</value>
+  </data>
+  <data name="WarningMsg_CheckoutNeedSelectedFile" xml:space="preserve">
+    <value>Please select a file and then Check Out.</value>
+  </data>
+  <data name="WarningMsg_UnableDeleteCheckoutFile" xml:space="preserve">
+    <value>This file cannot be deleted until it has been checked in.</value>
+  </data>
+  <data name="Legend_Attributes.Text" xml:space="preserve">
+    <value>Attributes</value>
+  </data>
+  <data name="GridColumn_Id" xml:space="preserve">
+    <value>Document #</value>
+  </data>
+  <data name="rfvAttributeName.ErrorMessage" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="lblEnableVersions.Text" xml:space="preserve">
+    <value>Enable Versions</value>
+  </data>
+  <data name="lblCheckIn.Text" xml:space="preserve">
+    <value>Check In</value>
+  </data>
+  <data name="lblPMWebViewer.Text" xml:space="preserve">
+    <value>PMWEB Viewer</value>
+  </data>
+  <data name="lbt3DViewer.Text" xml:space="preserve">
+    <value>3D Viewer</value>
+  </data>
+  <data name="lblDownloadSelectedLine.Text" xml:space="preserve">
+    <value>Download Files</value>
+  </data>
+  <data name="ErrorMsg_SelectLinesToDownload" xml:space="preserve">
+    <value>Select lines that contain files you want to download</value>
+  </data>
+  <data name="WarningMsg_UnableToDelete" xml:space="preserve">
+    <value>You don't have permission to delete one or more from the selected file(s). </value>
+  </data>
+  <data name="ContextMenu_Subscribe.Text" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="lblDuplicateFile.Text" xml:space="preserve">
+    <value>When Adding Duplicate Files...</value>
+  </data>
+  <data name="lblQuickFileUpload.Text" xml:space="preserve">
+    <value>Quick File Upload</value>
+  </data>
+  <data name="lblUploadOptionChFFText" xml:space="preserve">
+    <value>Browse to select files or drop files in the box below to upload them.</value>
+  </data>
+  <data name="lblUploadOptionIEText" xml:space="preserve">
+    <value>Browse to select files in the box below to upload them.</value>
+  </data>
+  <data name="rbnOverwriteDuplicateFile.Text" xml:space="preserve">
+    <value>Overwrite duplicate files. (Does not apply to Checked Out files or to files in Workflow.)</value>
+  </data>
+  <data name="rbnSkipDuplicateFile.Text" xml:space="preserve">
+    <value>Skip duplicate files</value>
+  </data>
+  <data name="lblCategory.Text" xml:space="preserve">
+    <value>Default Category</value>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>Default Type</value>
+  </data>
+  <data name="ErrorMsg_UploadingFiles" xml:space="preserve">
+    <value>Error while uploading - one or more file(s) were not uploaded. {0}</value>
+  </data>
+  <data name="WarningMsg_FileExtension" xml:space="preserve">
+    <value>Is A Restricted File Type. Valid File Types Include ( {0} ). Please Contact Your System Administrator If You Need To Upload A File Type Which Is Not Supported.</value>
+  </data>
+  <data name="WarningMsg_InvalidFile" xml:space="preserve">
+    <value>Invalid file extension or maximum file size exceeded</value>
+  </data>
+  <data name="ContextMenu_EditFolder.Text" xml:space="preserve">
+    <value>Edit Folder</value>
+  </data>
+  <data name="FileContextMenu_CancelCheckOut.Text" xml:space="preserve">
+    <value>Cancel Check Out</value>
+  </data>
+  <data name="FileContextMenu_CheckIn.Text" xml:space="preserve">
+    <value>Check In</value>
+  </data>
+  <data name="FileContextMenu_CheckOut.Text" xml:space="preserve">
+    <value>Check Out</value>
+  </data>
+  <data name="FileContextMenu_Copy.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="FileContextMenu_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="FileContextMenu_Download.Text" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="FileContextMenu_Paste.Text" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="FileContextMenu_PMWebViewer.Text" xml:space="preserve">
+    <value>PMWEB Viewer</value>
+  </data>
+  <data name="FileContextMenu_ShowLatestVersions.Text" xml:space="preserve">
+    <value>Show Latest Versions Only</value>
+  </data>
+  <data name="FileContextMenu_Upload.Text" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="FolderContextMenu_AddFolder.Text" xml:space="preserve">
+    <value>Add Folder</value>
+  </data>
+  <data name="FolderContextMenu_Delete.Text" xml:space="preserve">
+    <value>Delete Folders &amp; Subfolders</value>
+  </data>
+  <data name="FolderContextMenu_EditFolder.Text" xml:space="preserve">
+    <value>Edit Folder</value>
+  </data>
+  <data name="FolderContextMenu_Paste.Text" xml:space="preserve">
+    <value>Paste Files</value>
+  </data>
+  <data name="FolderContextMenu_Subscribe.Text" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="FolderContextMenu_Unsubscribe.Text" xml:space="preserve">
+    <value>Unsubscribe</value>
+  </data>
+  <data name="FolderContextMenu_UploadFiles.Text" xml:space="preserve">
+    <value>Upload Files</value>
+  </data>
+  <data name="ContextMenu_PasteFiles.Text" xml:space="preserve">
+    <value>Paste File(s)</value>
+  </data>
+  <data name="ContextMenu_Unsubscribe.Text" xml:space="preserve">
+    <value>Unsubscribe</value>
+  </data>
+  <data name="GridColumn_Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="GridColumn_CheckedByUserName" xml:space="preserve">
+    <value>Last Checked In/Out</value>
+  </data>
+  <data name="GridColumn_CreatedByUserName" xml:space="preserve">
+    <value>Added by</value>
+  </data>
+  <data name="GridColumn_CreatedDate" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="GridColumn_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="GridColumn_Extension" xml:space="preserve">
+    <value>Ext.</value>
+  </data>
+  <data name="GridColumn_FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="GridColumn_FolderPath" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="GridColumn_LastModified" xml:space="preserve">
+    <value>Last Checked In/Out</value>
+  </data>
+  <data name="GridColumn_Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="GridColumn_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="GridColumn_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="GridColumn_WorkflowStatus" xml:space="preserve">
+    <value>Workflow  Status</value>
+  </data>
+  <data name="ContextMenu_DeleteFolder.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="FileContextMenu_3DViewer.Text" xml:space="preserve">
+    <value>3D Viewer</value>
+  </data>
+  <data name="ContextMenu_CopyFolderUrl.Text" xml:space="preserve">
+    <value>Copy Folder URL</value>
+  </data>
+  <data name="ALL_ENTITIES" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="ALL_LOCATIONS" xml:space="preserve">
+    <value>All Locations</value>
+  </data>
+  <data name="ALL_PROJECTS" xml:space="preserve">
+    <value>All Projects</value>
+  </data>
+  <data name="CONFIGURE_TREE" xml:space="preserve">
+    <value>Configure Tree</value>
+  </data>
+  <data name="SAVE_TREE" xml:space="preserve">
+    <value>Save Tree</value>
+  </data>
+  <data name="OverLoadTreeMsg" xml:space="preserve">
+    <value>Only the first 500 records are being shown. Reconfigure the tree view to show fewer than 500 records.</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="lblDropFilesToUploadText" xml:space="preserve">
+    <value>Drop Files Here to Upload</value>
+  </data>
+  <data name="CotextMenu_3DViewer.Text" xml:space="preserve">
+    <value>3D Viewer</value>
+  </data>
+</root>

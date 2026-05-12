@@ -1,0 +1,13 @@
+﻿@model Trinergy.Model.Projects
+    @{ 
+        Layout = null;
+    }
+<ul>
+    @{
+        <li id="@Model.FolderId" project-id="@Model.Id" parent-id="0" data-jstree='{ "icon" : "glyphicon glyphicon-book" }'>
+            @Model.Name
+            @Html.Raw(new Trinergy.Wrapper.Tree().GetTreeNode(Model.FolderId))
+        </li>
+    }
+</ul>
+

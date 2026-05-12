@@ -1,0 +1,237 @@
+﻿.btncancel .Icon {
+    background-image: url(Images/ResponsiveIcons/24Enabled.png) !important;
+    width: 24px !important;
+    height: 24px !important;
+    background-repeat: no-repeat;
+    background-position: -1248px 0px !important;
+    display: inline-block !important;
+    vertical-align: middle;
+    margin-left: 24px;
+    margin-top: 10px;
+}
+
+input[type="button"].configureTree ::before {
+}
+
+.configureTree:hover {
+    color: #666666 !important;
+}
+
+.DMSplitterPane {
+    height: calc(100vh - 163px) !important;
+    overflow:hidden !important;
+   
+}
+
+@media screen and (max-width: 843px) and (min-width: 650px) {
+    .PMHeader .row .col-6 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+}
+
+@media screen and (min-width:844px) {
+    .DMHorizontalSplitter {
+        height: calc(100vh - 60px) !important;
+    }
+}
+
+div#ctl00_CPH1_trvFolders {
+    color: #ffffff !important;
+    background-color: #666666 !important;
+}
+
+div#ctl00_CPH1_trvConfigureFolders {
+    color: #ffffff !important;
+    background-color: #666666 !important;
+}
+
+.configureTree .Icon {
+    background-image: url('Images/ResponsiveIcons/24enabled.png');
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: -2424px 0 !important;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 24px;
+    margin-top: 10px;
+}
+
+.configureTree, .btnSave, .btnSaveExit, .btncancel {
+    background-color: transparent !important;
+    /*border-radius: 10px;*/
+    /*width: 270px;*/
+    /*height: 32px;*/
+    display: block;
+    text-decoration: none;
+    position: relative;
+    left: -10px;
+}
+
+    .configureTree .lblConfigureFolders {
+        text-transform: uppercase;
+        position: relative;
+        top: 10px;
+        color: white;
+        text-decoration: none;
+        left: 24px;
+    }
+
+.saveTree {
+    background-color: transparent !important;
+}
+
+    .saveTree .Icon {
+        background-image: url('Images/ResponsiveIcons/24enabled.png');
+        height: 24px;
+        width: 24px;
+        background-position: -720px 0 !important;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .saveTree .lblConfigureFolders {
+        text-transform: uppercase;
+        position: relative;
+        text-decoration: none;
+        color: #666666;
+        font-size: 13px;
+    }
+
+.removeLeft {
+    left: 0 !important;
+}
+
+.DMVerticalSplitter {
+    height: calc(100vh - 80px) !important;
+}
+
+.DMHeaderPane {
+    Height: calc(50vh - 80px);
+}
+
+.DocumentManagerTree {
+    height: calc(100vh - 285px);
+}
+
+.closed {
+    width: 0px !important;
+}
+
+div#ctl00_CPH1_FolderManagerTree_trvFolders {
+    color: #ffffff !important;
+    background-color: #666666 !important;
+}
+
+div#ctl00_CPH1_FolderManagerTree_trvConfigureFolders,
+div.DocumentManagerTree {
+    color: #ffffff !important;
+    background-color: #666666 !important;
+}
+
+.RadMenu ul.rmGroup {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.RadSplitter .rspCollapseBarCollapse,
+.RadSplitter .rspCollapseBarExpand {
+    background-image: none !important;
+    background-color: #b1b1b1;
+    border-radius: 0 0 0 0;
+    height: 40px;
+}
+
+.RadSplitter .rspCollapseBarCollapseOver:hover,
+.RadSplitter .rspCollapseBarExpandOver:hover {
+    background-color: #cccccc !important;
+}
+
+@media screen and (max-width: 843px) and (min-width: 320px) {
+    .DocumentManagerTree {
+        height: calc(100vh - 165px);
+    }
+    /*.DMSplitterPane {
+        height: calc(100vh - 50px) !important;
+        margin-top: 0 !important;
+        position: unset !important;
+        z-index:3000 !important;
+        width: 70vw !important;
+    }*/
+
+ 
+
+    /*#RAD_SPLITTER_PANE_CONTENT_ctl00_CPH1_DMHeaderPane, #RAD_SPLITTER_PANE_CONTENT_ctl00_CPH1_DetailPane, #RAD_SPLITTER_PANE_CONTENT_ctl00_CPH1_RadContentPane {
+        width: calc(100vw - 3px) !important;
+    }*/
+
+   /* .DMSplitter {
+        top: 116px !important;
+        z-index: 3001;
+        left: calc(70vw) !important;
+    }*/
+
+    /*.RadSplitter .rspPane {
+        position: relative;
+        top: 50px;
+    }*/
+    /*.rspCollapseBarCollapse {
+        margin-top: 40vh !important;
+    }*/
+  
+
+    .RadSplitter_Default .rspResizeBar{
+        z-index: 9999 !important;
+    }
+
+
+
+    #ctl00_CPH1_treeGroupsAndItemsPane .DMSplitterPane {
+        z-index: 3001 !important;
+        top: 116px;
+        position:fixed !important;
+    }
+
+    .ToolBar {
+        top: 116px !important;
+        width: calc(70vw) !important;
+        left: 2px !important;
+        max-width: unset !important;
+    }
+
+}
+
+.trvConfigureFolders {
+    z-index: 9999;
+    position: relative;
+}
+
+.btnSave .Icon {
+    background-image: url('Images/ResponsiveIcons/24newEnabled.png');
+    width: 24px !important;
+    height: 24px !important;
+    background-repeat: no-repeat;
+    background-position: -696px 0 !important;
+    display: inline-block !important;
+    vertical-align: middle;
+    margin-left: 24px;
+    margin-top: 10px;
+}
+
+.btnSaveExit .Icon {
+    background-image: url('Images/ResponsiveIcons/24newEnabled.png');
+    width: 24px !important;
+    height: 24px !important;
+    background-repeat: no-repeat;
+    background-position: -2282px 0 !important;
+    display: inline-block !important;
+    vertical-align: middle;
+    margin-left: 24px;
+    margin-top: 10px;
+}
+
+.DocumentManagerTree .rtIn {
+    white-space:normal;
+    overflow-wrap:break-word;
+}

@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = null;
+}
+<div class="col-md-12 ">
+    <label class="lblpanel">From Date</label>
+    @Html.TextBox("txtfromdate", new DateTime(DateTime.Now.Year, 1, 1), "{0:yyyy-MM-dd}", new { @class = "form-control formdate", type = "date" })
+    @*  @Html.Editor("FromDate", new { htmlAttributes = new { @class = "form-control formdate", @id = "txtfromdate", @type = "date" , @value= new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd") } })*@
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel">To Date</label>
+        @Html.TextBox("txttodate", DateTime.Today, "{0:yyyy-MM-dd}", new { @class = "form-control formdate", type = "date" })
+
+    </div>
+</div>
+<div class="form-group " style="overflow:inherit">
+    <div class="col-md-12">
+        <label class="lblpanel" style="text-align:left;width:inherit">Projects</label>
+
+        @Html.ListBox("Projects", new SelectList(ViewBag.Userprojects, "Id", "Name"), new { @id = "listboxproj", @class = "form-control listbox" })
+
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 " style="max-width:100px">
+        <label class="lblpanel" style="text-align:left;width:inherit">Forms</label>
+        @Html.ListBox("Forms", new SelectList(ViewBag.UserForms, "Id", "Name"), new { @id = "listboxforms", @class = "form-control listbox" })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel" style="text-align:left;width:inherit">Document Type</label>
+        @Html.ListBox("DocType", new SelectList(ViewBag.DocType, "Val", "Name"), new { @id = "listboxdoctype", @class = "form-control listbox" })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel" style="text-align:left;width:inherit">Discipline</label>
+        @Html.ListBox("Discipline", new SelectList(ViewBag.Disciplines, "Val", "Name"), new { @id = "listboxdisc", @class = "form-control listbox" })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel" style="text-align:left;width:inherit">Workflow Status</label>
+        @Html.ListBox("WorkflowStatus", new SelectList(ViewBag.DocumentsStatus, "Id", "Name"), new { @id = "listboxws", @class = "form-control listbox" })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel">Subject</label>
+        @Html.Editor("Subject", new { htmlAttributes = new { @class = "form-control formtext", @id = "txtsubject" } })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel">Originator Reference</label>
+        @Html.Editor("Reference", new { htmlAttributes = new { @class = "form-control formtext", @id = "txtoref" } })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel">Category</label>
+        @Html.Editor("Doc Category", new { htmlAttributes = new { @class = "form-control formtext", @id = "txtcategory" } })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel">From</label>
+        @Html.Editor("From", new { htmlAttributes = new { @class = "form-control formtext", @id = "txtfrom" } })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel">To</label>
+        @Html.Editor("To", new { htmlAttributes = new { @class = "form-control formtext", @id = "txtto" } })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 ">
+        <label class="lblpanel">File Name</label>
+        @Html.Editor("To", new { htmlAttributes = new { @class = "form-control formtext", @id = "txtFileName" } })
+    </div>
+</div>
+<div class="form-group ">
+    <div class="col-md-12 marginTop10">
+        <button type="button" id="btngetreport" class="btn btn-primary">Get Report</button>
+        <button type="button" id="btnclear" class="btn btn-primary">Clear</button>
+    </div>
+</div>

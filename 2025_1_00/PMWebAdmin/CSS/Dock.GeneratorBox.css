@@ -1,0 +1,13 @@
+.RadDock_GeneratorBox
+{
+    /*background: #fff url(Dock/GeneratorBox.jpg) no-repeat;*/
+    color: #000;
+    font-family: 'ms sans serif' ,sans-serif;
+    text-align: left;
+    position: relative !important;
+    top: 0px !important;
+    right: 0px !important;
+    bottom: 0px !important;
+    left: 0px !important;
+}
+

@@ -1,0 +1,283 @@
+﻿
+
+div.applicationWrapper
+{
+    background: url('../Images/Redlining/ApplicationBackground.gif') repeat-x;
+    font: normal 11px Arial, Verdana, Sans-serif;
+    color: #404040;
+    width: 680px;
+    margin: 20px auto;
+}
+
+div.menuBar
+{
+    height: 55px;
+    position: relative;
+    
+}
+
+/*div.titleBar
+{
+    height: 29px;
+    margin-left:54px;
+    background: transparent url('Images/TitleBarBg.gif') no-repeat;
+}*/
+
+div.titleBar div
+{
+    float: left;
+}
+
+div.titleBar div.cmdBar
+{
+    width: 128px;
+}
+
+/* menu bar toolbar begin */
+div.titleBar div.cmdBar ul
+{
+    margin: 0;
+    padding: 0;
+    margin-top: 5px;
+    list-style-type: none;
+}
+
+div.titleBar div.cmdBar li
+{
+    float: left;
+}
+
+div.titleBar div.cmdBar li a
+{
+    height: 22px;
+    width: 22px;
+    display: block;
+    background: transparent;
+    margin-right: 4px;
+}
+
+div.titleBar div.cmdBar li a img
+{
+    border: 0;
+    margin: 2px;
+}
+
+div.titleBar div.cmdBar a:hover
+{
+    background: transparent url('../Images/Redlining/CmdBarHover.gif') no-repeat;
+}
+
+/* menu bar toolbar end */
+
+div.titleBar div.windowControls
+{
+    width: 78px;
+    float: right;
+}
+
+div.titleBar div.documentTitle
+{
+    padding-left: 100px;
+}
+
+div.ribbonBar
+{
+    position: relative;
+    top: -24px;
+    border-left: solid 1px #3b5a82;
+    border-right: solid 1px #3b5a82;
+    background: url('../Images/Redlining/ribbonBg.gif') repeat-x left 26px;
+    
+}
+
+.MultipageWrapper
+{
+    width: 100%;
+    position: relative;
+    top: -3px;
+    background: url('../Images/Redlining/ribbonBg.gif') repeat-x;
+}
+
+/* ribbon dock begin */
+table.ribbonDock
+{
+    float: left;
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 2px;
+}
+
+table.ribbonDock td
+{
+    font-size: 1px;
+    vertical-align: top;
+}
+
+table.ribbonDock td.dockTitle
+{
+    text-align: center;
+    font: bold 11px Arial, Verdana, Sans-serif;
+    color: #3e6aaa;
+    cursor: pointer;
+    cursor: default;
+    background: #c1d9f1 url('../Images/Redlining/DockTitle.gif') repeat-x;
+}
+
+table.ribbonDock td.dockTitle div.titleText
+{
+   
+    text-align:center;
+}
+
+table.ribbonDock td.dockTitle div.dockGrip
+{
+    float: right;
+    width: 8px;
+    height: 16px;
+    background: transparent url('../Images/Redlining/DockGrip.gif') no-repeat;
+}
+
+table.ribbonDock td.dockTop
+{
+    background: transparent url('../Images/Redlining/DockTop.gif') repeat-x;
+}
+
+table.ribbonDock td.middleLeft
+{
+    width: 3px;
+    background: transparent url('../Images/Redlining/DockMiddleLeft.gif') repeat-y;
+}
+
+table.ribbonDock td.middleRight
+{
+    width: 3px;
+    background: transparent url('../Images/Redlining/DockMiddleRight.gif') repeat-y;
+}
+
+table.ribbonDock td.toolsContainer
+{
+    background: #d8e8f5 url('../Images/Redlining/ToolsContainer.gif') repeat-x;
+    padding: 6px 4px;
+    padding-bottom: 0;
+    height: 60px;
+}
+
+table.innerTable td
+{
+    font: normal 11px Arial, Verdana, Sans-serif;
+}
+
+/* ribbon dock end */
+
+/* most used command tool begin */
+ul.mostUsedCommand
+{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ul.mostUsedCommand li
+{
+    float: left;
+}
+
+ul.mostUsedCommand li img
+{
+    border: 0;
+}
+
+ul.mostUsedCommand li a
+{
+    text-decoration: none;
+    display: block;
+    color: #15428b;
+    text-align: center;
+    margin-right: 4px;
+    background: transparent;
+    width: 42px;
+    padding-top: 4px;
+}
+
+ul.mostUsedCommand li a:hover
+{
+    background: transparent url('../Images/Redlining/MostUsedBtnHover.gif') no-repeat;
+}
+
+ul.mostUsedCommand li a:hover
+{
+    color: #404040;
+}
+
+ul.mostUsedCommand li a span
+{
+    display: block;
+}
+
+ul.mostUsedCommand li a span.last
+{
+    margin-top: 2px;
+}
+/* most used command tool end */
+
+div.applicationBottom
+{
+    height: 20px;
+   /* background: transparent url('Images/Redlining/FrayedBottom.gif') no-repeat;*/
+    position: relative;
+    top: -26px;
+}
+
+div.RadMenu_Office2007Big .myClass
+{
+    padding: 0 !important;
+}
+
+div.RadMenu_Office2007Big .myClass .rmText
+{
+    display: none;
+}
+
+
+
+
+  #RedliningPageContainer  .RadTabStrip .rtsLevel1 .rtsTxt,#RedliningPageContainer  .RadTabStripVertical .rtsLevel1 .rtsTxt
+    ,#RedliningPageContainer .RadTabStrip .rtsIn,#RedliningPageContainer  .RadTabStripVertical .rtsIn
+    {
+        padding: 0 1px !important;
+     }
+#RedliningPageContainer .rmLink,#RedliningPageContainer  .rmRootLink
+{
+    display:none !important;
+}
+
+
+
+#RedliningPageContainer .stampItems > div
+{
+    border:3px solid red;
+    padding:1px;
+    margin:5px;
+    cursor:pointer;
+    float:left;
+    white-space:nowrap;
+    font-size:14px;
+    color:Red;
+}
+
+#RedliningPageContainer .stampItems > div:hover
+{
+     border:3px dashed red;
+}
+
+
+#RedliningPageContainer .rmRootGroup,#RedliningPageContainer  .rmHorizontal
+{
+    border: none !important;
+    background-color: Transparent !important ;
+}
+
+#RedliningPageContainer .RadMenu .rmGroup .rmText 
+{
+    padding: 0 5px 0 5px !important;
+}

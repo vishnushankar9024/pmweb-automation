@@ -1,0 +1,327 @@
+﻿@model Importer
+@{
+    Layout = null;
+
+    string project = "\"" + Model.Project + "\"";
+    string docStatus = "\"" + Model.DocStatus + "\"";
+    string contact = "\"" + Model.ContactName + "\"";
+    string category = "\"" + Model.Category + "\"";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Importer</title>
+
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/web/kendo.common.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Content/web/kendo.bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    @*<link rel="stylesheet" href="~/Content/fontawesome.min.css" />*@
+
+    <script src="~/Scripts/kendo/2019.3.1023/jquery.min.js"></script>
+    <script src="~/Scripts/kendo/2019.3.1023/jszip.min.js"></script>
+    <script src="~/Scripts/kendo/2019.3.1023/kendo.all.min.js"></script>
+    <script src="~/Scripts/kendo/2019.3.1023/kendo.aspnetmvc.min.js"></script>
+    <style>
+        html, body {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h3>Transmittals</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label>No. of Records</label>
+                <input type="number" id="txtNoRecords" />
+                <button id="save">Save</button>
+            </div>
+        </div>
+
+        @(Html.Kendo().Spreadsheet()
+        .Name("spreadsheet")
+        //.Rows(10)
+        .Columns(19)
+        .Sheetsbar(false)
+        .Toolbar(false)
+        // Required to enable Excel Export in some browsers
+        .HtmlAttributes(new { style = "width:100%" })
+        .Excel(excel => excel
+            .ProxyURL(Url.Action("Editors_Proxy", "Spreadsheet"))
+        )
+        .Pdf(pdf => pdf
+            .ProxyURL(Url.Action("Editors_Proxy", "Spreadsheet"))
+        )
+        .Sheets(sheets =>
+        {
+            sheets.Add()
+                .Columns(columns =>
+                {
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                    columns.Add().Width(100);
+                })
+                .Rows(rows =>
+                {
+                    rows.Add().Cells(cells =>
+                    {
+                        cells.Add()
+                                .Value("Project")
+                                .Bold(true);
+                        cells.Add()
+                               .Value("Phase")
+                               .Bold(true);
+                        cells.Add()
+                                .Value("Transmittal#")
+                                .Bold(true);
+                        cells.Add()
+                                .Value("Subject")
+                                .Bold(true);
+                        cells.Add()
+                               .Value("Status")
+                               .Bold(true);
+                        cells.Add()
+                                .Value("Reference")
+                                .Bold(true);
+                        cells.Add()
+                               .Value("Revision")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("Date")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("To")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("WBS")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("Address")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("From")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("Category")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("Shipping Date")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("Shipping Time")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("Transmittal Type")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("Area of Application")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("Quantity")
+                               .Bold(true);
+                        cells.Add()
+                               .Value("Due Date")
+                               .Bold(true);
+
+                    });
+
+                    rows.Add().Cells(cells =>
+                    {
+                        cells.Add()
+                               .Validation(validation => validation
+                                   .DataType("list")
+                                   .ShowButton(true)
+                                   .ComparerType("list")
+                                   .From(project)
+                                   .AllowNulls(true)
+                                   .Type("reject")
+                                );
+                        cells.Add()
+                              .Validation(validation => validation
+                                  .DataType("list")
+                                  .ShowButton(true)
+                                  .ComparerType("list")
+                                  .From("\"\"")
+                                  .AllowNulls(true)
+                                  .Type("reject")
+                               );
+                        cells.Add();
+                        cells.Add();
+                        cells.Add()
+                              .Validation(validation => validation
+                                  .DataType("list")
+                                  .ShowButton(true)
+                                  .ComparerType("list")
+                                  .From(docStatus)
+                                  .AllowNulls(true)
+                                  .Type("reject")
+                               );
+                        cells.Add();
+                        cells.Add();
+                        cells.Add()
+                               .Format("yyyy-MM-dd")
+                               .Validation(validation => validation
+                                   .DataType("date")
+                                   .ShowButton(true)
+                                   .ComparerType("between")
+                                   .From("DATEVALUE(\"1/1/1900\")")
+                                   .To("DATEVALUE(\"1/1/2100\")")
+                                   .AllowNulls(true)
+                                   .Type("reject")
+                                   .TitleTemplate("Selected Date validation error")
+                                   .MessageTemplate("Selected Date should be between year 1900 and 2100.")
+                                );
+                        cells.Add()
+                              .Validation(validation => validation
+                                  .DataType("list")
+                                  .ShowButton(true)
+                                  .ComparerType("list")
+                                  .From(contact)
+                                  .AllowNulls(true)
+                                  .Type("reject")
+                               );
+                        cells.Add()
+                              .Validation(validation => validation
+                                  .DataType("list")
+                                  .ShowButton(true)
+                                  .ComparerType("list")
+                                  .From("\"\"")
+                                  .AllowNulls(true)
+                                  .Type("reject")
+                               );
+                        cells.Add();
+                        cells.Add()
+                              .Validation(validation => validation
+                                  .DataType("list")
+                                  .ShowButton(true)
+                                  .ComparerType("list")
+                                  .From(contact)
+                                  .AllowNulls(true)
+                                  .Type("reject")
+                               );
+                        cells.Add()
+                              .Validation(validation => validation
+                                  .DataType("list")
+                                  .ShowButton(true)
+                                  .ComparerType("list")
+                                  .From(category)
+                                  .AllowNulls(true)
+                                  .Type("reject")
+                               );
+                        cells.Add()
+                              .Format("yyyy-MM-dd")
+                              .Validation(validation => validation
+                                  .DataType("date")
+                                  .ShowButton(true)
+                                  .ComparerType("between")
+                                  .From("DATEVALUE(\"1/1/1900\")")
+                                  .To("DATEVALUE(\"1/1/2100\")")
+                                  .AllowNulls(true)
+                                  .Type("reject")
+                                  .TitleTemplate("Selected Date validation error")
+                                  .MessageTemplate("Selected Date should be between year 1900 and 2100.")
+                               );
+                        cells.Add();
+                        cells.Add()
+                              .Validation(validation => validation
+                                  .DataType("list")
+                                  .ShowButton(true)
+                                  .ComparerType("list")
+                                  .From("\"\"")
+                                  .AllowNulls(true)
+                                  .Type("reject")
+                               );
+                        cells.Add();
+                        cells.Add();
+                        cells.Add()
+                              .Format("yyyy-MM-dd")
+                              .Validation(validation => validation
+                                  .DataType("date")
+                                  .ShowButton(true)
+                                  .ComparerType("between")
+                                  .From("DATEVALUE(\"1/1/1900\")")
+                                  .To("DATEVALUE(\"1/1/2100\")")
+                                  .AllowNulls(true)
+                                  .Type("reject")
+                                  .TitleTemplate("Selected Date validation error")
+                                  .MessageTemplate("Selected Date should be between year 1900 and 2100.")
+                               );
+                    });
+                });
+        }).Events(e => {
+            e.Paste("onPaste");
+        })
+)
+    </div>
+    <script type="text/javascript">
+        $("#save").click(function () {
+            var noRecords = $('#txtNoRecords').val();
+            if (noRecords == '' || isNaN(noRecords)) {
+                alert('Please enter the number of records');
+                return;
+            }
+            noRecords = parseInt(noRecords);
+        var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+        var sheet = spreadsheet.sheets()[0];
+        //var sheet = spreadsheet.activeSheet();
+        var rowsCount = sheet._rows._count;
+        var columnsCount = sheet._columns._count;
+        var rows = [];
+            for (var i = 1; i <= noRecords; i++) {
+            var row = '';
+            for (var j = 0; j < columnsCount; j++) {
+                if (sheet.range(i, j).values() == null)
+                    break;
+                if (j == 0)
+                    row = sheet.range(i, j).values();
+                else
+                    row = row + ',' + sheet.range(i, j).values();
+            }
+            rows.push(row);
+            }
+            console.log(rows);
+        $.ajax({
+            url: "@Url.Action("Save", "Home")",
+            data: JSON.stringify({ rows: rows}),
+            contentType: "application/json",
+            type: "POST"
+        }).done(function () {
+            alert('Transmittals added succesully');
+        });
+        });
+
+        function onPaste(arg) {
+            var values = arg.clipboardContent.data.map(function (row) {
+                return row.map(function (cell) {
+                    return cell.value;
+                });
+            });
+        }
+    </script>
+</body>
+</html>

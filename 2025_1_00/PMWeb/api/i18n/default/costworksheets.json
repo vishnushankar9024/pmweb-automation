@@ -1,0 +1,20 @@
+{
+    "Label.Worksheet": "Worksheet",
+    "Label.PeriodFrom": "Period From",
+    "Label.PeriodTo": "Period To",
+    "AddCostWorksheetPopup_Label.CostCode": "Cost Code",
+    "AddCostWorksheetPopup_Label.WorksheetColumn": "Worksheet Column",
+    "AddCostWorksheetPopup_Label.Status": "Status",
+    "AddCostWorksheetPopup_Label.Description": "Description",
+    "AddCostWorksheetPopup_Label.UOM": "UOM",
+    "AddCostWorksheetPopup_Label.Period": "Period",
+    "AddCostWorksheetPopup_Label.ReqCode": "Req Code",
+    "AddCostWorksheetPopup_Label.Notes": "Notes",
+    "AddCostWorksheetPopoup_Column.Field": "Field",
+    "AddCostWorksheetPopoup_Column.Current": "Current",
+    "AddCostWorksheetPopoup_Column.Adjustment": "Adjustment",
+    "AddCostWorksheetPopoup_Column.Total": "Total",
+    "AddCostWorksheetPopoup_Row.Quantity": "Quantity",
+    "AddCostWorksheetPopoup_Row.UnitCost": "Unit Cost",
+    "AddCostWorksheetPopoup_Row.TotalAmount": "Total Amount"
+}

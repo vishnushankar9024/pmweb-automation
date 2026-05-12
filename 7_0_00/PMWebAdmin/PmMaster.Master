@@ -1,0 +1,445 @@
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="PmMaster.master.vb"
+    Inherits="Website.PmMaster" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>PMWeb Admin</title>
+    <telerik:RadCodeBlock ID="CodeBlock" runat="server">
+        <link href="CSS/PMCss.css" rel="stylesheet" type="text/css" />
+        <link href="CSS/PanelBar.PM.css" rel="stylesheet" type="text/css" />
+        <link href="CSS/Toolbar.PM.css" rel="stylesheet" type="text/css" />
+        <link href="CSS/TreeView.PM.css" rel="stylesheet" type="text/css" />
+        <link href="CSS/ComboBox.PM.css" rel="stylesheet" type="text/css" />
+        <link href="CSS/Grid.PM.css" rel="stylesheet" type="text/css" />
+        <link href="CSS/Menu.PM.css" rel="stylesheet" type="text/css" />
+        <link href="CSS/window.css" rel="stylesheet" type="text/css" />
+        <link href="CSS/Slider.css" rel="stylesheet" />
+        <link href="CSS/ColorPicker.css" rel="stylesheet" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <style type="text/css">
+            @keyframes animationPanelToggleHide {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                    height: auto;
+                }
+
+                to {
+                    opacity: 0;
+                    transform: scale(0);
+                    height: 0;
+                }
+            }
+
+            @keyframes animationPanelToggleShow {
+                from {
+                    opacity: 0;
+                    transform: scale(0);
+                    height: 0;
+                }
+
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                    height: auto;
+                }
+            }
+
+            .closeanimation {
+                animation: animationPanelToggleHide .3s cubic-bezier(0.86,0,0.07,1) forwards !important;
+            }
+
+            .openanimation {
+                animation: animationPanelToggleShow .3s cubic-bezier(0.86,0,0.07,1) forwards !important;
+            }
+
+            .MobileMenuItems {
+                background-color: #fff;
+                z-index: 999999999999;
+            }
+
+                .MobileMenuItems.hiddenMobileMenuItems {
+                    height: 0px;
+                }
+
+                .MobileMenuItems i {
+                    color: rgb(102,102,102);
+                }
+
+            .mobilemodules {
+                width: 100%;
+            }
+
+                .mobilemodules td {
+                    text-align: center;
+                    width: 33.33%;
+                }
+
+            .MobileMenuItems a {
+                text-transform: uppercase;
+                text-decoration: none;
+                color: rgb(153,153,153);
+            }
+
+            #ctl00_btnLogOut {
+                background-image: none !important;
+            }
+
+
+
+            .MobileFixedMenu {
+                display: none;
+            }
+
+            .MobileMenuItems a {
+                text-transform: uppercase;
+                text-decoration: none;
+                color: rgb(153,153,153);
+            }
+
+            .MobileFixedMenu a table td:last-child {
+                padding: 15px 0;
+            }
+
+            .MobileFixedMenu a table td:first-child > div {
+                background-image: url(Images/ResponsiveIcons/24Enabled.png);
+                width: 24px;
+                height: 24px;
+                background-repeat: no-repeat;
+                display: inline-block;
+            }
+
+            .MobileMenuItems {
+                background-color: #fff;
+                z-index: 999999999999;
+            }
+
+                .MobileMenuItems.hiddenMobileMenuItems {
+                    height: 0px;
+                }
+
+                .MobileMenuItems i {
+                    color: rgb(102,102,102);
+                }
+
+            .mobilemodules {
+                width: 100%;
+            }
+
+                .mobilemodules td {
+                    text-align: center;
+                    width: 33.33%;
+                }
+
+            .colorDiv {
+                height: 21px;
+                line-height: 21px;
+                color: #000000;
+                background: #FFFFFF;
+                border: 1px solid #666;
+                border-radius: 0px;
+            }
+
+                .colorDiv:after {
+                    content: "";
+                    width: 0;
+                    height: 0;
+                    position: relative;
+                    border-bottom: 10px solid #666666;
+                    border-left: 10px solid transparent;
+                    float: right;
+                    top: 12px;
+                }
+        </style>
+        <script type="text/javascript" language="javascript">
+
+            function ApplySave() {
+                var btnSave = document.getElementById("ctl00_ContentPlaceHolder1_btnSave");
+                if (btnSave != null) {
+                    btnSave.click();
+                    return false;
+                }
+            }
+
+            function ScreenHeight() {
+                var windowWidth;
+                var windowHeight;
+
+                if (window.addEventListener) {
+                    windowWidth = window.innerWidth;
+                    windowHeight = window.innerHeight;
+                }
+                else {
+                    windowWidth = document.documentElement.clientWidth || document.body.clientWidth;
+                    windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+                }
+
+                windowHeight = windowHeight - 108;
+
+                return windowHeight;
+            }
+         <%--   function ResizePage() {
+                document.getElementById('<%= treeMainMenu.ClientID %>').style.height = ScreenHeight() + 'px';
+            }--%>
+            function ToggleMobileMenu() {
+
+
+                panel = $('.MobileMenuItems');
+                if (panel[0].className.indexOf('closeanimation') > 0 || panel[0].className.indexOf('hiddenMobileMenuItems') > 0) {
+                    panel[0].className = panel[0].className.replace(' hiddenMobileMenuItems', '').replace(' closeanimation', '') + ' openanimation';
+                    $('.MobileFixedMenu')[0].className = $('.MobileFixedMenu')[0].className + ' open'
+                    return false;
+                }
+                panel[0].className = panel[0].className.replace(' hiddenMobileMenuItems', '').replace(' openanimation', '') + ' closeanimation';
+                $('.MobileFixedMenu')[0].className = $('.MobileFixedMenu')[0].className.replace(' open', '')
+                return false;
+            }
+            function OpenMobileFlyoutMenu(sender) {
+
+                ToggleMobileMenu();
+                var ModuleId = sender.getAttribute('data-CommandArgument');
+                if (ModuleId) {
+                    var FlyoutMenu = document.getElementsByClassName('divMenuPages')[0];
+                    var divMenuPagesClientId = FlyoutMenu.id;
+
+                    if (FlyoutMenu.classList.contains("Hide") == true) {
+                        FlyoutMenu.classList.remove("Hide")
+                        FlyoutMenu.style.display = ""
+                    }
+                    $('#' + divMenuPagesClientId).find('div').each(function () {
+                        if ($(this).attr('module-id') == ModuleId)
+                            $(this)[0].classList.remove("Hide")
+                        else
+                            if ($(this).attr('module-id') > 0 && $(this)[0].classList.contains("Hide") == false)
+                                $(this)[0].classList.add("Hide")
+                    })
+
+                }
+
+
+                return false;
+            }
+                function confirmLogout() {
+            <%--var Promt = '<%=PM.UserInfo.LogoutCookieType%>';
+            var IsSAMLAuthenticated = '<%=PM.UserInfo.IsSAMLAuthenticated%>';--%>
+            var IsLoginCookieSaved = '<%=PM.UserInfo.IsLoginCookieSaved%>';
+            var browserWidth = $telerik.$(window).width();
+            var browserHeight = $telerik.$(window).height();
+           
+                if (IsLoginCookieSaved == 'True') {
+                    var wnd = window.radopen("LogOutPopup.aspx",'welcome')
+                    if (isMobileScreen()) {
+                        wnd.setSize(browserWidth - 10, browserHeight);
+                        wnd.moveTo(0, 0);
+                    }
+                    else {
+                        wnd.setSize((browserWidth * 0.3)+20, browserHeight * 0.3);
+                        wnd.Center();
+                    }
+
+                    return false;
+                }
+            
+            return true;
+        }
+        </script>
+    </telerik:RadCodeBlock>
+</head>
+
+<body>
+
+
+
+    <form id="form1" runat="server">
+
+        <asp:ScriptManager ID="PMScriptManager" runat="server" EnableScriptGlobalization="True">
+        </asp:ScriptManager>
+        <telerik:RadAjaxManager ID="PMAjaxManager" runat="server">
+            <ClientEvents OnRequestStart="conditionalPostback" OnResponseEnd="ResponseEnd" />
+        </telerik:RadAjaxManager>
+        <telerik:RadAjaxLoadingPanel ID="ldpPM" runat="server" Skin="Office2007" />
+        <asp:Button ID="btnLogoutSave" CausesValidation="false" CssClass="Hide" runat="server" />
+        <asp:Button ID="btnLogoutDelete" CausesValidation="false" CssClass="Hide" runat="server" />
+        <div class="MenuContainer" style="overflow: hidden; float: left">
+            <div class="drawer" id="drawer" runat="server">
+                <div class="drawer-header" style="z-index: 9999">
+                    <table>
+                        <tr>
+                            <td style="padding-top: 20px;">
+                                <asp:LinkButton runat="server" ID="btnclose" CssClass="showrail" OnClientClick="return ShowRail()"><div class="Closerail">&nbsp; </div></asp:LinkButton>
+                                <asp:LinkButton runat="server" ID="btnOpen" Style="display: none;" CssClass="hiderail" OnClientClick="return HideRail()"><div class="Openrail">&nbsp; </div></asp:LinkButton>
+                            </td>
+                            <td>
+                                <asp:ImageButton runat="server" Style="margin-top: 15px;" ImageUrl="Images/PMWeb-Logo-WHite.png" ID="imgDrawerLogo" CssClass="imgDrawerLogo" Height="40px" OnClientClick="return ShowRail();" />
+                                <asp:ImageButton runat="server" ImageUrl="Images/Wlogo.png" Style="display: none; padding-top: 10px;" ID="imgRailLogo" CssClass="imgRailLogo" OnClientClick="return HideRail();" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="drawer-modules">
+                    <div class="Module">
+                        <div class="nav">
+                            <asp:Repeater ID="rptMenu" runat="server">
+                                <ItemTemplate>
+                                    <asp:LinkButton runat="server" OnClick="btnModule_Click" CssClass="nav-link" ID="btnModule" CommandArgument='<%# Container.DataItem("Id") %>' data-CommandArgument='<%# Container.DataItem("Id") %>'>
+                                    <table>
+                                        <tr>
+                                            <td class="text">
+                                                <span><%# Eval("Title") %></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    </asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </div>
+                </div>
+                <div class="Module drawer-Exit" style="border-bottom: 0px">
+                    <asp:LinkButton runat="server" CssClass="nav-link" ID="btnExit" OnClientClick="return confirmLogout();">
+                        <table>
+                            <tr>
+                                <td style="text-align:center;">
+                                     <span class="Exit"></span>
+                                    <span style="position:relative;left:-15px;top:-5px;">
+                                       Exit
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </asp:LinkButton>
+                </div>
+            </div>
+        </div>
+
+        <div class="ContentPane">
+            <div id="toolbartop" runat="server">
+                <table style="width: 100%;" cellpadding="0" cellspacing="0" border="0">
+                    <tr class="ToolBar">
+                        <td class="ToolbarTd" style="width: 50px;">
+                            <asp:LinkButton runat="server" ID="btnGlobalSave" OnClientClick="javascript:return ApplySave();">
+                                <div class="btnToolbarSave">
+                                                   &nbsp; 
+                                                </div>
+                            </asp:LinkButton>
+                        </td>
+                        <td>
+                            <asp:LinkButton ID="btnReset" runat="server" CssClass="lnkButton" OnClientClick="Javascript:return confirm('This command will Sign Out all connected Users, Are you sure you want to proceed?')"
+                                CausesValidation="False" CommandName="Reset" OnClick="btnReset_Click">
+                                <span runat="server" class="Icon btnExclamationMark"></span>
+                                <asp:Label ID="lblReset" Text="Restart PMWeb" runat="server"></asp:Label>
+                                &nbsp;&nbsp;
+                            </asp:LinkButton>
+
+                            <%--  <asp:LinkButton runat="server" ID="btnSubmit" CssClass="lnkButton" OnClientClick="javascript:return CheckDirtyWorkflow();"
+                                ValidationGroup="Save">
+                                <span runat="server" class="Icon btnExclamationMark"></span>
+                                <span runat="server">
+                                    <asp:Label runat="server" ID="lblSubmit" Visible="true" meta:resourcekey="btnSubmit"></asp:Label>
+                                </span>
+                            </asp:LinkButton>--%>
+
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="divContentHolder" style="margin-top: 50px;">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+
+        <div class="MobileFixedMenu" style="position: fixed; width: 100%; left: 0; right: 0; bottom: 0; opacity: 1; z-index: 9999999">
+            <div style="width: 100%; background-color: RGB(115,150,170); height: 36px; color: #fff;">
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="width: 40px;">
+                            <asp:LinkButton runat="server" CssClass="mobilemeuwhite" ID="btntogglemobileMenu" OnClientClick="return ToggleMobileMenu();">
+                                                                                 <div class="ToggleMobileMenu">
+                                                                                 &nbsp;
+                                                                            </div>
+                            </asp:LinkButton>
+                        </td>
+                        <td>
+                            <asp:Label runat="server" ID="lblRecordType" Style="font-size: 14px; display: block; margin-top: -4px"></asp:Label><br />
+                            <asp:Label runat="server" ID="lblRecordInfo" Style="display: block; margin-top: -15px"></asp:Label>
+                        </td>
+                        <td style="width: 40px; vertical-align: top; padding-top: 2px;">
+                            <asp:LinkButton runat="server" CssClass="mobilemeuwhite" ID="btnMobileExit" OnClientClick="return CheckDirtLogout();">
+                                                                                           <div class="Exit">
+                                                                                 &nbsp;
+                                                                            </div> 
+                            </asp:LinkButton>
+                        </td>
+
+                    </tr>
+
+                </table>
+
+
+            </div>
+            <div class="MobileMenuItems hiddenMobileMenuItems">
+                <asp:DataList ID="dlMenuModules" runat="server" RepeatColumns="3" RepeatLayout="Table" CssClass="mobilemodules" RepeatDirection="Horizontal">
+                    <ItemTemplate>
+                        <asp:LinkButton runat="server" ID="btnMobileModules" OnClientClick="return OpenMobileFlyoutMenu(this)" data-CommandArgument='<%# Container.DataItem("Id") %>'>
+                        <table style="margin:0 auto;">
+                                <tr>
+                                    <td>
+                                        <span></span>
+                                        <a href="<%# Eval("URL").ToString().Replace("~/", "") %>"><%# Eval("Title") %></a>
+                                    </td>
+                                </tr>
+                        </table>
+                        </asp:LinkButton>
+                    </ItemTemplate>
+                </asp:DataList>
+            </div>
+        </div>
+
+
+
+        <%--      <table width="100%"style="height: 30px;color:#666666;border:1px solid #999999;" cellpadding="0" cellspacing="0" class="NormalGrayBack bottomtoolbar">
+            <tr style="background-color: #ededed">
+                <td style="width: 30%;">
+                    <asp:Literal ID="ltrBreadcrumb" runat="server"></asp:Literal>
+                </td>
+                <td style="width: 40%;">
+                    <asp:Label ID="lblDatabase" runat="server" Text="Database:"></asp:Label>
+                    &nbsp;&nbsp;<asp:Label ID="lblDatabaseName" runat="server"></asp:Label>
+                </td>
+                <td style="width: 15%;">
+                    <asp:Label ID="lblUser" runat="server" Text="User:"></asp:Label>
+                    &nbsp;&nbsp;<asp:Label ID="lblFullName" runat="server"></asp:Label>
+                </td>
+            </tr>
+        </table>--%>
+
+        <%--<div>
+            <table width="100%" style="height: 30px;color:#666666;border:1px solid #999999;" cellpadding="0" cellspacing="0" class="NormalGrayBack bottomtoolbar">
+<tr style="background-color: #ededed">
+<td style="width: 30%"><asp:Label ID="lblCreated" runat="server" meta:resourcekey="lblCreated" Visible="false" Text="Created:"></asp:Label>&nbsp;&nbsp;<asp:Label ID="lblCreatedName" Visible="false" runat="server"></asp:Label></td>
+<td style="width: 40%;"></td><td style="width: 15%;"><asp:Label ID="lblDatabase" runat="server" meta:resourcekey="lblDatabase" Text="Database: "></asp:Label>&nbsp;&nbsp;<asp:Label ID="lblDatabaseName" runat="server"></asp:Label></td>
+<td style="width: 15%;"><asp:Label ID="lblUser" runat="server" meta:resourcekey="lblUser" Text="User:"></asp:Label>&nbsp;&nbsp;<asp:Label ID="lblFullName" runat="server"></asp:Label></td></tr></table>
+        </div>--%>
+
+        <telerik:RadWindowManager ID="PMWindowManager" runat="server" Skin="Outlook" VisibleStatusbar="False"
+            ReloadOnShow="True" Modal="True" KeepInScreenBounds="True" Behavior="Default"
+            InitialBehavior="None" Left="" Style="display: none;" Top="">
+        </telerik:RadWindowManager>
+    </form>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,4816 @@
+/****************some tree don't load the plus and minus icons from the popups********************/
+
+.RadTreeView_Office2007 .rtPlus, .RadTreeView_Office2007 .rtMinus {
+background-image: url('TreeView/PlusMinus.png');
+}
+.RadTreeView .rtPlus {
+background-position: 0 0;
+}
+.RadTreeView .rtPlus, .RadTreeView .rtMinus {
+margin: 5px 6px 0 -17px;
+padding: 0;
+width: 11px;
+height: 11px;
+background-repeat: no-repeat;
+font-size: 0;
+display: inline-block; 
+vertical-align: top;
+}
+
+.RadTreeView .rtChk, .RadTreeView .rtChecked, .RadTreeView .rtUnchecked, .RadTreeView .rtIndeterminate {
+    padding-left: 4px !important;
+}
+
+ 
+/*********************************/
+#FooterPane .WhiteDarkBlueBack { 
+background-color: #f0f0f0; 
+color: #000; 
+}
+.WhiteDarkBlueBack { 
+    background-color :#3598DB;
+    height:24px !important;
+    color:#fff;
+} 
+.AllDarkBlueBorder
+{
+    border: 1px solid #9EBFDB !important;
+}
+/*-------------Login to Project ddl------------------*/
+.LoginToProjectddl {
+    margin-top: -1px;
+}
+
+/*.LoginToProjectddl .rcbArrowCell a {
+height: 17px !important;
+}
+
+.LoginToProjectddl .rcbInputCell, .RadComboBox_Office2007 .rcbArrowCell {
+height: 17px !important;
+}*/
+
+/*-----------------------------------------------------*/
+
+.ToolBar {
+    background: url('ToolBar/rtbControlBg.png') repeat-x !important;
+    background-color: #d2e1f4 !important;
+}
+
+/*------------------------Rad ToolBar DropDown-----------------------------*/
+.RadToolBarDropDown_Office2007 {
+    border-color: #9eb6ce;
+    background-color: #ffffff;
+    /*background-image: url('ToolBar/rtbDropDownBg.png')*/
+    background-image:none !important;
+}
+
+.RadToolBar_Office2007 .rtbChoiceArrow {
+    background-image: url('ToolBar/rtbDropArrows.png'); }
+
+.SearchDoctdAdd .rtbItemHovered { 
+    color: #000000;
+    background-image: url('ToolBar/rtbHoverBg.png'); 
+}
+/*--------------------------------------------------------------------*/
+.RadDock .rdTop, .RadDock .rdTop * {
+height: 19px;
+line-height:21px;
+}
+/*---------------------Grid---------------------------*/
+.RadGrid_Office2007 .rgSelectedRow, .RadGrid_Office2007 .rgSelectedRow:hover {
+    background: #ffcb60 0 -3900px repeat-x url('Grid/sprite.gif') !important;
+}
+
+.RadGrid_Office2007 .rgSelectedRow>td {
+    border-bottom-color: #ff9b35 ;
+	 background: #ffcb60 0 -3900px repeat-x url('Grid/sprite.gif');
+}
+
+.RadGrid_Office2007 .SearchDocFilteredItem {
+  border-bottom-color: #999999 !important;
+  background-color: #ededed !important;
+}
+
+.RadGrid_Office2007 .rgEditRow {
+    background: #ffe5ad !important;
+}
+
+.RadGrid_Office2007 .rgRow td div, .RadGrid_Office2007 .rgAltRow td div, .RadGrid_Office2007 .rgRow td span, .RadGrid_Office2007 .rgAltRow td span
+{
+    white-space: nowrap !important;
+    overflow: hidden;
+}
+
+/*-----------------------------------------------------*/
+
+/*------------Link Button--------------*/
+.lnkButton
+{
+    /*background-image: url('Button/btn.gif') !important;*/
+    /*background-position: -2px 130px !important;*/
+    
+    border: 1px solid #666666 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    color: #666666 !important;
+    line-height: 1.8 !important;
+    border-radius:2px !important;
+    background-color: #FFFFFF !important;
+    vertical-align: central !important;
+    padding: 8px !important;
+    height:32px !important;
+    text-decoration:none !important;
+    font-size:13px !important;
+    width:100% !important;
+}
+
+.lnkButton:hover
+{
+    /*background-image: url('Button/btn.gif') !important;*/
+    background-color: #EDEDED !important;
+}
+
+.lnkButton .Icon {
+    background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+    width: 16px;
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 3px;
+    background-repeat:no-repeat;
+}
+
+.btnSaveWorkflow {
+    background-position:-480px !important;
+}
+.btnDeleteWorkflow {
+    background-position:-512px !important;
+}
+.btnDocuSign {
+    /*background-position:-250px !important;*/
+}
+.btnTeamInput {
+    background-position:-1296px !important;
+}
+.btnSubmitWorkflow {
+    background-position:-1376px !important;
+}
+.btnCancelWorkflow {
+    background-position:-1232px !important;
+}
+.lnkButtonAnchor
+{
+    color: #012361 !important;
+    text-decoration:none !important;
+}
+/*---------------------------------------------*/
+
+/*--------------------Large Button---------------------------*/
+input[type="button"].LargeButton, input[type="submit"].LargeButton
+{
+	background-image: url('Button/btn.gif') !important;
+    background-position: -2px 130px !important;
+    /*border: 1px solid #C3D9F1;*/
+    border: 1px solid #b3c7e1; 
+    border-radius:2px;
+}
+input[type="button"].LargeButton:hover, input[type="submit"].LargeButton:hover, input[type="submit"].LargeButton:active, input[type="button"].LargeButton:active
+{
+	background-image: url('Button/btn.gif');
+    background-position: -2px 86px !important;
+}
+
+input[type="button"].CancelUploadButton , input[type="submit"].CancelUploadButton
+{
+    border:1px solid #a7bedb;
+    background-color: #e8f1fc;
+    background-image: linear-gradient(#e8f1fc,#e9f1fc 50%,#d2e1f4 50%,#e8f1fc);
+    border-radius: .25em;
+}
+input[type="button"].CancelUploadButton:hover,  input[type="button"].CancelUploadButton:active , input[type="submit"].CancelUploadButton:hover, input[type="submit"].CancelUploadButton:active 
+{
+    border:1px solid  #c6ba9d;
+    background-color: #ffe18a;
+    background-image: linear-gradient(#fffce8,#ffedb3 50%,#ffd563 50%,#ffe18a);
+}
+
+input[type="button"].CancelUploadButton:disabled,  input[type="button"].CancelUploadButton:disabled,input[type="submit"].CancelUploadButton:disabled,  input[type="submit"].CancelUploadButton:disabled
+{
+    border:1px solid #a7bedb !important;
+    background-color: #e8f1fc !important;
+    background-image: linear-gradient(#e8f1fc,#e9f1fc 50%,#d2e1f4 50%,#e8f1fc) !important;
+    border-radius: .25em !important;
+    opacity: .5 !important;
+}
+
+ .btnRemove {
+  background-image: url('Upload/ruSprite.png');
+  color: #0e2377; 
+  background-color: transparent;
+  overflow: visible;
+  height:23px !important;
+   border: 0;
+   text-align:left;
+   background-position: 2px -70px;
+    width: auto;
+    padding-left: 16px !important;
+    cursor: pointer;
+    font-size: 10px;
+	width:80px !important;
+ }
+.btnRemove:hover
+{
+	background-position: 100% -23px;
+	color: #000;
+}
+
+
+/*-----------------------------------------------------*/
+/*------------------------Tree Menu-----------*/
+.treeMenu {
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #688caf;
+    width: 200px !important;
+}
+/*---------------------------------------------*/
+.RadForm_Office2007.rfdScrollBars ::-webkit-scrollbar-corner
+{
+    background-color:transparent !important;
+}
+/*.RadForm_Office2007.rfdScrollBars ::-webkit-scrollbar-track-piece,
+.RadForm_Office2007.rfdScrollBars ::-webkit-scrollbar-corner {
+    background-color: #D8DFE8 !important;
+}*/
+
+/*---------------------Inbox Color-----------------*/
+.InboxItem {
+    /*background-color: #c4d9f1;*/
+    background-image: url('Grid/InboxItemBg.png');
+    
+}
+/*---------------------------------------------*/
+
+/*---------------------RadTreeView input-----------------*/
+ .RadTreeView a.rtIn, .RadTreeView .rtLast .rtIn input{
+	width:150px;
+}
+/*---------------------------------------------*/
+
+/*fieldset {
+    border: 1px solid #9ebfdb !important;
+    border-radius: 4px  !important;
+    padding:-5px 4px 4px 4px !important;
+}*/
+
+
+/*-------------------------------------------------------RAD WINDOW------------------------------------------------------*/
+.RadWindow .rwTitleRow em {
+    font: normal bold 12px "Segoe UI",Arial;
+    font-family:'Work Sans' !important;
+    color: black !important;
+    padding: 3px 0 0 1px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    float: left !important;
+}
+
+.RadWindow .rwTitlebarControls {
+    width: 100% !important;
+    height: 27px !important;
+}
+.RadWindow table.rwTable, .RadWindow table.rwShadow, .RadWindow .rwTitlebarControls {
+    border: 0;
+    padding: 0;
+}
+
+.RadWindow table .rwTitlebar {
+    background-repeat: repeat-x;
+    background-position: 0 -31px;
+    /*-moz-user-select: none;*/
+}
+.RadWindow .rwTable {
+    width: 100%;
+    height: 100%;
+    table-layout: auto;
+}
+.RadWindow .rwTopLeft {
+    background-position: 0 0;
+}
+.RadWindow .rwTopLeft, .RadWindow .rwTopRight, .RadWindow .rwTitlebar, .RadWindow .rwFooterLeft, .RadWindow .rwFooterRight, .RadWindow .rwFooterCenter {
+    height: 8px;
+    font-size: 1px;
+    background-repeat: no-repeat;
+    line-height: 1px;
+}
+.RadWindow .rwCorner {
+    width: 8px;
+}
+.RadWindow .rwCorner, .RadWindow .rwTitlebar, .RadWindow .rwStatusbar, .RadWindow .rwFooterCenter, .RadWindow .rwTitlebarControls td {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-collapse: collapse;
+    vertical-align: top;
+}
+RadWindow .rwTitleRow, .RadWindow .rwTitleRow * {
+    box-sizing: content-box !important;
+}
+.RadWindow .rwTopResize {
+    font-size: 1px !important;
+    line-height: 4px !important;
+    width: 100% !important;
+    height: 4px !important;
+    background-position: 0 -31px !important;
+    background-repeat: repeat-x !important;
+}
+.RadWindow .rwIcon {
+    display: block !important;
+    background-repeat: no-repeat !important;
+    background-position: 0 -78px !important;
+    width: 16px !important;
+    height: 16px !important;
+    cursor: default !important;
+    margin: 3px 5px 0 0 !important;
+}
+.RadWindow .rwControlButtons {
+    padding: 0 !important;
+    margin: 2px 0 0 0 !important;
+    list-style: none !important;
+    white-space: nowrap !important;
+    float: right !important;
+}
+.RadWindow .rwControlButtons li {
+    float: left !important;
+    padding: 0 0 0 0 !important;
+}
+.RadWindow .rwControlButtons a {
+    text-indent: -3333px !important;
+    overflow: hidden !important;
+    text-align: center !important;
+}
+.RadWindow .rwControlButtons a {
+    width: 26px !important;
+    height: 20px !important;
+    line-height: 1px !important;
+    font-size: 1px !important;
+    cursor: default !important;
+    background-repeat: no-repeat !important;
+    display: block !important;
+    text-decoration: none !important;
+    outline: 0 !important;
+}
+
+.RadWindow .rwPinButton {
+    background-position: -180px 0 !important;
+}
+.RadWindow .rwReloadButton {
+    background-position: -120px 0 !important;
+}
+.RadWindow .rwMinimizeButton {
+    background-position: 0 0 !important;
+}
+.RadWindow .rwMaximizeButton {
+    background-position: -60px 0 !important;
+}
+.RadWindow .rwCloseButton {
+    background-position: -90px 0 !important;
+}
+
+.RadWindow .rwPinButton:hover
+{ background-position:-177px -20px !important;
+}
+.RadWindow .rwReloadButton:hover {
+    background-position: -120px -20px !important;
+}
+.RadWindow .rwMinimizeButton:hover {
+    background-position: 0 -20px !important;
+}
+.RadWindow .rwMaximizeButton:hover {
+    background-position: -60px -20px !important;
+}
+.RadWindow .rwCloseButton:hover {
+    background-position: -90px -20px !important;
+}
+
+
+.RadWindow .rwWindowContent .radalert
+{
+    background-image: url('Images/2007Large.png') !important;
+    background-position: -1344px 0px !important;
+    display: inline-block;
+    vertical-align: middle !important;
+    padding-left: 25px;
+    background-repeat: no-repeat !important;
+    background-color: transparent !important;
+}
+
+.RadWindow .rwDialogText {
+    text-align: left;
+    background: #FFFFFF !important;
+}
+
+.RadWindow .rwDialogPopup {
+    margin: 16px !important;
+    color: black;
+    padding: 1px 0 16px 50px;
+    cursor: default;
+}
+
+.RadWindow .rwTopRight {
+    background-position: -8px 0 !important;
+}
+.RadWindow .rwBodyLeft, .RadWindow .rwBodyRight {
+    background-repeat: repeat-y !important;
+}
+.RadWindow .rwWindowContent {
+    height: 100%!important;
+    background: white !important;
+}
+.RadWindow .rwWindowContent iframe {
+    display: block;
+}
+.RadForm, .RadForm.rfdTextbox input[type="text"].rfdDecorated, .RadForm.rfdTextbox input[type="password"].rfdDecorated {
+    box-sizing: content-box !important;
+}
+.RadWindow .rwBodyRight {
+    background-position: -8px 0 !important;
+}
+
+.RadWindow .rwBodyLeft, .RadWindow .rwBodyRight {
+    background-repeat: repeat-y !important;
+}
+.RadWindow .rwStatusbar {
+    height: 22px !important;
+    background-position: 0 -113px !important;
+    background-repeat: repeat-x !important;
+}
+
+.RadWindow .rwStatusbarRow .rwBodyRight {
+    background-position: -24px 0 !important;
+}
+.RadWindow .rwFooterLeft {
+    background-position: 0 -62px !important;
+}
+.RadWindow .rwFooterCenter {
+    background-repeat: repeat-x !important;
+    background-position: 0 -70px !important;
+}
+.RadWindow .rwFooterRight {
+    background-position: -8px -62px !important;
+}
+
+.RadWindow_Office2007 {
+  /*font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  font-size: 12px;*/
+  /* Window Background */
+  /* Horiznotal */
+  /* Vertical */
+  /* Window Shadows */
+  /* Horiznotal */
+  /* Vertical */
+  /* Shadows End */
+  /* When ShowContentDuringLoad="true" */
+  /* When ShowContentDuringLoad="false" */
+  /* Shadow Control Buttons */
+  /* ctrl buttons when winodw is minimized */
+  /* Icon when winodw is minimized */
+  /*title buttons when winodw is minimized */ }
+
+  .RadWindow_Office2007 .rwTopLeft,
+  .RadWindow_Office2007 .rwTopRight,
+  .RadWindow_Office2007 .rwTitlebar,
+  .RadWindow_Office2007 .rwFooterLeft,
+  .RadWindow_Office2007 .rwFooterRight,
+  .RadWindow_Office2007 .rwFooterCenter,
+  .RadWindow_Office2007 .rwTopResize,
+  .RadWindow_Office2007 .rwStatusbar div,
+  .RadWindow_Office2007 .rwStatusbar,
+  .RadWindow_Office2007 .rwPopupButton,
+  .RadWindow_Office2007 .rwPopupButton span, .RadWindow_Office2007.rwMinimizedWindow .rwCorner {
+    background-image: url('Window/WindowHorizontalSprites.gif') !important; }
+  .RadWindow_Office2007 .rwBodyLeft,
+  .RadWindow_Office2007 .rwBodyRight,
+  .RadWindow_Office2007 .rwStatusbarRow .rwCorner {
+    background-image: url('Window/WindowVerticalSprites.gif') !important; }
+  .RadWindow_Office2007 .rwShadow .rwTopLeft,
+  .RadWindow_Office2007 .rwShadow .rwTopRight,
+  .RadWindow_Office2007 .rwShadow .rwTitlebar,
+  .RadWindow_Office2007 .rwShadow .rwFooterLeft,
+  .RadWindow_Office2007 .rwShadow .rwFooterRight,
+  .RadWindow_Office2007 .rwShadow .rwFooterCenter,
+  .RadWindow_Office2007 .rwShadow .rwTopResize,  
+  .RadWindow_Office2007 .rwShadow .rwStatusbar div,
+  .RadWindow_Office2007 .rwShadow .rwStatusbar,
+  .RadWindow_Office2007 .rwShadow .rwPopupButton,
+  .RadWindow_Office2007 .rwShadow .rwPopupButton span,
+  .RadWindow_Office2007 .rwShadow .rwBodyLeft,
+  .RadWindow_Office2007 .rwShadow .rwBodyRight,
+  .RadWindow_Office2007 .rwShadow .rwStatusbarRow .rwBodyLeft,
+  .RadWindow_Office2007 .rwShadow .rwStatusbarRow .rwBodyRight {
+    background-image: url('Window/WindowHorizontalSprites.png') !important; }
+  .RadWindow_Office2007 .rwShadow .rwBodyLeft,
+  .RadWindow_Office2007 .rwShadow .rwBodyRight,
+  .RadWindow_Office2007 .rwShadow .rwStatusbarRow .rwBodyLeft,
+  .RadWindow_Office2007 .rwShadow .rwStatusbarRow .rwBodyRight {
+    background-image: url('Window/WindowVerticalSprites.png') !important; }
+  .RadWindow_Office2007 .rwStatusbar input {
+    background-color: #f7f3e9; }
+  .RadWindow_Office2007 .rwControlButtons {
+    margin-top: 0; }
+  .RadWindow_Office2007 .rwControlButtons a {
+    background-image: url('Window/CommandButtonSprites.gif') !important; }
+    .RadWindow_Office2007 a.rwIcon
+    {
+        background: url(../../../Images/Global/favicon.ico) !important;
+    }
+  .RadWindow_Office2007 table.rwTitlebarControls em {
+    color: #00156e !important; }
+  .RadWindow_Office2007 input.rwDialogInput {
+    border: 1px solid #abc1de; }
+  .RadWindow_Office2007 input.rwDialogInput:hover {
+    border: 1px solid #305090; }
+  .RadWindow_Office2007 tr td.rwWindowContent {
+    background-color: white; }
+  .RadWindow_Office2007 tr td.rwWindowContent.rwLoading {
+    /*background-image: url('Common/loading.gif') !important;*/
+     background: white url('Common/loading.gif') center no-repeat !important; 
+  }
+  .RadWindow_Office2007 td input.rwLoading {
+    background-image: url('Common/loading_small.gif') !important; 
+   
+  }
+  .RadWindow_Office2007 .rwShadow .rwControlButtons {
+    margin: 5px -2px 0 0; }
+  .RadWindow_Office2007 .rwShadow .rwControlButtons {
+    margin: 5px -1px 0 0; }
+  .RadWindow_Office2007.rwMinimizedWindowShadow .rwShadow .rwControlButtons {
+    margin: 9px -8px 0 0; }
+  .RadWindow_Office2007.rwMinimizedWindowShadow .rwShadow .rwIcon {
+    margin: 9px 6px 0 0; }
+  .RadWindow_Office2007.rwMinimizedWindowShadow .rwShadow em {
+    margin: 4px 0 0 -1px; }
+  .RadWindow_Office2007 .rwShadow .rwControlButtons li {
+    float: left;
+    padding: 0; }
+  .RadWindow_Office2007 .RadWindow_Office2007 .rwShadow .rwControlButtons a {
+    width: 28px; }
+  .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwTopLeft, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwTopRight, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwTitlebar, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwFooterLeft, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwFooterRight, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwFooterCenter, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwTopResize, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwStatusbar div, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwStatusbar, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwPopupButton, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwPopupButton span, .RadWindow_Office2007.rwInactiveWindow .rwShadow.rwMinimizedWindow .rwCorner, .RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwTopLeft, .RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwTitlebar, .RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwTopRight, .RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwFooterLeft, .RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwFooterCenter, .RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwFooterRight {
+    background-image: url('Window/WindowHorizontalSprites.gif') !important; }
+  .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwBodyLeft, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwBodyRight, .RadWindow_Office2007.rwInactiveWindow .rwShadow .rwStatusbarRow .rwCorner, .RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwBodyLeft, .RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwBodyRight {
+    background-image: url('Window/WindowVerticalSprites.gif') !important; }
+
+/* Loading Indicators 
+div.RadWindow_Office2007 tr td.rwLoading {
+  background-color: #e8f1fc; }*/
+/*--------------------------------------------------------------------------------------------------------------*/
+
+
+input[type=text], textarea
+{border: 1px solid #ABC1DE ;
+/*background-color: #fff;*/
+/*min-height: 17px;*/
+height: 17px;
+padding: 2px 0 1px 3px;
+line-height: normal;
+vertical-align: top;
+font-size: 12px;
+font-family: "Segoe UI",Arial,Helvetica,sans-serif;
+font-family: 'Work Sans';
+box-sizing: content-box;
+border-radius: 4px;
+}
+
+
+/*----------------------------------Check Box IE-----------------------------------------------*/
+.RadForm_Office2007 .rfdCheckboxUnchecked:hover
+{background-position: 0 0 !important;
+}
+.RadForm_Office2007 .rfdCheckboxUnchecked
+{background-position: 0 0 !important;
+}
+
+.RadForm_Office2007 .rfdCheckboxChecked
+{background-position: 0px -418px !important;
+}
+
+.RadForm_Office2007 .rfdCheckboxChecked:hover
+{background-position: 0px -638px !important;
+}
+/*-------------------------------------------------------------------------------------*/
+
+
+/*-------------------------------Time Pickerand Rad Date Picker (Responsive Controls) ---------------------------------------------------*/
+
+
+ .RadPicker_Office2007 .rcCalPopup {
+        background-position: -864px 0 !important;
+    }
+
+ .RadPicker_Office2007 .rcTimePopup {
+        background-position: -1272px 0px !important;
+    }
+ input[type=text] {
+    width:99%;
+    font-family:'Work Sans' !important;
+    height:20px;
+    line-height:20px;
+    color:#000000;
+    background:#FFFFFF;
+    border-color:#666666;
+    border-radius:0px;
+}
+
+input[type=text]:disabled {
+    width:99%;
+    font-family:'Work Sans' !important;
+    height:20px;
+    line-height:20px;
+    color:#666666;
+    background:#EDEDED;
+    border-color:#666666;
+    border-radius:0px;
+}
+
+.RadPicker_Office2007 .rcCalPopup, .RadPicker_Office2007 .rcTimePopup{
+     background-image:url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+     width:24px !important;
+     height:24px !important;
+}
+.RadInput_Office2007 .riTextBox {
+    height:24px;
+    line-height:24px;
+    border-radius:0;
+    border-color:#666666 !important;
+    color:#000000;
+}
+
+.RadComboBox table td.rcbInputCell , .RadComboBox table td.rcbArrowCell {
+    border-width:1px !important;
+    padding:0 !important;
+    border-color:#666666;
+}
+
+.RadComboBox .rcbArrowCellRight , .RadComboBox .rcbDisabled .rcbArrowCellRight , 
+.RadComboBox .rcbReadOnly .rcbArrowCellRight , .RadComboBox .rcbHovered .rcbArrowCellRight,
+.RadComboBox .rcbHovered .rcbReadOnly   .rcbArrowCellRight,
+.RadComboBox .rcbFocused .rcbReadOnly   .rcbArrowCellRight,
+.RadComboBox .rcbDisabled .rcbReadOnly .rcbArrowCellRight,
+.RadComboBox .rcbFocused   .rcbArrowCellRight  {
+    background-position: -306px -176px !important;
+    background-color:white !important;
+    border:1px solid #666666 !important;
+}
+
+.RadComboBoxDropDown_Office2007 .rcbHovered, 
+.RadComboBoxDropDown_Office2007 .rcbCheckAllItemsHovered {
+    background:RGB(115,150,170) !important;
+    color:#FFFFFF !important;
+}
+.RadTreeView_Office2007 .rtSelected .rtIn ,
+.RadTreeView_Office2007 .rtHover .rtIn{
+    background:RGB(115,150,170) !important;
+    color:#FFFFFF !important;
+    border-color:RGB(115,150,170) !important;
+}
+
+textarea {
+    height:82px !important;
+    border-color: #666666;
+    background: #FFFFFF;
+    color: #000000;
+    overflow-y:auto;
+    border-radius:0;
+    resize:none;
+    overflow-x:hidden;
+} 
+
+.RadComboBox .rcbHovered .rcbReadOnly .rcbInputCellLeft ,
+.RadComboBox .rcbFocused .rcbReadOnly .rcbInputCellLeft,
+.RadComboBox .rcbFocused .rcbInputCellLeft {
+    background:none !important;
+}
+
+
+.RadComboBox_Office2007 .rcbInput {
+    color:#666666 !important;
+}
+.RadComboBox_Office2007 .rcbInput.rcbEmptyMessage {
+    color:transparent !important;
+} 
+.RadTabStrip_Office2007 .rtsLI, .RadTabStrip_Office2007 .rtsLink {
+    font-size:11px !important;
+}
+
+.RadComboBox .rcbReadOnly .rcbInputCellLeft {
+    background:none;
+}
+.RadInput_Office2007 a.riUp{
+    margin-left:2px;
+}
+
+.RadComboBox .rcbReadOnly .rcbArrowCellRight {
+    background-position: -306px -176px;
+    border: 1px solid #666666;
+    background-color: white !important;
+}
+
+.RadGrid_Office2007 .RadComboBox .rcbReadOnly .rcbInputCellLeft {
+    border: 1px solid #666666;
+    background-color: white !important;
+}
+
+.RadGrid_Office2007 .RadComboBox .rcbReadOnly .rcbArrowCellRight {
+    background-position: -306px -176px;
+    border: 1px solid #666666;
+    background-color: white !important;
+}
+
+.RadComboBox .rcbInputCellLeft {
+    background:none;
+    color:#000000 !important;
+}
+.RadComboBox_Office2007 .rcbReadOnly .rcbInput {
+    color:#666666 !important;
+}
+
+.RadComboBox .rcbDisabled{
+    border: 1px solid #666666;
+    opacity:1 !important ;
+}
+
+.RadComboBox .rcbReadOnly .rcbInputCellLeft {
+    background-position: 0 -88px;
+    background: #FFF;
+    border: 1px solid #000;
+}
+
+.RadComboBox .rcbHovered .rcbReadOnly .rcbInputCellLeft {
+    background-position: 0 -88px !important;
+    background: #FFF !important;
+    border: 1px solid #000 !important;
+}
+.RadComboBox .rcbFocused .rcbReadOnly .rcbInputCellLeft {
+    background-position: 0 -88px !important;
+    background: #FFF !important;
+    border: 1px solid #000 !important;
+}
+
+.RadComboBox .rcbInputCell, .RadComboBox .rcbArrowCell {
+
+}
+
+.RadComboBox .rcbReadOnly .rcbArrowCellRight {
+    background-position: -306px -176px !important;
+}
+
+.RadComboBox .rcbHovered .rcbReadOnly .rcbInputCellLeft, 
+.RadComboBox .rcbFocused .rcbReadOnly .rcbInputCellLeft, 
+.RadComboBox .rcbFocused .rcbInputCellLeft {
+    background:white !important;
+}
+
+.RadComboBox .rcbReadOnly .rcbInputCellLeft, 
+.RadComboBox .rcbReadOnly .rcbInputCellLeft, 
+.RadComboBox .rcbInputCellLeft {
+    background:white !important;
+}
+
+.RadGrid textarea {
+    height:22px !important;
+}
+
+.RadComboBoxDropDown_Office2007 .rcbMoreResults {
+    border-color: RGB(115,150,170) !important;
+    color: white !important;
+    background: RGB(115,150,170) !important;
+}
+
+.RadComboBoxDropDown .rcbMoreResults a {
+    color:white !important;
+}
+.RadComboBox .rcbDisabled .rcbInputCellLeft,
+.RadComboBox .rcbDisabled .rcbReadOnly .rcbInputCellLeft,
+.RadComboBox .rcbDisabled .rcbReadOnly .rcbArrowCellRight,
+.RadComboBox .rcbDisabled .rcbArrowCellRight {
+    background-color:#EDEDED !important;
+}
+/*-------------------------------------------------------------------------------------*/
+
+
+
+/*------------------------------Rad Editor IE--------------------------------------*/
+.reEditorModes span {
+    background-image: url('Editor/RadEditorIcons.gif') !important;
+}
+/*-------------------------------------------------------------------------------------*/
+
+
+.RadComboBox .rcbDisabled {
+    filter: 0 !important;
+}
+
+.RadForm.rfdButton input[type="button"].rfdDecorated, .RadForm.rfdButton input[type="reset"].rfdDecorated, .RadForm.rfdButton input[type="submit"].rfdDecorated, .RadForm.rfdButton .rfdSkinnedButton button {
+    padding: 0px 0px 0px 0px !important;
+    margin-right: -3px !important;
+}
+.RecurrenceEditor div.rsAdvRecurrencePatterns label, .RecurrenceEditor div.rsAdvRecurrenceRangePanel label
+{
+    padding-left: 20px !important;
+}
+
+.RecurrenceEditor div.rsAdvRecurrenceFreq {
+    height:112px;
+}
+
+
+.Operator
+{
+    width: 25px !important;
+    background-image:none !important;
+    border: 1px solid #C4DBF9;
+}
+.Operator:hover{
+    background-color:#0054D2 !important;
+    color: White !important;
+}
+.RadPanelBar .rpText {
+
+    padding: 0 28px !important;
+    font: bold 12px/31px Arial,Verdana,Sans-serif;
+    font-family:'Work Sans' !important;
+	margin-top: -3px;
+	white-space: nowrap;
+}
+.RadPanelBar_Office2007 .rpOut
+{
+background-image: url('Images/2007Large.png') !important;
+	background-repeat: no-repeat;
+	width: 24px;
+	/*height: 23px;*/
+	float: left;
+	margin-top: 5px;
+	margin-left: 2px;
+}
+.Planning .rpOut {
+    background-position: 0px 0px !important;
+   
+}
+
+.EngineeringForms .rpOut
+{
+	background-position: -24px 0px !important;
+}
+
+.CostManagement .rpOut {
+    background-position: -48px 0px !important;
+}
+
+.Scheduling .rpOut {
+    background-position: -72px 0px !important;
+}
+
+.AssetManagement .rpOut {
+    background-position: -96px 0px !important;
+}
+.Workflow .rpOut {
+    background-position: -120px 0px !important;
+}
+.Portfolio .rpOut {
+    background-position: -144px 0px !important;
+   
+}
+.Toolbox .rpOut {
+    background-position: -168px 0px !important;
+}
+
+/***************************Toolbar Icons*********************************************************/
+.RadToolBar .rtbText {
+padding-left: 3px !important;
+}
+.ToolbarNew .rtbText,.ToolbarSearch .rtbText,.ToolbarDelete .rtbText,.ToolbarCancelWorksheet .rtbText, .ToolbarVoid .rtbText,
+.ToolbarNotification .rtbText,.ToolbarSave .rtbText,.ToolbarCreateRevision .rtbText,.ToolbarSearchItems .rtbText,.ToolbarTest .rtbText,.ToolbarCopy .rtbText
+,.ToolbarTimeSheetSave .rtbText,.ToolbarCopyFromDefault .rtbText,.ToolbarCopyURL .rtbText,.ToolbarLinkSchedule .rtbText
+.ToolbarCopyWBS .rtbText,.ToolbarExportToExcel .rtbText,.ToolbarExportAllToExcel .rtbText,ToolbarStepSecurity .rtbText,
+.ToolbarAssignement .rtbText,.ToolbarUnassigned .rtbText, .ToolbarForecast .rtbText,.ToolbarPost .rtbText,.ToolbarUnPost .rtbText
+,.ToolbarTakeSnapshot .rtbText,.ToolbarUnTakeSnapshot .rtbText,.ToolbarPrintPreview .rtbText,.ToolbarExportSQL .rtbText,.ToolbarBluebeamSync .rtbText
+{display: none !important;
+}
+
+.ToolbarCreateCompany .rtbIcon , .ToolbarUpdateAsset .rtbIcon {
+width:24px !Important;
+height:24px !Important;
+background-image: url('Images/2007Large.png') !important;
+background-position:-1248px 0 !important;
+
+}
+ 
+
+
+.ToolbarCopyURL .rtbIcon
+{
+    background-position: -1104px 0px !important;
+    width: 24px !important;
+    height: 24px  !important;
+}
+
+
+.ToolbarExportToExcel .rtbIcon,.ToolbarExportAllToExcel .rtbIcon
+{
+    background-position: -1056px 0px !important;
+    width: 24px !important;
+    height: 24px  !important;
+}
+
+.ToolbarExportSQL .rtbIcon {
+    background-position: -696px 0px !important;
+}
+.RadToolBar_Office2007 .rtbIn img
+{height:15px !important;
+}
+.RadMenu_Office2007 .rmRootGroup .rmFocused>.rmLink {
+    box-shadow: inset 0 0 0 0 #c6ba9d !important;
+}
+.removeAssign .Icon{
+     background-image:url(../../Images/ResponsiveIcons/16Enabled.png);background-repeat:no-repeat;width: 16px;height: 16px;background-position:-208px 0;display:inline-block;
+}
+
+.MoreMenu .rmLeftImage {
+    /*content: "";
+    margin: -9px 0 0px 5px;
+    width: 16px; b  
+    height: 16px;
+    position: absolute;
+    top: 50%;
+    left: 0;*/
+    background:url(../../Images/ResponsiveIcons/16Enabled.png) no-repeat;
+    /*background-position:16px 0;*/
+}
+.RadMenu .Print .rmLeftImage {background-position:-544px 0 !important;}
+.RadMenu .Void .rmLeftImage { background-position: -1392px 0 !important;}
+.RadMenu .Generate .rmLeftImage {background-position: -560px 0 !important;}
+.RadMenu .Help .rmLeftImage{background-position: -224px 0 !important;}
+.RadMenu .Assign .rmLeftImage{background-position: -1248px 0 !important;}
+.RadMenu .Export .rmLeftImage{background-position: -704px 0 !important;}
+.RadMenu .Post .rmLeftImage{background-position: -1200px 0 !important;}
+.RadMenu .UnPost .rmLeftImage{background-position: -1216px 0 !important;}
+.RadMenu .SaveSnapshot .rmLeftImage{background-position: -1344px 0 !important;}
+.RadMenu .DeleteSnapshot .rmLeftImage{background-position: -1392px 0 !important;}
+.RadMenu .Forecast .rmLeftImage{background-position: -1328px 0 !important;}
+.RadMenu .ActiveLocation .rmLeftImage{background-position: -800px 0 !important;}
+.RadMenu .InactiveLocation .rmLeftImage{background-position: -816px 0 !important;}
+.RadMenu .BluebeamSyncMobile .rmLeftImage{background-position: -16px 0 !important;}
+.RadMenu .CloseBluebeamMobile .rmLeftImage{background-position: -128px 0 !important;}
+.RadMenu .OpenSessionMobile .rmLeftImage{background-position: -1232px 0 !important;}
+.RadMenu .BIM .rmLeftImage{background-position: -414px 0 !important;}
+.RadMenu .Import .rmLeftImage{background-position: -1200px 0 !important;}
+.RadMenu .LockLocation .rmLeftImage{background-position: -800px 0 !important;}
+.RadMenu .UnLockLocation .rmLeftImage{background-position: -816px 0 !important;}
+.RadMenu .Preview .rmLeftImage {background-position:-288px 0 !important;}
+.RadMenu .Submit .rmLeftImage {background-position:-1376px 0 !important;}
+/*.RadMenu .CreateNext .rmLeftImage {background-position:-1376px 0 !important;}*/
+.RadToolBar_Office2007 .rtbIcon
+{
+ background-image:url(../../Images/ResponsiveIcons/24Enabled.png);
+  background-repeat:no-repeat;
+}
+.ToolbarForecast .rtbIcon {
+    background-position: -1992px 0px !important;
+	width: 24px !important;
+ height: 24px  !important;
+} 
+.ToolbarCreateChangeOrder .rtbIcon {
+    background-position: -840px  0px !important;                  
+	width: 24px !important;
+ height: 24px  !important;
+}  
+.ToolbarCreateProgressInvoice .rtbIcon {                 
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -864px  0px !important;
+}  
+.ToolbarRecalculate .rtbIcon,.ToolbarCalculate .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -504px  0px !important;
+}  
+.ToolbarPost .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -1800px  0px !important;
+} 
+.ToolbarUnPost .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -1824px  0px !important;
+} 
+
+.ToolbarViewer3DTakeSnapshot .rtbIcon {
+	width: 24px !important;
+    height: 24px  !important;
+    background-position: -648px  0px !important;
+} 
+
+.ToolbarTakeSnapshot .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -2016px  0px !important;
+} 
+.ToolbarUnTakeSnapshot .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -2088px  0px !important;
+} 
+.ToolbarAssignement  .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -912px  0px !important;
+}
+.ToolbarUnassigned  .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -888px  0px !important;
+}
+.ToolbarEmail  .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -480px  0px !important;
+}
+.ToolbarTest  .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -1992px  0px !important;
+}
+.ToolbarNew .rtbIcon , .ToolbarNewInitiative .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+ background-position:-744px 0px !important; 
+}
+.RadToolBar_Horizontal .rtbItem{margin-right: 16px;}
+.RadToolBar_Office2007 .rtbSeparator { margin-right: 20px;border-color: rgb(153,153,153) !important;}  
+.RadToolBar .rtbOuter{padding:0px!important}
+.RadToolBar_Horizontal .rtbSeparator{height:50px !important;}
+.ToolbarSave .rtbIcon,.ToolbarTimeSheetSave .rtbIcon,.ToolbarPopUpSave .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -720px 0px  !important; 
+}
+.ToolbarSearch .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -216px 0px !important;
+}
+.ToolbarSearchItems .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -696px 0px !important;
+}
+.ToolbarDelete .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -768px 0px !important;
+}
+           
+.ToolbarNotification .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -792px 0px !important;
+}
+.ToolbarCreateRevision .rtbIcon ,.ToolbarCopyRevision .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -600px 0px !important;
+}
+.ToolbarBIM .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -624px 0px !important;
+}
+.ToolbarImport .rtbIcon 
+{
+		width: 24px !important;
+ height: 24px  !important;
+background-position: -1800px 0px !important;
+}
+.ToolbarCreateNext .rtbIcon 
+{
+    width: 24px !important;
+    height: 24px  !important;
+    background-position: -504px 0px !important;
+}
+.ToolbarSubmit .rtbIcon {
+    width: 24px !important;
+    height: 24px  !important;
+    background-position: -2064px 0px !important;
+}
+.ToolbarGenerate .rtbIcon 
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position:-840px 0px !important
+}
+.ToolbarHelp .rtbIcon 
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -816px 0px !important
+}
+.ToolbarPrint .rtbIcon ,.ToolbarPrintPreview .rtbIcon 
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -816px 0px !important
+}
+.ToolbarCopy .rtbIcon,.ToolbarCopyFromDefault .rtbIcon,.ToolbarCopyWBS .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -408px 0px !important
+}
+.ToolbarActive .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -1200px 0px !important
+}
+
+.ToolbarInActive .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -1224px 0px !important
+}
+
+.ToolbarLock .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -1320px   0px !important
+}
+
+.ToolbarUnLock .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+background-position: -1345px   0px !important
+}
+.ToolbarTreeSearch .rtbIcon,.item-toolbar .ToolbarSearch .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -1896px 0px !important;
+}
+
+.ToolbarExportSQL .rtbIcon {
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -696px 0px !important;
+}
+
+.ToolbarLinkTasks .rtbIcon,.ToolbarLinkSchedule .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -1104px 0px !important;
+}
+
+.ToolbarPlanview .rtbIcon
+{
+	width: 24px !important;
+ height: 24px  !important;
+    background-position: -120px 0px !important;
+}
+
+.ToolbarButtonGeneratePMBudgets .rtbIcon,.ToolbarButtonGeneratePMContracts .rtbIcon,
+.ToolbarButtonGeneratePMProcurements .rtbIcon,.ToolbarButtonGeneratePMBudgetsRequest .rtbIcon,.ToolbarButtonPrintCustomFormToWord .rtbIcon,
+.ToolbarButtonViewReports .rtbIcon, .ToolbarButtonPrintToPDF .rtbIcon,.ToolbarButtonViewPMWebReports .rtbIcon,.ToolbarButtonViewTemplates .rtbIcon,.ToolbarButtonGenerateTransmittal  .rtbIcon,
+.ToolbarButtonGenerateCE .rtbIcon,.ToolbarButtonGenerateProjectRecords .rtbIcon, .ToolbarButtonProcurement  .rtbIcon, .ToolbarButtonGenerateMultipleRevisions  .rtbIcon,
+.ToolbarButtonPaymentSchedule .rtbIcon, .ToolbarButtonGenerateChangeEvent .rtbIcon,.ToolbarButtonGenerateChangeOrder .rtbIcon,.ToolbarButtonCommitment .rtbIcon
+ {
+/*background-image: url('Images/2007Small.png');
+background-position: -32px 0px !important;*/
+background-image:none!important;
+}
+
+
+.ToolbarCancelWorksheet .rtbIcon, .ToolbarVoid .rtbIcon,.ToolbarCancel .rtbIcon{
+    background-position:-2088px 0px !important;
+    width: 24px  !important;
+    height: 24px !important;
+}
+
+.ToolbarCancel .rtbIcon
+{
+    width: 24px !important;
+    height: 24px  !important;
+    background-position: -1248px 0px !important;
+}
+ .RadMenu_Office2007{z-index:3000!important;}
+.ToolbarButtonNewInitiative .rtbIcon ,.ToolbarButtonNewInitiativeFromTemplate  .rtbIcon ,.ToolbarNewInit .rtbIcon 
+{
+/*background-image: url('Images/2007Small.png');*/
+background-image:none !important;
+/*background-position: -416px 0px !important;
+width: 16px !important;
+height: 16px !important;
+display:inline-block;*/
+}
+
+.ToolbarBluebeamSync .rtbIcon
+{
+    width: 24px !important;
+    height: 24px  !important;
+    background-position: -1680px  0px !important;
+}
+
+ .ToolbarDelegate .rtbIcon
+{
+	width: 24px !important;
+    height: 24px  !important;
+    background-position: -912px  0px !important;
+}
+
+ .TaskTabsShown .rtbIcon {
+    width: 24px !important;
+    height: 24px  !important;
+    background-position: -1392px  0px !important;
+}
+ .TaskTabsHidden .rtbIcon {
+    width: 24px !important;
+    height: 24px  !important;
+    background-position: -1416px  0px !important;
+}
+
+.LockedSchedule .rtbIcon {
+    width: 24px !important;
+    height: 24px  !important;
+    background-position: -1440px  0px !important;
+}
+ .UnlockedSchedule .rtbIcon {
+    width: 24px !important;
+    height: 24px  !important;
+    background-position: -1464px  0px !important;
+}
+
+.ToolbarEdit .rtbIcon {
+    width: 24px !important;
+    height: 24px  !important;
+    background-position: -1632px  0px !important;
+}
+
+.EditButton .Icon {
+    background-image: url('Images/2007Small.png');
+    background-position:-576px 0px !important;
+    width: 16px !important;
+    height: 16px !important;
+	display: inline-block;
+    vertical-align: middle !important;
+}
+
+.Warning .Icon
+{
+    background-image: url('Images/2007Large.png');
+    background-position:-1344px 0px !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: inline-block;
+    vertical-align: middle !important;
+}
+
+.SmallWarning .Icon
+{
+    background-image: url('Images/2007Small.png') !important;
+    background-position:-3008px 0px !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-block;
+    vertical-align: middle !important;
+}
+
+.smallUp .Icon
+{
+    background-image: url('Images/2007Small.png') !important;
+    background-position:-2944px 0px !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-block;
+    vertical-align: middle !important;
+}
+
+.smallUpAll .Icon
+{
+    background-image: url('Images/2007Small.png') !important;
+    background-position:-2976px 0px !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-block;
+    vertical-align: middle !important;
+}
+
+
+.SmallLink {
+    background-image: url('Images/2007Small.png');
+    background-position:-384px  0px !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: inline-block;
+    cursor:pointer;
+}
+
+
+.rgCommandRow .Icon
+{background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+width: 16px;
+display: inline-block;
+height: 16px;
+vertical-align: middle;
+margin-bottom: 3px;
+ background-repeat:no-repeat;
+}
+
+.tblCommandRow a {
+    position:relative;
+    top:-2px;
+}
+
+.tblCommandRow .GridCmdGridView .Text {
+    position:relative;
+    top:4px;
+}
+
+.tblCommandRow .Icon {
+    background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important; 
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+}
+
+
+
+
+.GridCmdEditRows .Icon,.GridCmdEditSelectedLines .Icon,.GridCmdEditRow  .Icon,.GridCmdAppendIssue  .Icon
+{
+     background-position: -592px 0px !important;
+}
+
+.GridCmdEditRows_disabled .Icon,.GridCmdEditSelectedLines_disabled .Icon,.GridCmdEditRow_disabled  .Icon,.GridCmdAppendIssue_disabled  .Icon
+{
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -592px 0px !important;
+}
+
+.GridCmdPctComplete .Icon , .GridCmdSnooze .Icon
+{
+  background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+  width: 16px !important;
+  height: 16px !important;
+  display:inline-block;
+  background-position: -848px 0px !important;
+
+}
+
+.GridCmdPctComplete_disabled .Icon ,.GridCmdSnooze_disabled .Icon
+{
+  background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+  width: 16px !important;
+  height: 16px !important;
+  display:inline-block;
+  background-position: -848px 0px !important;
+}
+
+
+
+
+
+.GridCmdInitNewRow .rtbIcon ,.GridCmdInitNewRow_disabled .rtbIcon{
+    background-position: -496px 0px !important;
+}
+
+.GridCmdAddAssembly .rtbIcon ,.GridCmdAddAssembly_disabled .rtbIcon{
+    background-position: -624px 0px !important;
+}
+
+.GridCmdWorkOrderAddResources .rtbIcon ,.GridCmdWorkOrderAddResources_disabled .rtbIcon{
+    background-position: -1248px 0px !important;
+}
+
+
+
+.GridCmdCloseSelectedPeriods .Icon
+{
+    background-position: -880px 0px !important;
+}
+
+.GridCmdCloseSelectedPeriods_disabled .Icon
+{
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -880px 0px !important;
+}
+
+
+
+.GridCmdOpenSelectedPeriods .Icon
+{
+    background-position: -896px 0px !important;
+}
+
+.GridCmdOpenSelectedPeriods_disabled .Icon
+{
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -896px 0px !important;
+}
+
+
+.GridCmdUpdateEdited .Icon,.GridCmdPerformInsert .Icon,
+.GridCmdSaveContacts .Icon,.GridCmdSaveDistContacts .Icon
+,.GridCmdSaveMapping .Icon,.GridCmdSave .Icon,.GridCmdAddLdapUsers .Icon,.GridCmdAttachSelected .Icon
+,.GridCmdRadToolBarSplitButtonImport .Icon ,.GridCmdImportRows .Icon,.GridCmdUpdate .Icon,.GridCmdPerformUpdate .Icon
+,.GridCmdUpdateMapping .Icon,.GridCmdUpdateImportPopup .Icon,.GridCmdUpdateRevision .Icon,.GridCmdUpdateSubItemPopup .Icon,.GridCmdReissue .Icon
+{
+   background-position: -480px 0px !important;
+}
+
+.GridCmdUpdateEdited_disabled .Icon,.GridCmdPerformInsert_disabled .Icon,
+.GridCmdSaveContacts_disabled .Icon,.GridCmdSaveDistContacts_disabled .Icon
+,.GridCmdSaveMapping_disabled .Icon,.GridCmdSave_disabled .Icon,.GridCmdAddLdapUsers_disabled .Icon,.GridCmdAttachSelected_disabled .Icon
+,.GridCmdRadToolBarSplitButtonImport_disabled .Icon ,.GridCmdImportRows_disabled .Icon,.GridCmdUpdate_disabled .Icon,.GridCmdPerformUpdate_disabled .Icon
+,.GridCmdUpdateMapping_disabled .Icon,.GridCmdUpdateImportPopup_disabled .Icon,.GridCmdUpdateRevision_disabled .Icon,.GridCmdUpdateSubItemPopup_disabled .Icon
+{
+     background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+     background-position: -480px 0px !important;
+}
+
+
+
+
+
+ .GridCmdCancelAll .Icon,  .GridCmdCancelImport .Icon,.GridCmdVoidLines .Icon,.GridCmdRemoveCommitmentLink .Icon,.GridCmdCancelPopup .Icon,.GridCmdCancelSubItemPopup .Icon,.GridCmdCancel .Icon
+  {
+    background-position: -1392px 0px !important;
+  }
+
+ .GridCmdCancelAll_disabled .Icon,  .GridCmdCancelImport_disabled .Icon,.GridCmdVoidLines_disabled .Icon,.GridCmdRemoveCommitmentLink_disabled .Icon,.GridCmdCancelPopup_disabled .Icon,.GridCmdCancelSubItemPopup_disabled .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -1392px 0px !important;
+  }
+
+  .GridCmdAddItems .Icon
+  {
+      background-position: -608px 0px !important;
+  }
+
+  .GridCmdAddItems_disabled .Icon
+  {
+     background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+     background-position: -608px 0px !important;
+  }
+
+
+  .GridCmdAddAssembly .Icon
+  {
+     background-position: -624px 0px !important;
+  }
+
+   .GridCmdAddAssembly_disabled .Icon
+  {
+     background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+     background-position: -624px 0px !important;
+  }
+
+
+
+
+  .GridCmdWorkOrderAddResources .Icon , .GridCmdTimeSheetAddResources .Icon
+  {
+    background-position: -1248px 0px !important;
+  }
+
+  .GridCmdWorkOrderAddResources_disabled .Icon , .GridCmdTimeSheetAddResources_disabled .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -1248px 0px !important;
+  }
+
+
+
+
+
+ .GridCmdUpdateTasks .Icon
+  {
+    background-position: -304px 0px !important;
+  }
+
+  .GridCmdUpdateTasks_disabled .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -304px 0px !important;
+  }
+
+
+
+
+
+  .GridCmdInitNewRow .Icon,.GridCmdInitNewRecord .Icon,.GridCmdAddAdjustments .Icon
+  ,.GridCmdAddDocumentManager .Icon,.GridCmdAddClauses .Icon
+  , .GridCmdAddTasks .Icon,.GridCmdAddBidders .Icon,.GridCmdAddCostCodes .Icon,.GridCmdAddPMWebReport .Icon
+  ,.GridCmdAddFundingCodes .Icon,.GridCmdAdd .Icon,.MoveOutButton .Icon,.GridCmdAddCharges .Icon,.GridCmdAddMultiple .Icon
+  ,.GridCmdAddBidders .Icon ,.GridCmdGenerateNext .Icon, .GridCmdAddScoring .Icon
+  ,.GridCmdNewRow .Icon,.GridCmdAddEstimateItems .Icon,.GridCmdAddSQLReport .Icon,.GridCmdInitNewCommitment .Icon,.GridCmdInitNewCalculatedRow .Icon,.GridCmdInitNewIssue .Icon,.GridCmdAddSubmittalItems .Icon
+  {
+    background-position: -496px 0px !important;
+  }
+
+
+   .GridCmdInitNewRow_disabled .Icon,.GridCmdInitNewRecord_disabled .Icon,.GridCmdAddAdjustments_disabled .Icon
+  ,.GridCmdAddDocumentManager_disabled .Icon,.GridCmdAddClauses_disabled .Icon
+  , .GridCmdAddTasks_disabled .Icon,.GridCmdAddBidders_disabled .Icon,.GridCmdAddCostCodes_disabled .Icon,.GridCmdAddPMWebReport_disabled .Icon
+  ,.GridCmdAddFundingCodes_disabled .Icon,.GridCmdAdd_disabled .Icon,.MoveOutButton_disabled .Icon,.GridCmdAddCharges_disabled .Icon,.GridCmdAddMultiple_disabled .Icon
+  ,.GridCmdAddBidders_disabled .Icon ,.GridCmdGenerateNext_disabled .Icon, .GridCmdAddScoring_disabled .Icon
+  ,.GridCmdNewRow_disabled .Icon,.GridCmdAddEstimateItems_disabled .Icon,.GridCmdAddSQLReport_disabled .Icon,.GridCmdInitNewCommitment_disabled .Icon,.GridCmdInitNewCalculatedRow_disabled .Icon,.GridCmdInitNewIssue_disabled .Icon,.GridCmdAddSubmittalItems_disabled .Icon
+  {
+     background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+     background-position: -496px 0px !important;
+  }
+
+
+
+
+
+ .GridCmdDeleteRows .Icon,.GridCmdDeleteRecords .Icon,.GridCmdDeleteSelectedLine .Icon,.GridCmdDeleteLink .Icon,.GridCmdClearRows .Icon,.GridCmdDeleteRow .Icon
+  {
+    background-position: -512px 0px !important;
+  }
+
+  .GridCmdDeleteRows_disabled .Icon,.GridCmdDeleteRecords_disabled .Icon,.GridCmdDeleteSelectedLine_disabled .Icon,.GridCmdDeleteLink_disabled .Icon,.GridCmdClearRows_disabled .Icon,.GridCmdDeleteRow_disabled .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -512px 0px !important;
+  }
+
+
+
+
+
+	 .GridCmdLinkPMWebRecords .Icon,.GridCmdLinkPayments .Icon
+	,.GridCmdlinkAsset .Icon,.GridCmdLinkOCR .Icon
+	,.GridCmdAddLinked .Icon,.GridCmdLinkCE .Icon
+	,.GridCmdProduction .Icon,.GridCmdLinkChangeOrders .Icon,.GridCmdLinkProduction .Icon
+	,.GridCmdLinkInitiative .Icon ,.GridCmdAddLink .Icon,.GridCmdLinkEstimates .Icon,.GridCmdLinkSchedule .Icon,.GridCmdLinkCommitments .Icon
+	,.GridCmdlinkComponent .Icon
+   {
+     background-position: -736px 0px !important;
+   }
+
+    .GridCmdLinkPMWebRecords_disabled .Icon,.GridCmdLinkPayments_disabled .Icon
+	,.GridCmdlinkAsset_disabled .Icon,.GridCmdLinkOCR_disabled .Icon
+	,.GridCmdAddLinked_disabled .Icon,.GridCmdLinkCE_disabled .Icon
+	,.GridCmdProduction_disabled .Icon,.GridCmdLinkChangeOrders_disabled .Icon,.GridCmdLinkProduction_disabled .Icon
+	,.GridCmdLinkInitiative_disabled .Icon ,.GridCmdAddLink_disabled .Icon,.GridCmdLinkEstimates_disabled .Icon,.GridCmdLinkSchedule_disabled .Icon,.GridCmdLinkCommitments_disabled .Icon
+	,.GridCmdlinkComponent_disabled .Icon
+   {
+     background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+     background-position: -736px 0px !important;
+   }
+
+
+
+
+
+  
+   .GridCmdDownloadSelectedFiles .Icon
+   { background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+     display: inline-block;
+	 width: 16px;
+	 height: 16px; 
+     background-position: -1200px 0px !important;
+   }
+
+   .GridCmdDownloadSelectedFiles_disabled .Icon
+   {
+	   background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+     display: inline-block;
+	 width: 16px;
+	 height: 16px; 
+     background-position: -1200px 0px !important;
+   }
+
+
+
+
+	
+   /*.GridCmdPMWebViewer .Icon
+   {
+     background-position: -784px 0px !important;
+   }
+
+   .GridCmdPMWebViewer_disabled .Icon
+   {
+        background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+     background-position: -784px 0px !important;
+   }*/
+
+   
+  /*.GridCmdRebindGrid .Icon,.GridCmdUndo .Icon ,.GridCmdFilterGrid .Icon ,.GridCmdRefresh .Icon 
+  {
+    background-position: -97px 0px !important;
+  }
+
+  .GridCmdRebindGrid_disabled .Icon,.GridCmdUndo_disabled .Icon ,.GridCmdFilterGrid_disabled .Icon ,.GridCmdRefresh_disabled .Icon 
+  {
+     background-position: -112px 0px !important;
+  }*/
+
+    .GridCmdRebindGrid .Icon,.GridCmdUndo .Icon ,.GridCmdFilterGrid .Icon ,.GridCmdRefresh .Icon 
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+    width: 16px !important;
+    display: inline-block !important;
+    height: 16px !important;
+    vertical-align: middle !important;
+    margin-bottom: 3px !important;
+    background-repeat:no-repeat !important;
+    background-position: -640px 0px !important;
+  }
+
+  .GridCmdRebindGrid_disabled .Icon,.GridCmdUndo_disabled .Icon ,.GridCmdFilterGrid_disabled .Icon ,.GridCmdRefresh_disabled .Icon 
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    width: 16px !important;
+    display: inline-block !important;
+    height: 16px !important;
+    vertical-align: middle !important;
+    margin-bottom: 3px !important;
+    background-repeat:no-repeat !important;
+    background-position: -640px 0px !important;
+  }
+
+
+  .GridCmdPasteClipBoard .Icon,.GridCmdGenerateSubmittal .Icon
+  {
+    background-position: -672px 0px !important;
+  }
+
+  .GridCmdPasteClipBoard_disabled .Icon,.GridCmdGenerateSubmittal_disabled .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -672px 0px !important;
+  }
+
+
+
+
+  
+  .GridCmdAddEquipment .Icon ,  .GridCmdGotoMySettings  .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+    width: 16px!important;
+    height: 16px!important;
+    background-position: -1520px 0px !important;
+  }
+
+   .GridCmdAddEquipment_disabled .Icon , .GridCmdGotoMySettings_disabled  .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -1520px 0px !important;
+    width: 16px!important;
+    height: 16px!important;
+  }
+
+
+
+
+
+  .GridCmdUnlinkPayments .Icon,.GridCmdUnlinkAsset .Icon,.GridCmdUnlinkComponent .Icon
+  {
+    background-position: -752px  0px !important;
+  }
+
+  .GridCmdUnlinkPayments_disabled .Icon,.GridCmdUnlinkAsset_disabled .Icon,.GridCmdUnlinkComponent_disabled .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -752px  0px !important;
+  }
+
+
+
+
+
+
+  .GridCmdPayInvoices .Icon,.GridCmdApplyPayments .Icon
+  {
+    background-position: -1344px 0px !important;
+  }
+
+  .GridCmdPayInvoices_disabled .Icon,.GridCmdApplyPayments_disabled .Icon
+  {
+    background-position: -1360px 0px !important;
+  }
+   
+
+
+
+
+  .GridCmdPickInventory .Icon
+  {
+    background-position: -1408px 0px !important;
+    width: 16px!important;
+    height: 16px!important;
+  }
+
+  .GridCmdPickInventory_disabled .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -1408px 0px !important;
+    width: 16px!important;
+    height: 16px!important;
+  }
+
+
+
+
+.GridCmdAddQuestion .Icon,.GridCmdSearchProjects .Icon,.GridCmdSearchProperties .Icon,.GridCmdPreview .Icon,.GridCmdSearch .Icon
+{
+	 background-position:-144px 0px !important;
+}
+
+.GridCmdAddQuestion_disabled .Icon,.GridCmdSearchProjects_disabled .Icon,.GridCmdSearchProperties_disabled .Icon,.GridCmdPreview_disabled .Icon,.GridCmdSearch_disabled .Icon
+{
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+	background-position: -144px 0px !important;
+}
+
+
+
+
+
+
+  .GridCmdAward  .Icon,.GridCmdUpdateDispatchBoard  .Icon, .GridCmdAutoApply .Icon, .GridCmdDeactivateRows .Icon,.GridCmdActivateRow .Icon , .GridCmdDismiss .Icon
+  {
+    background-position: -336px 0px !important;
+    width: 16px!important;
+    height: 16px!important;
+  }
+
+  .GridCmdAward_disabled  .Icon,.GridCmdUpdateDispatchBoard_disabled  .Icon, .GridCmdAutoApply_disabled .Icon, .GridCmdDeactivateRows_disabled .Icon,.GridCmdActivateRow_disabled .Icon , .GridCmdDismiss_disabled .Icon
+  {
+        background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+        background-position: -976px 0px !important;
+        width: 16px!important;
+        height: 16px!important;
+  }
+
+
+
+
+
+  .GridCmdTreeListView .Icon
+  {
+    background-position: -1264px 0px !important;
+  }
+
+  .GridCmdTreeListView_disabled .Icon
+  {
+      background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+      background-position: -1264px 0px !important;
+  }
+
+
+
+
+  .GridCmdCreateWorkOrder .Icon
+  {
+    background-position: -1552px 0px !important;
+  }
+
+  .GridCmdCreateWorkOrder_disabled .Icon
+  {
+    background-position: -1552px 0px !important;
+  }
+
+
+
+
+  .GridCmdSavePermissions .Icon,  .GridCmdEndSession .Icon
+  {
+    background-position: -1584px 0px !important;
+  }
+
+  .GridCmdSavePermissions_disabled .Icon,  .GridCmdEndSession_disabled .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -1584px 0px !important;
+  }
+
+
+
+
+
+  .GridCmdCopyUser  .Icon,.GridCmdRecurCharges  .Icon,.GridCmdCopyUsernames  .Icon
+  {
+    background-position: -272px 0px !important;
+  }
+
+  .GridCmdCopyUser_disabled  .Icon,.GridCmdRecurCharges_disabled  .Icon,.GridCmdCopyUsernames_disabled  .Icon
+  {
+      background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -272px 0px !important;
+  }
+
+
+
+
+
+  .GridCmdInactivate .Icon
+  {
+      background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -96px  0px !important;
+  }
+
+  .GridCmdActivate .Icon
+  {
+    background-position: -96px 0px !important;
+  }
+
+
+
+
+
+
+  .GridCmdAnalyzeLease .Icon
+  {
+     background-position: -1328px 0px !important;
+  }
+
+  .GridCmdAnalyzeLease_disabled .Icon
+  {
+      background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+     background-position: -1328px 0px !important;
+  }
+
+
+
+
+	
+  .GridCmdLoadDefaultState .Icon
+  {
+    background-position: -336px 0px !important;
+  } 
+
+  .GridCmdLoadDefaultState_disabled .Icon
+  {
+      background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+      background-position: -336px 0px !important;
+  } 
+
+
+  .GridCmdGoToEventCenter  .Icon
+  {
+    background-image: url('Images/2007Small.png') !important;
+    width: 16px!important;
+    height: 16px!important;
+    background-position: -2400px 0px !important;
+  }
+
+.GridCmdGoToEventCenter_disabled  .Icon
+  {
+    background-image: url('Images/2007Small.png') !important;
+    width: 16px!important;
+    height: 16px!important;
+    background-position: -2416px 0px !important;
+  }
+
+
+ .GoogleAddresseUpdateButton .Icon , .GridCmdReissueBids .Icon , .GridCmdMoveOut  .Icon
+  {
+    background-position: -1183px 0px !important;
+  }
+
+  .GoogleAddresseUpdateButton_disabled .Icon  , .GridCmdReissueBids_disabled .Icon , .GridCmdMoveOut_disabled  .Icon
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -1183px 0px !important;
+  }
+
+    .GridCmdUploadFile  .Icon,.GridCmdUpdateAsset  .Icon,.TopPageButton .Icon 
+  {
+    background-position: -1216px 0px !important;
+  }
+
+  .GridCmdUploadFile_disabled  .Icon,.GridCmdUpdateAsset_disabled  .Icon,.TopPageButton_disabled .Icon 
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -1216px 0px !important;
+  }
+
+  .GridCmdAttachSelectedAndExit  .Icon  
+{
+   /*background-image: url('Images/2007Small.png') !important;*/
+  width: 16px!important;
+  height: 16px!important;
+  background-position: -1536px 0px !important;
+}
+
+.GridCmdAttachSelectedAndExit_disabled  .Icon  
+{
+  background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+  width: 16px!important;
+  height: 16px!important;
+  background-position: -1536px 0px !important;
+}
+
+
+ 
+
+
+
+
+.GridCmdReverseSelection .Icon {
+  background-image: url('Images/2007Small.png') !important;
+  width: 16px!important;
+  height: 16px!important;
+  background-position: -320px 0px !important;
+  background-repeat: no-repeat; 
+}
+
+.GridCmdReverseSelection_disabled .Icon {
+  background-image: url('Images/2007Small.png') !important;
+  width: 16px!important;
+  height: 16px!important;
+  background-position: -336px 0px !important;
+  background-repeat: no-repeat; 
+}
+
+
+
+
+.PreviousButton .Icon 
+  {
+    background-position: -1169px 0px !important;
+  }
+
+.PreviousButton_disabled .Icon 
+  {
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -1169px 0px !important;
+  }
+ 
+
+
+
+
+
+
+ .GridCmdMarkAsRead  .Icon
+  {
+    background-position: -528px 0px !important;
+  }
+
+ .GridCmdMarkAsRead_disabled  .Icon
+  {
+     background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -528px 0px !important;
+  }
+
+
+
+.GridCmdRecalculateCostLines  .Icon
+{
+    background-position: -1472px 0px !important;
+}
+
+.GridCmdRecalculateCostLines_disabled   .Icon
+{
+     background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -1488px 0px !important;
+}
+
+
+
+
+.GridCmdGridView  .Icon
+{
+    background-position: -704px 0px !important;
+}
+
+.GridCmdGridView_disabled  .Icon
+{
+     background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position: -704px 0px !important;
+}
+  
+
+ /***************************************Workflow Icons******************************************************/
+.InboxItem .Icon
+{
+ background-image: url('Images/2007Small.png');
+ display: inline-block;
+ width: 16px;
+ height: 16px;
+ margin:5px;
+}
+.lbtApproveWorkflow .Icon
+{background-position:-1184px 0px;
+}
+.lbtReturnWorkflow .Icon
+{background-position:-1168px 0px;
+}
+.lbtRejectWorkflow .Icon
+{background-position:-1232px 0px;
+}
+.lbtWithdrawWorkflow .Icon
+{background-position:-3056px 0px;
+}
+.lbtFinalApproveWorkflow .Icon
+{background-position:-336px 0px;
+}
+.lbtDelegateWorkflow .Icon
+{background-position:-1296px 0px;
+}
+.lbtCommentWorkflow .Icon
+{background-position:-1312px 0px;
+}
+.lbtReviewCompleteWorkflow .Icon
+{background-position:-336px 0px;
+}
+
+.lbtApproveWorkflow, .lbtReturnWorkflow, .lbtRejectWorkflow, .lbtWithdrawWorkflow, .lbtFinalApproveWorkflow, .lbtDelegateWorkflow, .lbtCommentWorkflow, .lbtReviewCompleteWorkflow
+{text-decoration: none;
+}
+
+.CreateProjectButton .Icon,.CreateProjectFromTemplateButton .Icon
+{
+ background-image:url('Images/2007Large.png');
+  background-repeat:no-repeat;
+   background-position: -1080px  0px !important;
+   display:inline-block;
+	width: 24px !important;
+ height: 24px  !important;
+}
+
+.SaveButton .Icon
+{
+ background-image:url('Images/2007Large.png');
+  background-repeat:no-repeat;
+   background-position: -360px !important;
+   display:inline-block;
+	width: 24px !important;
+ height: 24px  !important;
+}
+
+.PrintButton .Icon
+{
+ background-image:url('Images/2007Large.png');
+  background-repeat:no-repeat;
+   background-position: -1056px 0px !important;
+   display:inline-block;
+	width: 24px !important;
+ height: 24px  !important;
+}
+
+.SearchButton .Icon
+{background-image:url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+ background-position:-72px 0px !important;
+ display: inline-block !important;
+ width: 24px !important;
+ height: 24px !important; 
+ margin-right: 8px !important;
+}
+
+/*.SearchButton_disabled .Icon
+{
+    background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-position: -64px 0px !important;
+    display: inline-block !important;
+    width: 16px !important;
+    height: 16px !important;
+}*/
+.SearchButton[Disabled] .Icon
+{
+    background-image: url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+    background-position: -96px 0px !important;
+    display: inline-block !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+.LoopButton .Icon {
+    background-image:url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+    background-position:-216px 0px !important;
+    display: inline-block !important;
+    width: 24px !important;
+    height: 24px !important; 
+    margin-right: 8px !important;
+}
+
+.Activebutton .Icon {
+background-image: url('Images/2007Large.png') !important;
+background-repeat: no-repeat;
+width: 24px !important;
+height: 24px !important;
+background-position: -432px 0px !important;
+display: inline-block !important;
+}
+
+.Inactivebutton .Icon {
+background-image: url('Images/2007Large.png') !important;
+background-repeat: no-repeat;
+width: 24px !important;
+height: 24px !important;
+background-position: -456px 0px !important;
+display: inline-block !important;
+}
+
+.RightFlashButton .Icon
+{background-image:url('Images/2007Small.png') !important;
+ background-position:-1504px 0px !important;
+ display: inline-block !important;
+width: 16px !important;
+height: 16px !important; 
+}
+
+.LockButton .Icon,.smalllock {
+background-image: url('Images/2007Small.png') !important;
+background-position: -896px 0px;
+display: inline-block;
+width: 16px;
+height: 16px;
+} 
+ 
+.Filterbutton .Icon
+{background-image:url('Images/2007Large.png');
+ background-position:-1272px 0px;
+  display: inline-block;
+width: 24px;
+height: 24px; 
+}
+
+.FilterbuttonDisabled .Icon
+{background-image:url('Images/2007Large.png');
+ background-position:-1296px 0px;
+  display: inline-block;
+width: 24px;
+height: 24px; 
+}
+
+.FormulaButton .Icon {
+background-image: url('Images/2007Small.png') !important;
+background-position: -1440px 0px;
+display: inline-block;
+width: 16px;
+height: 16px;
+} 
+.UnlockButton .Icon,.smallUnlock {
+background-image: url('Images/2007Small.png') !important;
+background-position: -928px 0px;
+display: inline-block;
+width: 16px;
+height: 16px;
+}
+
+.SmallLinkButton .Icon
+{background-image: url('Images/2007Small.png');
+  background-position:-384px  0px !important;
+width: 16px !important;
+height: 16px !important;
+display: inline-block;
+}
+
+.ClockButton .Icon
+{background-image: url('Images/2007Small.png');
+background-position: -1248px  0px !important;
+width: 16px !important;
+height: 16px !important;
+display: inline-block;
+}
+.AttachmentButton .Icon
+{background-image: url('Images/2007Small.png');
+background-position: -1216px 0px !important;
+width: 16px !important;
+height: 16px !important;
+display: inline-block;
+}
+
+.SwitchButton .Icon {
+background-image: url('Images/2007Small.png');
+background-position: -320px 0px;
+display: inline-block;
+width: 16px;
+height: 16px;
+}
+
+.HelpButton .Icon {
+background-image: url('Images/2007Small.png');
+background-position: -1152px 0px; 
+display: inline-block;
+width: 16px;
+height: 16px;
+}
+.BranchButton .Icon
+{background-image:url('Images/2007Small.png');
+ background-position:-2464px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+.LockedButton .Icon
+{background-image:url('Images/2007Small.png');
+ background-position:-896px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+.UnlockedButton .Icon
+{background-image:url('Images/2007Small.png');
+ background-position:-928px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+.VisualCalculatorButton .Icon {
+background-image: url('Images/2007Large.png');
+background-position: -504px 0px;
+display: inline-block;
+width: 24px;
+height: 24px;
+}
+.MenuEmpty .rmLeftImage {
+width:0px !important;
+height:0px !important;
+min-height:0px !important;
+min-width:0px !important;
+}
+.EmptyButton .Icon
+{
+width: 0px;
+height: 0px; 
+
+}
+
+.WorkflowApproveButton .Icon
+{background-image:url('Images/2007Small.png');
+ background-position:-2496px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+word-wrap:break-word;
+}
+.WorkflowReturnButton .Icon
+{background-image:url('Images/2007Small.png');
+ background-position:-2512px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+word-wrap:break-word;
+}
+.WorkflowRejectButton .Icon
+{background-image:url('Images/2007Small.png');
+ background-position:-2528px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+word-wrap:break-word;
+}
+.WorkflowWithdrawButton .Icon
+{background-image:url('Images/2007Small.png');
+ background-position:-2544px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+word-wrap:break-word;
+}
+.CheckedInButton .Icon
+{background-image: url('Images/2007Small.png') !important;
+background-position: -960px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+
+.PMwebViewerButton .Icon
+{background-image: url('Images/2007Small.png') !important;
+background-position: -768px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+
+.PMwebViewerButton_disabled .Icon
+{background-image: url('Images/2007Small.png') !important;
+background-position: -784px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+
+.ThreeDViewerButton .Icon
+{background-image: url('Images/2007Small.png') !important;
+background-position: -3456px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+
+.ThreeDViewerButton_disabled .Icon
+{background-image: url('Images/2007Small.png') !important;
+background-position: -3472px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+
+
+.ProjectButton .Icon
+{background-image: url('Images/2007Small.png');
+ background-position:-1888px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+.PortfolioButton .Icon
+{background-image: url('Images/2007Small.png');
+ background-position:-32px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+.ALLButton .Icon
+{
+    display: none !important; 
+}
+.PorgramProjectButton .Icon
+{background-image: url('Images/2007Small.png');
+ background-position:-2016px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+.PorgramLocationButton .Icon
+{background-image: url('Images/2007Small.png');
+ background-position:-2048px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+.PropertyButton .Icon
+{background-image: url('Images/2007Small.png');
+ background-position:-1760px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+.FodlerButton .Icon
+{background-image: url('Images/TreeViewSmall.png');
+ background-position:0px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+.UserGroupButton .Icon,.MenuUserGroup .rmLeftImage{
+    background-image: url('Images/2007Small.png') !important; 
+    background-position:-256px 0px !important; 
+     display: inline-block;
+    width: 16px;
+    height: 16px; 
+}
+.FilledDetails .Icon
+{background-image:url('Images/2007Small.png');
+ background-position:-736px 0px;
+ display: inline-block;
+width: 16px;
+height: 16px; 
+}
+
+.EmptyDetails .Icon
+{background-image:url('Images/2007Small.png');
+ background-position:-704px 0px;
+  display: inline-block;
+width: 16px;
+height: 16px; 
+}
+
+
+.ExcelButton .Icon,  .ToolbarExportQuery .rtbIcon,.GridCmdCopyToExcel .Icon,.GridCmdExpToExcel .Icon
+{
+ background-position:-656px  0px;
+}
+
+.GridCmdCopyToExcel_disabled .Icon,.GridCmdExpToExcel_disabled .Icon
+{
+  background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+  background-position: -656px 0px !important;
+}
+
+ .ToolbarSaveAndExit  .rtbIcon
+{
+	background-image:url('Images/2007Large.png') !important;
+    background-position:-1152px  0px;
+    display: inline-block;
+    width: 24px !important;
+    height: 24px !important;
+    vertical-align: middle
+} 
+
+ /* To Remove*/
+.ToolbarButtonSaveLayout .rtbIcon ,.SaveLayoutButton .Icon
+{
+    background-image:url('Images/2007Small.png')!important;
+    background-position:-352px   0px;
+    display: inline-block;
+    width: 16px!important;
+    height: 16px!important;
+    vertical-align: middle
+}
+.ToolbarButtonLoadDefaultState .rtbIcon 
+{background-image:url('Images/2007Small.png')!important;
+ background-position:-256px   0px;
+ display: inline-block;
+width: 16px!important;
+height: 16px!important;
+ vertical-align: middle
+}
+/*-----------*/
+
+
+.popup-toolbar .CancelButton .rtbIcon, .ToolbarClose .rtbIcon
+{background-image:url('Images/2007Small.png') !important;
+ background-position:-192px  0px;
+ display: inline-block;
+width: 16px !important;
+height: 16px !important;
+ vertical-align: middle
+}
+
+.popup-toolbar .ReportViewerButton .rtbIcon
+{background-image:url('Images/2007Small.png') !important;
+ background-position:-1568px 0px;
+ display: inline-block;
+width: 16px !important;
+height: 16px !important; 
+vertical-align: middle;
+}
+.SendEmailButton .Icon,.GridCmdResendMessage .Icon,  .GridCmdEmailPasswords .Icon
+{
+ background-position:-528px  0px !important;
+}
+
+.GridCmdResendMessage_disabled  .Icon,.GridCmdEmailPasswords_disabled  .Icon , .GridCmdEmailPasswords_disabled .Icon
+{
+    background-image: url(../../Images/ResponsiveIcons/16Disabled.png) !important;
+    background-position:-528px  0px !important;
+}
+ .UserButton .Icon,.MenuUserButton .rmLeftImage
+{
+    background-image: url('Images/2007Small.png') !important; 
+    background-position: -352px 0px !important;
+     display: inline-block;
+    width: 16px !important;
+    height: 16px !important; 
+}
+
+.popup-toolbar .ToolbarPDFButton .rtbIcon, .popup-toolbar  .ToolbarExportPDF .rtbIcon 
+{
+background-image:url('Images/2007Small.png') !important;
+ background-position:-288px   0px;
+ display: inline-block;
+ vertical-align: middle;
+width: 16px !important;
+height: 16px !important;
+}
+.MergeWordButton .Icon
+{
+background-image:url('Images/2007Small.png') !important;
+ background-position:-2720px   0px;
+ display: inline-block;
+width: 16px !important;
+height: 16px !important;
+ vertical-align: middle;
+}
+
+.WordButton .Icon
+{
+    background-image:url('Images/2007Small.png') !important;
+    background-position:-1632px   0px;
+    display: inline-block;
+    width: 16px !important;
+    height: 16px !important; 
+    vertical-align: middle
+}
+
+.linearAssetButton .Icon,.CmdGMapsButton .Icon
+{
+    background-image:url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+    background-repeat:no-repeat;
+    background-position: -72px 0px !important;
+    display:inline-block;
+    width: 24px !important;
+    height: 24px  !important;
+}
+
+.ToolbarCheck .rtbIcon,.CheckButton .Icon
+{
+    background-image:url('Images/2007Large.png') !important;
+    background-position:-1248px  0px;
+    display: inline-block;
+    width: 24px;
+    height: 24px; 
+    vertical-align: middle
+}
+
+ 
+  .RadToolBar .ToolbarClose .rtbText,.RadToolBar .ToolbarRefresh  .rtbText 
+  /*,.RadToolBar .ToolbarCheck .rtbText*/
+{
+ display: inline-block !important;
+
+}
+/*****************ContextMenu Icons************************************/
+.Menue {
+background-image: url('Images/2007Small.png') !important;
+background-position: -1312px 0px;
+width:16px;
+height:16px;
+margin-right: 3px;
+}
+
+.trvContextMenu .rmLeftImage
+{ background-image: url('Images/2007Small.png');
+  width:16px;
+  height:16px;
+}
+.MenuSaveAs .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -512px 0px;
+}
+.MenuRename .rmLeftImage /*Done*/
+{background-position:-2241px 0px;
+}
+.MenuPmWebViewr .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -768px 0px;
+}
+.MenuSelected .rmLeftImage {
+background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+background-position: -336px 0px !important
+}
+.MenuUpload .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -1120px 0px;
+}
+.MenuPaste .rmLeftImage { /*Done*/
+background-position: -674px 0px;
+}
+.MenuCopy .rmLeftImage { /*Done*/
+background-position: -1185px 0px;
+}
+.MenuCancel .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -192px 0px;
+}
+.MenuCheckedIn .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -960px 0px;
+}
+.MenuCheckedInDisabled .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -976px 0px;
+}
+.MenuCheckedOut .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -1088px 0px;
+}
+.MenuDownload .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -800px 0px;
+}
+.MenuUnsubscribe .rmLeftImage /*Done*/
+{background-position:-2224px 0px;
+}
+.MenuUrl .rmLeftImage /*Done*/
+{background-position:-2272px 0px;
+}
+.MenuSubscribe .rmLeftImage /*Done*/
+{background-position:-2209px 0px;
+}
+
+.MenuOpen .rmLeftImage,.GridCmdOpenContainingFolder .Icon{
+	background-position:-1536px 0px !important; 
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+}
+.MenuDelete .rmLeftImage /*Done*/
+{    
+    background-image: url('Images/2007Small.png');
+    background-position:-448px 0px;
+}
+.OrgMenuDelete .rmLeftImage /*Done*/
+{ background-image: url('Images/2007Small.png') !important; 
+  background-position:-448px 0px;
+}
+.MenuAddProperty .rmLeftImage /*Done*/
+{background-position:-1760px 0px;
+}
+.MenuAddBuilding .rmLeftImage /*Done*/
+{background-position:-1792px 0px;
+}
+.MenuAddFloor .rmLeftImage /*Done*/
+{background-position:-768px 0px;
+}
+.MenuAddSpace .rmLeftImage /*Done*/
+{background-position:-1856px 0px;
+}
+.MenuAddEquipment .rmLeftImage /*Done*/
+{background-position:-1824px 0px;
+}
+.MenuDocument .rmLeftImage { /*Done*/
+   background-position:-1696px 0px;
+}
+.MenuStage .rmLeftImage /*Done*/
+{
+    background-position: -2080px 0px;
+}
+.MenuGoToDocument .rmLeftImage /*Done*/
+{
+    background-position: -1505px 0px;
+}
+.MenuPermission .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -896px 0px;
+}
+
+.MenuAdd .rmLeftImage
+{
+    background-image: url('Images/2007Small.png') !important ;
+    background-position:-416px 0px; 
+}
+.MenuEdit .rmLeftImage
+{
+    background-image: url('Images/2007Small.png') !important ;
+    background-position:-576px 0px;
+}
+.MenuRefresh .rmLeftImage
+{
+    background-image: url('Images/2007Small.png') !important ;
+    background-position:-96px 0px;
+}
+.MenuLayout .rmLeftImage {
+  background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+ background-position: -704px 0px !important;
+}
+.MenuSave .rmLeftImage {
+background-image: url('Images/2007Small.png') !important;
+background-position: -543px 0px;
+}
+  /*****************TreeView Icons************************************/
+.CheckBoxesTreeview .trvFolder,.CheckBoxesTreeview .trvFile,.CheckBoxesTreeview .trvUser ,.CheckBoxesTreeview .trvEquipment ,.CheckBoxesTreeview .trvDocument , .CheckBoxesTreeview .trvSharedFolder ,.CheckBoxesTreeview .trvLayout
+.CheckBoxesTreeview .trvProject ,.CheckBoxesTreeview .trvProperty ,.CheckBoxesTreeview .trvBuilding ,.CheckBoxesTreeview .trvFloor ,.CheckBoxesTreeview .trvSpace ,.CheckBoxesTreeview .trvProject ,.CheckBoxesTreeview .trvUserGroup ,
+.CheckBoxesTreeview .trvPortfolio ,.CheckBoxesTreeview .trvInventory ,.CheckBoxesTreeview .trvPorgramLocation ,.CheckBoxesTreeview .trvPorgramProject ,.CheckBoxesTreeview .trvCustomFolder ,.CheckBoxesTreeview .trvCustomReport ,
+.CheckBoxesTreeview .trvReportnotTranslated ,.CheckBoxesTreeview .trvInbox ,.CheckBoxesTreeview .trvSent ,.CheckBoxesTreeview .trvSubscribe ,.CheckBoxesTreeview .trvGate ,.CheckBoxesTreeview .trvCheck ,.CheckBoxesTreeview .trvBranch ,
+.CheckBoxesTreeview .trvTab
+{background-color: transparent !important;
+border: 0px !important;
+padding: 0 !important;
+background-image: none !important;
+margin-left:20px;
+}
+.CheckBoxesTreeview label
+{margin-right: 4px;
+}
+.trvFolder .rtIn,.trvFile .rtIn,.trvUser .rtIn,.trvEquipment .rtIn,.trvDocument .rtIn,.trvSharedFolder .rtIn,.trvPBSProject .rtIn,
+.trvProject .rtIn,.trvProperty .rtIn,.trvBuilding .rtIn,.trvFloor .rtIn,.trvSpace .rtIn,.trvProject .rtIn,.trvUserGroup .rtIn,
+.trvPortfolio .rtIn,.trvInventory .rtIn,.trvPorgramLocation .rtIn,.trvPorgramProject .rtIn,.trvPBSPortfolio .rtIn,.trvPBSFolder .rtIn
+,.trvCustomFolder .rtIn,.trvCustomReport .rtIn,.trvReportnotTranslated .rtIn,.trvInbox .rtIn,.trvSent .rtIn
+,.trvSubscribe .rtIn,.trvGate .rtIn,.trvCheck .rtIn,.trvBranch .rtIn,.trvLayout .rtIn, .trvTab .rtIn
+{
+    margin-left:16px !important; 
+}
+
+ .trvFolder .rtSp,.trvPBSFolder .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position: -1664px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+} 
+ .trvLayout .rtSp{
+background-image: url('Images/2007Small.png') !important;
+width: 16px !important;
+height: 22px !important;
+margin-left: -5px !important;
+margin-right: -14px !important;
+background-position: -480px 0px;
+background-repeat: no-repeat; 
+margin-top: 2px;
+}
+.trvBranch .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -3px !important;
+margin-right: -14px !important;
+background-position: -2464px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+ .trvGate .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -3px !important;
+margin-right: -14px !important;
+background-position: -2080px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+.trvCheck .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -3px !important;
+margin-right: -14px !important;
+background-position: -960px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+.trvLocked .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -3px !important;
+margin-right: 0px !important;
+background-position: -896px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+.trvUnlocked .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -3px !important;
+margin-right: 0px !important;
+background-position: -928px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+.trvCustomFolder .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -3px !important;
+margin-right: -14px !important;
+background-position: -1920px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+.trvCustomReport .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -3px !important;
+margin-right: -14px !important;
+background-position: -1952px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+.trvReportnotTranslated .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -3px !important;
+margin-right: -14px !important;
+background-position: -1984px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+ .trvFile .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-1728px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+
+.trvTab .rtSp
+{
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-2368px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+
+  .trvUser .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-352px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+
+  
+    .trvUserDisabled .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    background-position:-368px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+  
+.trvProject .rtSp,.trvPBSProject .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-1888px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+
+.trvProperty .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-1760px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+.ToolbarEmail  .rtbIcon {
+    background-position: -144px  0px !important;
+}
+.trvBuilding .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-1792px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+
+.trvFloor .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-768px 0px;
+    margin-top: 2px;
+}
+
+.trvSpace .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-1856px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+
+.trvEquipment .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-1824px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+
+    .trvDocument .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-1696px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+    .trvSharedFolder .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-2304px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+    .trvUserGroup .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-256px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+
+    .trvPortfolio .rtSp,.trvPBSPortfolio .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-32px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+    .trvInventory .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-2336px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+.trvPorgramProject .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-2016px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+.trvPorgramLocation .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position:-2048px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+.trvSubscribe .rtSp {
+    background-image: url('Images/2007Small.png');
+    width: 16px !important;
+    height: 22px !important;
+    margin-left: -3px !important;
+    margin-right: -14px !important;
+    background-position: -2208px 0px;
+    background-repeat:no-repeat;
+    margin-top: 2px;
+}
+.trvInbox .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -5px !important;
+margin-right: -13px !important;
+background-position: -2144px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+.trvSent .rtSp {
+background-image: url('Images/2007Small.png');
+width: 16px !important;
+height: 22px !important;
+margin-left: -5px !important;
+margin-right: -13px !important;
+background-position: -2176px 0px;
+background-repeat: no-repeat;
+margin-top: 2px;
+}
+.trvPlanning .rtIn,.trvEngineering .rtIn,.trvCostManagement .rtIn,.trvScheduling .rtIn,.trvAsset .rtIn,
+.trvWorkflow .rtIn,.trvPortfolioModule .rtIn,.trvtoolbox .rtIn
+{
+    margin-left:22px !important;
+}
+
+.trvPlanning .rtSp {
+    background-image: url('Images/2007Large.png');
+    width: 24px !important;
+    height: 26px !important;
+    margin-left: -5px !important;
+    margin-right:-20px !important;
+    background-position:0px 0px;
+    background-repeat: no-repeat;
+}
+
+.trvEngineering .rtSp {
+    background-image: url('Images/2007Large.png');
+    width: 24px !important;
+    height: 26px !important;
+    margin-left: -5px !important;
+    margin-right: -21px !important;
+    background-position:-24px 0px;
+    background-repeat: no-repeat;
+}
+.trvCostManagement .rtSp {
+    background-image: url('Images/2007Large.png');
+    width: 24px !important;
+    height: 26px !important;
+    margin-left: -5px !important;
+    margin-right: -21px !important;
+    background-position: -48px 0px;
+    background-repeat: no-repeat;
+}
+.trvScheduling .rtSp {
+    background-image: url('Images/2007Large.png');
+    width: 24px !important;
+    height: 26px !important;
+    margin-left: -5px !important;
+  margin-right: -21px !important;
+background-position: -72px 0px;
+background-repeat: no-repeat;
+}
+.trvAsset .rtSp {
+    background-image: url('Images/2007Large.png');
+    width: 24px !important;
+    height: 26px !important;
+    margin-left: -5px !important;
+ margin-right: -21px !important;
+background-position: -96px 0px;
+background-repeat: no-repeat;
+}
+.trvWorkflow .rtSp {
+    background-image: url('Images/2007Large.png');
+    width: 24px !important;
+    height: 26px !important;
+    margin-left: -5px !important;
+  margin-right: -21px !important;
+background-position: -120px 0px;
+background-repeat: no-repeat;
+}
+.trvPortfolioModule .rtSp {
+    background-image: url('Images/2007Large.png');
+    width: 24px !important;
+    height: 26px !important;
+    margin-left: -5px !important;
+margin-right: -21px !important;
+background-position: -144px 0px;
+background-repeat: no-repeat;
+}
+.trvtoolbox .rtSp {
+    background-image: url('Images/2007Large.png'); 
+    width: 24px !important;
+    height: 26px !important;
+    margin-left: -5px !important;
+    margin-right: -21px !important;
+    background-position:-168px 0px;
+    background-repeat: no-repeat;
+}
+
+/*-------------------------------------Email Home-------------------------------------*/
+
+.inbox-search-toolbar .rtbIcon
+{
+     width: 16px !important;
+     height: 16px  !important;
+     background-image:url('Images/2007Small.png');
+     background-repeat:no-repeat;
+}
+
+.inbox-search-toolbar .ToolbarNewEmail .rtbIcon
+{
+    background-position:-416px 0px;
+}
+
+.inbox-search-toolbar .ToolbarRefresh .rtbIcon
+{
+    background-position:-96px 0px;
+}
+
+.inbox-search-toolbar .Toolbardelete .rtbIcon
+{
+    background-position:-448px 0px;
+}
+
+.inbox-search-toolbar .ToolbarReceiveEmail .rtbIcon
+{
+    background-position:-128px 0px;
+}
+
+.inbox-search-toolbar .ToolbardoSearch .rtbIcon
+{
+    background-position:0px 0px;
+}
+
+.inbox-search-toolbar .ToolbarEmailReply .rtbIcon
+{
+    background-position:-160px 0px;
+}
+
+.inbox-search-toolbar .ToolbarLayout .rtbIcon
+{
+    background-position:-480px 0px;
+}
+
+.inbox-search-toolbar .ToolbarEmail .rtbIcon
+{
+    background-position:-224px 0px !important;
+}
+
+.inbox-search-toolbar .ToolbarCancelSendMail .rtbIcon
+{
+    background-position:-192px  0px;
+}
+.inbox-search-toolbar .ToolbarUser .rtbIcon
+{
+  background-position: -352px 0px !important;
+}
+
+.inbox-search-toolbar .ToolbarDelegate .rtbIcon
+{
+  background-position: -256px 0px !important;
+}
+
+
+/*-----------------------------------------------------------------------------------*/
+/*--------------------------------PM Web Viewer--------------------------------------*/
+
+.drawing-viewer-toolbar .rtbIcon
+{
+     width: 16px !important;
+     height: 16px  !important;
+     background-image:url('Images/2007Small.png');
+     background-repeat:no-repeat;
+}
+
+.drawing-viewer-toolbar .ToolbarUndo .rtbIcon
+{
+    background-image: url('../../Images/ResponsiveIcons/16Enabled.png');
+    background-position:-768px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarRedo .rtbIcon {
+     background-image: url('../../Images/ResponsiveIcons/16Enabled.png');
+        background-position: -784px 0px;
+}
+
+.drawing-viewer-toolbar .drawThickness .rtbIcon
+    {
+       background-position:-3424px 0px;
+
+    }
+.drawing-viewer-toolbar .ToolbarPrint .rtbIcon
+{
+    background-position:-2720px 0px !important;
+}
+/*.drawing-viewer-toolbar a
+{
+    display:inline !important;
+}*/
+
+
+.drawing-viewer-toolbar .Toolbarellipse .rtbIcon
+{
+    background-position:-2816px 0px;
+}
+
+/*.drawing-viewer-toolbar .rtbItem
+{
+   margin: 2px 2px 2px 2px;
+}*/
+
+
+.drawing-viewer-toolbar .Toolbarline .rtbIcon
+{
+    background-position:-2784px 0px;
+}
+
+.drawing-viewer-toolbar .Toolbarpolyline .rtbIcon
+{
+    background-position:-2880px 0px;
+}
+
+.drawing-viewer-toolbar .rtbChoiceArrow
+{margin: 0 0 0 0px !important;
+padding: 0 0 0 0px !important;
+}
+
+.drawing-viewer-toolbar .Toolbarrectangle .rtbIcon
+{
+    background-position:-2848px 0px;
+     /*width: 16px !important;
+     height: 16px  !important;*/
+}
+
+.drawing-viewer-toolbar .Toolbartext .rtbIcon
+{
+    background-position:-2752px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarDefault .rtbIcon
+{
+    background-position:-3168px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarPointer .rtbIcon
+{
+    background-position:-3200px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarMove .rtbIcon
+{
+    background-position:-3232px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarCurveLine .rtbIcon
+{
+    background-position:-3072px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarTriangle .rtbIcon
+{
+    background-position:-3040px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarNotes .rtbIcon
+{
+    background-position:-3104px 0px;
+}
+
+.drawing-viewer-toolbar .Toolbarstamps .rtbIcon
+{
+    background-position:-3136px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarLinkRecords .rtbIcon
+{
+    background-position:-384px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarPrevious .rtbIcon
+{
+    background-position:-3296px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarNext .rtbIcon
+{
+    background-position:-3312px 0px;
+}
+
+.drawing-viewer-toolbar .ToolbarBubble .rtbIcon
+{
+    background-position:-3264px 0px;
+}
+
+.menu-stamps .icon
+{
+    background-image:url('Images/Others.png');
+    background-position:-48px 0px;
+    display: inline-block;
+    width: 24px;
+    height: 24px; 
+}
+
+.RL_ActionHeader .icon
+{
+    background-image:url('Images/OthersSmall.png');
+    background-position:-64px 0px;
+    display: inline-block;
+    width: 16px;
+    height: 16px; 
+    float: left;
+}
+
+.drawing-iconSpace,.SpaceButton .Icon
+{
+    background-image:url('Images/OthersSmall.png');
+    background-position:-144px 0px;
+    display: inline-block;
+    width: 16px;
+    height: 16px; 
+
+}
+
+.drawing-iconEquipment,.EquipmentButton .Icon
+{
+    background-image:url('Images/OthersSmall.png');
+    background-position:-160px 0px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+	
+}
+
+
+
+  /*.drawing-viewer-rdsplitter .rspSlideContainerResize
+    {
+        background-image: url('Images/2007Small.png') !important;
+        background-repeat: repeat-x !important;
+        background-position-y: center !important;
+        background-position-x: -3300px !important;
+        border-right: 4px solid !important;
+        border-left: 4px solid !important;
+        background-color: #C4DBF9 !important;
+        border-color: #C4DBF9 !important;
+    }
+
+   .drawing-viewer-rdsplitter .rspSlideContainerResizeOver:hover
+    {
+        cursor: pointer !important;
+        resize: none !important;
+        background-color: #C4DBF9 !important;
+    }*/
+
+
+   .drawing-viewer-rdsplitter .rspSlideTitleContainer,
+   .drawing-viewer-rdsplitter .rspSlideHeaderIconWrapper,
+   .drawing-viewer-rdsplitter .rspResizeBar
+    {
+        /*display: none;*/
+    }
+   .drawing-viewer-rdsplitter .rspSlideTitle
+    {
+        visibility:hidden ;
+    }
+   .drawing-viewer-rdsplitter .rspPaneTabText
+    {
+        display: none !important;
+    }
+
+   .drawing-viewer-rdsplitter .rspPaneTabContainer
+    {
+        width: 10px !important;
+        background-image: url('Images/2007Small.png') !important;
+        background-repeat: repeat-x;
+        background-position: -3315px center !important;
+        position: absolute;
+        /*top: 600px;*/
+        background-color: #C4DBF9;
+        height: 30px !important;
+    }
+
+    .drawing-viewer-UnDockrdLeftPane{
+    width:10px !important;
+    }
+
+    /*.drawing-viewer-ToolTipManager .rtWrapper 
+    {
+        height:60px !important;
+    }
+    .drawing-viewer-ToolTipManager .rtCallout 
+    {
+        visibility: hidden;
+    }*/
+
+.measurement-viewer-divselect
+{
+    background-color : #FFCB60;
+    width: 252px;
+    padding: 5px;
+    border-width: 0 0px 0 0px;
+    border-color:#8d8b8b;
+    border-style:solid;
+    display: table;
+}
+
+.measurement-viewer-divselect:hover
+{
+    background-color: #FFCB60;
+    cursor:pointer;
+}
+
+    .TooltipManagerTextNote .rtCloseButton 
+    {
+        margin-top:10px;
+        margin-right:10px;
+    }
+
+    .TooltipManagerTextNote .rtCalloutBottomLeft
+    {
+        visibility:hidden;
+    }
+
+    .TooltipManagerTextNote
+    {
+        overflow:hidden;
+        padding-bottom:50px;
+    }
+
+/*-----------------------------------------------------------------------------------*/
+/**********************Procurement Countdown***********************/
+.hasCountdown {
+	border: 1px solid #4875b8;
+	
+    width:380px; 
+    height:60px;
+    background:url(../../../JS/Estimates/VerticalBlueGredientBg.jpg) repeat-x ;
+}
+.countdown_amount {
+	font-size: 1.5em;
+	height:20px;
+    border: 1px solid White;
+    color:White;
+    text-align:center;
+    line-height:20px;
+    background:url(../../../JS/Estimates/VerticalBlueGredientBg.jpg) repeat-y ;
+    background-color:#4875b8;
+}
+
+
+/**********************Header menu And Project Explorer*******************************************************************/
+.MainHeaderMenu
+{background-image: url('Images/2007Large.png') !important;
+    background-position :-216px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin-left:15px; 
+    text-align:center;
+    cursor:pointer;
+     outline:0;
+}
+
+
+.MainHeaderEventSheild
+{background-image: url('Images/2007Shield.png') !important;
+    background-position :0px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 32px !important;
+    height: 32px !important;
+    margin-left:20px; 
+    text-align:center;
+    cursor:pointer;
+     outline:0;
+}
+.MainLogoutButton
+{background-image: url('Images/2007Large.png') !important;
+    background-position :-192px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin-left:90px;
+    margin-top:-1px;
+    text-align:center;
+    cursor:pointer;
+    display:inline-block;
+     outline:0;
+}
+
+.ShowMenu
+{   background-image: url('Images/2007Large.png') !important;
+    background-position :-264px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 24px !important;
+    height: 24px !important;
+    cursor:pointer !important;
+    display: inline-block;
+     outline:0;
+}
+.HideMenu
+{
+    background-image: url('Images/2007Large.png') !important;
+    background-position :-240px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 24px !important;
+    height: 24px !important;
+    cursor:pointer !important;
+    margin-left: -20px;
+    background-color: #688caf;
+    display: inline-block;
+     outline:0;
+}
+.PMMasterTableLoginToProject
+{height:24px;
+
+}
+.PMMasterTableLoginToProject > td
+    {
+        vertical-align:middle;
+    }
+.ShowAssetMenu
+{
+    background-image: url('Images/2007Large.png') !important;
+    background-position :-312px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 24px !important;
+    height: 24px !important;
+    cursor:pointer !important;
+    display: inline-block;
+    outline:0;
+    margin: 0px 4px 2px 6px;
+
+}
+.HideAssetMenu
+{
+    background-image: url('Images/2007Large.png') !important;
+    background-position :-288px 0px !important;
+    background-repeat:no-repeat !important;
+    width: 24px !important;
+    height: 24px !important;
+    cursor:pointer !important;
+    display: inline-block;
+     outline:0;
+     margin: 0px 4px 2px 6px;
+
+}
+.HeaderMenuHelp
+{background-image:url('../../Images/ResponsiveIcons/24White.png') !important;
+background-repeat: no-repeat;
+background-position: -336px 0px !important;
+width: 24px !important;
+height: 24px !important;
+ display: inline-block;
+  outline:0;
+}
+
+.HeaderMenuLogout
+{background-image:url('../../Images/ResponsiveIcons/24White.png') !important;
+background-repeat: no-repeat;
+background-position: -192px 0px !important;
+width: 24px !important;
+height: 24px !important;
+display: none;
+outline:0;
+}
+
+.breadcumb
+{padding-bottom: 3px;
+ padding-left: 2px;
+ font-size:12px !important;
+}
+.WorksheetSection .rgRow, .WorksheetSection .rgAltRow
+{
+	font-weight: bold !important;
+	background: #d7e6f7;
+	width:100% !important;
+}
+
+.WorksheetSection .rgRow span, .WorksheetSection .rgAltRow span ,.WorksheetSection .rgRow a,.WorksheetSection .rgAltRow a
+{
+	font-weight: normal !important;
+}
+
+
+/*----------------------------------Popup ToolBar---------------------------- */
+
+
+
+.popup-toolbar .ToolbarSave .rtbText,
+.popup-toolbar .ToolbarDelete .rtbText,
+.popup-toolbar .ToolbarNew .rtbText, 
+.small-toolbar .ToolbarSave .rtbText,
+.small-toolbar .ToolbarDelete .rtbText,
+.popup-toolbar .ToolbarExportSQL .rtbText, 
+.popup-toolbar .ToolbarViewModel_ON .rtbText, 
+.popup-toolbar .ToolbarViewModel_OFF .rtbText, 
+.popup-toolbar .ToolbarChange3DFile .rtbText, 
+.popup-toolbar .ToolbarChange2DImage .rtbText, 
+.popup-toolbar .ToolbarViewer3DTakeSnapshot .rtbText, 
+.popup-toolbar .ToolbarOpenInPopup .rtbText 
+{
+    display:inline-block !important;
+}
+
+.small-toolbar .rtbIcon
+{
+     width: 16px !important;
+     height: 16px  !important;
+     background-image:url('../../Images/ResponsiveIcons/16Enabled.png') !important;
+     background-repeat:no-repeat;
+}
+
+
+.small-toolbar .ToolbarPDF .rtbIcon,.small-toolbar .ExportPDF .rtbIcon
+{
+    background-position: -288px 0px !important;
+}
+
+.small-toolbar .ToolbarMSWord .rtbIcon
+{
+    background-position: -1630px 0px !important;
+}
+
+.small-toolbar .ToolbarHistory .rtbIcon ,  .small-toolbar .ToolbarClock .rtbIcon
+{
+    
+    background-repeat:no-repeat;
+    background-position: -1248px 0px !important;
+}
+
+
+.small-toolbar .ToolbarSave .rtbIcon
+{
+    background-position: -480px 0px !important;
+}
+
+.small-toolbar .ToolbarSaveExit .rtbIcon,
+.small-toolbar .ToolbarSaveAndExit .rtbIcon,
+.small-toolbar .ToolbarSaveAndClose .rtbIcon
+{
+    background-position: -1536px 0px !important;
+}
+
+.small-toolbar .ToolbarCancel .rtbIcon,
+.small-toolbar .ToolbarClear .rtbIcon,
+.small-toolbar .ToolbarClose .rtbIcon, .small-toolbar .ToolbarExit .rtbIcon
+{
+    width: 16px !important;
+    height: 16px  !important;
+    background-repeat:no-repeat;
+    background-position: -832px 0px !important;
+}
+
+.small-toolbar .ToolbarDelete .rtbIcon
+{
+    background-repeat:no-repeat;
+    background-position: -448px 0px !important;
+}
+
+.small-toolbar .ToolbarEmail .rtbIcon
+{
+   background-position: -128px 0px !important;
+}
+
+.small-toolbar .ToolbarRefresh .rtbIcon
+{
+     background-repeat:no-repeat;
+     background-position: -97px 0px !important;
+}
+
+.small-toolbar .ToolbarToggle .rtbIcon
+{
+    background-repeat:no-repeat;
+    background-position: -320px 0px !important;
+}
+
+.small-toolbar .ToolbarSaveAs .rtbIcon
+{
+   background-repeat:no-repeat;
+    background-position: -513px 0px !important;
+}
+
+.small-toolbar .ToolbarDelegate .rtbIcon
+{
+   background-repeat:no-repeat;
+    background-position: -256px 0px !important;
+}
+
+.small-toolbar .ToolbarCheck .rtbIcon
+{
+     background-position: -960px 0px !important;
+}
+
+.small-toolbar .ToolbarExcel .rtbIcon
+{
+     background-position: -1600px 0px !important;
+}
+
+.small-toolbar .ToolbarBold .rtbIcon
+{
+    background-position: -3360px 0px !important;
+}
+
+.small-toolbar .ToolbarItalic .rtbIcon
+{
+    background-position: -3392px 0px !important;
+}
+
+.popup-toolbar .rtbIcon 
+{
+    width: 24px  !important;
+    height: 24px !important;
+    vertical-align: middle !important;
+     background-image: url('../../Images/ResponsiveIcons/24Enabled.png') !important;
+}
+
+
+.popup-toolbar .ToolbarSave .rtbIcon
+{
+    background-position: -720px 0px !important;
+}
+
+
+
+.popup-toolbar .ToolbarSaveExit .rtbIcon,
+.popup-toolbar .ToolbarSaveAndExit .rtbIcon,
+.popup-toolbar .ToolbarSaveAndClose .rtbIcon
+{
+   background-position: -2304px 0px !important;
+}
+
+.popup-toolbar .ToolbarCancel .rtbIcon,
+.popup-toolbar .ToolbarClear .rtbIcon,
+.popup-toolbar .ToolbarClose .rtbIcon,.ToolbarReturnToAccount  .rtbIcon
+{
+   background-position: -1248px 0px !important;
+}
+
+.popup-toolbar .ToolbarCheck .rtbIcon
+{
+  /*background-position: -976px 0px !important;*/
+  background-position: -504px 0px !important;
+}
+
+.popup-toolbar .ToolbarViewModel_ON .rtbIcon
+{
+    background-position: -1488px 0px !important;
+}
+
+.popup-toolbar .ToolbarViewModel_OFF .rtbIcon
+{
+    background-position: -1512px 0px !important;
+}
+
+.popup-toolbar .ToolbarChange3DFile .rtbIcon
+{
+    background-position: -312px 0px !important;
+}
+.popup-toolbar .ToolbarChange2DImage .rtbIcon
+{
+    background-position: -1536px 0px !important;
+}
+.popup-toolbar .ToolbarOpenInPopup .rtbIcon
+{
+    background-position: -1008px 0px !important;
+}
+
+.popup-toolbar .ToolbarRefresh .rtbIcon
+{
+    background-position: -1824px 0px !important;
+}
+
+
+
+.LocktextBoxContainer
+{Width: 101px;
+background-color: #FFFF99;
+border-width: 1px;
+padding-left: 1px;
+border-style: solid;
+border-color: #e5e5e5;
+}
+.LockTextbox
+{   width: 80px !important;
+    border: 0px !important;
+    position: relative !important;
+    margin-left: 0px !important;
+    outline: none;
+    background-color: #FFFF99 !important;
+    height: 16px !important;
+}
+.DisabledLink
+{color:#7B84A7 !important;
+}
+.DisabledRadMenu .rmLeftImage
+{background-image: url('Images/RadGridCommandsSmall.png') !important;
+ background-position: -1264px 0px !important;
+  
+}
+.DisabledRadMenu .rmText
+{
+    color:#7B84A7 !important;
+}
+.DisabledRadMenu
+{z-index: 1 !important;
+}
+/*----------------------------------------------------------------------------*/
+/*-------------------------------------------------------RAD COMBO------------------------------------------------------*/
+.RadComboBoxDropDown  .Icon
+{
+    background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-repeat:no-repeat;
+	width: 16px  !important;
+    height: 16px !important;
+	display:inline-block;
+}
+
+.RadComboBoxDropDown .Down .Icon {
+    background-position: -1200px 0px;
+}
+.RadComboBoxDropDown .Up .Icon {
+    background-position: -1216px 0px;
+}
+
+.RadComboBoxDropDown .smallFilter .Icon {
+    background-position: -1616px;
+}
+ 
+
+
+.RadGrid_Office2007 .rgFilterBox
+{width:70%;
+}
+.BigUpload .ruDropZone,.BigUpload .ruDropZone span
+{
+	width: 0px !important; 
+	height: 0px !important;
+	background-color:transparent !important;
+	color:transparent !important;
+		border: 0px !important;
+
+}
+.BigUpload .ruBrowse
+{    color: black;
+	 font: normal 12px "Segoe UI",Arial,Helvetica,sans-serif!important;
+     font-family:'Work Sans' !important;
+}
+.BigUpload .ruBrowse,.BigUpload .ruFileInput
+{
+
+  height: 23px  !important;
+    line-height: 22px  !important;
+	width:252px !important;
+	padding:0 !important;
+  /*font: normal 12px "Segoe UI",Arial,Helvetica,sans-serif!important;*/
+}
+  .RadUpload .radIcon
+{
+	height:2.14286em !important;
+} 
+/*----------------------------a-Link-----------------------------------------------*/
+  a, a:visited, a:active {
+    color: #666666;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+  a.Link, a.Link:visited, a.Link:active {
+    color: #666666 !important;
+    cursor: pointer;
+    font-size:12px !important;
+    text-decoration: underline !important;
+}
+.RadTreeView_Office2007 .rtEdit .rtIn{
+/*border-color: #0f3789 !important;*/
+/*color: #000;*/
+background-color: transparent !important;
+background-image: none !important;
+}
+.RadTreeView_Office2007 .rtEdit .rtIn input
+{
+	width: 200px ;
+}
+.RadToolBar_Office2007 .rtbDisabled .rtbIn,
+.RadToolBar_Office2007 .rtbDisabled .rtbMid,
+.RadToolBar_Office2007 .rtbDisabled .rtbOut,
+.RadToolBar_Office2007 .rtbDisabled .rtbWrap {
+color: #000;
+background-image:none !important;
+}
+/*----------------------------------------------------------------------------*/
+/*.rtIn.Planning  {
+	background-position: 0px 0px !important;
+	background-image: url('Menu/Modules.png') !important;
+	background-repeat: no-repeat!important;
+	width: 24px !important;
+	padding: 3px 27px 3px !important;
+}
+
+.rtIn.EngineeringForms 
+{
+	background-position: -24px 0px !important;
+	background-image: url('Menu/Modules.png') !important;
+	background-repeat: no-repeat!important;
+	width: 24px !important;
+	padding: 3px 27px 3px !important;
+}
+
+.rtIn.CostManagement {
+    background-position: -48px 0px !important;
+	background-image: url('Menu/Modules.png') !important;
+	background-repeat: no-repeat!important;
+	width: 24px !important;
+	padding: 3px 27px 3px !important;
+}
+
+.rtIn.Scheduling {
+    background-position: -72px 0px !important;
+	background-image: url('Menu/Modules.png') !important;
+	background-repeat: no-repeat!important;
+	width: 24px !important;
+	padding: 3px 27px 3px !important;
+}
+
+.rtIn.AssetManagement  {
+    background-position: -96px 0px !important;
+	background-image: url('Menu/Modules.png') !important;
+	background-repeat: no-repeat!important;
+	width: 24px !important;
+	padding: 3px 27px 3px !important;
+}
+.rtIn.Workflow  {
+    background-position: -120px 0px !important;
+	background-image: url('Menu/Modules.png') !important;
+	background-repeat: no-repeat!important;
+	width: 24px !important;
+	padding: 3px 27px 3px !important;
+}
+.rtIn.Portfolio {
+    background-position: -144px 0px !important;
+	background-image: url('Menu/Modules.png') !important;
+	background-repeat: no-repeat!important;
+	width: 24px !important;
+	padding: 3px 27px 3px !important;
+   
+}
+rtIn.Toolbox
+{
+	background-position: -168px 0px !important;
+	background-image: url('Menu/Modules.png') !important;
+	background-image: url('Menu/Modules.png') !important;
+	background-repeat: no-repeat!important;
+	width: 24px !important;
+	padding: 3px 27px 3px !important;
+
+	
+}*/
+.CheckLicense .Icon {
+    background-image:url('Images/2007Small.png');
+    background-position: -960px 0px !important;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+ }
+
+.GQTop {background: #6ca6d1; }
+.GQTopSpace1 { border-color:#6ca6d1; background:#6ca6d1; }
+
+.RadMenu_Default .rmRootGroup
+{
+    background-image:url('Menu/rmSprite.png') !important;
+    border: 1px solid #688caf !important;
+    background-repeat: repeat-x !important;
+    background-position: 0 -408px !important;
+    background-color: #BBD9FF !important;
+}
+
+.RadMenu_Default a.rmLink:hover .rmText, .RadMenu_Default a.rmFocused .rmText,.RadMenu_Default a.rmExpanded .rmText, .RadMenu_Default a.rmSelected .rmText,.RadMenu_Default a.rmExpanded:hover .rmText
+{
+    background-image:url('Menu/rmSprite.png') !important;
+    background-position: 100% -144px !important;
+
+}
+
+.RadMenu_Default a.rmExpanded, .RadMenu_Default a.rmExpanded:hover {
+background-color: #BBD9FF !important;
+background-position: 0 -120px !important;
+background-image:url('Menu/rmSprite.png') !important;
+}
+
+.TelerikSearchButton
+{
+	background:#FFFFFF url(Images/2007Small.png) 181px 1px no-repeat !important;
+	padding:4px 4px 4px 27px;
+	border:1px solid #CCCCCC;
+	width:200px !important;
+	height:10px;
+}
+
+
+.RefreshButton .Icon{
+          background-image: url(../../Images/ResponsiveIcons/16White.png) !important;
+    width: 16px !important;
+    display: inline-block !important;
+    height: 16px !important;
+    vertical-align: middle !important;
+    background-repeat:no-repeat !important;
+    background-position: -640px 0px !important;}
+ 
+
+
+.FontWhite a{
+    color:white !important;
+}
+
+/*------------------------------For Labels titles tables in home page*/
+.RadDock .rdTitleBar em {
+padding:2px !important;
+}
+ 
+/*-----------------------------------------------------------------*/
+
+.GridCmdInitNewRow, .GridCmdDeleteRows, .GridCmdRebindGrid
+{
+    text-decoration: none;
+}
+
+/*------------------------------RadGrid Hyperlink---------------------------------------------------------*/
+.RadGrid_Office2007 .rgRow a, .RadGrid_Office2007 .rgAltRow a, .RadGrid_Office2007 tr.rgEditRow a, .RadGrid_Office2007 .rgFooter a, .RadGrid_Office2007 .rgEditForm a 
+    {
+    color: #666666 !important;
+}
+/*----------------------------------------------------------------------------*/
+
+.RadTreeList_Office2007 .rtlRSel {
+    background: #ffcb60 repeat-x !important;
+}
+
+.rdgLog .rgSelectedRow, .rdgLog .rgSelectedRow:hover {
+    background: #ffcb60 0 -3900px !important;
+}
+
+.rdgLog .rgSelectedRow>td {
+    border-bottom-color: #ff9b35 !important;
+    background: #ffcb60 0 -3900px !important;
+}
+.CheckBoxesTreeview .txt
+{margin-left: -5px !important ;
+}
+.CheckBoxesTreeview .txt .rtIn
+{border: 0px  !important;
+}
+.CheckBoxesTreeview .txt .rtSp
+{height: 0px  !important;
+}
+
+.rtEdit .trvFolder
+{border: 1px solid #f99631 !important;
+}
+.RadEditor .reCommentInfoPanel {
+  width: 250px;
+  position: relative  !important;
+  right: 5px;
+  bottom: 5px;
+  padding: 5px 7px;
+  border: 1px solid;
+  border-radius: 5px; }
+
+.BigUploadClassicRender .ruButton,.BigUploadClassicRender .ruBrowse{
+    background:linear-gradient(#e8f1fc,#e9f1fc 50%,#d2e1f4 50%,#e8f1fc) !important;
+    background:-moz-linear-gradient(#e8f1fc,#e9f1fc 50%,#d2e1f4 50%,#e8f1fc) !important;
+    border: 1px solid #abc1de !important;
+    border-radius: .25em !important;
+    margin-top: 5px !important;
+}
+
+.BigUploadClassicRender .ruButton.ruButtonHover {
+    border-color: #c6ba9d !important;
+    background: linear-gradient(#fffce8,#ffedb3 50%,#ffd563 50%,#ffe18a) #ffe18a !important;
+    background: -moz-linear-gradient(#fffce8,#ffedb3 50%,#ffd563 50%,#ffe18a) #ffe18a !important;
+}
+
+.BluebeamIconEnabled .Icon
+{background-image: url('Images/2007Small.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -3552px 0px;
+    text-align:center;
+    cursor:pointer !important;
+    height: 16px !important;
+    width: 16px !important;
+ }
+
+.BluebeamIconEnabled .rtbText
+{
+    display:inline-block;
+}
+
+.BluebeamIconDisabled .Icon
+{background-image: url('Images/2007Small.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -3568px 0px;
+    text-align:center;
+    color: #7B84A7 !important;
+    cursor:default !important;
+    height: 16px !important;
+    width: 16px !important;
+ 
+}
+
+.BluebeamIconDisabled .rtbText
+{
+    color: #7B84A7 !important;
+    display:inline-block;
+}
+
+.BluebeamIcon .Icon
+{   background-image: url('Images/2007Small.png') !important;
+    background-position: 96px 0px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+}
+
+.BluebeamButton
+{background-image:url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1679px 1px;
+    height:25px !important;
+    width:25px !important;
+    cursor:pointer;
+}
+
+.lblCreateSession
+{
+    text-decoration: none !important;
+    padding-left: 28px !important;
+    color: #012361;
+    position: absolute;
+    padding-top: 4px;
+}
+
+.BluebeamSync .rtbIcon
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1680px 1px !important;
+    text-align:center;
+    cursor:pointer !important;
+    height: 25px !important;
+    width: 24px !important;
+ 
+}
+
+/*.BluebeamSync .rtbText
+{
+ display:none !important;
+}*/
+
+/*.DisconnectBluebeamFile .rtbIcon
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1728px 1px !important;
+    text-align:center;
+    cursor:pointer !important;
+    height: 25px !important;
+    width: 24px !important;
+ 
+}
+
+.DisconnectBluebeamFile .rtbText
+{
+ display:none !important;
+}*/
+
+.OpenSession .rtbIcon
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1872px 1px !important;
+    text-align:center;
+    cursor:pointer !important;
+    height: 25px !important;
+    width: 24px !important;
+ 
+}
+
+
+
+.CloseBluebeam .rtbIcon
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1920px 1px !important;
+    text-align:center;
+    cursor:pointer !important;
+    height: 25px !important;
+    width: 24px !important;
+ 
+}
+
+/*.CloseBluebeam .rtbText
+{
+ display:none !important;
+}*/
+
+.BluebeamSync_Disabled .rtbIcon
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1704px 1px !important;
+    text-align:center;
+    cursor:default !important;
+    height: 25px !important;
+    width: 24px !important;
+ 
+}
+
+/*.BluebeamSync_Disabled .rtbText
+{
+ display:none !important;
+}*/
+
+/*.DisconnectBluebeamFile_Disabled .rtbIcon
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1752px 1px !important;
+    text-align:center;
+    cursor:default !important;
+    height: 25px !important;
+    width: 24px !important;
+}
+
+.DisconnectBluebeamFile_Disabled .rtbText
+{
+ display:none !important;
+}*/
+
+.OpenSession_Disabled .rtbIcon
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1897px 1px !important;
+    text-align:center;
+    cursor:default !important;
+    height: 25px !important;
+    width: 23px !important;
+}
+
+.CloseBluebeam_Disabled .rtbIcon
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1944px 1px !important;
+    text-align:center;
+    cursor:default !important;
+    height: 25px !important;
+    width: 24px !important;
+}
+
+/*.CloseBluebeam_Disabled .rtbText
+{
+ display:none !important;
+}*/
+
+.DisconnectBluebeamPDFFile
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+   background-position: -1728px 1px !important;
+    text-align:center;
+    height: 25px !important;
+    width: 24px !important;
+}
+
+.EndBluebeamSession
+{background-image: url('Images/2007Large.png') !important;
+    background-repeat:no-repeat !important;
+   background-position: -1920px 1px !important;
+    text-align:center;
+    height: 25px !important;
+    width: 24px !important;
+}
+
+.MarkupFileActive .Icon
+{   background-image: url('Images/2007Small.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1040px 1px !important;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.MarkupFileInactive .Icon
+{   background-image: url('Images/2007Small.png') !important;
+    background-repeat:no-repeat !important;
+    background-position: -1024px 1px !important;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    cursor:default;
+}
+
+.SessionFinished
+{   font-size:15px;
+    font-weight:bold;
+}
+
+
+.GridCmdRebindGrid_disabled .rtbText
+{
+    color: #7B84A7 !important;
+    display:inline-block;
+}
+
+.ToolbarStepSecurity .rtbIcon
+{  background-position: -1008px 1px !important;
+
+}
+
+
+.ToolbarPreview .rtbIcon
+{
+    width:24px !Important;
+    height:24px !Important;
+    background-position:-432px 0 !important;
+}
+
+.SystemIcon
+{background-image: url('Images/2007Small.png') !important;
+    background-repeat:no-repeat !important;
+   background-position: -33px 1px !important;
+    text-align:center;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.ProgramIcon
+{background-image: url('Images/2007Small.png') !important;
+    background-repeat:no-repeat !important;
+   background-position: -2016px 1px !important;
+    text-align:center;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.ProjectIcon
+{background-image: url('Images/2007Small.png') !important;
+    background-repeat:no-repeat !important;
+   background-position: -1888px 1px !important;
+    text-align:center;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.PropertyIcon
+{background-image: url('Images/2007Small.png') !important;
+    background-repeat:no-repeat !important;
+   background-position: -1760px 1px !important;
+    text-align:center;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.LocProgramIcon
+{background-image: url('Images/2007Small.png') !important;
+    background-repeat:no-repeat !important;
+   background-position: -2048px 1px !important;
+    text-align:center;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.RadTreeList  .rtlEdit {
+    background-image:url('Images/2007Small.png') !important;
+    background-position: -577px 0px !important;
+    margin-right: 3px !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.RadTreeList .rtlUpdate {
+    background-image:url('Images/2007Small.png') !important;
+    background-position: -544px 0px !important;
+    margin-right: 3px !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+        
+.RadTreeList .rtlCancel {
+    background-image:url('Images/2007Small.png') !important;
+    background-position: -448px 0px !important;
+    margin-right: 3px !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+.RadTreeList .rtlAdd {
+    background-image:url('Images/2007Small.png') !important;
+    background-position: -416px 0px !important;
+    margin-right: 3px !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.TemplateLinkEnabledIcon
+{background-image: url('Images/2007Small.png') !important;
+   display: inline-block !important;
+   background-position: -384px 0px !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.TemplateLinkDisabledIcon
+{background-image: url('Images/2007Small.png') !important;
+   display: inline-block !important;
+   background-position: -400px 0px !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+
+
+  .TreeListDeleteRole .Icon
+   { background-image: url('Images/2007Small.png');
+     display: inline-block;
+	 width: 16px;
+	 height: 16px; 
+     background-position: -448px 0px !important;
+     vertical-align: middle;
+   }
+
+
+  .DeleteRoleButton .Icon
+    {background-image:url('Images/2007Small.png');
+     background-position:-448px 0px;
+     display: inline-block;
+    width: 16px;
+    height: 16px; 
+    }
+
+    .DeleteRoleAssignment .Icon
+    {background-image:url('Images/2007Small.png');
+     background-position:-3649px 0px;
+     display: inline-block;
+    width: 16px;
+    height: 16px; 
+    }
+
+
+    /********************Responsive Grid Layout**************************/
+.PMHeader {width:100%;padding-top:24px
+}
+    .PMHeader .row {
+    width:100%;
+    display:table;
+    }
+
+.PMHeader .col-1,.PMHeader .col-2,.PMHeader .col-3,.PMHeader .col-4,.PMHeader .col-5,.PMHeader .col-6,.PMHeader .col-7,.PMHeader .col-8,.PMHeader .col-9,.PMHeader .col-10,.PMHeader .col-11,.PMHeader .col-12{
+    position:relative;
+    width:100%;
+    min-height:1px;
+}
+.PMHeader .row .col-1{
+    flex:0 0 8.33333%;
+    max-width:8.33333%;
+    float:left;
+}
+.PMHeader .row .col-2{
+    flex:0 0 16.66667%;
+    max-width:16.66667%;
+    float:left;
+}
+.PMHeader .row .col-3{
+    flex:0 0 25%;
+    max-width:25%;
+    float:left
+}
+.PMHeader .row .col-4{
+    flex:0 0 33.3333%;
+    max-width:33.3333%;
+    float:left
+}
+.PMHeader .row .col-5{
+    flex:0 0 41.66667%;
+    max-width:41.66667%;
+    float:left;
+}
+.PMHeader .row .col-6{
+    flex:0 0 50%;
+    max-width:50%;
+    float:left;
+}
+.PMHeader .row .col-7{
+    flex:0 0 58.33333%;
+    max-width:58.33333%;
+    float:left;
+}
+.PMHeader .row .col-8{
+    flex:0 0 66.66667%;
+    max-width:66.66667%;
+    float:left;
+}
+.PMHeader .row .col-9{
+    flex:0 0 75%;
+    max-width:75%;
+    float:left;
+}
+.PMHeader .row .col-10{
+    flex:0 0 83.33333%;
+    max-width:83.33333%;
+    float:left;
+}
+.PMHeader .row .col-11{
+    flex:0 0 91.66667%;
+    max-width:91.66667%;
+    float:left;
+}
+.PMHeader .row .col-12{
+    flex:0 0 100%;
+    max-width:100%;
+    float:left;
+}
+
+.PMHeader .row:after {
+display:table;
+clear:both;
+}
+
+.RadTabStrip_Office2007 .rtsLevel1 
+{background:none !important;
+}
+.RadTabStrip_Office2007 .rtsLevel {
+    background:none !important;
+}
+.RadTabStrip_Office2007 .rtsLevel1 .rtsLink .rtsSelected{
+    background:none;
+   
+}
+.RadTabStrip_Office2007 .rtsLevel1 .rtsSelected .rtsOut {
+    background-position:0 ,-52px;
+    border-bottom:2px solid RGB(249,170,51);
+    color:RGB(249,170,51);
+    height:30px;
+}
+.RadTabStrip_Office2007 .rtsLevel1 .rtsOut {
+    background-image:none !important;
+    font-family: 'Work Sans';
+}
+.RadTabStrip_Office2007 .rtsLevel1 .rtsLink {
+    background-image:none !important;
+    color:#316888 !important;
+}
+.RadTabStrip_Office2007 {border-bottom:1px solid #999999;
+}
+.ToolBar {background-color:RGB(237,237,237) !important;background-image:none !important; 
+}
+.labelWidth {
+    width:40% !important;
+   	height: 24px;
+    line-height:24px;
+	background: #FFFFFF;
+	color: #666666 !important;
+    padding-bottom: 3px;
+}
+.controlWidth {width:60% !important;
+}
+.controlWidth .RadComboBox{width:calc(100%) !important}
+.RadPicker{width:calc(100% + 3px) !important}
+.RadInput {width:99% !important;}
+/*.rtsUL.rtsScroll{width:100% !important;}*/
+
+
+fieldset {
+    border-bottom: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    padding-left: 0;
+    border-top: 1px solid #999999 !important;
+    width:99% !important;
+    margin:0 !important;
+    padding:0 !important;
+   
+    
+}
+
+.legend , legend {
+    padding-right: 20px;
+    color: #999999;
+    height: 24px;
+    text-transform:uppercase;
+}
+
+.colTable {
+    width:100%;
+    padding-left:24px;
+}
+
+.RecapLabelWidth {
+    width:40% !important;
+    height: 24px;
+    line-height:24px;
+	background: #FFFFFF;
+	color: #666666 !important;
+    /*text-overflow:ellipsis !important;*/
+}
+
+.RecapControlWidth {
+    width:40% !important;
+}
+
+.RecapDaysWidth {
+    width:20% !important;
+    padding-left:12px;
+}
+
+.RecapControlWidth input[type=text] , .RecapDaysWidth input[type=text] {
+    width:100%;
+    font-family:'Work Sans' !important;
+}
+
+.RadMenu_Office2007 .rmRootGroup>.rmItem{padding:0px!important;}
+.RadMenu_Office2007 .rmRootGroup {background-image: none !important;}
+.rmRootGroup.rmHorizontal{background-color:transparent !important;border:0px !important;}
+.RadMenu_Office2007 .rmRootGroup .rmSelected > .rmRootLink,.RadMenu_Office2007 .rmRootGroup .rmExpanded> .rmRootLink {background-color: transparent !important;}
+.menuMore{border:0px !important;}
+.menuMore >span{
+    background-image: url('../../Images/ResponsiveIcons/24Enabled.png') !important;
+    background-position: -1920px 0px !important;
+    display: inline-block !important ;
+    width: 24px !important;
+    height: 24px !important;
+    padding:0!important;
+        border: 0px solid transparent !important;
+}
+    .menuMore:hover {
+     background-image: url('../../Images/ResponsiveIcons/24Enabled.png') !important;
+    background-position: -1920px 0px !important;
+    display: inline-block;
+    width: 24px; 
+    height: 24px;
+    }
+
+    .assign{border:0px !important;padding: 0 !important; background-image:none !important
+    }
+.assign >span{
+    background-image: url('../../Images/ResponsiveIcons/24Enabled.png') !important;
+    background-position: -1872px 0px !important;
+    display: inline-block !important ;
+    width: 24px !important;
+    height: 24px !important;
+    padding:0!important;
+        border: 0px solid transparent !important;
+}
+    .assign:hover {
+     background-image: url('../../Images/ResponsiveIcons/24Enabled.png') !important;
+      background-position: -1872px 0px !important;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    }
+.RadToolBar {background-color:#ededed !important;border:0px !important;}
+    .RadToolBar .rtbOuter {background-color:#ededed !important; background-image:none !important;border:0px !important;box-shadow:none !important}
+/*.RadToolBarDropDown .rtbWrap {
+padding-left:5px;}*/
+
+.ToolbarDeleteAssign .rtbIcon{
+	width: 24px !important;
+    height: 24px  !important;
+    background-position: -1728px, 0px !important;
+} 
+.RadMenu_Office2007 .rmGroup{background-image:none !important}
+.RadMenu .rmGroup:before{width:0px !important}
+.RadMenu .rmGroup .rmContent{padding-left:10px !important}
+.RadGrid_Office2007 .rgPageFirst{
+    width:16px !important;
+    height:16px !important;
+   background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+   background-position: -400px 0px !important;
+       margin-top: 4px !important;
+}
+.RadGrid_Office2007 .rgPagePrev{
+    width:16px !important;
+    height:16px !important;
+   background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+   background-position: -384px 0px !important;
+       margin-top: 4px !important;
+}
+.RadGrid_Office2007 .rgPageNext{
+    width:16px !important ;
+    height:16px !important;
+   background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+   background-position: -416px 0px !important;
+   margin-top: 4px !important;
+}
+.RadGrid_Office2007 .rgPageLast{
+    width:16px !important;
+    height:16px !important;
+   background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+   background-position: -432px 0px !important;
+       margin-top: 4px !important;
+}
+ 
+.RadGrid_Office2007 .rgInfoPart {
+    color: #666666;
+}
+
+.RadGrid .rgNumPart span {
+    float: left;
+    padding: 0 0 0 5px;
+    font-size: 12px !important;
+    color:#000 !important;
+}
+
+.RadGrid_Office2007 .rgNumPart a.rgCurrentPage span, .RadGrid_Office2007 .rgNumPart a.rgCurrentPage:hover span{
+    background: #FFF !important;
+    font-size: 16px;
+    float: right;
+}
+
+.RadGrid_Office2007 .rgNumPart a.rgCurrentPage {
+    background: white !important;
+    height: 24px !important;
+    border: 1px solid black !important;
+}
+
+.RadGrid .rgPagerLabel {
+    margin: 0 4px 0 0;
+    vertical-align: top;
+    font-size: 16px;
+    color: #858585;
+}
+
+.rtbAdd.RadToolBar_Horizontal .rtbItem{margin: 0 !important;}
+
+.MobileMenuRebindGrid .rmLeftImage {
+    background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-position: -640px 0px !important;
+}
+.MobileMenuUseUnit .rmLeftImage {
+    background-image: url(../../Images/ResponsiveIcons/16Enabled.png) !important;
+    background-position: -336px 0px !important
+}
+.tbsDocumentAdd .rtsUL,.tbsDocumentAdd .rtsFirst{float:none !important}
+.tbsDocumentAdd .rtsLink{padding-left:0px !important} 
+.tbsDocumentAdd .rtsLevel.rtsLevel1{width:100% !important}
+/*.RadToolBarDropDown .rtbWrap{padding-left:5px !important}*/
+
+.chkBox input[type="checkbox"] {
+    display: none;
+}
+
+    .chkBox input[type="checkbox"] + label i.icon {
+        width: 24px !important;
+        height: 24px !important;
+        background-image: url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+        background-position: -1224px 0px !important;
+        display: inline-block;
+    }
+
+    .chkBox input[type="checkbox"]:checked + label i.icon {
+        width: 24px !important;
+        height: 24px !important;
+        background-image: url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+        background-position: -1200px 0px !important;
+        display: inline-block;
+    }
+     .chkBox input[type="checkbox"]:disabled + label i.icon {
+        width: 24px !important;
+        height: 24px !important;
+        background-image: url(../../Images/ResponsiveIcons/24Disabled.png) !important;
+        background-position: -1224px 0px !important;
+        display: inline-block;
+    }
+
+    .chkBox input[type="checkbox"]:checked:disabled + label i.icon , .chkBoxDisabled label i.icon {
+        width: 24px !important;
+        height: 24px !important;
+        background-image: url(../../Images/ResponsiveIcons/24Disabled.png) !important;
+        background-position: -1200px 0px !important;
+        display: inline-block;
+    }
+
+
+    .MovePlanRadTabStrip .rtsLevel1 
+{width: 100% !important;
+}
+
+    .chkLock input[type="checkbox"] {
+    display: none;
+}
+
+    .chkLock input[type="checkbox"] + label i.icon {
+        width: 24px !important;
+        height: 24px !important;
+        background-image: url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+        background-position: -1320px  0px !important;
+        display: inline-block;
+    }
+
+    .chkLock input[type="checkbox"]:checked + label i.icon {
+        width: 24px !important;
+        height: 24px !important;
+        background-image: url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+        background-position: -1345px 0px !important;
+        display: inline-block;
+    }
+     .chkLock input[type="checkbox"]:disabled + label i.icon {
+        width: 24px !important;
+        height: 24px !important;
+        background-image: url(../../Images/ResponsiveIcons/24Disabled.png) !important;
+        background-position: -1320px  0px !important;
+        display: inline-block;
+    }
+
+    .chkLock input[type="checkbox"]:checked:disabled + label i.icon {
+        width: 24px !important;
+        height: 24px !important;
+        background-image: url(../../Images/ResponsiveIcons/24Disabled.png) !important;
+        background-position: -1345px 0px !important;
+        display: inline-block;
+    }
+
+.LightWeight div.rgDataDiv{ 
+    max-height:260px !important;
+}
+
+/*.RadUpload_Office2007 .ruButton {
+      width: 24px !important;
+        height: 24px !important;
+        background-image: url(../../Images/ResponsiveIcons/24Enabled.png) !important;
+        background-position: -72px  0px !important;
+        display: inline-block;
+}*/

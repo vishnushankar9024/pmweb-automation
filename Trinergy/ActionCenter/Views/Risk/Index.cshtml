@@ -1,0 +1,319 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Risk</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.aspnetmvc.min.js"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+</head>
+<body>
+    <div class="container" style="margin-bottom:50px;">
+        <div class="container-fluid box">
+            <div class="row" id="test">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Risk Management</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Project</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Project")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Project")
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Risk Identification</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Risk Id</label>
+                                    @(Html.Kendo().TextBox()
+                                          .Name("TaskId")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Title</label>
+                                    @(Html.Kendo().TextBox()
+                                          .Name("Title")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Category</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Category")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Category")
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Potential Risk Occirence</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Potential_Risk_Occirence")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Potential Risk Occirence")
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label>Defination (Description + Consequences)</label>
+                                    @Html.TextArea("Defination", new { style = "width:100%; height:150px;" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label>Drivers / Root Cause</label>
+                                    @Html.TextArea("Drivers", new { style = "width:100%; height:150px;" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Risk Assesment - Pre Mitigation Score</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group ">
+                                    <label>Time Impact</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Time_Impact")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Time Impact")
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group ">
+                                    <label>Cost Impact</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Cost_Impact")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Cost Impact")
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group ">
+                                    <label>Probability</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Probability")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Probability")
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group ">
+                                    <label>Criticality</label>
+                                    @(Html.Kendo().ComboBox()
+                                                  .Name("Criticality")
+                                                  .HtmlAttributes(new { style = "width:100%" })
+                                                  .Filter("contains")
+                                                  .Placeholder("Criticality")
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Risk Response</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Strategy</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Strategy")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Strategy")
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Risk Owner</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Risk_Owner")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Risk Owner")
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label>Completion Date</label>
+                                    @(Html.Kendo().DatePicker()
+                                            .Name("Completion_Date")
+                                            .DateInput()
+                                            .Value(DateTime.Today)
+                                            .Format("yyyy-MM-dd")
+                                            .HtmlAttributes(new { style = "width:100%" })
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label>Mitigation / Action Plan</label>
+                                    @Html.TextArea("Mitigation", new { style = "width:100%; height:150px;" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Risk Monitoring</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label>Status</label>
+                                    @(Html.Kendo().ComboBox()
+                                                  .Name("Status")
+                                                  .HtmlAttributes(new { style = "width:100%" })
+                                                  .Filter("contains")
+                                                  .Placeholder("Status")
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label>Status Comments</label>
+                                    @Html.TextArea("Status_Comments", new { style = "width:100%; height:150px;" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Risk Monitoring - Post Mitigation Score</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group ">
+                                    <label>Time Impact</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Post_Time_Impact")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Time Impact")
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group ">
+                                    <label>Cost Impact</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Post_Cost_Impact")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Cost Impact")
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group ">
+                                    <label>Probability</label>
+                                    @(Html.Kendo().ComboBox()
+                                          .Name("Post_Probability")
+                                          .HtmlAttributes(new { style = "width:100%" })
+                                          .Filter("contains")
+                                          .Placeholder("Probability")
+                                    )
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group ">
+                                    <label>Criticality</label>
+                                    @(Html.Kendo().ComboBox()
+                                                  .Name("Post_Criticality")
+                                                  .HtmlAttributes(new { style = "width:100%" })
+                                                  .Filter("contains")
+                                                  .Placeholder("Criticality")
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    @(Html.Kendo().Button()
+                        .Name("Submit")
+                        .Content("Submit")
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

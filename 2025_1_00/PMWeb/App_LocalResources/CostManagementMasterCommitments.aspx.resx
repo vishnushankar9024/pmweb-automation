@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="lblFrom.Text" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="cmpFromToDates.ErrorMessage" xml:space="preserve">
+    <value>Finish Date should be greater than Start Date</value>
+  </data>
+  <data name="Companies" xml:space="preserve">
+    <value>Companies</value>
+  </data>
+  <data name="csvProjects.ErrorMessage" xml:space="preserve">
+    <value>Program required</value>
+  </data>
+  <data name="ddlCommitments.EmptyMessage" xml:space="preserve">
+    <value>Select Master Commitment</value>
+  </data>
+  <data name="ddlCompanies.EmptyMessage" xml:space="preserve">
+    <value>Select a company</value>
+  </data>
+  <data name="lblApprovedChanges.Text" xml:space="preserve">
+    <value>Approved Changes</value>
+  </data>
+  <data name="lblBalance.Text" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="lblCancelled.Text" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="lblCommIDUnique.Text" xml:space="preserve">
+    <value>ID must be unique by type and program</value>
+  </data>
+  <data name="lblCopyLines.Text" xml:space="preserve">
+    <value>Copy Lines</value>
+  </data>
+  <data name="lblCosts.Text" xml:space="preserve">
+    <value>Costs</value>
+  </data>
+  <data name="lblDays.Text" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="lblEffectiveDate.Text" xml:space="preserve">
+    <value>Effective Date</value>
+  </data>
+  <data name="lblEnforceValue.Text" xml:space="preserve">
+    <value>Enforce Value</value>
+  </data>
+  <data name="lblId.Text" xml:space="preserve">
+    <value>ID*</value>
+  </data>
+  <data name="lblInvoiced.Text" xml:space="preserve">
+    <value>Invoiced</value>
+  </data>
+  <data name="lblMasterBalance.Text" xml:space="preserve">
+    <value>Master Balance</value>
+  </data>
+  <data name="lblMasterRecap.Text" xml:space="preserve">
+    <value>MASTER COMMITMENT RECAP</value>
+  </data>
+  <data name="lblOriginalValue.Text" xml:space="preserve">
+    <value>Original Commitments</value>
+  </data>
+  <data name="lblPendingChanges.Text" xml:space="preserve">
+    <value>Pending Changes</value>
+  </data>
+  <data name="lblProgram.Text" xml:space="preserve">
+    <value>Program*</value>
+  </data>
+  <data name="lblProjectedValue.Text" xml:space="preserve">
+    <value>Projected Value</value>
+  </data>
+  <data name="lblRetained.Text" xml:space="preserve">
+    <value>Retained</value>
+  </data>
+	<data name="lblRevisedValue.Text" xml:space="preserve">
+    <value>Revised Value</value>
+  </data>
+  <data name="lblTaxable.Text" xml:space="preserve">
+    <value>Taxable</value>
+  </data>
+  <data name="lblTo.Text" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="MasterCommitments" xml:space="preserve">
+    <value>Master Commitments</value>
+  </data>
+  <data name="lblCategory.Text" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="lblReference.Text" xml:space="preserve">
+    <value>Reference</value>
+  </data>
+  <data name="hplCurrency.Text" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="rfvRequired.ErrorMessage" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="lblMasterOriginalValue.Text" xml:space="preserve">
+    <value>Master Value</value>
+  </data>
+  <data name="lblMasterValueCosts.Text" xml:space="preserve">
+    <value>Master Value Costs</value>
+  </data>
+  <data name="lblMasterValueDays.Text" xml:space="preserve">
+    <value>Master Value Days</value>
+  </data>
+  <data name="lblOriginalValueCosts.Text" xml:space="preserve">
+    <value>Original Value Costs</value>
+  </data>
+  <data name="lblOriginalValueDays.Text" xml:space="preserve">
+    <value>Original Value Days</value>
+  </data>
+  <data name="lblApprovedChangesCosts.Text" xml:space="preserve">
+    <value>Approved Changes Costs</value>
+  </data>
+  <data name="lblApprovedChangesDays.Text" xml:space="preserve">
+    <value>Approved Changes Days</value>
+  </data>
+  <data name="lblRevisedValue.Text" xml:space="preserve">
+    <value>Revised Value</value>
+  </data>
+  <data name="lblRevisedValueCosts.Text" xml:space="preserve">
+    <value>Revised Value Costs</value>
+  </data>
+  <data name="lblRevisedValueDays.Text" xml:space="preserve">
+    <value>Revised Value Days</value>
+  </data>
+  <data name="lblPendingChangesCosts.Text" xml:space="preserve">
+    <value>Pending Changes Costs</value>
+  </data>
+  <data name="lblPendingChangesDays.Text" xml:space="preserve">
+    <value>Pending Changes Days</value>
+  </data>
+  <data name="lblProjectedValueCosts.Text" xml:space="preserve">
+    <value>Projected Value Costs</value>
+  </data>
+  <data name="lblProjectedValueDays.Text" xml:space="preserve">
+    <value>Projected Value Days</value>
+  </data>
+  <data name="lblMasterBalanceCosts.Text" xml:space="preserve">
+    <value>Master Balance Costs</value>
+  </data>
+  <data name="lblMasterBalanceDays.Text" xml:space="preserve">
+    <value>Master Balance Days</value>
+  </data>
+</root>

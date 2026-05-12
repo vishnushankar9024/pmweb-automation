@@ -1,0 +1,1854 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<!-- These HTML files are a combination of Word-generated HTML and long-hand HTML.
+  -- They must really be rewritten to be clean and plain HTML.
+  -- Be particularly careful with the tag names, ids.
+  -- Tags were sometimes added only to make duplicate names.
+  -- PMWeb QA, June 2013.
+  -->
+  
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="PMWebUserManual_Workflow_files/filelist.xml">
+<link rel=Edit-Time-Data href="PMWebUserManual_Workflow_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Using PM Web-Workflow</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>PSSGroup</o:Author>
+  <o:LastAuthor>User1</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>15333</o:TotalTime>
+  <o:LastPrinted>2009-04-16T19:40:00Z</o:LastPrinted>
+  <o:Created>2009-10-23T20:11:00Z</o:Created>
+  <o:LastSaved>2009-10-23T20:11:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1235</o:Words>
+  <o:Characters>7043</o:Characters>
+  <o:Lines>58</o:Lines>
+  <o:Paragraphs>16</o:Paragraphs>
+  <o:CharactersWithSpaces>8262</o:CharactersWithSpaces>
+  <o:Version>11.9999</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:1627421319 -2147483648 8 0 66047 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+h1
+	{mso-style-link:"Heading 1 Char";
+	mso-style-next:Normal;
+	margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-before:always;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	mso-font-kerning:16.0pt;
+	font-weight:bold;}
+h2
+	{mso-style-link:"Heading 2 Char";
+	mso-style-next:Normal;
+	margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	color:navy;
+	font-weight:bold;
+	font-style:italic;}
+h3
+	{mso-style-link:"Heading 3 Char";
+	mso-style-next:Normal;
+	margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	color:navy;
+	font-weight:bold;}
+h4
+	{mso-style-link:"Heading 4 Char";
+	mso-style-next:Normal;
+	margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:10.0pt;
+	mso-bidi-font-size:14.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	color:#993300;
+	font-weight:bold;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+h5
+	{mso-style-next:"Normal Heading 5";
+	margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.5in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:5;
+	font-size:10.0pt;
+	mso-bidi-font-size:13.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	font-style:italic;}
+h6
+	{mso-style-next:Normal;
+	margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:6;
+	font-size:11.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	text-transform:uppercase;
+	font-weight:bold;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-variant:small-caps;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:24.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoToc4, li.MsoToc4, div.MsoToc4
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoToc5, li.MsoToc5, div.MsoToc5
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:48.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoToc6, li.MsoToc6, div.MsoToc6
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:60.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoToc7, li.MsoToc7, div.MsoToc7
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoToc8, li.MsoToc8, div.MsoToc8
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:84.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoToc9, li.MsoToc9, div.MsoToc9
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:96.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:2.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:navy;
+	mso-bidi-font-weight:bold;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	mso-list:l9 level1 lfo1;
+	tab-stops:list .25in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-font-kerning:14.0pt;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-noshow:yes;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	background:navy;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MenuReference, li.MenuReference, div.MenuReference
+	{mso-style-name:"Menu Reference";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.NormalHeading5, li.NormalHeading5, div.NormalHeading5
+	{mso-style-name:"Normal Heading 5";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-locked:yes;
+	mso-style-link:"Heading 2";
+	mso-ansi-font-size:14.0pt;
+	mso-bidi-font-size:14.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:navy;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;
+	font-weight:bold;
+	font-style:italic;}
+span.Heading4Char
+	{mso-style-name:"Heading 4 Char";
+	mso-style-locked:yes;
+	mso-style-link:"Heading 4";
+	mso-bidi-font-size:14.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	color:#993300;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;
+	font-weight:bold;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+span.Heading3Char
+	{mso-style-name:"Heading 3 Char";
+	mso-style-locked:yes;
+	mso-style-link:"Heading 3";
+	mso-ansi-font-size:13.0pt;
+	mso-bidi-font-size:13.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:navy;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;
+	font-weight:bold;}
+span.Heading1Char
+	{mso-style-name:"Heading 1 Char";
+	mso-style-locked:yes;
+	mso-style-link:"Heading 1";
+	mso-ansi-font-size:16.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	mso-font-kerning:16.0pt;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;
+	font-weight:bold;}
+ /* Page Definitions */
+ @page
+	{mso-footnote-separator:url("PMWebUserManual_Workflow_files/header.htm") fs;
+	mso-footnote-continuation-separator:url("PMWebUserManual_Workflow_files/header.htm") fcs;
+	mso-endnote-separator:url("PMWebUserManual_Workflow_files/header.htm") es;
+	mso-endnote-continuation-separator:url("PMWebUserManual_Workflow_files/header.htm") ecs;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:.75in .75in .75in .75in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-footer:url("PMWebUserManual_Workflow_files/header.htm") f1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:-132;
+	mso-list-type:simple;
+	mso-list-template-ids:687878678;}
+@list l0:level1
+	{mso-level-tab-stop:1.25in;
+	mso-level-number-position:left;
+	margin-left:1.25in;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:-131;
+	mso-list-type:simple;
+	mso-list-template-ids:-401040250;}
+@list l1:level1
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	margin-left:1.0in;
+	text-indent:-.25in;}
+@list l2
+	{mso-list-id:-130;
+	mso-list-type:simple;
+	mso-list-template-ids:-181344636;}
+@list l2:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:-129;
+	mso-list-type:simple;
+	mso-list-template-ids:-1064301920;}
+@list l3:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4
+	{mso-list-id:-128;
+	mso-list-type:simple;
+	mso-list-template-ids:-361721684;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:1.25in;
+	mso-level-number-position:left;
+	margin-left:1.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l5
+	{mso-list-id:-127;
+	mso-list-type:simple;
+	mso-list-template-ids:1098682976;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	margin-left:1.0in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l6
+	{mso-list-id:-126;
+	mso-list-type:simple;
+	mso-list-template-ids:592057282;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l7
+	{mso-list-id:-125;
+	mso-list-type:simple;
+	mso-list-template-ids:90361128;}
+@list l7:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l8
+	{mso-list-id:-120;
+	mso-list-type:simple;
+	mso-list-template-ids:-180956680;}
+@list l8:level1
+	{mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;}
+@list l9
+	{mso-list-id:-119;
+	mso-list-type:simple;
+	mso-list-template-ids:-147430332;}
+@list l9:level1
+	{mso-level-number-format:bullet;
+	mso-level-style-link:"List Bullet";
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l10
+	{mso-list-id:44525467;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-615743810 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l10:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l11
+	{mso-list-id:222761086;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1230746674 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l11:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12
+	{mso-list-id:227151077;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1271383974 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l12:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13
+	{mso-list-id:239338883;
+	mso-list-type:hybrid;
+	mso-list-template-ids:615570212 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l13:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14
+	{mso-list-id:259409222;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1081424604 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l14:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l15
+	{mso-list-id:349651453;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1668145950 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l15:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16
+	{mso-list-id:359553001;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1499030380 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l16:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l17
+	{mso-list-id:497773887;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1031640744 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l17:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:39.0pt;
+	mso-level-number-position:left;
+	margin-left:39.0pt;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l18
+	{mso-list-id:521628730;
+	mso-list-type:hybrid;
+	mso-list-template-ids:2010415710 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l18:level1
+	{mso-level-tab-stop:39.0pt;
+	mso-level-number-position:left;
+	margin-left:39.0pt;
+	text-indent:-.25in;}
+@list l19
+	{mso-list-id:543366047;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-994778772 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l19:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l20
+	{mso-list-id:604457194;
+	mso-list-type:hybrid;
+	mso-list-template-ids:658277336 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l20:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l21
+	{mso-list-id:626666193;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1708479216 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l21:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l22
+	{mso-list-id:659696383;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1516515046 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l22:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l23
+	{mso-list-id:749079993;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1233046872 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l23:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l24
+	{mso-list-id:796026799;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1124892802 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l24:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l25
+	{mso-list-id:834566848;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-674091232 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l25:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l26
+	{mso-list-id:930314921;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1549118876 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l26:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l27
+	{mso-list-id:1041976231;
+	mso-list-type:hybrid;
+	mso-list-template-ids:905741582 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l27:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l28
+	{mso-list-id:1045256581;
+	mso-list-type:hybrid;
+	mso-list-template-ids:701292054 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l28:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l29
+	{mso-list-id:1151409169;
+	mso-list-type:hybrid;
+	mso-list-template-ids:66236124 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l29:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l30
+	{mso-list-id:1170022700;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1613881166 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l30:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l31
+	{mso-list-id:1210261598;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-399732604 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l31:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l32
+	{mso-list-id:1216696155;
+	mso-list-type:hybrid;
+	mso-list-template-ids:471500888 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l32:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l33
+	{mso-list-id:1376612484;
+	mso-list-type:hybrid;
+	mso-list-template-ids:287241124 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l33:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l34
+	{mso-list-id:1397119540;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1775916266 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l34:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l35
+	{mso-list-id:1467040363;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1855077690 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l35:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l36
+	{mso-list-id:1501701307;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1381699222 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l36:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l37
+	{mso-list-id:1534348608;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-826117722 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l37:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l38
+	{mso-list-id:1578855720;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1544714800 67698703 67698689 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l38:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l38:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l39
+	{mso-list-id:1602105420;
+	mso-list-type:hybrid;
+	mso-list-template-ids:774004258 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l39:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l40
+	{mso-list-id:1650357390;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1935325542 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l40:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l41
+	{mso-list-id:1670791597;
+	mso-list-type:hybrid;
+	mso-list-template-ids:2115408086 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l41:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l42
+	{mso-list-id:1692682732;
+	mso-list-type:hybrid;
+	mso-list-template-ids:904813996 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l42:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l43
+	{mso-list-id:1729257807;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1933654448 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l43:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l44
+	{mso-list-id:1916935844;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1792180426 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l44:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45
+	{mso-list-id:1920209501;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1352167442 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l45:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l45:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l46
+	{mso-list-id:1970014899;
+	mso-list-type:hybrid;
+	mso-list-template-ids:863267756 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l46:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l47
+	{mso-list-id:2014187960;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1615970962 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l47:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l48
+	{mso-list-id:2016036212;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1320948416 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l48:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l49
+	{mso-list-id:2073379994;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-757278408 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l49:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l50
+	{mso-list-id:2085105946;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-318624112 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l50:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l51
+	{mso-list-id:2091728575;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-395181062 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l51:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l52
+	{mso-list-id:2117947467;
+	mso-list-type:hybrid;
+	mso-list-template-ids:900635698 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l52:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTableGrid
+	{mso-style-name:"Table Grid";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	border:solid windowtext 1.0pt;
+	mso-border-alt:solid windowtext .5pt;
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-border-insideh:.5pt solid windowtext;
+	mso-border-insidev:.5pt solid windowtext;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050">
+  <o:colormru v:ext="edit" colors="#5302be,#d1e8ff,#e1e5ad,#f5fab4,#fbfddb"/>
+  <o:colormenu v:ext="edit" shadowcolor="none" extrusioncolor="none"/>
+ </o:shapedefaults></xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+
+<link rel="stylesheet" href="PMWebHelp.css" type="text/css"> 
+ 
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class="TOC">
+
+<h1 id="contents">Contents</h1>
+
+<div id="folders_list">
+
+<div class="toc_folder"> </div> <a class="toc_top" href="#top_workflow">Workflow</a>
+
+<ul class="toggle">
+
+<li class="indent_folder">
+  <input type="checkbox" id="toc_workflow_overview"><label for="toc_workflow_overview">Workflow Overview
+  <span>
+  <a href="#workflow_overview">Workflow Overview</a>
+  </span>
+  </label>
+</li>
+
+<li class="indent_folder">
+  <input type="checkbox" id="toc_workflow_inbox"><label for="toc_workflow_inbox">Workflow Inbox
+  <span>
+  <a href="#workflow_inbox">Workflow Inbox</a>
+  </span>
+  </label>
+</li>
+
+<li class="indent_folder">
+  <input type="checkbox" id="toc_workflow_workflow"><label for="toc_workflow_workflow">Workflow
+  <span>
+  <a href="#workflow_workflow">Workflow</a>
+  <ul>
+  <li><a href="#workflow_roles">Defining Roles</a></li>
+  <li><a href="#workflow_templates">Creating Templates</a></li>
+  <li><a href="#workflow_bpm">Business Process Models</a></li>
+  <li><a href="#workflow_apm">Automated Process Management</a></li>
+  </ul>
+  </span>
+  </label>
+</li>
+
+</ul>
+
+</div>
+</div>
+
+<div  class="Content">
+
+<div class=Section1>
+
+<h1 id="top_workflow"><!--[if supportFields]><span style='font-family:Symbol;background:silver;
+mso-highlight:silver'><span style='mso-element:field-end'></span></span><![endif]--><a
+name="_Toc244077290"></a><a name="_Toc224546657"></a><a name="_Workflow_1"></a><span
+style='mso-bookmark:_Toc244077290'><span style='mso-bookmark:_Toc224546657'><!--[if gte vml 1]><v:shape
+ id="_x0000_i1026" type="#_x0000_t75" style='width:18pt;height:18pt' o:bullet="t">
+ <v:imagedata src="PMWebUserManual_Workflow_files/image020.png" o:title="Workflow"/>
+</v:shape><![endif]--><![if !vml]><img width=24 height=24
+src="PMWebUserManual_Workflow_files/image021.gif" alt="*" v:shapes="_x0000_i1026"><![endif]><span
+style='mso-spacerun:yes'>  </span>Workflow</span></span><span
+class=Heading1Char><o:p></o:p></span></h1>
+
+<h2><a name="_Toc244077291"></a><a name="_Toc224546658"><span style='mso-bookmark:
+_Toc244077291' id="workflow_overview">Workflow Overview</span></a></h2>
+
+<p class=MsoNormal>PMWeb Workflow routes PMWeb and custom forms for approval using routing templates you design. You can create workflow templates for one-time use or reuse them for all of your projects.</p>
+
+<h3><a name="_Toc244077292"></a><a name="_Toc224546659"><span style='mso-bookmark:
+_Toc244077292'>Easy to Use…</span></a></h3>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_i1027" type="#_x0000_t75"
+ style='width:409.5pt;height:146.25pt'>
+ <v:imagedata src="PMWebUserManual_Workflow_files/image022.png" o:title="1"/>
+</v:shape><![endif]--><![if !vml]><img width=546 height=195
+src="PMWebUserManual_Workflow_files/image023.jpg" v:shapes="_x0000_i1027"><![endif]></p>
+
+<h4 style='text-align:justify'>Drag and drop a PMWeb user to a workflow role
+then drop it in a template. You just created a Workflow.</h4>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<h3><a name="_Toc244077293"></a><a name="_Toc224546660"><span style='mso-bookmark:
+_Toc244077293'>…Powerful Features</span></a></h3>
+
+<p class=MsoNormal>Despite its ease of use, PM Workflow is loaded with
+sophisticated features: </p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_i1028" type="#_x0000_t75"
+ style='width:234.75pt;height:57pt' wrapcoords="-56 0 -56 21368 21600 21368 21600 0 -56 0"
+ o:allowoverlap="f">
+ <v:imagedata src="PMWebUserManual_Workflow_files/image024.png" o:title="1"/>
+</v:shape><![endif]--><![if !vml]><img width=313 height=76
+src="PMWebUserManual_Workflow_files/image025.jpg" v:shapes="_x0000_i1028"><![endif]></p>
+
+<h4>“All Must Approve” or “Any Can Approve” settings for each workflow step</h4>
+
+<h4 align=center style='text-align:center'>“Review Days” at each step keep the
+workflow moving </h4>
+
+<p class=MsoNormal align=center style='text-align:center'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_i1029" type="#_x0000_t75"
+ style='width:501.75pt;height:108.75pt'>
+ <v:imagedata src="PMWebUserManual_Workflow_files/image026.jpg" o:title="1"/>
+</v:shape><![endif]--><![if !vml]><img width=669 height=145
+src="PMWebUserManual_Workflow_files/image027.jpg" v:shapes="_x0000_i1029"><![endif]></p>
+
+<h4>As you add approver steps to a template the workflow is drawn in real time.<br
+clear=all style='mso-special-character:line-break;page-break-before:always'>
+</h4>
+
+<p class=MsoNormal align=center style='text-align:center'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal align=center style='text-align:center'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_i1030" type="#_x0000_t75"
+ style='width:271.5pt;height:177.75pt'>
+ <v:imagedata src="PMWebUserManual_Workflow_files/image028.jpg" o:title="1"/>
+</v:shape><![endif]--><![if !vml]><img width=362 height=237
+src="PMWebUserManual_Workflow_files/image029.jpg" v:shapes="_x0000_i1030"><![endif]></p>
+
+<p class=MsoNormal align=center style='text-align:center'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span class=Heading4Char><span style='mso-bidi-font-family:
+"Times New Roman"'>Design your own custom forms, deploy them on the Web and
+seamlessly route them for approval.</span></span></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoCaption><!--[if gte vml 1]><v:shape id="_x0000_i1031" type="#_x0000_t75"
+ style='width:409.5pt;height:157.5pt'>
+ <v:imagedata src="PMWebUserManual_Workflow_files/image030.png" o:title="1"/>
+</v:shape><![endif]--><![if !vml]><img width=546 height=210
+src="PMWebUserManual_Workflow_files/image031.jpg" v:shapes="_x0000_i1031"><![endif]><a
+name="_Toc224546661"></a></p>
+
+<h4><span style='mso-bookmark:_Toc224546661'>Automated Process Management</span></h4>
+
+<b><i><span style='font-size:14.0pt;font-family:Arial;mso-fareast-font-family:
+"Times New Roman";color:navy;background:yellow;mso-highlight:yellow;mso-ansi-language:
+EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br clear=all
+style='page-break-before:always'>
+</span></i></b>
+
+<h2><span style='mso-bookmark:_Toc224546661'><a name="_File_Manager"></a><a
+name="_Toc244077294" id="workflow_inbox">Workflow Inbox</a></span></h2>
+
+<p class=MsoNormal><span style='mso-bookmark:_Toc224546661'>The Inbox displays
+a list of all of the records for which you are a current approver. Click a
+record in the Inbox to open it.</span></p>
+<br/>
+<h2><span style='mso-bookmark:_Toc224546661'><a name="_Toc244077295" id="workflow_workflow">Workflow</a></span></h2>
+
+<p class=MsoNormal>The Workflow/Setup/Workflow page allows you to make
+system-wide and project-specific settings. Before creating workflow settings
+select a project using the drop-down list in the toolbar.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><em><span style='font-family:Arial;mso-bidi-font-family:
+"Times New Roman"'>Note: The “(System)” project is a special one that allows
+you to create defaults for all new projects.<o:p></o:p></span></em></p>
+
+<h3><a name="_Toc244077296"></a><a name="_Toc224546663"><span style='mso-bookmark:
+_Toc244077296' id="workflow_roles">Defining Roles</span></a></h3>
+
+<p class=MsoNormal>PMWeb Workflow is a role-based solution. Roles are defined
+at the system level and assigned at system or project level.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_i1032" type="#_x0000_t75"
+ style='width:40.5pt;height:30pt'>
+ <v:imagedata src="PMWebUserManual_Workflow_files/image032.jpg" o:title="1"/>
+</v:shape><![endif]--><![if !vml]><img width=54 height=40
+src="PMWebUserManual_Workflow_files/image033.jpg" v:shapes="_x0000_i1032"><![endif]></p>
+
+<h4><a name="_Document_Manager"></a>Document Manager</h4>
+
+<p class=MsoNormal>Document Manager is a special role in PMWeb with the ability
+to shepherd the approval process. The Document Manager can be automatically
+notified that an approval is overdue, can assign proxy approvers and possesses
+other similarly powerful permissions. One Document Manager can be designated
+for the entire PMWeb system or a different one can be assigned to each project.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid;
+  height:15.25pt'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt;
+  height:15.25pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b
+  style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Field Name<o:p></o:p></span></i></b></p>
+  </td>
+  <td width=523 style='width:5.45in;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt;height:15.25pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b
+  style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Comments<o:p></o:p></span></i></b></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Document Manager<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>This
+  field is required.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Notify On All Approvals<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Every
+  time a record is approved the <b style='mso-bidi-font-weight:normal'>Document
+  Manager</b> receives an email notification.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Notify On All Returns<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Every
+  time a record is returned the <b style='mso-bidi-font-weight:normal'>Document
+  Manager</b> receives an email notification.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Notify On All Rejects<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Every
+  time a record is rejected the <b style='mso-bidi-font-weight:normal'>Document
+  Manager</b> receives an email notification.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Notify On Final Approval<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>When
+  a record is receives final approval the <b style='mso-bidi-font-weight:normal'>Document
+  Manager</b> receives an email notification.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>CC<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Each
+  time the <b style='mso-bidi-font-weight:normal'>Document Manager</b> is sent
+  these users receive a courtesy copy.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Can Edit Records<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>The
+  <b style='mso-bidi-font-weight:normal'>Document Manager</b> may directly edit
+  a record routed for approval, even if his normal rights, assigned through <a
+  href="PMWebUserManual_Portfolio.htm#_Security">Security</a>, disallow access.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8;mso-yfti-lastrow:yes;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Can Edit Workflow<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>The
+  <b style='mso-bidi-font-weight:normal'>Document Manager</b> may, record by
+  record, edit the assigned template.<o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<h4>Define Roles</h4>
+
+<p class=MsoNormal>There are two ways to add lines to the grid:</p>
+
+<h5>Using the Add Line Button to Add Roles</h5>
+
+<p class=NormalHeading5>Click the <i style='mso-bidi-font-style:normal'>Add
+Line</i> button in the grid header. A new line opens for editing. Type a name
+for the role and select a user to assign. Click the <i style='mso-bidi-font-style:
+normal'>Save</i> button to save the line.</p>
+
+<h5>Using Drag-and-drop to Add Roles</h5>
+
+<p class=NormalHeading5>Click a user in the Users tree and drag it to the Roles
+grid. When you release the mouse a new line is opened for editing with the User
+filled in. Type a name for the role and click the <i style='mso-bidi-font-style:
+normal'>Save</i> button to save the line.</p>
+
+<b><span style='font-size:13.0pt;font-family:Arial;mso-fareast-font-family:
+"Times New Roman";color:navy;mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:always'>
+</span></b>
+
+<h3><a name="_Toc224546664"></a><a name="_Templates"></a><a name="_Toc244077297"><span
+style='mso-bookmark:_Toc224546664' id="workflow_templates">Templates</span></a></h3>
+
+<h4>Template Fields</h4>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid;
+  height:15.25pt'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt;
+  height:15.25pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b
+  style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Field Name<o:p></o:p></span></i></b></p>
+  </td>
+  <td width=523 style='width:5.45in;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt;height:15.25pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b
+  style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Comments<o:p></o:p></span></i></b></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Select Template<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Select
+  a template from the list to load it for editing or select “Add Template” to
+  create a new one.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Template Name<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>This
+  field is required.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'># of days for original
+  submitter to resubmit<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>If
+  the original submitter doesn’t resubmit within this number of days the <a
+  href="#_Document_Manager">Document Manager</a> is automatically notified. <o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Allow returns to
+  recalculate due dates.<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>If
+  this is checked all subsequent dues dates are recalculated when a record is
+  returned.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Allow resubmitter to edit.<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>If
+  this is checked the record may be edited before being resubmitted. If not,
+  only workflow comments may be added before resubmitting.<o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<h4>Roles Grid</h4>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid;
+  height:15.25pt'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt;
+  height:15.25pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b
+  style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Field Name<o:p></o:p></span></i></b></p>
+  </td>
+  <td width=523 style='width:5.45in;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#F3F3F3;padding:0in 5.4pt 0in 5.4pt;height:15.25pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b
+  style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Comments<o:p></o:p></span></i></b></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Step<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>This
+  field is read-only. To edit this field click and drag it up or down in the
+  grid. When you release the mouse the steps will be renumbered.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Roles<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>This
+  field is required. You may select one or more roles for each line.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Any Can Approve, All Must
+  Approve<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>You
+  must select one or the other of these fields. These settings apply to lines
+  with more than one role. If <b style='mso-bidi-font-weight:normal'>Any Can
+  Approve</b> is checked the first user to approve automatically sends the
+  record to the next approval step.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Review Days<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>If
+  no decision is made on this step in this many days the <a
+  href="#_Document_Manager">Document Manager</a> is automatically notified.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Can Edit Records<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>The
+  approvers on this line may directly edit a record routed for approval, even
+  if their normal rights, assigned through <a
+  href="PMWebUserManual_Portfolio.htm#_Security">Security</a>, disallow access.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Notify on All Approvals<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Every
+  time a record is approved the approvers on this line receive an email
+  notification.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Notify on All Returns<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Every
+  time a record is returned the approvers on this line receive an email
+  notification.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Notify on All Rejects<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Every
+  time a record is rejected the approvers on this line receive an email
+  notification.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Notify on All Withdrawals<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Every
+  time a record is withdrawn the approvers on this line receive an email
+  notification.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Notify on Final Approval<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>When
+  a record is receives final approval the approvers on this line receive an
+  email notification.<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:11;mso-yfti-lastrow:yes;page-break-inside:avoid'>
+  <td width=163 style='width:1.7in;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+  style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>CC<o:p></o:p></span></b></p>
+  </td>
+  <td width=523 valign=top style='width:5.45in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Each
+  time a workflow decision is made these users receive a courtesy copy.<o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>There are two ways to add lines to the grid:</p>
+
+<h5>Using Add Line Button to Add Roles to Templates</h5>
+
+<p class=NormalHeading5>Click the <i style='mso-bidi-font-style:normal'>Add
+Line</i> button in the grid header. A new line opens for editing. Edit the line
+and click the <i style='mso-bidi-font-style:normal'>Save</i> button.</p>
+
+<h5>Using Drag-and-drop to Add Roles to Templates</h5>
+
+<p class=NormalHeading5>Click one or more roles in the Roles tree and drag them
+to the Roles grid. When you release the mouse new lines open for editing in the
+grid. Edit the line and click the <i style='mso-bidi-font-style:normal'>Save</i>
+button.</p>
+
+<h4>Visual Workflow</h4>
+
+<p class=MsoNormal>The Visual Workflow control is a graphical display of the
+data you enter in the Roles grid and is immediately redrawn as the Roles grid
+is edited.</p>
+
+<b><span style='font-size:13.0pt;font-family:Arial;mso-fareast-font-family:
+"Times New Roman";color:navy;mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:always'>
+</span></b>
+
+<h3><a name="_Toc244077298" id="workflow_bpm">Business Process Models</a></h3>
+
+<p class=MsoNormal>The Business Process Model (BPM) tab is where you select a default workflow template
+to use for each record type, including custom forms you create yourself. If you
+select “”(Do Not Use Workflow)” users will not be required to submit records of
+that type for approval and may change the status of records as they wish.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><em><span style='font-family:Arial;mso-bidi-font-family:
+"Times New Roman"'>Notes:<o:p></o:p></span></em></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l31 level1 lfo36;tab-stops:list .5in'><em><span
+     style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'>Templates
+     selected for the “(System)” project are inherited by default by new
+     projects, but may be edited.<o:p></o:p></span></em></li>
+ <li class=MsoNormal style='mso-list:l31 level1 lfo36;tab-stops:list .5in'><em><span
+     style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'>Selecting
+     “(Do Not Use Workflow)” for the “(System)” project means that workflow
+     will not be allowed for all new projects.</span></em> </li>
+</ul>
+
+<h3><a name="_Toc244077299" id="workflow_apm">Automated Process Management</a></h3>
+
+<p class=MsoNormal>Automated Process Management(APM) rules fine-tune the process of assigning the correct
+workflow <a href="#_Templates">Templates</a>. An example of APM rules is one
+that distinguishes between Subcontracts and Purchase Orders. If the <b
+style='mso-bidi-font-weight:normal'>Commitment Type</b> is “Subcontract” one
+template is used; if it is “Purchase Order” a different template is used. APM
+rules can be evaluate a single field in the record or can consist of many
+layers of conditional logic.</p>
+
+<h4>Creating APM Rules</h4>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_i1033" type="#_x0000_t75"
+ style='width:7in;height:298.5pt'>
+ <v:imagedata src="PMWebUserManual_Workflow_files/image034.jpg" o:title="1"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=672 height=398
+src="PMWebUserManual_Workflow_files/image035.jpg" v:shapes="_x0000_i1033"><![endif]></p>
+
+<p class=MsoCaption>Creating APM Rules</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='mso-list:l23 level1 lfo37;tab-stops:list .5in'>Click
+     the New button in the toolbar. A new, empty rules record loads.</li>
+ <li class=MsoNormal style='mso-list:l23 level1 lfo37;tab-stops:list .5in'>Click
+     a form in the Forms tree to select it.</li>
+ <li class=MsoNormal style='mso-list:l23 level1 lfo37;tab-stops:list .5in'>Enter
+     a <b style='mso-bidi-font-weight:normal'>Rule Name</b>.</li>
+ <li class=MsoNormal style='mso-list:l23 level1 lfo37;tab-stops:list .5in'>Select
+     the template to use if the rule evaluates as true.</li>
+ <li class=MsoNormal style='mso-list:l23 level1 lfo37;tab-stops:list .5in'>Click
+     the Save button on the toolbar.</li>
+ <li class=MsoNormal style='mso-list:l23 level1 lfo37;tab-stops:list .5in'>Click
+     the <i style='mso-bidi-font-style:normal'>Add Condition</i> button in the
+     grid header.</li>
+ <li class=MsoNormal style='mso-list:l23 level1 lfo37;tab-stops:list .5in'>Enter
+     the condition information and click the <i style='mso-bidi-font-style:
+     normal'>Save</i> button in the grid header.</li>
+</ol>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

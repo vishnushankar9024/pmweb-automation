@@ -1,0 +1,11 @@
+{
+  "grid-column.select": "Select",
+  "grid-column.lineNumber": "Line",
+  "grid-column.sessionId": "Session ID",
+  "grid-column.username": "User Name",
+  "grid-column.login": "Login",
+  "grid-column.lastActivity": "Last Activity",
+  "grid-column.licenseType": "License Type",
+  "grid-column.named": "Named",
+  "grid-column.ip": "IP"
+}

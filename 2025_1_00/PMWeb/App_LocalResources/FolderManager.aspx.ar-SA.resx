@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ALL_ENTITIES" xml:space="preserve">
+    <value>الكلّ</value>
+  </data>
+  <data name="ALL_LOCATIONS" xml:space="preserve">
+    <value>كلّ المواقع</value>
+  </data>
+  <data name="ALL_PROJECTS" xml:space="preserve">
+    <value>كلّ المشاريع</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="chkSearchContent.text" xml:space="preserve">
+    <value>بحث محتويات الملف</value>
+  </data>
+  <data name="CONFIGURE_TREE" xml:space="preserve">
+    <value>تهيئة شجرة الملفّات</value>
+  </data>
+  <data name="ContextMenu_CopyFolder.Text" xml:space="preserve">
+    <value>نسج مجلّد</value>
+  </data>
+  <data name="ContextMenu_CopyFolderUrl.Text" xml:space="preserve">
+    <value>نسخ رابط مجلّد</value>
+  </data>
+  <data name="ContextMenu_DeleteFolder.Text" xml:space="preserve">
+    <value>مسح مجلّد</value>
+  </data>
+  <data name="ContextMenu_EditFolder.Text" xml:space="preserve">
+    <value>تعديل مجلّد</value>
+  </data>
+  <data name="ContextMenu_NewFolder.Text" xml:space="preserve">
+    <value>مجلّد جديد</value>
+  </data>
+  <data name="ContextMenu_Open.Text" xml:space="preserve">
+    <value>فتح</value>
+  </data>
+  <data name="ContextMenu_PasteFiles.Text" xml:space="preserve">
+    <value>لصق ملف(ات)</value>
+  </data>
+  <data name="ContextMenu_PasteFolder.Text" xml:space="preserve">
+    <value>لصق مجلّد</value>
+  </data>
+  <data name="ContextMenu_Rename.Text" xml:space="preserve">
+    <value>إعادة تسمية</value>
+  </data>
+  <data name="ContextMenu_Subscribe.Text" xml:space="preserve">
+    <value>إشتراك</value>
+  </data>
+  <data name="ContextMenu_Unsubscribe.Text" xml:space="preserve">
+    <value>إلغاء الإشتراك</value>
+  </data>
+  <data name="ContextMenu_UploadFile.Text" xml:space="preserve">
+    <value>تحميل ملف</value>
+  </data>
+  <data name="ErrorMsg_SelectLinesToDownload" xml:space="preserve">
+    <value>حدّد سطور الملفات التي تريد تنزيلها</value>
+  </data>
+  <data name="ErrorMsg_UploadingFiles" xml:space="preserve">
+    <value>خطأ في رفع الملفّات - ملفّ أو أكثر لم يتمّ رفعها. {0}</value>
+  </data>
+  <data name="FileContextMenu_3DViewer.Text" xml:space="preserve">
+    <value>عارض ثلاثي الأبعاد</value>
+  </data>
+  <data name="FileContextMenu_CancelCheckOut.Text" xml:space="preserve">
+    <value>إلغاء التحقيق بمخرج الملفّ</value>
+  </data>
+  <data name="FileContextMenu_CheckIn.Text" xml:space="preserve">
+    <value>مراجعة الملفّ</value>
+  </data>
+  <data name="FileContextMenu_CheckOut.Text" xml:space="preserve">
+    <value>التحقيق بمخرج الملفّ</value>
+  </data>
+  <data name="FileContextMenu_Copy.Text" xml:space="preserve">
+    <value>نسخ</value>
+  </data>
+  <data name="FileContextMenu_Delete.Text" xml:space="preserve">
+    <value>مسح</value>
+  </data>
+  <data name="FileContextMenu_Download.Text" xml:space="preserve">
+    <value>تنزيل ملفّ</value>
+  </data>
+  <data name="FileContextMenu_Paste.Text" xml:space="preserve">
+    <value>لصق</value>
+  </data>
+  <data name="FileContextMenu_PMWebViewer.Text" xml:space="preserve">
+    <value>PMWeb عارض</value>
+  </data>
+  <data name="FileContextMenu_ShowLatestVersions.Text" xml:space="preserve">
+    <value>إظهار آخر نسخة من الملفّ</value>
+  </data>
+  <data name="FileContextMenu_Upload.Text" xml:space="preserve">
+    <value>رفع ملفّ</value>
+  </data>
+  <data name="FolderContextMenu_AddFolder.Text" xml:space="preserve">
+    <value>إضافة مجلّد</value>
+  </data>
+  <data name="FolderContextMenu_Delete.Text" xml:space="preserve">
+    <value>مسح مجلّدات ومجلدّات فرعيّة تحتها</value>
+  </data>
+  <data name="FolderContextMenu_EditFolder.Text" xml:space="preserve">
+    <value>تعديل مجلّد</value>
+  </data>
+  <data name="FolderContextMenu_Paste.Text" xml:space="preserve">
+    <value>لصق ملفّات</value>
+  </data>
+  <data name="FolderContextMenu_Subscribe.Text" xml:space="preserve">
+    <value>إشتراك</value>
+  </data>
+  <data name="FolderContextMenu_Unsubscribe.Text" xml:space="preserve">
+    <value>إلغاء الإشتراك</value>
+  </data>
+  <data name="FolderContextMenu_UploadFiles.Text" xml:space="preserve">
+    <value>رفع ملفّات</value>
+  </data>
+  <data name="GridColumn_Category" xml:space="preserve">
+    <value>الفئة</value>
+  </data>
+  <data name="GridColumn_CheckedByUserName" xml:space="preserve">
+    <value>آخر مراجعة / مخرج بواسطة</value>
+  </data>
+  <data name="GridColumn_CreatedByUserName" xml:space="preserve">
+    <value>أضيف بواسطة</value>
+  </data>
+  <data name="GridColumn_CreatedDate" xml:space="preserve">
+    <value>أضافة</value>
+  </data>
+  <data name="GridColumn_Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="GridColumn_Extension" xml:space="preserve">
+    <value>نوع الملفّ</value>
+  </data>
+  <data name="GridColumn_FileName" xml:space="preserve">
+    <value>إسم الملف</value>
+  </data>
+  <data name="GridColumn_FolderPath" xml:space="preserve">
+    <value>المسار</value>
+  </data>
+  <data name="GridColumn_Id" xml:space="preserve">
+    <value># رقم الوثيقة</value>
+  </data>
+  <data name="GridColumn_LastModified" xml:space="preserve">
+    <value>آخر مراجعة / مخرج</value>
+  </data>
+  <data name="GridColumn_Size" xml:space="preserve">
+    <value>حجم الملفّ</value>
+  </data>
+  <data name="GridColumn_Type" xml:space="preserve">
+    <value>النوع</value>
+  </data>
+  <data name="GridColumn_Version" xml:space="preserve">
+    <value>الإصدار</value>
+  </data>
+  <data name="GridColumn_WorkflowStatus" xml:space="preserve">
+    <value>حالة سير العمل</value>
+  </data>
+  <data name="lblCategory.Text" xml:space="preserve">
+    <value>الفئة الإفتراضيّة</value>
+  </data>
+  <data name="lblCheckIn.Text" xml:space="preserve">
+    <value>التسجيل للمراجعة</value>
+  </data>
+  <data name="lblDownloadSelectedLine.Text" xml:space="preserve">
+    <value>تنزيل ملفّات</value>
+  </data>
+  <data name="lblDropFilesToUploadText" xml:space="preserve">
+    <value>قم بوضع الملفّات هنا للرفع</value>
+  </data>
+  <data name="lblDuplicateFile.Text" xml:space="preserve">
+    <value>عند إضافة ملفّات مكرّرة</value>
+  </data>
+  <data name="lblEnableVersions.Text" xml:space="preserve">
+    <value>السماح بإصدار نسخ</value>
+  </data>
+  <data name="lblFolder" xml:space="preserve">
+    <value>:المجلّد</value>
+  </data>
+  <data name="lblNoAvailableAttributes.Text" xml:space="preserve">
+    <value>لا يوجد صفات متاحة لهذا المجلّد</value>
+  </data>
+  <data name="lblNoFileToDisplay.Text" xml:space="preserve">
+    <value>لا يوجد ملفّات للعرض</value>
+  </data>
+  <data name="lblPMWebViewer.Text" xml:space="preserve">
+    <value>PMWeb عارض ال</value>
+  </data>
+  <data name="lblQuickFileUpload.Text" xml:space="preserve">
+    <value>رفع ملفّات سريع</value>
+  </data>
+  <data name="lblSearchResult" xml:space="preserve">
+    <value>نتائج البحث</value>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>النوع الإفتراضي</value>
+  </data>
+  <data name="lblUploadOptionChFFText" xml:space="preserve">
+    <value>تصفّح لتحديد الملفّات للرفع أو قم بوضع الملفّات في العلبة هنا للرفع</value>
+  </data>
+  <data name="lblUploadOptionIEText" xml:space="preserve">
+    <value>تصفّح لتحديد الملفّات وقم بوضع الملفّات في العلبة هنا للرفع</value>
+  </data>
+  <data name="lbt3DViewer.Text" xml:space="preserve">
+    <value>عارض ثلاثي الأبعاد</value>
+  </data>
+  <data name="Legend_Attributes.Text" xml:space="preserve">
+    <value>الصّفات</value>
+  </data>
+  <data name="legend_Preview.Text" xml:space="preserve">
+    <value>المعاينة</value>
+  </data>
+  <data name="Msg_CheckedOutBy" xml:space="preserve">
+    <value>مدقّق من قبل</value>
+  </data>
+  <data name="OverLoadTreeMsg" xml:space="preserve">
+    <value>.يتمّ إظهار أول 500 سجلّ فقط. أعد تهيئة شجرة المجلّدات لإظهار أقل من 500 سجلّ</value>
+  </data>
+  <data name="rbnOverwriteDuplicateFile.Text" xml:space="preserve">
+    <value>حفظ الملفّات المكرّرة بنفس الإسم من دون إصدار جديد. لا تطبّق على الملفّات التي يتمّ التحقق والمراجعة فيها أو الملفّات التي ضمن سير العمل</value>
+  </data>
+  <data name="rbnSkipDuplicateFile.Text" xml:space="preserve">
+    <value>تخطي الملفّات المكرّرة</value>
+  </data>
+  <data name="rfvAttributeName.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="SAVE_TREE" xml:space="preserve">
+    <value>حفظ شجرة المجلّدات</value>
+  </data>
+  <data name="tab_Attributes.Text" xml:space="preserve">
+    <value>الصّفات</value>
+  </data>
+  <data name="tab_Files.Text" xml:space="preserve">
+    <value>الملفّات</value>
+  </data>
+  <data name="tab_Permissions.Text" xml:space="preserve">
+    <value>الأذونات</value>
+  </data>
+  <data name="tab_Revision.Text" xml:space="preserve">
+    <value>المراجعة</value>
+  </data>
+  <data name="WarningMsg_CheckoutNeedSelectedFile" xml:space="preserve">
+    <value>الرجاء تحديد ملفّ ثمّ دقّق</value>
+  </data>
+  <data name="WarningMsg_DeleteSelectedFile" xml:space="preserve">
+    <value>حذف الملفّ المحدّد؟</value>
+  </data>
+  <data name="WarningMsg_DeleteSelectedFolder" xml:space="preserve">
+    <value>لا يمكن إستعادة الحذف. هل أنت متأكّد من أنّك تريد الإستمرار؟</value>
+  </data>
+  <data name="WarningMsg_DeleteSelectedFolderWithSubFolders" xml:space="preserve">
+    <value>أنت على وشك حذف المجلد المحدد ، على المجلدات الفرعية وجميع الملفات داخل تلك المجلدات. لا يمكن إستعادة هذه  العملية.  هل أنت متأكد من أنك ترغب في الاستمرار؟</value>
+  </data>
+  <data name="WarningMsg_FileExtension" xml:space="preserve">
+    <value>.نوع الملفّ مقيّد. أنواع الملفّات الصالحة للرفع هي ( {0} ). الرجاء الإتصال بمدير النظام إذا كنت ترغب برفع ملفّ من نوع غير مدعوم</value>
+  </data>
+  <data name="WarningMsg_InvalidFile" xml:space="preserve">
+    <value>.نوع الملفّ غير صالح أو حجم الملفّ يفوق الحدّ الأقصى. الرجاء الإتصال بمدير النظام لإمكانيّة زيادة حجم الملفّات المرفوعة</value>
+  </data>
+  <data name="WarningMsg_UnableDeleteCheckoutFile" xml:space="preserve">
+    <value>لا يمكن حذف هذا الملفّ حتّى يتمّ إيداعه فيه</value>
+  </data>
+  <data name="WarningMsg_UnableToDelete" xml:space="preserve">
+    <value>You don't have permission to delete one or more from the selected file(s). </value>
+  </data>
+</root>

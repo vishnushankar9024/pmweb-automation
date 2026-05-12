@@ -1,0 +1,92 @@
+﻿@model IEnumerable<string>
+@{
+    ViewBag.Title = "Cash Flow";
+    string[] defaultColumns = new string[] { "Id", "PackageNo", "Vendor", "Lpo", "Activity", "Budget", "OriginalContract", "ApprovedVo", "Forecast", "PaidCumulative", "RemainingValue" };
+
+    string budgetMonth = "Revised Approved<br />Project Budget in<br />" + DateTime.Now.ToString("MMM yyyy");
+
+    int i = 0;
+}
+
+<h2>Cash Flow Report</h2>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label for="from">From</label>
+            <select class="form-control" id="from" aria-describedby="fromHelp" placeholder="Select From">
+                <option>--- Select ---</option>
+            </select>
+            <small id="fromHelp" class="form-text text-muted">Select the from month and year.</small>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group">
+            <label for="from">To</label>
+            <select class="form-control" id="to" aria-describedby="toHelp" placeholder="Select To">
+                <option>--- Select ---</option>
+            </select>
+            <small id="toHelp" class="form-text text-muted">Select the to month and year.</small>
+        </div>
+    </div>
+</div>
+@(Html.Kendo().Grid<Payment>()
+    .Name("grid_Cashflow")
+    .ColumnMenu(c => c.Enabled(true).Columns(false))
+    .Columns(col => {
+        col.Bound(p => p.PackageNoDescription).Width(200).Locked(true).Lockable(false);
+        col.Bound(p => p.Vendor).Width(200).Locked(true).Lockable(false);
+        col.Bound(p => p.Lpo).Title("LPO / Cobtract Reference").Width(200).Locked(true).Lockable(false);
+        col.Bound(p => p.Activity).Title("Activity Name").Width(200).Locked(true).Lockable(false);
+        col.Bound(p => p.Budget).Title(budgetMonth).Width(150).Lockable(false);
+        col.Bound(p => p.OriginalContract).Width(150).Lockable(false);
+        col.Bound(p => p.ApprovedVo).Width(150).Lockable(false);
+        col.Bound(p => p.Forecast).Width(150).Lockable(false);
+        col.Bound(p => p.PaidCumulative).Width(150).Lockable(false);
+        col.Bound(p => p.RemainingValue).Width(150).Lockable(false);
+        foreach(string colTitle in Model)
+        {
+            i++;
+            string colName = "distributionMonths.Month_" + i.ToString();
+            col.Bound(colName).Title(colTitle).Width(150).Lockable(false);
+        }
+    })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("GetPayments", "CashFlow"))
+        .Update(read => read.Action("GetPayments", "CashFlow"))
+        .PageSize(100)
+        .Model(model =>
+        {
+            model.Id(m => m.Id);
+            model.Field(f => f.Vendor).Editable(false);
+            model.Field(f => f.Lpo).Editable(false);
+            model.Field(f => f.Activity).Editable(false);
+            model.Field(f => f.Budget).Editable(false);
+            model.Field(f => f.OriginalContract).Editable(false);
+            model.Field(f => f.ApprovedVo).Editable(false);
+            model.Field(f => f.PaidCumulative).Editable(false);
+            model.Field(f => f.RemainingValue).Editable(false);
+        })
+        .Batch(true)
+        .ServerOperation(false)
+    )
+    .Scrollable(scrollable => scrollable.Height(500))
+    .Pageable()
+    .Filterable()
+    .Sortable()
+    .Editable(edt => edt.Mode(GridEditMode.InCell))
+    .ToolBar(toolbar =>
+    {
+        toolbar.Save();
+        toolbar.Excel();
+    })
+)
+@section scripts {
+    <script type="text/javascript">
+        function getDistributionValue(data, month) {
+            return $.grep(data.distributionMonths, function (d) {
+                return d.MonthName == month
+            })[0].Value.toFixed(2);
+        }
+    </script>
+}

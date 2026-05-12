@@ -1,0 +1,14 @@
+{
+    "GroupBy": "Group By",
+    "ListItemNone": "None",
+    "ListItemsCategory": "Category",
+    "ListItemsType": "Type",
+    "ListItemsGroup": "Item Group",
+    "grid-column.Line": "Line",
+    "grid-column.addingTimes": "#",
+    "grid-column.Item": "Item",
+    "grid-column.Description": "Description",
+    "grid-column.Manufacturer": "Manufacturer",
+    "Items": "Items",
+    "grid-column.ManufacturerNumber": "Manufacturer #"
+}

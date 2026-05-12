@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="VB" Debug="true" Service="API.RestFloors" CodeBehind="Floors.svc.vb" %>

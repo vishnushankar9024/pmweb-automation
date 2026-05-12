@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Asset_Folder_Assets" xml:space="preserve">
+    <value>资产</value>
+  </data>
+  <data name="Asset_Folder_Leases" xml:space="preserve">
+    <value>租赁</value>
+  </data>
+  <data name="Asset_Folder_MaintenanceContracts" xml:space="preserve">
+    <value>维修合同</value>
+  </data>
+  <data name="Asset_Folder_Payments" xml:space="preserve">
+    <value>支付</value>
+  </data>
+  <data name="Asset_Folder_Setup" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Asset_Folder_WorkOrders" xml:space="preserve">
+    <value>工单</value>
+  </data>
+  <data name="Asset_Module" xml:space="preserve">
+    <value>资产管理</value>
+  </data>
+  <data name="Asset_Page_APTenantPaymentBatches" xml:space="preserve">
+    <value>A/P 支付批次</value>
+  </data>
+  <data name="Asset_Page_APTenantPayments" xml:space="preserve">
+    <value>A/P 支付</value>
+  </data>
+  <data name="Asset_Page_ARTenantPaymentBatches" xml:space="preserve">
+    <value>A/R 支付批次</value>
+  </data>
+  <data name="Asset_Page_ARTenantPayments" xml:space="preserve">
+    <value>A/R 支付</value>
+  </data>
+  <data name="Asset_Page_Buildings" xml:space="preserve">
+    <value>房屋</value>
+  </data>
+  <data name="Asset_Page_ConfigureDispatchBoards" xml:space="preserve">
+    <value>配置调度板</value>
+  </data>
+  <data name="Asset_Page_DispatchBoard" xml:space="preserve">
+    <value>调度局</value>
+  </data>
+  <data name="Asset_Page_Equipment" xml:space="preserve">
+    <value>设备</value>
+  </data>
+  <data name="Asset_Page_Floors" xml:space="preserve">
+    <value>地板</value>
+  </data>
+  <data name="Asset_Page_InventoryLocations" xml:space="preserve">
+    <value>库存位置</value>
+  </data>
+  <data name="Asset_Page_LeaseAdministrator" xml:space="preserve">
+    <value>租赁管理</value>
+  </data>
+  <data name="Asset_Page_LeaseCharges" xml:space="preserve">
+    <value>租赁费用</value>
+  </data>
+  <data name="Asset_Page_Leases" xml:space="preserve">
+    <value>租赁</value>
+  </data>
+  <data name="Asset_Page_LocationPrograms" xml:space="preserve">
+    <value>项目群位置</value>
+  </data>
+  <data name="Asset_Page_Locations" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="Asset_Page_MaintenanceContracts" xml:space="preserve">
+    <value>维修合同</value>
+  </data>
+  <data name="Asset_Page_Moveout" xml:space="preserve">
+    <value>移动计划</value>
+  </data>
+  <data name="Asset_Page_Reservation" xml:space="preserve">
+    <value>预约申请</value>
+  </data>
+  <data name="Asset_Page_Search" xml:space="preserve">
+    <value>资产搜索</value>
+  </data>
+  <data name="Asset_Page_SharedAssets" xml:space="preserve">
+    <value>共享资产</value>
+  </data>
+  <data name="Asset_Page_Spaces" xml:space="preserve">
+    <value>空间</value>
+  </data>
+  <data name="Asset_Page_Suites" xml:space="preserve">
+    <value>套房</value>
+  </data>
+  <data name="Asset_Page_TenantInvoices" xml:space="preserve">
+    <value>承租人发票</value>
+  </data>
+  <data name="Asset_Page_Units" xml:space="preserve">
+    <value>单位</value>
+  </data>
+  <data name="Asset_Page_WorkOrders" xml:space="preserve">
+    <value>工单</value>
+  </data>
+  <data name="Asset_Page_WorkOrdersMapView" xml:space="preserve">
+    <value>地图</value>
+  </data>
+  <data name="Asset_Page_WorkRequests" xml:space="preserve">
+    <value>工作请求</value>
+  </data>
+  <data name="CostManagement_Folder_Budgets" xml:space="preserve">
+    <value>预算</value>
+  </data>
+  <data name="CostManagement_Folder_ChangeManagement" xml:space="preserve">
+    <value>变更管理</value>
+  </data>
+  <data name="CostManagement_Folder_Contracts" xml:space="preserve">
+    <value>合同</value>
+  </data>
+  <data name="CostManagement_Folder_Funding" xml:space="preserve">
+    <value>资金</value>
+  </data>
+  <data name="CostManagement_Folder_Invoices" xml:space="preserve">
+    <value>发票</value>
+  </data>
+  <data name="CostManagement_Folder_Payments" xml:space="preserve">
+    <value>支付</value>
+  </data>
+  <data name="CostManagement_Module" xml:space="preserve">
+    <value>成本管理</value>
+  </data>
+  <data name="CostManagement_Page_APPaymentBatches" xml:space="preserve">
+    <value>A/P 支付批次</value>
+  </data>
+  <data name="CostManagement_Page_APPayments" xml:space="preserve">
+    <value>A/P 支付</value>
+  </data>
+  <data name="CostManagement_Page_ARPaymentBatches" xml:space="preserve">
+    <value>A/R 支付批次</value>
+  </data>
+  <data name="CostManagement_Page_ARPayments" xml:space="preserve">
+    <value>A/R 支付</value>
+  </data>
+  <data name="CostManagement_Page_BudgetRequests" xml:space="preserve">
+    <value>预算请求</value>
+  </data>
+  <data name="CostManagement_Page_Budgets" xml:space="preserve">
+    <value>预算</value>
+  </data>
+  <data name="CostManagement_Page_CashFlow" xml:space="preserve">
+    <value>现金流</value>
+  </data>
+  <data name="CostManagement_Page_ChangeEvents" xml:space="preserve">
+    <value>变更事件</value>
+  </data>
+  <data name="CostManagement_Page_CommitmentCOs" xml:space="preserve">
+    <value>承诺变更</value>
+  </data>
+  <data name="CostManagement_Page_Commitments" xml:space="preserve">
+    <value>承诺</value>
+  </data>
+  <data name="CostManagement_Page_ContractCOs" xml:space="preserve">
+    <value>合同变更</value>
+  </data>
+  <data name="CostManagement_Page_Contracts" xml:space="preserve">
+    <value>合同</value>
+  </data>
+  <data name="CostManagement_Page_CostCodes" xml:space="preserve">
+    <value>成本编码</value>
+  </data>
+  <data name="CostManagement_Page_CostLedger" xml:space="preserve">
+    <value>成本总帐</value>
+  </data>
+  <data name="CostManagement_Page_CostWorksheet" xml:space="preserve">
+    <value>费用工作表</value>
+  </data>
+  <data name="CostManagement_Page_DefineWorksheet" xml:space="preserve">
+    <value>定义工作表</value>
+  </data>
+  <data name="CostManagement_Page_Forecasts" xml:space="preserve">
+    <value>预测</value>
+  </data>
+  <data name="CostManagement_Page_FundingAuthorizations" xml:space="preserve">
+    <value>资金授权</value>
+  </data>
+  <data name="CostManagement_Page_FundingRecap" xml:space="preserve">
+    <value>资金概要</value>
+  </data>
+  <data name="CostManagement_Page_FundingRecords" xml:space="preserve">
+    <value>资金记录</value>
+  </data>
+  <data name="CostManagement_Page_FundingRequests" xml:space="preserve">
+    <value>资金请求</value>
+  </data>
+  <data name="CostManagement_Page_JournalEntries" xml:space="preserve">
+    <value>日记帐分录</value>
+  </data>
+  <data name="CostManagement_Page_MasterCommitments" xml:space="preserve">
+    <value>主承诺</value>
+  </data>
+  <data name="CostManagement_Page_MiscellaneousInvoices" xml:space="preserve">
+    <value>杂项发票</value>
+  </data>
+  <data name="CostManagement_Page_PrimeContracts" xml:space="preserve">
+    <value>合同</value>
+  </data>
+  <data name="CostManagement_Page_Production" xml:space="preserve">
+    <value>生产</value>
+  </data>
+  <data name="CostManagement_Page_ProgressInvoices" xml:space="preserve">
+    <value>进度款发票</value>
+  </data>
+  <data name="CostManagement_Requisition" xml:space="preserve">
+    <value>支付申请</value>
+  </data>
+  <data name="Estimating_Folder_Setup" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Estimating_Module" xml:space="preserve">
+    <value>规划管理</value>
+  </data>
+  <data name="Estimating_Page_Assemblies" xml:space="preserve">
+    <value>组件</value>
+  </data>
+  <data name="Estimating_Page_Estimates" xml:space="preserve">
+    <value>估算</value>
+  </data>
+  <data name="Estimating_Page_Formulas" xml:space="preserve">
+    <value>公式</value>
+  </data>
+  <data name="Estimating_Page_Items" xml:space="preserve">
+    <value>条目</value>
+  </data>
+  <data name="Estimating_Page_OnlineBidding" xml:space="preserve">
+    <value>网上招标</value>
+  </data>
+  <data name="Estimating_Page_Procurement" xml:space="preserve">
+    <value>采购</value>
+  </data>
+  <data name="Portfolio_Folder_Email" xml:space="preserve">
+    <value>电子邮件</value>
+  </data>
+  <data name="Portfolio_Folder_EmailSetup" xml:space="preserve">
+    <value>电子邮件设置</value>
+  </data>
+  <data name="Portfolio_Folder_Planning" xml:space="preserve">
+    <value>组合规划</value>
+  </data>
+  <data name="Portfolio_Folder_Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="Portfolio_Folder_Setup" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Portfolio_Module" xml:space="preserve">
+    <value>组合管理</value>
+  </data>
+  <data name="Portfolio_Page_AditTrail" xml:space="preserve">
+    <value>审计跟踪</value>
+  </data>
+  <data name="Portfolio_Page_Adjustment" xml:space="preserve">
+    <value>调整</value>
+  </data>
+  <data name="Portfolio_Page_AdjustmentGroups" xml:space="preserve">
+    <value>调整组</value>
+  </data>
+  <data name="Portfolio_Page_BIReporting" xml:space="preserve">
+    <value>BI报告</value>
+  </data>
+  <data name="Portfolio_Page_CalendarSetup" xml:space="preserve">
+    <value>日历设置</value>
+  </data>
+  <data name="Portfolio_Page_ClassificationMatrix" xml:space="preserve">
+    <value>分类矩阵</value>
+  </data>
+  <data name="Portfolio_Page_Clauses" xml:space="preserve">
+    <value>条款</value>
+  </data>
+  <data name="Portfolio_Page_Companies" xml:space="preserve">
+    <value>公司</value>
+  </data>
+  <data name="Portfolio_Page_CPI" xml:space="preserve">
+    <value>CPI</value>
+  </data>
+  <data name="Portfolio_Page_DefineChecklists" xml:space="preserve">
+    <value>定义检查表</value>
+  </data>
+  <data name="Portfolio_Page_DistributionList" xml:space="preserve">
+    <value>通讯组列表</value>
+  </data>
+  <data name="Portfolio_Page_EmailHome" xml:space="preserve">
+    <value>企业邮箱首页</value>
+  </data>
+  <data name="Portfolio_Page_Folder_Lists" xml:space="preserve">
+    <value>列表</value>
+  </data>
+  <data name="Portfolio_Page_InitiativesBudget" xml:space="preserve">
+    <value>倡议</value>
+  </data>
+  <data name="Portfolio_Page_Issues" xml:space="preserve">
+    <value>问题</value>
+  </data>
+  <data name="Portfolio_Page_Items" xml:space="preserve">
+    <value>条目</value>
+  </data>
+  <data name="Portfolio_Page_Lists" xml:space="preserve">
+    <value>列表</value>
+  </data>
+  <data name="Portfolio_Page_MapView" xml:space="preserve">
+    <value>地图</value>
+  </data>
+  <data name="Portfolio_Page_MergeLog" xml:space="preserve">
+    <value>文档日志</value>
+  </data>
+  <data name="Portfolio_Page_MergeTemplates" xml:space="preserve">
+    <value>PMWeb Word</value>
+  </data>
+  <data name="Portfolio_Page_PayTypes" xml:space="preserve">
+    <value>支付类型</value>
+  </data>
+  <data name="Portfolio_Page_Periods" xml:space="preserve">
+    <value>周期</value>
+  </data>
+  <data name="Portfolio_Page_PMWebReport" xml:space="preserve">
+    <value>PMWeb报告</value>
+  </data>
+  <data name="Portfolio_Page_PortfolioPlanning" xml:space="preserve">
+    <value>组合规划工作表</value>
+  </data>
+  <data name="Portfolio_Page_PortfolioView" xml:space="preserve">
+    <value>组合视图</value>
+  </data>
+  <data name="Portfolio_Page_Programs" xml:space="preserve">
+    <value>项目群</value>
+  </data>
+  <data name="Portfolio_Page_Projects" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="Portfolio_Page_Resources" xml:space="preserve">
+    <value>资源</value>
+  </data>
+  <data name="Portfolio_Page_Scheduler" xml:space="preserve">
+    <value>PMWeb日历</value>
+  </data>
+  <data name="Portfolio_Page_Scoring" xml:space="preserve">
+    <value>评分</value>
+  </data>
+  <data name="Portfolio_Page_Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="Portfolio_Page_Security" xml:space="preserve">
+    <value>安全</value>
+  </data>
+  <data name="Portfolio_Page_Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Portfolio_Page_Specifications" xml:space="preserve">
+    <value>技术规格</value>
+  </data>
+  <data name="Portfolio_Page_UserDefinedFields" xml:space="preserve">
+    <value>用户定义字段</value>
+  </data>
+  <data name="Portfolio_Page_WBS" xml:space="preserve">
+    <value>WBS</value>
+  </data>
+  <data name="ProjectManagement_Module" xml:space="preserve">
+    <value>工程文件</value>
+  </data>
+  <data name="ProjectManagement_Page_ActionItems" xml:space="preserve">
+    <value>行动事项</value>
+  </data>
+  <data name="ProjectManagement_Page_Correspondence" xml:space="preserve">
+    <value>往来文件</value>
+  </data>
+  <data name="ProjectManagement_Page_DailyReports" xml:space="preserve">
+    <value>日报</value>
+  </data>
+  <data name="ProjectManagement_Page_DocumentSubmittals" xml:space="preserve">
+    <value>在线送审件</value>
+  </data>
+  <data name="ProjectManagement_Page_DrawingLists" xml:space="preserve">
+    <value>图纸列表</value>
+  </data>
+  <data name="ProjectManagement_Page_DrawingSets" xml:space="preserve">
+    <value>图集</value>
+  </data>
+  <data name="ProjectManagement_Page_MeetingMinutes" xml:space="preserve">
+    <value>会议纪要</value>
+  </data>
+  <data name="ProjectManagement_Page_PunchLists" xml:space="preserve">
+    <value>遗留事项</value>
+  </data>
+  <data name="ProjectManagement_Page_RFIs" xml:space="preserve">
+    <value>联系单</value>
+  </data>
+  <data name="ProjectManagement_Page_SafetyForms" xml:space="preserve">
+    <value>安全表单</value>
+  </data>
+  <data name="ProjectManagement_Page_Submittals" xml:space="preserve">
+    <value>送审包</value>
+  </data>
+  <data name="ProjectManagement_Page_SubmittelItems" xml:space="preserve">
+    <value>送审条目</value>
+  </data>
+  <data name="ProjectManagement_Page_Transmittals" xml:space="preserve">
+    <value>送交记录</value>
+  </data>
+  <data name="Scheduling_Folder_LinkSetup" xml:space="preserve">
+    <value>链接设置</value>
+  </data>
+  <data name="Scheduling_Module" xml:space="preserve">
+    <value>进度计划</value>
+  </data>
+  <data name="Scheduling_Page_CalendarDays" xml:space="preserve">
+    <value>日历</value>
+  </data>
+  <data name="Scheduling_Page_linkSetup" xml:space="preserve">
+    <value>链接设置</value>
+  </data>
+  <data name="Scheduling_Page_PPM" xml:space="preserve">
+    <value>PPM</value>
+  </data>
+  <data name="Scheduling_Page_ProjectCodes" xml:space="preserve">
+    <value>项目代码</value>
+  </data>
+  <data name="Scheduling_Page_ResoucesAvailability" xml:space="preserve">
+    <value>资源可用性</value>
+  </data>
+  <data name="Scheduling_Page_Schedules" xml:space="preserve">
+    <value>进度计划</value>
+  </data>
+  <data name="ToolBox_Folder" xml:space="preserve">
+    <value>工具箱</value>
+  </data>
+  <data name="Toolbox_Folder_BIM" xml:space="preserve">
+    <value>BIM</value>
+  </data>
+  <data name="Toolbox_Folder_IntegrationManager" xml:space="preserve">
+    <value>集成管理器</value>
+  </data>
+  <data name="Toolbox_Folder_StageGate" xml:space="preserve">
+    <value>阶段门</value>
+  </data>
+  <data name="Toolbox_Folder_VendorApprover" xml:space="preserve">
+    <value>供应商批准者</value>
+  </data>
+  <data name="Toolbox_Module" xml:space="preserve">
+    <value>工具箱</value>
+  </data>
+  <data name="Toolbox_Page_BIMCOBieManager" xml:space="preserve">
+    <value>COBie 管理器</value>
+  </data>
+  <data name="Toolbox_Page_BIMModelManager" xml:space="preserve">
+    <value>模块管理器</value>
+  </data>
+  <data name="Toolbox_Page_BIMViewer" xml:space="preserve">
+    <value>BIM 查看器</value>
+  </data>
+  <data name="Toolbox_Page_Designer" xml:space="preserve">
+    <value>设计师</value>
+  </data>
+  <data name="Toolbox_Page_FileManager" xml:space="preserve">
+    <value>文件管理器</value>
+  </data>
+  <data name="Toolbox_Page_FormBuilder" xml:space="preserve">
+    <value>表单生成器</value>
+  </data>
+  <data name="Toolbox_Page_IntegrationManager" xml:space="preserve">
+    <value>集成管理器</value>
+  </data>
+  <data name="Toolbox_Page_LDAPtIntegration" xml:space="preserve">
+    <value>LDAP集成</value>
+  </data>
+  <data name="Toolbox_Page_Redlining" xml:space="preserve">
+    <value>PMWeb浏览器</value>
+  </data>
+  <data name="Toolbox_Page_RiskAnalysis" xml:space="preserve">
+    <value>风险分析</value>
+  </data>
+  <data name="Toolbox_Page_StageGate" xml:space="preserve">
+    <value>阶段门</value>
+  </data>
+  <data name="Toolbox_Page_StageGateSetup" xml:space="preserve">
+    <value>阶段门设置</value>
+  </data>
+  <data name="Toolbox_Page_Timesheets" xml:space="preserve">
+    <value>工时单</value>
+  </data>
+  <data name="Toolbox_Page_VendorApprovals" xml:space="preserve">
+    <value>供应商批准</value>
+  </data>
+  <data name="Toolbox_SharePointIntegration" xml:space="preserve">
+    <value>SharePoint集成</value>
+  </data>
+  <data name="Workflow_Folder_Forms" xml:space="preserve">
+    <value>表单</value>
+  </data>
+  <data name="Workflow_Module" xml:space="preserve">
+    <value>工作流程</value>
+  </data>
+  <data name="Workflow_Page_Email_Template" xml:space="preserve">
+    <value>电子邮件模板</value>
+  </data>
+  <data name="Workflow_Page_Inbox" xml:space="preserve">
+    <value>收件箱</value>
+  </data>
+  <data name="Workflow_Page_Setup" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Workflow_Page_Workflow" xml:space="preserve">
+    <value>工作流程</value>
+  </data>
+</root>

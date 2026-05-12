@@ -1,0 +1,2040 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="GridColumn_AccountNumber" xml:space="preserve">
+    <value>Account Number</value>
+  </data>
+  <data name="GridColumn_Address1" xml:space="preserve">
+    <value>Address 1</value>
+  </data>
+  <data name="GridColumn_Address2" xml:space="preserve">
+    <value>Address 2</value>
+  </data>
+  <data name="GridColumn_Architect" xml:space="preserve">
+    <value>Architect</value>
+  </data>
+  <data name="GridColumn_AssignedTo" xml:space="preserve">
+    <value>Assigned To</value>
+  </data>
+  <data name="GridColumn_BidCategory" xml:space="preserve">
+    <value>Bid Category</value>
+  </data>
+  <data name="GridColumn_BidCategoryName" xml:space="preserve">
+    <value>Bid Category</value>
+  </data>
+  <data name="GridColumn_BidderComments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="GridColumn_BidExpires" xml:space="preserve">
+    <value>Bid Expires</value>
+  </data>
+  <data name="GridColumn_BidsDueDate" xml:space="preserve">
+    <value>Bids Due</value>
+  </data>
+  <data name="GridColumn_BidsDueTime" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="GridColumn_Billing" xml:space="preserve">
+    <value>Billing</value>
+  </data>
+  <data name="GridColumn_BillTo" xml:space="preserve">
+    <value>Bill To</value>
+  </data>
+  <data name="GridColumn_Capacity" xml:space="preserve">
+    <value>Capacity</value>
+  </data>
+  <data name="GridColumn_Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="GridColumn_Cause" xml:space="preserve">
+    <value>Cause</value>
+  </data>
+  <data name="GridColumn_City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="GridColumn_Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="GridColumn_Commitment" xml:space="preserve">
+    <value>Commitment</value>
+  </data>
+  <data name="GridColumn_CommitmentType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="GridColumn_Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="GridColumn_CompanyName" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="GridColumn_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="GridColumn_ContactEmail" xml:space="preserve">
+    <value>Contact Email</value>
+  </data>
+  <data name="GridColumn_ContactExt" xml:space="preserve">
+    <value>Ext</value>
+  </data>
+  <data name="GridColumn_ContactFromName" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="GridColumn_ContactName" xml:space="preserve">
+    <value>Contact Name</value>
+  </data>
+  <data name="GridColumn_ContactPhone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="GridColumn_ContactToName" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="GridColumn_Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="GridColumn_CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+  </data>
+  <data name="GridColumn_CSICode" xml:space="preserve">
+    <value>CSI Code</value>
+  </data>
+  <data name="GridColumn_Date" xml:space="preserve">
+    <value>Invoice Date</value>
+  </data>
+  <data name="GridColumn_DayPhone" xml:space="preserve">
+    <value>Day Phone</value>
+  </data>
+  <data name="GridColumn_Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="GridColumn_DefaultUser" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="GridColumn_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="GridColumn_DocumentNumber" xml:space="preserve">
+    <value>Record #</value>
+  </data>
+  <data name="GridColumn_DueDate" xml:space="preserve">
+    <value>Due Date</value>
+  </data>
+  <data name="GridColumn_SignedDate" xml:space="preserve">
+    <value>Signed Date</value>
+  </data>
+  <data name="GridColumn_EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="GridColumn_Estimate" xml:space="preserve">
+    <value>Estimate</value>
+  </data>
+  <data name="GridColumn_EstimateUnit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="GridColumn_Executive" xml:space="preserve">
+    <value>Executive</value>
+  </data>
+  <data name="GridColumn_Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="GridColumn_FedTax" xml:space="preserve">
+    <value>Fed Tax</value>
+  </data>
+  <data name="GridColumn_FinishDate" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="GridColumn_FromCompany" xml:space="preserve">
+    <value>From Company</value>
+  </data>
+  <data name="GridColumn_FromContact" xml:space="preserve">
+    <value>From Contact</value>
+  </data>
+  <data name="GridColumn_FromDate" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="GridColumn_FundingCode" xml:space="preserve">
+    <value>Funding Code</value>
+  </data>
+  <data name="GridColumn_FundingSource" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="GridColumn_GC" xml:space="preserve">
+    <value>GC</value>
+  </data>
+  <data name="GridColumn_Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="GridColumn_IncludePendingBudget" xml:space="preserve">
+    <value>Include Pending Budget</value>
+  </data>
+  <data name="GridColumn_IncludePendingCost" xml:space="preserve">
+    <value>Include Pending Cost</value>
+  </data>
+  <data name="GridColumn_InvoiceDate" xml:space="preserve">
+    <value>Invoice Date</value>
+  </data>
+  <data name="GridColumn_IsUseUnit" xml:space="preserve">
+    <value>Use Unit</value>
+  </data>
+  <data name="GridColumn_IsVoided" xml:space="preserve">
+    <value>Void</value>
+  </data>
+  <data name="GridColumn_LinkedToName" xml:space="preserve">
+    <value>Linked To</value>
+  </data>
+  <data name="GridColumn_Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="GridColumn_LocationType" xml:space="preserve">
+    <value>Location Type</value>
+  </data>
+  <data name="GridColumn_Manager" xml:space="preserve">
+    <value>Manager</value>
+  </data>
+  <data name="GridColumn_MeetingDate" xml:space="preserve">
+    <value>Meeting Date</value>
+  </data>
+  <data name="GridColumn_MeetingEndTime" xml:space="preserve">
+    <value>Meeting End Time</value>
+  </data>
+  <data name="GridColumn_MeetingStartTime" xml:space="preserve">
+    <value>Meeting Start Time</value>
+  </data>
+  <data name="GridColumn_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="GridColumn_NextMeetingDate" xml:space="preserve">
+    <value>Next Meeting Date</value>
+  </data>
+  <data name="GridColumn_NextMeetingLocation" xml:space="preserve">
+    <value>Next Meeting Location</value>
+  </data>
+  <data name="GridColumn_NextMeetingStartTime" xml:space="preserve">
+    <value>Next Meeting Start Time</value>
+  </data>
+  <data name="GridColumn_NightPhone" xml:space="preserve">
+    <value>Night Phone</value>
+  </data>
+  <data name="GridColumn_Number" xml:space="preserve">
+    <value>Timesheet #</value>
+  </data>
+  <data name="GridColumn_pctComplete" xml:space="preserve">
+    <value>% Complete</value>
+  </data>
+  <data name="GridColumn_Period" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="GridColumn_Phase" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="GridColumn_Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="GridColumn_PostToNonCommitmentCost" xml:space="preserve">
+    <value>Post To Non-Commitment Cost</value>
+  </data>
+  <data name="GridColumn_Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="GridColumn_Procurement" xml:space="preserve">
+    <value>Procurement</value>
+  </data>
+  <data name="GridColumn_Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="GridColumn_ProjectName" xml:space="preserve">
+    <value>Project Name</value>
+  </data>
+  <data name="GridColumn_Property" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="GridColumn_PropertyName" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="GridColumn_RequestedBy" xml:space="preserve">
+    <value>Requested By</value>
+  </data>
+  <data name="GridColumn_Resource" xml:space="preserve">
+    <value>Resource</value>
+  </data>
+  <data name="GridColumn_RetentionOnServices" xml:space="preserve">
+    <value>Retention On Services</value>
+  </data>
+  <data name="GridColumn_RetentionOnStoredMaterials" xml:space="preserve">
+    <value>Retention On Stored Materials</value>
+  </data>
+  <data name="GridColumn_RevisionDate" xml:space="preserve">
+    <value>Revision Date</value>
+  </data>
+  <data name="GridColumn_RevisionNumber" xml:space="preserve">
+    <value>Revision #</value>
+  </data>
+  <data name="GridColumn_Scheduled" xml:space="preserve">
+    <value>Scheduled</value>
+  </data>
+  <data name="GridColumn_ShippingCompanyName" xml:space="preserve">
+    <value>Via</value>
+  </data>
+  <data name="GridColumn_ShortName" xml:space="preserve">
+    <value>Abbreviation</value>
+  </data>
+  <data name="GridColumn_SourceRecord" xml:space="preserve">
+    <value>Source Record</value>
+  </data>
+  <data name="GridColumn_StartDate" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="GridColumn_State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="GridColumn_StateTax" xml:space="preserve">
+    <value>State Tax</value>
+  </data>
+  <data name="GridColumn_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="GridColumn_SubmittedBy" xml:space="preserve">
+    <value>Submitted By</value>
+  </data>
+  <data name="GridColumn_Superintendents" xml:space="preserve">
+    <value>Superintendent</value>
+  </data>
+  <data name="GridColumn_ToCompany" xml:space="preserve">
+    <value>To Company</value>
+  </data>
+  <data name="GridColumn_ToContact" xml:space="preserve">
+    <value>To Contact</value>
+  </data>
+  <data name="GridColumn_ToDate" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="GridColumn_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="GridColumn_UnitsName" xml:space="preserve">
+    <value>Unit(s)</value>
+  </data>
+  <data name="GridColumn_UOM" xml:space="preserve">
+    <value>UOM</value>
+  </data>
+  <data name="GridColumn_UserName" xml:space="preserve">
+    <value>Submitted by</value>
+  </data>
+  <data name="GridColumn_value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="GridColumn_Zip" xml:space="preserve">
+    <value>Zip</value>
+  </data>
+  <data name="lblPrograms.Text" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="lblProjects.Text" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="GridColumn_AllowOverBilling" xml:space="preserve">
+    <value>Allow Overbilling</value>
+  </data>
+  <data name="GridColumn_DefaultMarkup" xml:space="preserve">
+    <value>Default Markup</value>
+  </data>
+  <data name="GridColumn_MaxBilling" xml:space="preserve">
+    <value>Overbilling</value>
+  </data>
+  <data name="GridColumn_OriginalValue" xml:space="preserve">
+    <value>Original Value</value>
+  </data>
+  <data name="lblAddRecords.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="lblDeleteRecords.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="GridColumn_IsProjectSchedule" xml:space="preserve">
+    <value>Project Schedule</value>
+  </data>
+  <data name="Project_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Project_Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="GridColumn_WorkOrderProgress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="GridColumn_Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="lblAllProjects.Text" xml:space="preserve">
+    <value>All Projects</value>
+  </data>
+  <data name="GridColumn_ReportedBy" xml:space="preserve">
+    <value>Reported By</value>
+  </data>
+  <data name="GridColumn_BudgetTotal" xml:space="preserve">
+    <value>Budget Total</value>
+  </data>
+  <data name="GridColumn_CreatedByUser" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="GridColumn_FormDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="GridColumn_Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="GridColumn_ProjectStatus" xml:space="preserve">
+    <value>Project Status</value>
+  </data>
+  <data name="GridColumn_PlanTotal" xml:space="preserve">
+    <value>Plan Total</value>
+  </data>
+  <data name="GridColumn_PortfolioName" xml:space="preserve">
+    <value>Portfolio Name</value>
+  </data>
+  <data name="GridColumn_SelectedToFund" xml:space="preserve">
+    <value>Selected To Fund</value>
+  </data>
+  <data name="GridColumn_PlanYear" xml:space="preserve">
+    <value>Plan Year</value>
+  </data>
+  <data name="GridColumn_Agent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="GridColumn_LandLord" xml:space="preserve">
+    <value>LandLord</value>
+  </data>
+  <data name="GridColumn_LeaseFinishDate" xml:space="preserve">
+    <value>Lease Finish</value>
+  </data>
+  <data name="GridColumn_LeaseStartDate" xml:space="preserve">
+    <value>Lease Start</value>
+  </data>
+  <data name="GridColumn_LeaseType" xml:space="preserve">
+    <value>Lease Type</value>
+  </data>
+  <data name="GridColumn_LocationName" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="GridColumn_MonthlyRentTerm" xml:space="preserve">
+    <value>Rent Period</value>
+  </data>
+  <data name="GridColumn_RenewalTerm" xml:space="preserve">
+    <value>Renewal Term</value>
+  </data>
+  <data name="GridColumn_Tenant" xml:space="preserve">
+    <value>Tenant</value>
+  </data>
+  <data name="GridColumn_BudgetYear" xml:space="preserve">
+    <value>Funding Year</value>
+  </data>
+  <data name="GridColumn_Finish" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="GridColumn_Initiative" xml:space="preserve">
+    <value>Initiative</value>
+  </data>
+  <data name="GridColumn_Sponsor" xml:space="preserve">
+    <value>Sponsor</value>
+  </data>
+  <data name="GridColumn_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="GridColumn_Template" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="GridColumn_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="GridColumn_WeightedScore" xml:space="preserve">
+    <value>Score</value>
+  </data>
+  <data name="GridColumn_PhaseName" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="GridColumn_ReportDate" xml:space="preserve">
+    <value>Report Date</value>
+  </data>
+  <data name="GridColumn_Revision" xml:space="preserve">
+    <value>Revision #</value>
+  </data>
+  <data name="GridColumn_Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="GridColumn_Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="GridColumn_CheckListType" xml:space="preserve">
+    <value>Checklist Type</value>
+  </data>
+  <data name="GridColumn_Invoiced" xml:space="preserve">
+    <value>Billed</value>
+  </data>
+  <data name="GridColumn_OriginalCommitment" xml:space="preserve">
+    <value>Original Value</value>
+  </data>
+  <data name="GridColumn_TotalChanges" xml:space="preserve">
+    <value>Change Orders</value>
+  </data>
+  <data name="GridColumn_TotalInvoiced" xml:space="preserve">
+    <value>Total Invoiced</value>
+  </data>
+  <data name="GridColumn_TotalRetained" xml:space="preserve">
+    <value>Total Retained</value>
+  </data>
+  <data name="GridColumn_TotalThisInvoice" xml:space="preserve">
+    <value>Total This Invoice</value>
+  </data>
+  <data name="GridColumn_EstimatedCost" xml:space="preserve">
+    <value>Estimated Cost</value>
+  </data>
+  <data name="GridColumn_EstimatedDuration" xml:space="preserve">
+    <value>Estimated Duration</value>
+  </data>
+  <data name="GridColumn_ProgramDirector" xml:space="preserve">
+    <value>Program Director</value>
+  </data>
+  <data name="GridColumn_ProgramManager" xml:space="preserve">
+    <value>Program Manager</value>
+  </data>
+  <data name="GridColumn_ProgramStatus" xml:space="preserve">
+    <value>Program Status</value>
+  </data>
+  <data name="GridColumn_ProgramType" xml:space="preserve">
+    <value>Program Type</value>
+  </data>
+  <data name="GridColumn_ApprovedChanges" xml:space="preserve">
+    <value>Approved Changes</value>
+  </data>
+  <data name="GridColumn_MasterCommitmentType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="GridColumn_ProgramName" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="GridColumn_Revised" xml:space="preserve">
+    <value>Revised</value>
+  </data>
+  <data name="GridColumn_Taxable" xml:space="preserve">
+    <value>Taxable</value>
+  </data>
+  <data name="GridColumn_Mfr" xml:space="preserve">
+    <value>Manufacturer</value>
+  </data>
+  <data name="GridColumn_MfrNumber" xml:space="preserve">
+    <value>Mfr #</value>
+  </data>
+  <data name="GridColumn_Set" xml:space="preserve">
+    <value>Submittal Set</value>
+  </data>
+  <data name="GridColumn_SubmittedDate" xml:space="preserve">
+    <value>Submitted</value>
+  </data>
+  <data name="GridColumn_Supplier" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="GridColumn_From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="GridColumn_To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="GridColumn_Contract" xml:space="preserve">
+    <value>Contract</value>
+  </data>
+  <data name="GridColumn_InvoiceDue" xml:space="preserve">
+    <value>Invoice Due</value>
+  </data>
+  <data name="GridColumn_CreatedBy" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="GridColumn_IsDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="GridColumn_LastUpdatedBy" xml:space="preserve">
+    <value>Last Updated By</value>
+  </data>
+  <data name="GridColumn_RecordType" xml:space="preserve">
+    <value>Record Type</value>
+  </data>
+  <data name="GridColumn_UpdatedDate" xml:space="preserve">
+    <value>Last Updated Date</value>
+  </data>
+  <data name="GridColumn_CreatedDate" xml:space="preserve">
+    <value>Created Date</value>
+  </data>
+  <data name="GridColumn_AdjustmentGroupType" xml:space="preserve">
+    <value>Group Type</value>
+  </data>
+  <data name="GridColumn_IssueDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="GridColumn_IsOccupant" xml:space="preserve">
+    <value>Occupant</value>
+  </data>
+  <data name="GridColumn_Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="GridColumn_EquipmentName" xml:space="preserve">
+    <value>Equipment</value>
+  </data>
+  <data name="GridColumn_MoveType" xml:space="preserve">
+    <value>Move Type</value>
+  </data>
+  <data name="GridColumn_Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="GridColumn_ScheduledDate" xml:space="preserve">
+    <value>Scheduled Date</value>
+  </data>
+  <data name="GridColumn_SpaceName" xml:space="preserve">
+    <value>Space</value>
+  </data>
+  <data name="GridColumn_Reference" xml:space="preserve">
+    <value>Reference</value>
+  </data>
+  <data name="GridColumn_TotalChange" xml:space="preserve">
+    <value>CO Amount</value>
+  </data>
+  <data name="GridColumn_Trade" xml:space="preserve">
+    <value>Trade</value>
+  </data>
+  <data name="GridColumn_LeadTime" xml:space="preserve">
+    <value>Lead Time</value>
+  </data>
+  <data name="GridColumn_Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="GridColumn_Task" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="GridColumn_CODate" xml:space="preserve">
+    <value>CO Date</value>
+  </data>
+  <data name="GridColumn_ProjectNumber" xml:space="preserve">
+    <value>Project #</value>
+  </data>
+  <data name="MenuItem_DeleteCustomLayout" xml:space="preserve">
+    <value>Delete Custom Layout</value>
+  </data>
+  <data name="MenuItem_SaveCustomLayout" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MenuItem_SaveAsCustomLayout" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="MenuItem_CustomLayouts" xml:space="preserve">
+    <value>My Custom Layout</value>
+  </data>
+  <data name="MenuItem_EditLayout" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MenuItem_DeleteLayout" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MenuItem_Layouts" xml:space="preserve">
+    <value>Layouts</value>
+  </data>
+  <data name="MenuItem_SystemDefault" xml:space="preserve">
+    <value>System default layout</value>
+  </data>
+  <data name="WarningMsg_ConfirmDeleteLayout" xml:space="preserve">
+    <value>Are you sure you wish to delete the selected layout? This process cannot be undone.</value>
+  </data>
+  <data name="GridColumn_DoneDate" xml:space="preserve">
+    <value>Done </value>
+  </data>
+  <data name="GridColumn_GateKeeper" xml:space="preserve">
+    <value>Gate Keeper</value>
+  </data>
+  <data name="GridColumn_Stage" xml:space="preserve">
+    <value>Stage</value>
+  </data>
+  <data name="GridColumn_Abbreviation" xml:space="preserve">
+    <value>Abbreviation</value>
+  </data>
+  <data name="GridColumn_BiddingCompany" xml:space="preserve">
+    <value>Bidding Company</value>
+  </data>
+  <data name="GridColumn_BiddingContact" xml:space="preserve">
+    <value>Bidding Contact</value>
+  </data>
+  <data name="GridColumn_CommitmentCode" xml:space="preserve">
+    <value>Commitment #</value>
+  </data>
+  <data name="GridColumn_Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="GridColumn_Plan" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="GridColumn_ProcurementNumber" xml:space="preserve">
+    <value>Procurement #</value>
+  </data>
+  <data name="GridColumn_ProjectManager" xml:space="preserve">
+    <value>Project Manager</value>
+  </data>
+  <data name="GridColumn_RFIDate" xml:space="preserve">
+    <value>RFI Date</value>
+  </data>
+  <data name="GridColumn_Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="GridColumn_Conditions" xml:space="preserve">
+    <value>Weather</value>
+  </data>
+  <data name="GridColumn_CSIDivision" xml:space="preserve">
+    <value>CSI Division</value>
+  </data>
+  <data name="GridColumn_MeetingNumber" xml:space="preserve">
+    <value>Meeting #</value>
+  </data>
+  <data name="GridColumn_PrecipAmount" xml:space="preserve">
+    <value>Precip. Amount</value>
+  </data>
+  <data name="GridColumn_Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="GridColumn_ShippedDate" xml:space="preserve">
+    <value>Shipped Date</value>
+  </data>
+  <data name="GridColumn_ShippedTime" xml:space="preserve">
+    <value>Shipped Time</value>
+  </data>
+  <data name="GridColumn_Temperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="GridColumn_TemperatureUnit" xml:space="preserve">
+    <value>Temperature Unit</value>
+  </data>
+  <data name="GridColumn_TrackingNumber" xml:space="preserve">
+    <value>Tracking #</value>
+  </data>
+  <data name="GridColumn_CommitmentId" xml:space="preserve">
+    <value>Commitment</value>
+  </data>
+  <data name="GridColumn_CompanyId" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="GridColumn_CSICCode" xml:space="preserve">
+    <value>CSI Code</value>
+  </data>
+  <data name="GridColumn_IncludePendingActualCost" xml:space="preserve">
+    <value>Include Pending Actual Cost</value>
+  </data>
+  <data name="GridColumn_IsPostToCostLedger" xml:space="preserve">
+    <value>Is Post To Cost Ledger</value>
+  </data>
+  <data name="GridColumn_NetAmount" xml:space="preserve">
+    <value>Net Amount</value>
+  </data>
+  <data name="GridColumn_PeriodId" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="GridColumn_PostAs" xml:space="preserve">
+    <value>Post As</value>
+  </data>
+  <data name="GridColumn_PrimeContractId" xml:space="preserve">
+    <value>Contract</value>
+  </data>
+  <data name="GridColumn_ProductionNumber" xml:space="preserve">
+    <value>Production #</value>
+  </data>
+  <data name="GridColumn_AmountOriginalCommitment" xml:space="preserve">
+    <value>Original Commitment</value>
+  </data>
+  <data name="GridColumn_AmountPriorApprovedChanges" xml:space="preserve">
+    <value>Prior Approved Changes</value>
+  </data>
+  <data name="GridColumn_Balance" xml:space="preserve">
+    <value>Balance Due</value>
+  </data>
+  <data name="GridColumn_ChangeOrderDate" xml:space="preserve">
+    <value>Change Order Date</value>
+  </data>
+  <data name="GridColumn_ChangeRequestNumber" xml:space="preserve">
+    <value>Change Request Number</value>
+  </data>
+  <data name="GridColumn_ContractOfThisChange" xml:space="preserve">
+    <value>Contract Of This Change</value>
+  </data>
+  <data name="GridColumn_ContractToThisChange" xml:space="preserve">
+    <value>Contract To This Change</value>
+  </data>
+  <data name="GridColumn_ExtCost" xml:space="preserve">
+    <value>Ext. Cost</value>
+  </data>
+  <data name="GridColumn_Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="GridColumn_MasterBalance" xml:space="preserve">
+    <value>Master Balance</value>
+  </data>
+  <data name="GridColumn_MasterValue" xml:space="preserve">
+    <value>Master Value</value>
+  </data>
+  <data name="GridColumn_OriginalContractAmount" xml:space="preserve">
+    <value>Original Contract Amount</value>
+  </data>
+  <data name="GridColumn_OwnerBudget" xml:space="preserve">
+    <value>Owner Budget</value>
+  </data>
+  <data name="GridColumn_PendingChanges" xml:space="preserve">
+    <value>Pending Changes</value>
+  </data>
+  <data name="GridColumn_PriorApprovedChanges" xml:space="preserve">
+    <value>Prior Approved Changes</value>
+  </data>
+  <data name="GridColumn_PriorRevisedContract" xml:space="preserve">
+    <value>Prior Revised Contract</value>
+  </data>
+  <data name="GridColumn_ProjectBudget" xml:space="preserve">
+    <value>Project Budget</value>
+  </data>
+  <data name="GridColumn_ProjectedValue" xml:space="preserve">
+    <value>Projected Value</value>
+  </data>
+  <data name="GridColumn_Retained" xml:space="preserve">
+    <value>Retained</value>
+  </data>
+  <data name="GridColumn_RevisedValue" xml:space="preserve">
+    <value>Revised Value Costs</value>
+  </data>
+  <data name="GridColumn_ScheduledDeliveryDate" xml:space="preserve">
+    <value>Scheduled Delivery Date</value>
+  </data>
+  <data name="GridColumn_ShipTo" xml:space="preserve">
+    <value>Ship To</value>
+  </data>
+  <data name="GridColumn_ShipVia" xml:space="preserve">
+    <value>Ship Via</value>
+  </data>
+  <data name="GridColumn_TotalOfThisChange" xml:space="preserve">
+    <value>Total Of This Change</value>
+  </data>
+  <data name="GridColumn_ApprovedChangeOrder" xml:space="preserve">
+    <value>Approved Change Order</value>
+  </data>
+  <data name="GridColumn_BalanceToInvoice" xml:space="preserve">
+    <value>Balance To Invoice</value>
+  </data>
+  <data name="GridColumn_BillToAdress" xml:space="preserve">
+    <value>Bill To Address</value>
+  </data>
+  <data name="GridColumn_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="GridColumn_CurrentPaymentDue" xml:space="preserve">
+    <value>Current Payment Due</value>
+  </data>
+  <data name="GridColumn_Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="GridColumn_EarnedLessRetainage" xml:space="preserve">
+    <value>Earned Less Retainage</value>
+  </data>
+  <data name="GridColumn_InvoiceNumber" xml:space="preserve">
+    <value>Invoice #</value>
+  </data>
+  <data name="GridColumn_InvoiceType" xml:space="preserve">
+    <value>Invoice Type</value>
+  </data>
+  <data name="GridColumn_IsDone" xml:space="preserve">
+    <value>Is Done</value>
+  </data>
+  <data name="GridColumn_LessPriorInvoices" xml:space="preserve">
+    <value>Less Prior Invoices</value>
+  </data>
+  <data name="GridColumn_MaintenanceContractStatus" xml:space="preserve">
+    <value>Maintenance Contract Status</value>
+  </data>
+  <data name="GridColumn_OriginalContract" xml:space="preserve">
+    <value>Original Contract</value>
+  </data>
+  <data name="GridColumn_RevisedContract" xml:space="preserve">
+    <value>Revised Contract</value>
+  </data>
+  <data name="GridColumn_Schedule" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="GridColumn_StatusDate" xml:space="preserve">
+    <value>Status Date</value>
+  </data>
+  <data name="GridColumn_TargetBudget" xml:space="preserve">
+    <value>Target Budget</value>
+  </data>
+  <data name="GridColumn_Tenants" xml:space="preserve">
+    <value>Tenants</value>
+  </data>
+  <data name="GridColumn_WorkRequestId" xml:space="preserve">
+    <value>Work Request Id</value>
+  </data>
+  <data name="GridColumn_OverBilling" xml:space="preserve">
+    <value>Allow Overbilling</value>
+  </data>
+  <data name="GridColumn_SubmittalSet" xml:space="preserve">
+    <value>Set #</value>
+  </data>
+  <data name="GridColumn_VendorApprovalsCompanyId" xml:space="preserve">
+    <value>Company Id</value>
+  </data>
+  <data name="GridColumn_VendorApprovalsCompanyName" xml:space="preserve">
+    <value>Company Name</value>
+  </data>
+  <data name="GridColumn_ApplicationYear" xml:space="preserve">
+    <value>Application Year</value>
+  </data>
+  <data name="GridColumn_Submitted" xml:space="preserve">
+    <value>Submitted</value>
+  </data>
+  <data name="GridColumn_GroupDescription" xml:space="preserve">
+    <value>Group Description</value>
+  </data>
+  <data name="GridColumn_IncludeAttach" xml:space="preserve">
+    <value>Include Attach</value>
+  </data>
+  <data name="GridColumn_IncludeNotes" xml:space="preserve">
+    <value>Include Notes</value>
+  </data>
+  <data name="GridColumn_ProjectLocation" xml:space="preserve">
+    <value>Project(s)</value>
+  </data>
+  <data name="GridColumn_ProgramWBS" xml:space="preserve">
+    <value>Program WBS</value>
+  </data>
+  <data name="GridColumn_WBS" xml:space="preserve">
+    <value>WBS</value>
+  </data>
+  <data name="GridColumn_Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="GridColumn_DocumentTime" xml:space="preserve">
+    <value>Document Time</value>
+  </data>
+  <data name="GridColumn_IncidentDate" xml:space="preserve">
+    <value>Incident Date</value>
+  </data>
+  <data name="GridColumn_IncidentDescription" xml:space="preserve">
+    <value>Incident Description</value>
+  </data>
+  <data name="GridColumn_IncidentTime" xml:space="preserve">
+    <value>Incident Time</value>
+  </data>
+  <data name="GridColumn_Types" xml:space="preserve">
+    <value>Types</value>
+  </data>
+  <data name="GridColumn_DocumentDate" xml:space="preserve">
+    <value>Report Date</value>
+  </data>
+  <data name="GridColumn_PaidInFull" xml:space="preserve">
+    <value>Paid In Full</value>
+  </data>
+  <data name="GridColumn_OpenBalance" xml:space="preserve">
+    <value>Open Balance</value>
+  </data>
+  <data name="GridColumn_PaymentsApplied" xml:space="preserve">
+    <value>Payments Applied</value>
+  </data>
+  <data name="GridColumn_UnappliedPaymentsAvailable" xml:space="preserve">
+    <value>Unapplied Payments Available</value>
+  </data>
+  <data name="GridColumn_InvoiceAmount" xml:space="preserve">
+    <value>Invoice Amount</value>
+  </data>
+  <data name="GridColumn_AppliedInFull" xml:space="preserve">
+    <value>Applied In Full</value>
+  </data>
+  <data name="GridColumn_CostCode" xml:space="preserve">
+    <value>Cost Code</value>
+  </data>
+  <data name="GridColumn_LinkedInvoice" xml:space="preserve">
+    <value>Linked Invoice</value>
+  </data>
+  <data name="GridColumn_PaymentAmount" xml:space="preserve">
+    <value>Payment Amount</value>
+  </data>
+  <data name="GridColumn_PaymentBatch" xml:space="preserve">
+    <value>Payment Batch</value>
+  </data>
+  <data name="GridColumn_PaymentDate" xml:space="preserve">
+    <value>Payment Date</value>
+  </data>
+  <data name="GridColumn_PaymentMethod" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
+  <data name="GridColumn_PaymentNumber" xml:space="preserve">
+    <value>Payment #</value>
+  </data>
+  <data name="GridColumn_Paid" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="GridColumn_Unbilled" xml:space="preserve">
+    <value>Unbilled</value>
+  </data>
+  <data name="GridColumn_PaymentMemoTotal" xml:space="preserve">
+    <value>Payment Memo Total</value>
+  </data>
+  <data name="GridColumn_PropertyLocations" xml:space="preserve">
+    <value>Location(s)</value>
+  </data>
+  <data name="GridColumn_BuildingName" xml:space="preserve">
+    <value>Building Name</value>
+  </data>
+  <data name="GridColumn_CurrentRentAreaMonth" xml:space="preserve">
+    <value>Current Rent/Area/Month</value>
+  </data>
+  <data name="GridColumn_CurrentRentAreaYear" xml:space="preserve">
+    <value>Current Rent/Area/Year</value>
+  </data>
+  <data name="GridColumn_CurrentRentMonth" xml:space="preserve">
+    <value>Current Rent/Month</value>
+  </data>
+  <data name="GridColumn_CurrentRentYear" xml:space="preserve">
+    <value>Current Rent/Year</value>
+  </data>
+  <data name="GridColumn_CurrentTenant" xml:space="preserve">
+    <value>Current Tenant</value>
+  </data>
+  <data name="GridColumn_FloorName" xml:space="preserve">
+    <value>Floor</value>
+  </data>
+  <data name="GridColumn_GrossArea" xml:space="preserve">
+    <value>GrossArea</value>
+  </data>
+  <data name="GridColumn_LinkedGross" xml:space="preserve">
+    <value>Linked Gross</value>
+  </data>
+  <data name="GridColumn_LinkedRentable" xml:space="preserve">
+    <value>Linked rentable</value>
+  </data>
+  <data name="GridColumn_LinkedUsable" xml:space="preserve">
+    <value>Linked Usable</value>
+  </data>
+  <data name="GridColumn_MarketRentAreaMonth" xml:space="preserve">
+    <value>Market Rent/Area/Month</value>
+  </data>
+  <data name="GridColumn_MarketRentAreaYear" xml:space="preserve">
+    <value>Market Rent/Area/Year</value>
+  </data>
+  <data name="GridColumn_MarketRentMonth" xml:space="preserve">
+    <value>Market Rent/Month</value>
+  </data>
+  <data name="GridColumn_MarketRentYear" xml:space="preserve">
+    <value>Market Rent/Year</value>
+  </data>
+  <data name="GridColumn_PropertyId" xml:space="preserve">
+    <value>Location ID</value>
+  </data>
+  <data name="GridColumn_Rentable" xml:space="preserve">
+    <value>Rentable</value>
+  </data>
+  <data name="GridColumn_SubType" xml:space="preserve">
+    <value>Sub Type</value>
+  </data>
+  <data name="GridColumn_SuiteType" xml:space="preserve">
+    <value>Suite Type</value>
+  </data>
+  <data name="GridColumn_Usable" xml:space="preserve">
+    <value>Usable</value>
+  </data>
+  <data name="GridColumn_CommonArea" xml:space="preserve">
+    <value>Common Area %</value>
+  </data>
+  <data name="GridColumn_LeaseDescription" xml:space="preserve">
+    <value>Lease Description</value>
+  </data>
+  <data name="GridColumn_MonthlyRent" xml:space="preserve">
+    <value>Rent/Month</value>
+  </data>
+  <data name="GridColumn_RentAreaMonth" xml:space="preserve">
+    <value>Rent Area Month</value>
+  </data>
+  <data name="GridColumn_RentAreaYear" xml:space="preserve">
+    <value>Rent Area Year</value>
+  </data>
+  <data name="GridColumn_YearlyRent" xml:space="preserve">
+    <value>Rent/Year</value>
+  </data>
+  <data name="GridColumn_ParentLease" xml:space="preserve">
+    <value>Parent Lease</value>
+  </data>
+  <data name="GridColumn_BatchDate" xml:space="preserve">
+    <value>Batch Date</value>
+  </data>
+  <data name="GridColumn_BatchDescription" xml:space="preserve">
+    <value>Batch Description</value>
+  </data>
+  <data name="GridColumn_OperatingProject" xml:space="preserve">
+    <value>Operating Project</value>
+  </data>
+  <data name="GridColumn_PostedDate" xml:space="preserve">
+    <value>Posted Date</value>
+  </data>
+  <data name="GridColumn_ProgramCategory" xml:space="preserve">
+    <value>Program Category</value>
+  </data>
+  <data name="GridColumn_ProgramRevision" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="GridColumn_ProgramTargetBudget" xml:space="preserve">
+    <value>Program Target Budget</value>
+  </data>
+  <data name="GridColumn_ProgramtargetRevenue" xml:space="preserve">
+    <value>Program Target Revenue</value>
+  </data>
+  <data name="GridColumn_RentalTerm" xml:space="preserve">
+    <value>Rental Term</value>
+  </data>
+  <data name="GridColumn_BatchCode" xml:space="preserve">
+    <value>Batch ID</value>
+  </data>
+  <data name="GridColumn_BillingTerms" xml:space="preserve">
+    <value>Billing Terms</value>
+  </data>
+  <data name="GridColumn_Lease" xml:space="preserve">
+    <value>Lease</value>
+  </data>
+  <data name="GridColumn_PostType" xml:space="preserve">
+    <value>Post As</value>
+  </data>
+  <data name="GridColumn_LocationProgramName" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="GridColumn_BimApplication" xml:space="preserve">
+    <value>BIM Application</value>
+  </data>
+  <data name="GridColumn_BimModel" xml:space="preserve">
+    <value>BIM Model</value>
+  </data>
+  <data name="GridColumn_BMMDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="GridColumn_BRevision" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="GridColumn_BuildingID" xml:space="preserve">
+    <value>Building ID</value>
+  </data>
+  <data name="GridColumn_FileName" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="GridColumn_LocationID" xml:space="preserve">
+    <value>Location ID</value>
+  </data>
+  <data name="GridColumn_Owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="GridColumn_ProjectID" xml:space="preserve">
+    <value>Project ID</value>
+  </data>
+  <data name="GridColumn_Precipitation" xml:space="preserve">
+    <value>Precipitation</value>
+  </data>
+  <data name="GridColumn_Building" xml:space="preserve">
+    <value>Building</value>
+  </data>
+  <data name="GridColumn_BuildingType" xml:space="preserve">
+    <value>Building Type</value>
+  </data>
+  <data name="GridColumn_LinkedGrossArea" xml:space="preserve">
+    <value>Linked Gross Area</value>
+  </data>
+  <data name="GridColumn_ActualGrossArea" xml:space="preserve">
+    <value>Actual Gross Area</value>
+  </data>
+  <data name="GridColumn_ActualRentable" xml:space="preserve">
+    <value>Actual Rentable</value>
+  </data>
+  <data name="GridColumn_ActualUsable" xml:space="preserve">
+    <value>Actual Usable</value>
+  </data>
+  <data name="GridColumn_PropertyUOM" xml:space="preserve">
+    <value>UOM</value>
+  </data>
+  <data name="GridColumn_FloorId" xml:space="preserve">
+    <value>Floor ID</value>
+  </data>
+  <data name="GridColumn_OwnerContact" xml:space="preserve">
+    <value>Owner Contact</value>
+  </data>
+  <data name="GridColumn_PersonnelAgent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="GridColumn_PersonnelAuthority" xml:space="preserve">
+    <value>Authority</value>
+  </data>
+  <data name="GridColumn_PersonnelClient" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="GridColumn_PersonnelMaintenance" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
+  <data name="GridColumn_PersonnelManager" xml:space="preserve">
+    <value>Manager</value>
+  </data>
+  <data name="GridColumn_PersonnelMunicipality" xml:space="preserve">
+    <value>Municipality</value>
+  </data>
+  <data name="GridColumn_PersonnelOwner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="GridColumn_PersonnelSecurity" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="GridColumn_PersonnelSuperintendent" xml:space="preserve">
+    <value>Superintendent</value>
+  </data>
+  <data name="GridColumn_PersonnelTenant" xml:space="preserve">
+    <value>Tenant</value>
+  </data>
+  <data name="GridColumn_PropertyManager" xml:space="preserve">
+    <value>Property Manager</value>
+  </data>
+  <data name="GridColumn_PropertyType" xml:space="preserve">
+    <value>Location Type</value>
+  </data>
+  <data name="GridColumn_TargetOccupancy" xml:space="preserve">
+    <value>Target Occupancy</value>
+  </data>
+  <data name="GridColumn_TargetRevenue" xml:space="preserve">
+    <value>Target Revenue</value>
+  </data>
+  <data name="GridColumn_AreaUOM" xml:space="preserve">
+    <value>Area UOM</value>
+  </data>
+  <data name="GridColumn_Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="GridColumn_Available" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="GridColumn_Floor" xml:space="preserve">
+    <value>Floor</value>
+  </data>
+  <data name="GridColumn_MayBeLeased" xml:space="preserve">
+    <value>Leased</value>
+  </data>
+  <data name="GridColumn_Occupancy" xml:space="preserve">
+    <value>Occupancy</value>
+  </data>
+  <data name="GridColumn_SpaceCategory" xml:space="preserve">
+    <value>SpaceCategory</value>
+  </data>
+  <data name="GridColumn_Vacant" xml:space="preserve">
+    <value>Vacant</value>
+  </data>
+  <data name="GridColumn_ApplicationName" xml:space="preserve">
+    <value>Source Application</value>
+  </data>
+  <data name="GridColumn_CDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="GridColumn_IsActive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="GridColumn_LOD" xml:space="preserve">
+    <value>LOD</value>
+  </data>
+  <data name="GridColumn_ThisRequestValue" xml:space="preserve">
+    <value>This Request</value>
+  </data>
+  <data name="GridColumn_ChangeEvent" xml:space="preserve">
+    <value>Change Event</value>
+  </data>
+  <data name="GridColumn_CommitmentCO" xml:space="preserve">
+    <value>Commitment CO</value>
+  </data>
+  <data name="GridColumn_NeededByDate" xml:space="preserve">
+    <value>Needed By Date</value>
+  </data>
+  <data name="GridColumn_RequestedDate" xml:space="preserve">
+    <value>Requested Date</value>
+  </data>
+  <data name="GridColumn_UseUnit" xml:space="preserve">
+    <value>Use Unit</value>
+  </data>
+  <data name="GridColumn_Cell" xml:space="preserve">
+    <value>Cell</value>
+  </data>
+  <data name="GridColumn_DayExt" xml:space="preserve">
+    <value>Phone(Day) EXT.</value>
+  </data>
+  <data name="GridColumn_LinkWorkOrder" xml:space="preserve">
+    <value>Link Work Order</value>
+  </data>
+  <data name="GridColumn_NightExt" xml:space="preserve">
+    <value>Phone(Night) EXT.</value>
+  </data>
+  <data name="GridColumn_Scope" xml:space="preserve">
+    <value>Scope</value>
+  </data>
+  <data name="GridColumn_AddressCode" xml:space="preserve">
+    <value>Address Code</value>
+  </data>
+  <data name="GridColumn_AltPhone" xml:space="preserve">
+    <value>Alt Phone</value>
+  </data>
+  <data name="GridColumn_ApprovedBidder" xml:space="preserve">
+    <value>Approved Bidder</value>
+  </data>
+  <data name="GridColumn_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="GridColumn_Ext" xml:space="preserve">
+    <value>Ext</value>
+  </data>
+  <data name="GridColumn_Occupant" xml:space="preserve">
+    <value>Occupant</value>
+  </data>
+  <data name="GridColumn_Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="GridColumn_CheckedByUserName" xml:space="preserve">
+    <value>Last Checked In/Out By</value>
+  </data>
+  <data name="GridColumn_CheckedDate" xml:space="preserve">
+    <value>Last Checked In/Out Date</value>
+  </data>
+  <data name="GridColumn_ContentType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="GridColumn_FilePath" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="GridColumn_FileSize" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="GridColumn_FolderName" xml:space="preserve">
+    <value>Folder Name</value>
+  </data>
+  <data name="GridColumn_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="GridColumn_FileDescription" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="GridColumn_Requisition" xml:space="preserve">
+    <value>Requisition</value>
+  </data>
+  <data name="GridColumn_ChangeRequest" xml:space="preserve">
+    <value>Change Request</value>
+  </data>
+  <data name="GridColumn_ApproxLength" xml:space="preserve">
+    <value>Approx.Length</value>
+  </data>
+  <data name="GridColumn_ApproxLengthUOM" xml:space="preserve">
+    <value>Approx.Length UOM</value>
+  </data>
+  <data name="GridColumn_Begin" xml:space="preserve">
+    <value>Begin</value>
+  </data>
+  <data name="GridColumn_BeginDirection" xml:space="preserve">
+    <value>Begin Direction</value>
+  </data>
+  <data name="GridColumn_End" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="GridColumn_EndDirection" xml:space="preserve">
+    <value>End Direction</value>
+  </data>
+  <data name="GridColumn_Length" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="GridColumn_LengthUOM" xml:space="preserve">
+    <value>Length UOM</value>
+  </data>
+  <data name="GridColumn_ComponentType" xml:space="preserve">
+    <value>Component Type</value>
+  </data>
+  <data name="GridColumn_ServiceInterval" xml:space="preserve">
+    <value>Service Interval</value>
+  </data>
+  <data name="GridColumn_BIMId" xml:space="preserve">
+    <value>BIM ID</value>
+  </data>
+  <data name="GridColumn_Conversion" xml:space="preserve">
+    <value>Conversion</value>
+  </data>
+  <data name="GridColumn_CostUpdatedDate" xml:space="preserve">
+    <value>Cost Updated</value>
+  </data>
+  <data name="GridColumn_DefaultCompany" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="GridColumn_DefaultCost" xml:space="preserve">
+    <value>Estimating Cost</value>
+  </data>
+  <data name="GridColumn_DefaultCostCode" xml:space="preserve">
+    <value>Cost Code</value>
+  </data>
+  <data name="GridColumn_DefaultCostType" xml:space="preserve">
+    <value>Cost Type</value>
+  </data>
+  <data name="GridColumn_DefaultLocation" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="GridColumn_DefaultProjectName" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="GridColumn_EstimatingUOM" xml:space="preserve">
+    <value>Estimating UOM</value>
+  </data>
+  <data name="GridColumn_InventoryUOM" xml:space="preserve">
+    <value>Inventory UOM</value>
+  </data>
+  <data name="GridColumn_IsProcurementItem" xml:space="preserve">
+    <value>Procurement Item</value>
+  </data>
+  <data name="GridColumn_IsReorderPoint" xml:space="preserve">
+    <value>Is Reorder Point</value>
+  </data>
+  <data name="GridColumn_IsSubmittalItem" xml:space="preserve">
+    <value>Submittal Item</value>
+  </data>
+  <data name="GridColumn_IsUseUnitPrice" xml:space="preserve">
+    <value>Use Unit Price</value>
+  </data>
+  <data name="GridColumn_ItemGroup" xml:space="preserve">
+    <value>Item Group</value>
+  </data>
+  <data name="GridColumn_LateralOffset" xml:space="preserve">
+    <value>Lateral Offset</value>
+  </data>
+  <data name="GridColumn_LateralOffsetUOM" xml:space="preserve">
+    <value>Lateral Offset UOM</value>
+  </data>
+  <data name="GridColumn_Manufacturer" xml:space="preserve">
+    <value>Manufacturer</value>
+  </data>
+  <data name="GridColumn_ManufacturerNumber" xml:space="preserve">
+    <value>Manufacturer #</value>
+  </data>
+  <data name="GridColumn_Price" xml:space="preserve">
+    <value>Purchasing Price</value>
+  </data>
+  <data name="GridColumn_PriceUpdatedDate" xml:space="preserve">
+    <value>Price Updated</value>
+  </data>
+  <data name="GridColumn_PurchasingUOM" xml:space="preserve">
+    <value>Purchasing UOM</value>
+  </data>
+  <data name="GridColumn_QuantityUOM" xml:space="preserve">
+    <value>Quantity UOM</value>
+  </data>
+  <data name="GridColumn_RadialOffset" xml:space="preserve">
+    <value>Radial Offset</value>
+  </data>
+  <data name="GridColumn_ReorderPoint" xml:space="preserve">
+    <value>Reorder Point</value>
+  </data>
+  <data name="GridColumn_ServiceByDays" xml:space="preserve">
+    <value>Service By Days</value>
+  </data>
+  <data name="GridColumn_ServiceIntervalDays" xml:space="preserve">
+    <value>Service Interval Days</value>
+  </data>
+  <data name="GridColumn_ServiceIntervalUsage" xml:space="preserve">
+    <value>Service Interval Usage</value>
+  </data>
+  <data name="GridColumn_UnitPrice" xml:space="preserve">
+    <value>Purchasing Unit Price</value>
+  </data>
+  <data name="GridColumn_VerticalOffset" xml:space="preserve">
+    <value>Vertical Offset</value>
+  </data>
+  <data name="GridColumn_VerticalOffsetUOM" xml:space="preserve">
+    <value>Vertical Offset UOM</value>
+  </data>
+  <data name="GridColumn_ApprovalExpires" xml:space="preserve">
+    <value>Expiry Date</value>
+  </data>
+  <data name="GridColumn_ApprovalStarts" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="GridColumn_AccessedFrom" xml:space="preserve">
+    <value>Accessed From</value>
+  </data>
+  <data name="GridColumn_FromObjectType" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="GridColumn_IsSystemMap" xml:space="preserve">
+    <value>Is System Map</value>
+  </data>
+  <data name="GridColumn_SendDetailLines" xml:space="preserve">
+    <value>Send Components</value>
+  </data>
+  <data name="GridColumn_SubmitToWorkflow" xml:space="preserve">
+    <value>Submit To Workflow</value>
+  </data>
+  <data name="GridColumn_SystemNotes" xml:space="preserve">
+    <value>System Notes</value>
+  </data>
+  <data name="GridColumn_ToObjectType" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="GridColumn_Entity" xml:space="preserve">
+    <value>Entity</value>
+  </data>
+  <data name="GridColumn_RootFolder" xml:space="preserve">
+    <value>Root Folder</value>
+  </data>
+  <data name="GridColumn_Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="GridColumn_IsInitiative" xml:space="preserve">
+    <value>Initiative</value>
+  </data>
+  <data name="ContextMenu_AddInititiative.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContextMenu_NewInitiative.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="ContextMenu_NewInitiativeFromTemplate.Text" xml:space="preserve">
+    <value>Add From Template</value>
+  </data>
+  <data name="GridColumn_ApproximateDuration" xml:space="preserve">
+    <value>Approximate Duration</value>
+  </data>
+  <data name="GridColumn_EquipmentCost" xml:space="preserve">
+    <value>Equipment Cost</value>
+  </data>
+  <data name="GridColumn_EstimatedFinishDate" xml:space="preserve">
+    <value>Estimated Finish Date</value>
+  </data>
+  <data name="GridColumn_EstimatedStartDate" xml:space="preserve">
+    <value>Estimated Start Date</value>
+  </data>
+  <data name="GridColumn_LaborCost" xml:space="preserve">
+    <value>Labor Cost</value>
+  </data>
+  <data name="GridColumn_MaintenanceContract" xml:space="preserve">
+    <value>Maintenance Contract</value>
+  </data>
+  <data name="GridColumn_MaterialCost" xml:space="preserve">
+    <value>Material Cost</value>
+  </data>
+  <data name="GridColumn_NightPhoneExt" xml:space="preserve">
+    <value>Phone (Night) Ext.</value>
+  </data>
+  <data name="GridColumn_ReportedDate" xml:space="preserve">
+    <value>Reported Date</value>
+  </data>
+  <data name="GridColumn_StateKey" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="GridColumn_TotalCost" xml:space="preserve">
+    <value>Total Cost</value>
+  </data>
+  <data name="GridColumn_FilterbyPostAs" xml:space="preserve">
+    <value>Filter by Post As</value>
+  </data>
+  <data name="GridColumn_Condition" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="GridColumn_ConditionDate" xml:space="preserve">
+    <value>Condition Date</value>
+  </data>
+  <data name="GridColumn_PercentComplete" xml:space="preserve">
+    <value>Percent Complete</value>
+  </data>
+  <data name="GridColumn_TargetDuration" xml:space="preserve">
+    <value>Target Duration</value>
+  </data>
+  <data name="GridColumn_TargetFinish" xml:space="preserve">
+    <value>Target Finish</value>
+  </data>
+  <data name="GridColumn_TargetStart" xml:space="preserve">
+    <value>Target Start</value>
+  </data>
+  <data name="GridColumn_BillingTerm" xml:space="preserve">
+    <value>Billing Terms</value>
+  </data>
+  <data name="GridColumn_btnSend" xml:space="preserve">
+    <value>Button Send</value>
+  </data>
+  <data name="GridColumn_DDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="GridColumn_DefaultPhase" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="GridColumn_EffectiveDate" xml:space="preserve">
+    <value>Effective Date</value>
+  </data>
+  <data name="GridColumn_InServiceDate" xml:space="preserve">
+    <value>In Service Date</value>
+  </data>
+  <data name="GridColumn_PMWebAccountID" xml:space="preserve">
+    <value>PMWEB Account ID</value>
+  </data>
+  <data name="GridColumn_QueryType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="GridColumn_SubmittalStatus" xml:space="preserve">
+    <value>Submittal Status</value>
+  </data>
+  <data name="GridColumn_EstimatingCurrency" xml:space="preserve">
+    <value>Estimating Currency</value>
+  </data>
+  <data name="GridColumn_PurchasingCurrency" xml:space="preserve">
+    <value>Purchasing Currency</value>
+  </data>
+  <data name="GridColumn_DefaultBidCategoryId" xml:space="preserve">
+    <value>Bid Category</value>
+  </data>
+  <data name="GridColumn_PBS" xml:space="preserve">
+    <value>PBS</value>
+  </data>
+  <data name="GridColumn_CurrentLocation" xml:space="preserve">
+    <value>Current Location </value>
+  </data>
+  <data name="GridColumn_FunctionStatus" xml:space="preserve">
+    <value>Function Status</value>
+  </data>
+  <data name="GridColumn_OwnerShip" xml:space="preserve">
+    <value>Ownership</value>
+  </data>
+  <data name="GridColumn_RecordNumber" xml:space="preserve">
+    <value>Record #</value>
+  </data>
+  <data name="GridColumn_Space" xml:space="preserve">
+    <value>Space</value>
+  </data>
+  <data name="GridColumn_ActualFinish" xml:space="preserve">
+    <value>Actual Finish</value>
+  </data>
+  <data name="GridColumn_ActualStart" xml:space="preserve">
+    <value>Actual Start</value>
+  </data>
+  <data name="GridColumn_EarlyFinish" xml:space="preserve">
+    <value>Early Finish</value>
+  </data>
+  <data name="GridColumn_EarlyStart" xml:space="preserve">
+    <value>Early Start</value>
+  </data>
+  <data name="GridColumn_LateFinish" xml:space="preserve">
+    <value>Late Finish</value>
+  </data>
+  <data name="GridColumn_LateStart" xml:space="preserve">
+    <value>Late Start</value>
+  </data>
+  <data name="MenuItem_EditItem" xml:space="preserve">
+    <value>Edit Custom Layout</value>
+  </data>
+  <data name="GridColumn_OwnerShip1" xml:space="preserve">
+    <value>Ownership</value>
+  </data>
+  <data name="GridColumn_LockSchedule" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="GridColumn_Classifications" xml:space="preserve">
+    <value>Classifications</value>
+  </data>
+  <data name="GridColumn_DefaultFinishTime" xml:space="preserve">
+    <value>Default Finish Time</value>
+  </data>
+  <data name="GridColumn_DefaultStartTime" xml:space="preserve">
+    <value>Default Start Time</value>
+  </data>
+  <data name="GridColumn_Equipment" xml:space="preserve">
+    <value>Equipment</value>
+  </data>
+  <data name="GridColumn_EquipmentType" xml:space="preserve">
+    <value>Equipment Type</value>
+  </data>
+  <data name="GridColumn_Idle" xml:space="preserve">
+    <value>Idle</value>
+  </data>
+  <data name="GridColumn_LaborResource" xml:space="preserve">
+    <value>Labor Resource</value>
+  </data>
+  <data name="GridColumn_operating" xml:space="preserve">
+    <value>Operating</value>
+  </data>
+  <data name="GridColumn_OverbookingSetting" xml:space="preserve">
+    <value>Overbooking Setting</value>
+  </data>
+  <data name="GridColumn_Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="GridColumn_ResourceGroup" xml:space="preserve">
+    <value>Resource Group</value>
+  </data>
+  <data name="GridColumn_Standby" xml:space="preserve">
+    <value>Standby</value>
+  </data>
+  <data name="GridColumn_TargetUtilizationPercent" xml:space="preserve">
+    <value>Target Utilization Percent</value>
+  </data>
+  <data name="GridColumn_VisibileToUsersGroups" xml:space="preserve">
+    <value>Visibile To Users Groups</value>
+  </data>
+  <data name="GridColumn_DefaultCostMode" xml:space="preserve">
+    <value>Default Cost Mode</value>
+  </data>
+  <data name="GridColumn_Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="GridColumn_BasedOn" xml:space="preserve">
+    <value>Based On</value>
+  </data>
+  <data name="GridColumn_Classification" xml:space="preserve">
+    <value>Classification</value>
+  </data>
+  <data name="GridColumn_CostCodeWithDescription" xml:space="preserve">
+    <value>Cost Code</value>
+  </data>
+  <data name="GridColumn_AmountType" xml:space="preserve">
+    <value>Fixed Amount/Rate</value>
+  </data>
+  <data name="GridColumn_PayType" xml:space="preserve">
+    <value>Pay Type</value>
+  </data>
+  <data name="GridColumn_RequestedByName" xml:space="preserve">
+    <value>Requested By</value>
+  </data>
+  <data name="GridColumn_RequirementId" xml:space="preserve">
+    <value>Requirement Id</value>
+  </data>
+  <data name="GridColumn_ResourceType" xml:space="preserve">
+    <value>Resource Type</value>
+  </data>
+  <data name="GridColumn_SkillNames" xml:space="preserve">
+    <value>Skills</value>
+  </data>
+  <data name="GridColumn_WarnOfOverBookings" xml:space="preserve">
+    <value>Warn of Overbooking</value>
+  </data>
+  <data name="GridColumn_LocationProgram" xml:space="preserve">
+    <value>Location Program</value>
+  </data>
+  <data name="GridColumn_HoursPerDayRequired" xml:space="preserve">
+    <value>Hours per Day Required</value>
+  </data>
+  <data name="GridColumn_NbrOfResourcesRequired" xml:space="preserve">
+    <value># of Resources Required</value>
+  </data>
+  <data name="GridColumn_TotalHoursRequired" xml:space="preserve">
+    <value>Total Hours Required</value>
+  </data>
+  <data name="GridColumn_WorkDaysRequired" xml:space="preserve">
+    <value>Work Days Required</value>
+  </data>
+  <data name="GridColumn_NbrOfResourcesAssigned" xml:space="preserve">
+    <value># of Resources Assigned</value>
+  </data>
+  <data name="GridColumn_NbrOfResourcesVariance" xml:space="preserve">
+    <value># of Resources Variance</value>
+  </data>
+  <data name="GridColumn_TotalHoursAssigned" xml:space="preserve">
+    <value>Total Hours Assigned</value>
+  </data>
+  <data name="GridColumn_WorkDaysAssigned" xml:space="preserve">
+    <value>Work Days Assigned</value>
+  </data>
+  <data name="GridColumn_LinkedTo" xml:space="preserve">
+    <value>Linked To</value>
+  </data>
+  <data name="GridColumn_LinkType" xml:space="preserve">
+    <value>Link Type</value>
+  </data>
+  <data name="GridColumn_DefaultHoursPerDay" xml:space="preserve">
+    <value>Default Hours Per Day</value>
+  </data>
+  <data name="GridColumn_EmploymentStatus" xml:space="preserve">
+    <value>Employment Status</value>
+  </data>
+  <data name="GridColumn_FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="GridColumn_LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="GridColumn_Managers" xml:space="preserve">
+    <value>Manager(s)</value>
+  </data>
+  <data name="GridColumn_ResourceGroups" xml:space="preserve">
+    <value>Resource Group(s)</value>
+  </data>
+  <data name="GridColumn_Scheduling" xml:space="preserve">
+    <value>Scheduling</value>
+  </data>
+  <data name="GridColumn_Skills" xml:space="preserve">
+    <value>Skill(s)</value>
+  </data>
+  <data name="GridColumn_Sub" xml:space="preserve">
+    <value>Sub</value>
+  </data>
+  <data name="GridColumn_TargetUtilization" xml:space="preserve">
+    <value>Target Utilization</value>
+  </data>
+  <data name="GridColumn_VisibileToUserGroups" xml:space="preserve">
+    <value>Visibile To User Groups</value>
+  </data>
+  <data name="GridColumn_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="GridColumn_IsInsession" xml:space="preserve">
+    <value>Is In Session</value>
+  </data>
+  <data name="GridColumn_SessionId" xml:space="preserve">
+    <value>Session ID</value>
+  </data>
+  <data name="GridColumn_SessionManager" xml:space="preserve">
+    <value>Session Manager</value>
+  </data>
+  <data name="GridColumn_ProjectLocationDescription" xml:space="preserve">
+    <value>Project / Location</value>
+  </data>
+  <data name="GridColumn_SessionOrigin" xml:space="preserve">
+    <value>Session Origin</value>
+  </data>
+  <data name="GridColumn_LaborCountry" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="GridColumn_InspectionDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="GridColumn_Funding" xml:space="preserve">
+    <value>Funding</value>
+  </data>
+  <data name="GridColumn_AssemblyGroup" xml:space="preserve">
+    <value>Assembly Group</value>
+  </data>
+  <data name="GridColumn_CostType" xml:space="preserve">
+    <value>Cost Type</value>
+  </data>
+  <data name="GridColumn_DefaultBidCategoryName" xml:space="preserve">
+    <value>Category Name</value>
+  </data>
+  <data name="GridColumn_Formula" xml:space="preserve">
+    <value>Formula</value>
+  </data>
+  <data name="btnDeleteCompany.ToolTip" xml:space="preserve">
+    <value>Select a Single Company to Delete It</value>
+  </data>
+  <data name="WarningMsg_DeleteCompany" xml:space="preserve">
+    <value>The company is used therefore it can not be deleted.</value>
+  </data>
+  <data name="btnBookMarks.Tooltip" xml:space="preserve">
+    <value>Bookmarks</value>
+  </data>
+  <data name="btnCurrentFolder.Tooltip" xml:space="preserve">
+    <value>Open Current Folder</value>
+  </data>
+  <data name="btnRefresh.Tooltip" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="btnSearchDocRecent.Tooltip" xml:space="preserve">
+    <value>Recent Records</value>
+  </data>
+  <data name="GridColumn_InspectedBy" xml:space="preserve">
+    <value>Inspected By</value>
+  </data>
+  <data name="GridColumn_ActualCosts" xml:space="preserve">
+    <value>Actual Costs</value>
+  </data>
+  <data name="GridColumn_CostComplete" xml:space="preserve">
+    <value>Cost Complete</value>
+  </data>
+  <data name="GridColumn_LinkedLine" xml:space="preserve">
+    <value>Linked line </value>
+  </data>
+  <data name="ExportToExcel_Tooltip" xml:space="preserve">
+    <value>Click to create a spreadsheet from the current data</value>
+  </data>
+  <data name="ExportToPDF_Tooltip" xml:space="preserve">
+    <value>Click to create a PDF from the current data</value>
+  </data>
+  <data name="GridColumn_Attachments" xml:space="preserve">
+    <value>Attachments</value>
+  </data>
+  <data name="ddlActive_Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="ddlActive_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="GridColumn_RequestNumber" xml:space="preserve">
+    <value>Request ID</value>
+  </data>
+  <data name="GridColumn_MasterValueDays" xml:space="preserve">
+    <value>Master Value Days</value>
+  </data>
+  <data name="GridColumn_ContractType" xml:space="preserve">
+    <value>Contract Type</value>
+  </data>
+  <data name="GridColumn_SelectCheckBox" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="GridColumn_StatusColor" xml:space="preserve">
+    <value>Status Color</value>
+  </data>
+  <data name="GridColumn_Added" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="GridColumn_AddedBy" xml:space="preserve">
+    <value>Added By</value>
+  </data>
+  <data name="GridColumn_AddedFrom" xml:space="preserve">
+    <value>Added From</value>
+  </data>
+  <data name="GridColumn_BlueBeam" xml:space="preserve">
+    <value>BlueBeam</value>
+  </data>
+  <data name="GridColumn_CheckedOut" xml:space="preserve">
+    <value>Checked Out</value>
+  </data>
+  <data name="GridColumn_PmwebViewer" xml:space="preserve">
+    <value>PMWEB Viewer</value>
+  </data>
+  <data name="GridColumn_RecordDateDefault" xml:space="preserve">
+    <value>Record Date</value>
+  </data>
+  <data name="GridColumn_ActualDuration" xml:space="preserve">
+    <value>Actual Duration</value>
+  </data>
+  <data name="GridColumn_Calendar" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="GridColumn_EarlyDuration" xml:space="preserve">
+    <value>Early Duration</value>
+  </data>
+  <data name="GridColumn_HoursPerDayAssigned" xml:space="preserve">
+    <value>Hours Per Day Assigned</value>
+  </data>
+  <data name="GridColumn_LateDuration" xml:space="preserve">
+    <value>Late Duration</value>
+  </data>
+  <data name="GridColumn_ProjectFinish" xml:space="preserve">
+    <value>Project Start</value>
+  </data>
+  <data name="GridColumn_ProjectStart" xml:space="preserve">
+    <value>Project Finish</value>
+  </data>
+  <data name="GridColumn_Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="GridColumn_Module" xml:space="preserve">
+    <value>Module</value>
+  </data>
+  <data name="GridColumn_Id" xml:space="preserve">
+    <value>Record #</value>
+  </data>
+</root>

@@ -1,0 +1,65 @@
+﻿@model Trinergy.Wrapper.AttachmentOutput
+@{
+    Layout = null;
+    Trinergy.Wrapper.Tree tree = new Trinergy.Wrapper.Tree();
+    var fileManager = Model.Folders;
+    var folders = fileManager.Where(w => (w.FolderType == null || w.FolderType.Trim() == "") && (w.ParentFolder == null || w.ParentFolder == "")).ToList();
+    int fileCount = 0;
+    foreach (var _folder in folders)
+    {
+        if (_folder != null)
+        {
+            fileCount = fileCount + tree.GetFileCountByFolder(fileManager.ToList(), _folder.Id);
+        }
+    }
+}
+<div class="k-widget k-upload k-header k-upload-sync k-upload-empty" style="margin-left:20px;">
+    @if (fileCount > 0)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <input type="button" value="++" title="Expand All" onclick="$('#tree_atmt').jstree('open_all');">
+                <input type="button" value="--" title="Collapse All" onclick="$('#tree_atmt').jstree('close_all');">
+                <br />
+                <div style="width:100%;" id="tree_atmt">
+                    <ul>
+                        @foreach (var _folder in fileManager)
+                        {
+                            <li style="font-size: 12px !important;">
+                                <a href="javascript:void(0)" onclick="DownloadFolder(@_folder.Id, @_folder.ObjectId)" title="Download">@_folder.FolderName &nbsp;&nbsp;<span class="glyphicon glyphicon-download-alt"></span></a>
+                                @Html.Raw(tree.GetAttachmentTreeNode(fileManager, _folder.Id, ViewBag.UserId))
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    <p style="font-weight: bold;margin-top: 10px;font-size: 11px;">
+        Note: The folders will appear once the documents are uploaded in the respective folder and also based on the folder security.
+    </p>
+    @*<div class="panel panel-primary">
+        <div class="panel-body">
+            <ul>
+                <li><a href="pmweb/CustomForms.aspx?TypeId=187&Id=82102&ModuleId=7&PageId=80&notab=1" target="_blank">SCOPE OF WORK</a></li>
+                <li><a href="pmweb/CustomForms.aspx?TypeId=112&Id=82003&ModuleId=7&PageId=80&notab=1" target="_blank">FACILITIES EVALUATION REPORT</a></li>
+                <li><a href="pmweb/CustomForms.aspx?TypeId=109&Id=82406&ModuleId=7&PageId=80&notab=1" target="_blank">BUSINESS CASE SUMMARY</a></li>
+                <li><a href="pmweb/CustomForms.aspx?TypeId=113&Id=82392&ModuleId=7&PageId=80&notab=1" target="_blank">PROJECT CHARTER</a></li>
+                <li><a href="OCS/Default.aspx?Id=79774" target="_blank">OCS Link</a></li>
+            </ul>
+        </div>
+    </div>*@
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tree_atmt').jstree({
+            'core': {
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true
+                }
+            }
+        });
+    });
+</script>

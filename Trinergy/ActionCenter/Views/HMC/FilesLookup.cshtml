@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Files Lookup</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.get("pmweb/custom/pmwebhelper.aspx?UserId=@(Session["PMWebUserId"].ToString())&DocumentType=@ViewBag.DocumentType&DocumentId=@ViewBag.DocumentId&rnd=_@(new Random().Next())", function (data) {
+                location.href = "pmweb/FilesLookup.aspx?EntityId=@ViewBag.EntityId&MultiSelect=1";
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+
+    </div>
+</body>
+</html>

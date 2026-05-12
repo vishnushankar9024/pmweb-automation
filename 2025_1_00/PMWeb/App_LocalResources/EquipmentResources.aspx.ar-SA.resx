@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnGoogleAddress.Text" xml:space="preserve">
+    <value>عنوان غوغل</value>
+  </data>
+  <data name="CostCodes_LOD" xml:space="preserve">
+    <value>رموز التكلفة</value>
+  </data>
+  <data name="CSIDivisions_LOD" xml:space="preserve">
+    <value>CSI قسم</value>
+  </data>
+  <data name="ddlClassifications.EmptyMessage" xml:space="preserve">
+    <value>...حدّد التصنيف</value>
+  </data>
+  <data name="ddlCondition.EmptyMessage" xml:space="preserve">
+    <value>...حدّد الشرط</value>
+  </data>
+  <data name="ddlCostCode.EmptyMessage" xml:space="preserve">
+    <value>حدّد رمز التكلف...ة</value>
+  </data>
+  <data name="ddlCountry.EmptyMessage" xml:space="preserve">
+    <value>...حدّد البلد</value>
+  </data>
+  <data name="ddlCSIDivisions.EmptyMessage" xml:space="preserve">
+    <value>...CSI حدّد قسم</value>
+  </data>
+  <data name="ddlDefaultCostMode.EmptyMessage" xml:space="preserve">
+    <value>...حدّد طريقة التكلفة</value>
+  </data>
+  <data name="ddlEquipment.EmptyMessage" xml:space="preserve">
+    <value>...حدّد المعدّات</value>
+  </data>
+  <data name="ddlEquipmentResources.EmptyMessage" xml:space="preserve">
+    <value>...حدّد أحد الموارد</value>
+  </data>
+  <data name="ddlEquipmentType.EmptyMessage" xml:space="preserve">
+    <value>...حدّد نوع المعدّات</value>
+  </data>
+  <data name="ddlFunctionStatus.EmptyMessage" xml:space="preserve">
+    <value>...حدّد حالة الدور</value>
+  </data>
+  <data name="ddlItem.EmptyMessage" xml:space="preserve">
+    <value>...حدّد البند</value>
+  </data>
+  <data name="ddlItem_LOD" xml:space="preserve">
+    <value>البند</value>
+  </data>
+  <data name="ddlLaborResource.EmptyMessage" xml:space="preserve">
+    <value>...حدّد العامل</value>
+  </data>
+  <data name="ddlManager.EmptyMessage" xml:space="preserve">
+    <value>...حدّد المدير</value>
+  </data>
+  <data name="ddlManufacturer.EmptyMessage" xml:space="preserve">
+    <value>...حدّد الشركة المصنّعة</value>
+  </data>
+  <data name="ddlManufacturer_LOD" xml:space="preserve">
+    <value>الشركة المصنّعة</value>
+  </data>
+  <data name="ddlOverbookingSetting.EmptyMessage" xml:space="preserve">
+    <value>...حدّد إعدادات تخطي الحجز</value>
+  </data>
+  <data name="ddlOwnership.EmptyMessage" xml:space="preserve">
+    <value>...حدّد المالك</value>
+  </data>
+  <data name="ddlRegions.EmptyMessage" xml:space="preserve">
+    <value>...حدّد المنطقة</value>
+  </data>
+  <data name="ddlResourceGroups.EmptyMessage" xml:space="preserve">
+    <value>...حدّد مجموعة الموارد</value>
+  </data>
+  <data name="ddlUserGroups.EmptyMessage" xml:space="preserve">
+    <value>...حدّد مجموعات المستخدمين</value>
+  </data>
+  <data name="ddlVendor.EmptyMessage" xml:space="preserve">
+    <value>...حدّد البائع</value>
+  </data>
+  <data name="ddlVendor_LOD" xml:space="preserve">
+    <value>البائع</value>
+  </data>
+  <data name="EquipmentResources_LOD" xml:space="preserve">
+    <value>موارد المعدّات</value>
+  </data>
+  <data name="hliEquipment.Text" xml:space="preserve">
+    <value>المعدّات</value>
+  </data>
+  <data name="lblBarcodes.Text" xml:space="preserve">
+    <value>Barcode رمز</value>
+  </data>
+  <data name="lblClassification.Text" xml:space="preserve">
+    <value>التصنيفات</value>
+  </data>
+  <data name="lblCondition.Text" xml:space="preserve">
+    <value>الشرط</value>
+  </data>
+  <data name="lblConditionDate.Text" xml:space="preserve">
+    <value>تاريخ الشرط</value>
+  </data>
+  <data name="lblCostCode.Text" xml:space="preserve">
+    <value>رمز التكلفة الإفتراضي</value>
+  </data>
+  <data name="lblCountries.Text" xml:space="preserve">
+    <value>البلد</value>
+  </data>
+  <data name="lblCSIDivision.Text" xml:space="preserve">
+    <value>CSI قسم</value>
+  </data>
+  <data name="lblDefaultCostMode.Text" xml:space="preserve">
+    <value>طريقة التكلفة الإفتراضيّة</value>
+  </data>
+  <data name="lblDefaultFinishTime.Text" xml:space="preserve">
+    <value>وقت النهاية الإفتراضي</value>
+  </data>
+  <data name="lblDefaultStartTime.Text" xml:space="preserve">
+    <value>وقت البداية الإفتراضي</value>
+  </data>
+  <data name="lblDescription.Text" xml:space="preserve">
+    <value>*الوصف</value>
+  </data>
+  <data name="lblEquipment.Text" xml:space="preserve">
+    <value>المعدّات</value>
+  </data>
+  <data name="lblEquipmentType.Text" xml:space="preserve">
+    <value>نوع المعّادت</value>
+  </data>
+  <data name="lblEquResourceIDUnique.Text" xml:space="preserve">
+    <value>يجب ان يكون الرمز فريداً</value>
+  </data>
+  <data name="lblFunctionStatus.Text" xml:space="preserve">
+    <value>حالة الدور</value>
+  </data>
+  <data name="lblGoogleAddress.Text" xml:space="preserve">
+    <value>الموقع الجيوغرافي</value>
+  </data>
+  <data name="lblId.Text" xml:space="preserve">
+    <value>*الرمز</value>
+  </data>
+  <data name="lblIdle.Text" xml:space="preserve">
+    <value>واقف/عاطل</value>
+  </data>
+  <data name="lblImage.Text" xml:space="preserve">
+    <value>الصورة</value>
+  </data>
+  <data name="lblInServiceDate.Text" xml:space="preserve">
+    <value>تاريخ دخول الخدمة</value>
+  </data>
+  <data name="lblItem.Text" xml:space="preserve">
+    <value>بند</value>
+  </data>
+  <data name="lblLaborResource.Text" xml:space="preserve">
+    <value>عامل</value>
+  </data>
+  <data name="lblLotNumber.Text" xml:space="preserve">
+    <value>رقم المخزن</value>
+  </data>
+  <data name="lblManager.Text" xml:space="preserve">
+    <value>المدير</value>
+  </data>
+  <data name="lblManufacturer.Text" xml:space="preserve">
+    <value>المصنّع</value>
+  </data>
+  <data name="lblMfrNumber.Text" xml:space="preserve">
+    <value>رقم المصنّع</value>
+  </data>
+  <data name="lblOperatingLabel.Text" xml:space="preserve">
+    <value>المشغّل</value>
+  </data>
+  <data name="lblOverbookingSetting.Text" xml:space="preserve">
+    <value>إعدادات تخطي الحجز</value>
+  </data>
+  <data name="lblOwnershipLabel.Text" xml:space="preserve">
+    <value>الملكيّة</value>
+  </data>
+  <data name="lblPrice.Text" xml:space="preserve">
+    <value>السعر</value>
+  </data>
+  <data name="lblReceivedDate.Text" xml:space="preserve">
+    <value>تاريخ الإستلام</value>
+  </data>
+  <data name="lblRegions.Text" xml:space="preserve">
+    <value>المناطق</value>
+  </data>
+  <data name="lblResourceGroups.Text" xml:space="preserve">
+    <value>مجموعات الموارد</value>
+  </data>
+  <data name="lblSerialNumber.Text" xml:space="preserve">
+    <value>الرقم التسلسلي</value>
+  </data>
+  <data name="lblStandby.Text" xml:space="preserve">
+    <value>في الإنتطار</value>
+  </data>
+  <data name="lblTags.Text" xml:space="preserve">
+    <value>العلامات</value>
+  </data>
+  <data name="lblTargetUtilizationPercent.Text" xml:space="preserve">
+    <value>٪ نسبة الإستعمال المستهدفة</value>
+  </data>
+  <data name="lbltitle.Text" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="lblVendor.Text" xml:space="preserve">
+    <value>البائع</value>
+  </data>
+  <data name="lblVisibleToUserGroups.Text" xml:space="preserve">
+    <value>مرئي لمجموعات المستخدمين</value>
+  </data>
+  <data name="lblWarrantyExpires.Text" xml:space="preserve">
+    <value>إنتهاء التأمين</value>
+  </data>
+  <data name="LOD_Multiple" xml:space="preserve">
+    <value>-- متعدّد --</value>
+  </data>
+  <data name="ResourceGroup_LOD" xml:space="preserve">
+    <value>مجموعة الموارد</value>
+  </data>
+  <data name="rfv_Code.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="UserGroups_LOD" xml:space="preserve">
+    <value>مجموعات المستخدمين</value>
+  </data>
+  <data name="Users_LOD" xml:space="preserve">
+    <value>المستخدمين</value>
+  </data>
+</root>

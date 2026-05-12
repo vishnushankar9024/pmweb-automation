@@ -1,0 +1,5 @@
+{
+    "ErrorMsg_SystemFieldOrCalcRequired": "You must provide a value for System Field or Calculation.",
+    "ErrorMsg_InvalidCalculationExpression": "Invalid calculation expression.",
+    "ErrorMsg_InvalidCalculationSystemField": "Calculation has an invalid system field."
+}

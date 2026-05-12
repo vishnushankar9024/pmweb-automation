@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>إحفظ</value>
+  </data>
+  <data name="chkLegendVisible.Text" xml:space="preserve">
+    <value>وسيلة الإيضاح مرئيّة</value>
+  </data>
+  <data name="chkTitleVisible.Text" xml:space="preserve">
+    <value>العنوان مرئي</value>
+  </data>
+  <data name="chkVisible.Text" xml:space="preserve">
+    <value>مرئي</value>
+  </data>
+  <data name="chkXShowLabels.Text" xml:space="preserve">
+    <value>أعرض الملصقات</value>
+  </data>
+  <data name="chkXShowTicks.Text" xml:space="preserve">
+    <value>أعرض التكات</value>
+  </data>
+  <data name="chkXVisible.Text" xml:space="preserve">
+    <value>مرئي</value>
+  </data>
+  <data name="chkY2ShowLabels.Text" xml:space="preserve">
+    <value>أعرض الملصقات</value>
+  </data>
+  <data name="chkY2ShowTicks.Text" xml:space="preserve">
+    <value>أعرض التكات</value>
+  </data>
+  <data name="chkY2Visible.Text" xml:space="preserve">
+    <value>مرئي</value>
+  </data>
+  <data name="chkYShowLabels.Text" xml:space="preserve">
+    <value>أعرض الملصقات</value>
+  </data>
+  <data name="chkYShowTicks.Text" xml:space="preserve">
+    <value>أعرض التكات</value>
+  </data>
+  <data name="chkYVisible.Text" xml:space="preserve">
+    <value>مرئي</value>
+  </data>
+  <data name="GridColumn_ChartTypeId" xml:space="preserve">
+    <value>النوع</value>
+  </data>
+  <data name="GridColumn_LabelRotationAngle" xml:space="preserve">
+    <value>درجة دوران الملصقات</value>
+  </data>
+  <data name="GridColumn_LabelsField" xml:space="preserve">
+    <value>حقل ملصقات</value>
+  </data>
+  <data name="GridColumn_LabelVisible" xml:space="preserve">
+    <value>الملصقات مرئيّة</value>
+  </data>
+  <data name="GridColumn_Name" xml:space="preserve">
+    <value>الإسم</value>
+  </data>
+  <data name="GridColumn_X2Field" xml:space="preserve">
+    <value>X2 حقل</value>
+  </data>
+  <data name="GridColumn_XField" xml:space="preserve">
+    <value>X حقل</value>
+  </data>
+  <data name="GridColumn_Y2Field" xml:space="preserve">
+    <value>Y2 حقل</value>
+  </data>
+  <data name="GridColumn_YAxisTypeId" xml:space="preserve">
+    <value>Y نوع المحور</value>
+  </data>
+  <data name="GridColumn_YField" xml:space="preserve">
+    <value>Y حقل</value>
+  </data>
+  <data name="lblChart.Text" xml:space="preserve">
+    <value>رسم بياني</value>
+  </data>
+  <data name="lblHeight.Text" xml:space="preserve">
+    <value>الإرتفاع</value>
+  </data>
+  <data name="lblLegendAlignment.Text" xml:space="preserve">
+    <value>محاذاة وسيلة الإيضاح</value>
+  </data>
+  <data name="lblMarker.Text" xml:space="preserve">
+    <value>علامة</value>
+  </data>
+  <data name="lblSeries.Text" xml:space="preserve">
+    <value>سلسلة</value>
+  </data>
+  <data name="lblSeriesOrientation.Text" xml:space="preserve">
+    <value>الإتجاه</value>
+  </data>
+  <data name="lblSkin.Text" xml:space="preserve">
+    <value>السمة</value>
+  </data>
+  <data name="lblTitle.Text" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="lblTitleAlignment.Text" xml:space="preserve">
+    <value>محاذاة العنوان</value>
+  </data>
+  <data name="lblWidth.Text" xml:space="preserve">
+    <value>العرض</value>
+  </data>
+  <data name="lblXAlignment.Text" xml:space="preserve">
+    <value>المحاذاة</value>
+  </data>
+  <data name="lblXAxis.Text" xml:space="preserve">
+    <value>X محور</value>
+  </data>
+  <data name="lblXLabelDataColumn.Text" xml:space="preserve">
+    <value>عمود بيانات الملصقات</value>
+  </data>
+  <data name="lblXRotation.Text" xml:space="preserve">
+    <value>دوران</value>
+  </data>
+  <data name="lblXTitle.Text" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="lblXValueFormat.Text" xml:space="preserve">
+    <value>تنسيق القيمة</value>
+  </data>
+  <data name="lblXVisibleValues.Text" xml:space="preserve">
+    <value>القيم مرئيّة</value>
+  </data>
+  <data name="lblY2Alignment.Text" xml:space="preserve">
+    <value>المحاذاة</value>
+  </data>
+  <data name="lblY2Axis.Text" xml:space="preserve">
+    <value>Y2 محور</value>
+  </data>
+  <data name="lblY2Rotation.Text" xml:space="preserve">
+    <value>دوران</value>
+  </data>
+  <data name="lblY2Title.Text" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="lblY2ValueFormat.Text" xml:space="preserve">
+    <value>تنسيق القيمة</value>
+  </data>
+  <data name="lblY2VisibleValues.Text" xml:space="preserve">
+    <value>القيم مرئيّة</value>
+  </data>
+  <data name="lblYAlignment.Text" xml:space="preserve">
+    <value>المحاذاة</value>
+  </data>
+  <data name="lblYAxis.Text" xml:space="preserve">
+    <value>Y محور</value>
+  </data>
+  <data name="lblYRotation.Text" xml:space="preserve">
+    <value>دوران</value>
+  </data>
+  <data name="lblYTitle.Text" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="lblYValueFormat.Text" xml:space="preserve">
+    <value>تنسيق القيمة</value>
+  </data>
+  <data name="lblYVisibleValues.Text" xml:space="preserve">
+    <value>القيم مرئيّة</value>
+  </data>
+  <data name="ListItem_Alignment_Bottom" xml:space="preserve">
+    <value>الأسفل</value>
+  </data>
+  <data name="ListItem_Alignment_BottomLeft" xml:space="preserve">
+    <value>أسفل يسار</value>
+  </data>
+  <data name="ListItem_Alignment_BottomRight" xml:space="preserve">
+    <value>أسفل يمين</value>
+  </data>
+  <data name="ListItem_Alignment_Center" xml:space="preserve">
+    <value>المركز</value>
+  </data>
+  <data name="ListItem_Alignment_Left" xml:space="preserve">
+    <value>يسار</value>
+  </data>
+  <data name="ListItem_Alignment_None" xml:space="preserve">
+    <value>لا شيء</value>
+  </data>
+  <data name="ListItem_Alignment_Right" xml:space="preserve">
+    <value>يمين</value>
+  </data>
+  <data name="ListItem_Alignment_Top" xml:space="preserve">
+    <value>أعلى</value>
+  </data>
+  <data name="ListItem_Alignment_TopLeft" xml:space="preserve">
+    <value>أعلى يسار</value>
+  </data>
+  <data name="ListItem_Alignment_TopRight" xml:space="preserve">
+    <value>أعلي يمين</value>
+  </data>
+  <data name="ListItem_Area" xml:space="preserve">
+    <value>المساحة</value>
+  </data>
+  <data name="ListItem_Area_ToolTip" xml:space="preserve">
+    <value>تتكون مساحة الرسم البياني من سلسلة من نقاط البيانات المرتبطة بخط وحيث يتم ملء المنطقة الموجودة أسفل الخط</value>
+  </data>
+  <data name="ListItem_Bar" xml:space="preserve">
+    <value>شريط</value>
+  </data>
+  <data name="ListItem_Bar_ToolTip" xml:space="preserve">
+    <value>تعرض الرسم البياني الشريطي القيم بيانيًا في أشرطة عمودية وأفقية عبر الفئات. تعد المخططات الشريطية مفيدة لمقارنة سلاسل متعددة من البيانات (أي توفير لقطات من البيانات في نقاط زمنية معينة)</value>
+  </data>
+  <data name="ListItem_Bezier" xml:space="preserve">
+    <value>Bezier بيزير</value>
+  </data>
+  <data name="ListItem_Bezier_ToolTip" xml:space="preserve">
+    <value>يعرض الرسم البياني بيزير سلسلة من النقاط على خط منحني. تحدد "نقطتا التحكم" موضع الانحناء ومقداره في الخط الفاصل بين نقاط النهاية. غالبًا ما يتم استخدام مخطط بيزير لنمذجة البيانات عن طريق أخذ عدد محدود من نقاط البيانات واستيفاء أو تقدير القيم المتداخلة</value>
+  </data>
+  <data name="ListItem_Black" xml:space="preserve">
+    <value>أسود</value>
+  </data>
+  <data name="ListItem_BlueStripes" xml:space="preserve">
+    <value>خطوط زرقاء</value>
+  </data>
+  <data name="ListItem_Bubble" xml:space="preserve">
+    <value>فقاعة</value>
+  </data>
+  <data name="ListItem_Bubble_ToolTip" xml:space="preserve">
+    <value>الرسم البياني الفقاعي هو امتداد لمخطط النقاط ولكن كل نقطة يمكن أن تكون دائرة أو بيضاوية بأي حجم أو بعد. يمكن استخدام حجم الفقاعة لنقل قيم أكبر</value>
+  </data>
+  <data name="ListItem_CandleStick" xml:space="preserve">
+    <value>عصا شمعة</value>
+  </data>
+  <data name="ListItem_CandleStick_ToolTip" xml:space="preserve">
+    <value>يجمع الرسم البياني عصا شمعة بين أنماط المخطط الشريطي والخطي لإظهار نطاق من حركة القيمة بمرور الوقت. تُظهر الأشرطة ذات الألوان الداكنة اتجاهات هبوطية ، بينما تُظهر الأشرطة ذات الألوان الفاتحة اتجاهات صعودية ، بينما يُظهر الخط المار بالمنتصف ("الفتيل") القيم العالية والمنخفضة القصوى</value>
+  </data>
+  <data name="ListItem_DeepBlue" xml:space="preserve">
+    <value>أزرق غامق</value>
+  </data>
+  <data name="ListItem_DeepGray" xml:space="preserve">
+    <value>رمادي غامق</value>
+  </data>
+  <data name="ListItem_DeepGreen" xml:space="preserve">
+    <value>أخضر غامق</value>
+  </data>
+  <data name="ListItem_DeepRed" xml:space="preserve">
+    <value>أحمر غامق</value>
+  </data>
+  <data name="ListItem_Default" xml:space="preserve">
+    <value>الإفتراضي</value>
+  </data>
+  <data name="ListItem_Gantt" xml:space="preserve">
+    <value>Gantt رسم بياني غانت</value>
+  </data>
+  <data name="ListItem_Gantt_ToolTip" xml:space="preserve">
+    <value>يعرض الرسم البياني غانت، المعروفة أيضًا باسم مخططات الوقت، أحداثًا منفصلة كأشرطة على طول مقياس زمني. غالبًا ما تُستخدم هذه المخططات لتخطيط المشروع / الوقت ، حيث يمكن رسم البيانات باستخدام مقياس التاريخ والوقت أو مقياس رقمي آخر</value>
+  </data>
+  <data name="ListItem_Gray" xml:space="preserve">
+    <value>رمادي</value>
+  </data>
+  <data name="ListItem_GrayStripes" xml:space="preserve">
+    <value>خطوط رماديّة</value>
+  </data>
+  <data name="ListItem_GreenStripes" xml:space="preserve">
+    <value>خطوط زرقاء</value>
+  </data>
+  <data name="ListItem_Hay" xml:space="preserve">
+    <value>قشّ</value>
+  </data>
+  <data name="ListItem_Horizontal" xml:space="preserve">
+    <value>أفقي</value>
+  </data>
+  <data name="ListItem_Inox" xml:space="preserve">
+    <value>Inox اينوكس</value>
+  </data>
+  <data name="ListItem_LightBlue" xml:space="preserve">
+    <value>أزرق فاتح</value>
+  </data>
+  <data name="ListItem_LightBrown" xml:space="preserve">
+    <value>بنيّ فاتح</value>
+  </data>
+  <data name="ListItem_LightGreen" xml:space="preserve">
+    <value>أخضر فاتح</value>
+  </data>
+  <data name="ListItem_Line" xml:space="preserve">
+    <value>سطر</value>
+  </data>
+  <data name="ListItem_Line_ToolTip" xml:space="preserve">
+    <value>يعرض هذا النوع من الرسوم البيانيّة مجموعة من نقاط البيانات المتصلة بخط، والاستخدام الشائع للمخطط الخطي هو إظهار الاتجاهات على مدار فترة زمنية</value>
+  </data>
+  <data name="ListItem_Marble" xml:space="preserve">
+    <value>رخام</value>
+  </data>
+  <data name="ListItem_Marker_Circle" xml:space="preserve">
+    <value>دائري</value>
+  </data>
+  <data name="ListItem_Marker_Cross" xml:space="preserve">
+    <value>صليب</value>
+  </data>
+  <data name="ListItem_Marker_Diamond" xml:space="preserve">
+    <value>الماس</value>
+  </data>
+  <data name="ListItem_Marker_Ellipse" xml:space="preserve">
+    <value>بيضاوي</value>
+  </data>
+  <data name="ListItem_Marker_Rectangle" xml:space="preserve">
+    <value>مستطيل</value>
+  </data>
+  <data name="ListItem_Marker_Triangle" xml:space="preserve">
+    <value>مثلّث</value>
+  </data>
+  <data name="ListItem_Metal" xml:space="preserve">
+    <value>معدني</value>
+  </data>
+  <data name="ListItem_Office2007" xml:space="preserve">
+    <value>Office2007</value>
+  </data>
+  <data name="ListItem_Outlook" xml:space="preserve">
+    <value>Outlook</value>
+  </data>
+  <data name="ListItem_Pie" xml:space="preserve">
+    <value>فطيرة</value>
+  </data>
+  <data name="ListItem_Pie_ToolTip" xml:space="preserve">
+    <value>يعرض الرسم البياني الدائري شرائح تمثل الأجزاء الكسرية من الكل، عندما تحتاج إلى عرض مساهمة الأجزاء الكسرية في الكل</value>
+  </data>
+  <data name="ListItem_Point" xml:space="preserve">
+    <value>نقطة</value>
+  </data>
+  <data name="ListItem_Point_ToolTip" xml:space="preserve">
+    <value>تُستخدم الرسوم البيانيّة النقطية أو المخططة "المبعثرة" لإظهار الارتباطات بين مجموعتين من القيم. غالبًا ما يستخدم مخطط النقاط لنمذجة البيانات العلمية أو البيانات المالية. لا يتم استخدامه عادةً مع البيانات المعتمدة على الوقت حيث يكون المخطط الخطي أكثر ملاءم</value>
+  </data>
+  <data name="ListItem_Spline" xml:space="preserve">
+    <value>خط المفتاح</value>
+  </data>
+  <data name="ListItem_Spline_ToolTip" xml:space="preserve">
+    <value>تسمح لك مخططات الشرائح بأخذ مجموعة محدودة من نقاط البيانات المعروفة والقيم المتداخلة التقريبية. غالبًا ما يتم استخدام مخطط Spline ، مثل Bezier ، لنمذجة البيانات عن طريق أخذ عدد محدود من نقاط البيانات واستيفاء أو تقدير القيم المتداخلة</value>
+  </data>
+  <data name="ListItem_SplineArea" xml:space="preserve">
+    <value>منطقة المفتاح</value>
+  </data>
+  <data name="ListItem_SplineArea_ToolTip" xml:space="preserve">
+    <value>يحدد نوع مخطط Spline Area واحدًا أو أكثر من منحنيات الشرائح وتعبئتها في المنطقة المحددة بواسطة الشريحة. يمكن أيضًا استخدامها لنمذجة البيانات من حيث أنها تأخذ عددًا محدودًا من نقاط البيانات وتستكمل القيم المتداخلة. يؤكد نوع المخطط هذا أيضًا على المنطقة الواقعة بين منحنى الشريحة ونقطة منتصف الشريحة</value>
+  </data>
+  <data name="ListItem_StackedArea" xml:space="preserve">
+    <value>منطقة مكدسة</value>
+  </data>
+  <data name="ListItem_StackedArea_ToolTip" xml:space="preserve">
+    <value>مخطط المنطقة المكدسة هو أحد أشكال مخطط المنطقة الذي يعرض اتجاهات مساهمة كل قيمة بمرور الوقت (أو عبر الفئات). يتم تكديس المساحات بحيث تجاور كل سلسلة ولكن لا تتداخل مع السلسلة السابقة</value>
+  </data>
+  <data name="ListItem_StackedArea100" xml:space="preserve">
+    <value>منطقة مكدسة ١٠٠</value>
+  </data>
+  <data name="ListItem_StackedArea100_ToolTip" xml:space="preserve">
+    <value>المخططات المكدسة بنسبة ١٠٠٪ هي مجموعة متنوعة من مخططات المساحات المكدسة التي تقدم قيمًا للاتجاهات كنسب مئوية ، بإجمالي ١٠٠٪ لكل فئة</value>
+  </data>
+  <data name="ListItem_StackedBar" xml:space="preserve">
+    <value>بار مكدس</value>
+  </data>
+  <data name="ListItem_StackedBar_ToolTip" xml:space="preserve">
+    <value>تُستخدم المخططات الشريطية المكدسة لمقارنة مساهمات القيم بالمجموع عبر الفئات. استخدم المخطط الشريطي المكدس عندما تحتاج إلى رؤية القيم المجمعة لكل فئة</value>
+  </data>
+  <data name="ListItem_StackedBar100" xml:space="preserve">
+    <value>بار مكدس ١٠٠</value>
+  </data>
+  <data name="ListItem_StackedBar100_ToolTip" xml:space="preserve">
+    <value>يُظهر الشريط المكدس ١٠٠٪ المساهمة المجمعة للقيم كنسب مئوية حيث يكون الإجمالي المجمع لكل فئة ١٠٠ بالمائة. يُستخدم عندما تكون العلاقة بين القيم في فئة أكثر أهمية من المبالغ</value>
+  </data>
+  <data name="ListItem_StackedLine" xml:space="preserve">
+    <value>خط مكدس</value>
+  </data>
+  <data name="ListItem_StackedLine_ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListItem_StackedSpline" xml:space="preserve">
+    <value>خط المفتاح المكدس</value>
+  </data>
+  <data name="ListItem_StackedSpline_ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListItem_StackedSplineArea" xml:space="preserve">
+    <value>منطقة المفتاح المكدس</value>
+  </data>
+  <data name="ListItem_StackedSplineArea_ToolTip" xml:space="preserve">
+    <value>مخطط منطقة المفتاح المكدس هو تباين في مخطط منطقة المفتاح. يتم تكديس المساحات بحيث تجاور كل سلسلة ولكن لا تتداخل مع السلسلة السابقة. يمكن أيضًا استخدامها لنمذجة البيانات من حيث أنها تأخذ عددًا محدودًا من نقاط البيانات وتستكمل القيم المتداخلة. يسمح نوع المخطط هذا بعرض مساحة السطح بأكملها لجميع التسلسلات في وقت واحد</value>
+  </data>
+  <data name="ListItem_StackedSplineArea100" xml:space="preserve">
+    <value>منطقة المفتاح المكدس ١٠٠</value>
+  </data>
+  <data name="ListItem_StackedSplineArea100_ToolTip" xml:space="preserve">
+    <value>مخطط منطقة الشريحة المكدسة بنسبة ١٠٠٪ هو شكل مختلف من مخطط منطقة المفتاح. يتم تكديس المساحات بحيث تجاور كل سلسلة ولكن لا تتداخل مع السلسلة السابقة وحيث الإجمالي المجمع لكل فئة. يمكن أيضًا استخدامها لنمذجة البيانات من حيث أنها تأخذ عددًا محدودًا من نقاط البيانات وتستكمل القيم المتداخلة. يسمح نوع المخطط هذا بعرض مساحة السطح بأكملها لجميع التسلسلات في وقت واحد. استخدم نوع المخطط هذا عندما تكون العلاقة بين القيم في فئة أكثر أهمية من المبالغ. ١٠٠ بالمائة</value>
+  </data>
+  <data name="ListItem_Sunset" xml:space="preserve">
+    <value>الغروب</value>
+  </data>
+  <data name="ListItem_ValueFormat_Currency" xml:space="preserve">
+    <value>العملة</value>
+  </data>
+  <data name="ListItem_ValueFormat_General" xml:space="preserve">
+    <value>عامّ</value>
+  </data>
+  <data name="ListItem_ValueFormat_LongDate" xml:space="preserve">
+    <value>التاريخ بصيغة طويلة</value>
+  </data>
+  <data name="ListItem_ValueFormat_LongTime" xml:space="preserve">
+    <value>الوقت بصيغة طويلة</value>
+  </data>
+  <data name="ListItem_ValueFormat_None" xml:space="preserve">
+    <value>لا شيء</value>
+  </data>
+  <data name="ListItem_ValueFormat_Number" xml:space="preserve">
+    <value>رقم</value>
+  </data>
+  <data name="ListItem_ValueFormat_Percent" xml:space="preserve">
+    <value>نسبة مئويّة</value>
+  </data>
+  <data name="ListItem_ValueFormat_Scientific" xml:space="preserve">
+    <value>علمي</value>
+  </data>
+  <data name="ListItem_ValueFormat_ShortDate" xml:space="preserve">
+    <value>التاريخ بصيغة قصيرة</value>
+  </data>
+  <data name="ListItem_ValueFormat_ShortTime" xml:space="preserve">
+    <value>الوقت بصيغة قصيرة</value>
+  </data>
+  <data name="ListItem_Vertical" xml:space="preserve">
+    <value>عامودي</value>
+  </data>
+  <data name="ListItem_VisibleValues_All" xml:space="preserve">
+    <value>الكلّ</value>
+  </data>
+  <data name="ListItem_VisibleValues_Negative" xml:space="preserve">
+    <value>سلبي</value>
+  </data>
+  <data name="ListItem_VisibleValues_Positive" xml:space="preserve">
+    <value>إيجابي</value>
+  </data>
+  <data name="ListItem_Vista" xml:space="preserve">
+    <value>Vista</value>
+  </data>
+  <data name="ListItem_Web20" xml:space="preserve">
+    <value>Web 2.0</value>
+  </data>
+  <data name="ListItem_WebBlue" xml:space="preserve">
+    <value>Web Blue</value>
+  </data>
+  <data name="ListItem_Wood" xml:space="preserve">
+    <value>خشب</value>
+  </data>
+  <data name="ListItem_YAxisType_Primary" xml:space="preserve">
+    <value>الرئيسي</value>
+  </data>
+  <data name="ListItem_YAxisType_Secondary" xml:space="preserve">
+    <value>ثانوي</value>
+  </data>
+</root>

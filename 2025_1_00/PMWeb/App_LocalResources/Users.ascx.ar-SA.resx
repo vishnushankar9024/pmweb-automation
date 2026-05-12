@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="cmp_IsNamedLic.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="cmp_LicenseTypes.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="CONTACT_EXIST" xml:space="preserve">
+    <value>تمّ تعيين جهة التواصل</value>
+  </data>
+  <data name="ErrorMsg_DeleteUser" xml:space="preserve">
+    <value> (غير قادر على حذف هذا المستخدم ليتم استخدامه في واحد أو أكثر من السجلات. هل ترغب في جعل المستخدم نشط بدلا من ذلك؟ (لن يظهر المستخدمين غير الناشطين في بحث القوائم في سجلات جديدة PMWeb</value>
+  </data>
+  <data name="GridColumn_CanEditExpiredPassword" xml:space="preserve">
+    <value>يمكن تغيير كلمة السرّ المنتهية الصلاحية</value>
+  </data>
+  <data name="GridColumn_CanUsePMWebAdmin" xml:space="preserve">
+    <value>PMWeb  مدير ال</value>
+  </data>
+  <data name="GridColumn_Company" xml:space="preserve">
+    <value>الشركة</value>
+  </data>
+  <data name="GridColumn_Contact" xml:space="preserve">
+    <value>جهة التواصل</value>
+  </data>
+  <data name="GridColumn_Database" xml:space="preserve">
+    <value>قاعدة البيانات</value>
+  </data>
+  <data name="GridColumn_Email" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="GridColumn_FirstName" xml:space="preserve">
+    <value>*الإسم الأوّل</value>
+  </data>
+  <data name="GridColumn_Full" xml:space="preserve">
+    <value>الإسم الكامل</value>
+  </data>
+  <data name="GridColumn_FullConcurrent" xml:space="preserve">
+    <value>رخصة كاملة متزامنة</value>
+  </data>
+  <data name="GridColumn_FullNamed" xml:space="preserve">
+    <value>رخصة كاملة بإسم محدّد</value>
+  </data>
+  <data name="GridColumn_GroupName" xml:space="preserve">
+    <value>*إسم المجموعة</value>
+  </data>
+  <data name="GridColumn_Guest" xml:space="preserve">
+    <value>ضيف</value>
+  </data>
+  <data name="GridColumn_GuestConcurrent" xml:space="preserve">
+    <value>رخصة ضيف متزامنة</value>
+  </data>
+  <data name="GridColumn_GuestNamed" xml:space="preserve">
+    <value>رخصة ضيف بإسم محدّد</value>
+  </data>
+  <data name="GridColumn_Image" xml:space="preserve">
+    <value>الصّورة</value>
+  </data>
+  <data name="GridColumn_IsDisabled" xml:space="preserve">
+    <value>غير فعّال</value>
+  </data>
+  <data name="GridColumn_IsLDAPUser" xml:space="preserve">
+    <value>LDAP مستخدم</value>
+  </data>
+  <data name="GridColumn_IsNamedLic" xml:space="preserve">
+    <value>*رخصة بإسم محدّد</value>
+  </data>
+  <data name="GridColumn_LastName" xml:space="preserve">
+    <value>إسم العائلة/الشهرة</value>
+  </data>
+  <data name="GridColumn_LDAPAuthentication" xml:space="preserve">
+    <value>LDAP أذن</value>
+  </data>
+  <data name="GridColumn_LDAPPath" xml:space="preserve">
+    <value>LDAP مسار</value>
+  </data>
+  <data name="GridColumn_LicenseType" xml:space="preserve">
+    <value>*نوع الرخصة</value>
+  </data>
+  <data name="GridColumn_Password" xml:space="preserve">
+    <value>كلمة السرّ</value>
+  </data>
+  <data name="GridColumn_PasswordDoesNotExpire" xml:space="preserve">
+    <value>كلمة السرّ لا تنتهي الصلاحية</value>
+  </data>
+  <data name="GridColumn_Signature" xml:space="preserve">
+    <value>التوقيع</value>
+  </data>
+  <data name="GridColumn_TransatedNamedLic" xml:space="preserve">
+    <value>*رخصة بإسم محدّد</value>
+  </data>
+  <data name="GridColumn_UserName" xml:space="preserve">
+    <value>*الرمز</value>
+  </data>
+  <data name="lblAPIKeys.Text" xml:space="preserve">
+    <value>API مفتاح البرمجة</value>
+  </data>
+  <data name="lblAssetExplorer.Text" xml:space="preserve">
+    <value>متصفّح الأصول</value>
+  </data>
+  <data name="lblAssetManagement.Text" xml:space="preserve">
+    <value>إدارة الأصول</value>
+  </data>
+  <data name="lblAssignedConcurrentGuests.Text" xml:space="preserve">
+    <value>مكلّف</value>
+  </data>
+  <data name="lblAssignedConcurrentUsers.Text" xml:space="preserve">
+    <value>مكلّف</value>
+  </data>
+  <data name="lblAssignedGuests.Text" xml:space="preserve">
+    <value>مكلّف</value>
+  </data>
+  <data name="lblAssignedNamedGuests.Text" xml:space="preserve">
+    <value>مكلّف</value>
+  </data>
+  <data name="lblAssignedNamedUsers.Text" xml:space="preserve">
+    <value>مكلّف</value>
+  </data>
+  <data name="lblAssignedUsers.Text" xml:space="preserve">
+    <value>مكلّف</value>
+  </data>
+  <data name="lblAvailable.Text" xml:space="preserve">
+    <value>متاح</value>
+  </data>
+  <data name="lblAvailableConcurrentGuests.Text" xml:space="preserve">
+    <value>متاح</value>
+  </data>
+  <data name="lblAvailableConcurrentUsers.Text" xml:space="preserve">
+    <value>متاح</value>
+  </data>
+  <data name="lblAvailableGuests.Text" xml:space="preserve">
+    <value>ضيف متاح</value>
+  </data>
+  <data name="lblAvailableNamedGuests.Text" xml:space="preserve">
+    <value>متاح</value>
+  </data>
+  <data name="lblAvailableNamedUsers.Text" xml:space="preserve">
+    <value>متاح</value>
+  </data>
+  <data name="lblAvailableProjects.Text" xml:space="preserve">
+    <value>متاح</value>
+  </data>
+  <data name="lblBIM.Text" xml:space="preserve">
+    <value>BIM نموذج بيانات المباني</value>
+  </data>
+  <data name="lblConcGuests2.Text" xml:space="preserve">
+    <value>عدد رخص الضيوف</value>
+  </data>
+  <data name="lblConcurrentGuests.Text" xml:space="preserve">
+    <value>مستخدمين ضيوف متزامنين</value>
+  </data>
+  <data name="lblConcurrentUsers.Text" xml:space="preserve">
+    <value>مستخدمين متزامنين</value>
+  </data>
+  <data name="lblConcUsers.Text" xml:space="preserve">
+    <value>أكبر عدد من المستخدمين المتزامنين</value>
+  </data>
+  <data name="lblCostManagement.Text" xml:space="preserve">
+    <value>إدارة التكاليف</value>
+  </data>
+  <data name="lblCreatedProjects.Text" xml:space="preserve">
+    <value>أنشأ</value>
+  </data>
+  <data name="lblFileBrowser.Text" xml:space="preserve">
+    <value>إدارة الملفات</value>
+  </data>
+  <data name="lblFormBuilder.Text" xml:space="preserve">
+    <value>منشئ النماذج</value>
+  </data>
+  <data name="lblGuests.Text" xml:space="preserve">
+    <value>الضيوف</value>
+  </data>
+  <data name="lblIntegrationManager.Text" xml:space="preserve">
+    <value>إدارة التكامل</value>
+  </data>
+  <data name="lblLDAPIntegration.Text" xml:space="preserve">
+    <value>LDAP التكامل مع</value>
+  </data>
+  <data name="lblLicensedModulesAndTools.Text" xml:space="preserve">
+    <value>PMWeb الأقسام والمعدّات المرخّصة في</value>
+  </data>
+  <data name="lblLicenseExpires.Text" xml:space="preserve">
+    <value>نهاية صلاحية الرخصة</value>
+  </data>
+  <data name="lblLicenseInfo.Text" xml:space="preserve">
+    <value>معلومات الترخيص</value>
+  </data>
+  <data name="lblLicenses.Text" xml:space="preserve">
+    <value>التراخيص المعيّنة من قاعدة البيانات</value>
+  </data>
+  <data name="lblMaxConcurrentGuests.Text" xml:space="preserve">
+    <value>الحدّ الأقصى</value>
+  </data>
+  <data name="lblMaxConcurrentUsers.Text" xml:space="preserve">
+    <value>الحدّ الأقصى</value>
+  </data>
+  <data name="lblMaxNamedGuests.Text" xml:space="preserve">
+    <value>الحدّ الأقصى</value>
+  </data>
+  <data name="lblMaxNamedUsers.Text" xml:space="preserve">
+    <value>الحدّ الأقصى</value>
+  </data>
+  <data name="lblMaxUserNumber.Text" xml:space="preserve">
+    <value>أكبر عدد</value>
+  </data>
+  <data name="lblNamedGuests.Text" xml:space="preserve">
+    <value>الضيوف بالإسم</value>
+  </data>
+  <data name="lblNamedUsers.Text" xml:space="preserve">
+    <value>المستخدمين بالإسم</value>
+  </data>
+  <data name="lblNbOfProjects.Text" xml:space="preserve">
+    <value>عدد المشاريع</value>
+  </data>
+  <data name="lblPlanning.Text" xml:space="preserve">
+    <value>التخطيط</value>
+  </data>
+  <data name="lblProcurement.Text" xml:space="preserve">
+    <value>المشتريات</value>
+  </data>
+  <data name="lblProjectManagement.Text" xml:space="preserve">
+    <value>وثائق هندسيّة</value>
+  </data>
+  <data name="lblRevit.Text" xml:space="preserve">
+    <value>Revit ريفت</value>
+  </data>
+  <data name="lblRiskAnalysis.Text" xml:space="preserve">
+    <value>تحليل المخاطر</value>
+  </data>
+  <data name="lblSAMLIntegration.Text" xml:space="preserve">
+    <value>SAML التكامل مع</value>
+  </data>
+  <data name="lblScheduling.Text" xml:space="preserve">
+    <value>الجدولة الزمنيّة</value>
+  </data>
+  <data name="lblStageGate.Text" xml:space="preserve">
+    <value>بوّابة المرحلة</value>
+  </data>
+  <data name="lblTimesheets.Text" xml:space="preserve">
+    <value>أوراق الدوام</value>
+  </data>
+  <data name="lblToolbox.Text" xml:space="preserve">
+    <value>علبة المعدّات</value>
+  </data>
+  <data name="lblTotalProjects.Text" xml:space="preserve">
+    <value>مجموع الرخص</value>
+  </data>
+  <data name="lblUsers.Text" xml:space="preserve">
+    <value>المستخدمين</value>
+  </data>
+  <data name="lblVendorPrequalification.Text" xml:space="preserve">
+    <value>التأهيل المسبق للبائع</value>
+  </data>
+  <data name="lblWorkflow.Text" xml:space="preserve">
+    <value>سير العمل</value>
+  </data>
+  <data name="LICENSE_CONCURRENT" xml:space="preserve">
+    <value>متزامن</value>
+  </data>
+  <data name="LICENSE_FULL_ASSIGNED" xml:space="preserve">
+    <value>لا يمكن تجاوز الحد الأقصى لعدد المستخدمين</value>
+  </data>
+  <data name="LICENSE_GUEST_ASSIGNED" xml:space="preserve">
+    <value>لا يمكن تجاوز الحد الأقصى لعدد الضيوف</value>
+  </data>
+  <data name="LICENSE_NAMED" xml:space="preserve">
+    <value>بالإسم</value>
+  </data>
+  <data name="RESTRECTION_ADMIN_DELETING" xml:space="preserve">
+    <value>لا يمكنك حذف المدير</value>
+  </data>
+  <data name="revEmail.ErrorMessage" xml:space="preserve">
+    <value>البريد الإلكتروني غير صحيح</value>
+  </data>
+  <data name="revUserName.ErrorMessage" xml:space="preserve">
+    <value>رمز المستخدم غير صالح</value>
+  </data>
+  <data name="rfv_Email.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="rfv_FirstName.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="rfv_IsNamedLic.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="rfv_UserId.ErrorMessage" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>&lt;b&gt;غير محدود&lt;/b&gt;</value>
+  </data>
+  <data name="USER_EXIST" xml:space="preserve">
+    <value>!إسم المستخدم بالأصل موجود</value>
+  </data>
+  <data name="Warning_Msg_GroupRequired" xml:space="preserve">
+    <value>مطلوب</value>
+  </data>
+</root>

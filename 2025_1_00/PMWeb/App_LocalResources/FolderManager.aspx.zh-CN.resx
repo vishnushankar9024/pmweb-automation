@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="chkSearchContent.text" xml:space="preserve">
+    <value>搜索文件内容</value>
+  </data>
+  <data name="ContextMenu_CopyFolder.Text" xml:space="preserve">
+    <value>复制文件夹</value>
+  </data>
+  <data name="ContextMenu_DeleteFolder.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="ContextMenu_EditFolder.Text" xml:space="preserve">
+    <value>编辑文件夹</value>
+  </data>
+  <data name="ContextMenu_NewFolder.Text" xml:space="preserve">
+    <value>新建文件夹</value>
+  </data>
+  <data name="ContextMenu_Open.Text" xml:space="preserve">
+    <value>打开</value>
+  </data>
+  <data name="ContextMenu_PasteFiles.Text" xml:space="preserve">
+    <value>粘贴文件</value>
+  </data>
+  <data name="ContextMenu_PasteFolder.Text" xml:space="preserve">
+    <value>粘贴文件夹</value>
+  </data>
+  <data name="ContextMenu_Rename.Text" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="ContextMenu_Subscribe.Text" xml:space="preserve">
+    <value>订阅</value>
+  </data>
+  <data name="ContextMenu_Unsubscribe.Text" xml:space="preserve">
+    <value>取消订阅</value>
+  </data>
+  <data name="ContextMenu_UploadFile.Text" xml:space="preserve">
+    <value>上传文件</value>
+  </data>
+  <data name="ErrorMsg_SelectLinesToDownload" xml:space="preserve">
+    <value>选择包含你要下载的文件行</value>
+  </data>
+  <data name="ErrorMsg_UploadingFiles" xml:space="preserve">
+    <value>Error while uploading - one or more file(s) were not uploaded. {0}</value>
+  </data>
+  <data name="FileContextMenu_3DViewer.Text" xml:space="preserve">
+    <value>3D 浏览器</value>
+  </data>
+  <data name="FileContextMenu_CancelCheckOut.Text" xml:space="preserve">
+    <value>取消签出</value>
+  </data>
+  <data name="FileContextMenu_CheckIn.Text" xml:space="preserve">
+    <value>签入</value>
+  </data>
+  <data name="FileContextMenu_CheckOut.Text" xml:space="preserve">
+    <value>签出</value>
+  </data>
+  <data name="FileContextMenu_Copy.Text" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="FileContextMenu_Delete.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="FileContextMenu_Download.Text" xml:space="preserve">
+    <value>下载</value>
+  </data>
+  <data name="FileContextMenu_Paste.Text" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="FileContextMenu_PMWebViewer.Text" xml:space="preserve">
+    <value>PMWeb 浏览器</value>
+  </data>
+  <data name="FileContextMenu_ShowLatestVersions.Text" xml:space="preserve">
+    <value>Show Latest Versions Only</value>
+  </data>
+  <data name="FileContextMenu_Upload.Text" xml:space="preserve">
+    <value>上传</value>
+  </data>
+  <data name="FolderContextMenu_AddFolder.Text" xml:space="preserve">
+    <value>添加文件夹</value>
+  </data>
+  <data name="FolderContextMenu_Delete.Text" xml:space="preserve">
+    <value>Delete Folders &amp; Subfolders</value>
+  </data>
+  <data name="FolderContextMenu_EditFolder.Text" xml:space="preserve">
+    <value>编辑文件夹</value>
+  </data>
+  <data name="FolderContextMenu_Paste.Text" xml:space="preserve">
+    <value>粘贴文件</value>
+  </data>
+  <data name="FolderContextMenu_Subscribe.Text" xml:space="preserve">
+    <value>订阅</value>
+  </data>
+  <data name="FolderContextMenu_Unsubscribe.Text" xml:space="preserve">
+    <value>取消订阅</value>
+  </data>
+  <data name="FolderContextMenu_UploadFiles.Text" xml:space="preserve">
+    <value>上传文件</value>
+  </data>
+  <data name="GridColumn_Category" xml:space="preserve">
+    <value>类别</value>
+  </data>
+  <data name="GridColumn_CheckedByUserName" xml:space="preserve">
+    <value>最后IN / OUT</value>
+  </data>
+  <data name="GridColumn_CreatedByUserName" xml:space="preserve">
+    <value>添加者</value>
+  </data>
+  <data name="GridColumn_CreatedDate" xml:space="preserve">
+    <value>已增加</value>
+  </data>
+  <data name="GridColumn_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="GridColumn_Extension" xml:space="preserve">
+    <value>Ext.</value>
+  </data>
+  <data name="GridColumn_FileName" xml:space="preserve">
+    <value>文件名</value>
+  </data>
+  <data name="GridColumn_FolderPath" xml:space="preserve">
+    <value>路径</value>
+  </data>
+  <data name="GridColumn_Id" xml:space="preserve">
+    <value>Document #</value>
+  </data>
+  <data name="GridColumn_LastModified" xml:space="preserve">
+    <value>最后检查输入/输出</value>
+  </data>
+  <data name="GridColumn_Size" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="GridColumn_Type" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="GridColumn_Version" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="GridColumn_WorkflowStatus" xml:space="preserve">
+    <value>Workflow  Status</value>
+  </data>
+  <data name="lblCategory.Text" xml:space="preserve">
+    <value>Default Category</value>
+  </data>
+  <data name="lblCheckIn.Text" xml:space="preserve">
+    <value>登记</value>
+  </data>
+  <data name="lblDownloadSelectedLine.Text" xml:space="preserve">
+    <value>下载文件</value>
+  </data>
+  <data name="lblDuplicateFile.Text" xml:space="preserve">
+    <value>When Adding Duplicate Files...</value>
+  </data>
+  <data name="lblEnableVersions.Text" xml:space="preserve">
+    <value>Enable Versions</value>
+  </data>
+  <data name="lblFolder" xml:space="preserve">
+    <value>文件夹：</value>
+  </data>
+  <data name="lblNoAvailableAttributes.Text" xml:space="preserve">
+    <value>无可用此文件夹的属性。</value>
+  </data>
+  <data name="lblNoFileToDisplay.Text" xml:space="preserve">
+    <value>没有文件显示。</value>
+  </data>
+  <data name="lblPMWebViewer.Text" xml:space="preserve">
+    <value>PMWeb浏览器</value>
+  </data>
+  <data name="lblQuickFileUpload.Text" xml:space="preserve">
+    <value>Quick File Upload</value>
+  </data>
+  <data name="lblSearchResult" xml:space="preserve">
+    <value>搜索结果</value>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>Default Type</value>
+  </data>
+  <data name="lblUploadOptionChFFText" xml:space="preserve">
+    <value>Browse to select files or drop files in the box below to upload them.</value>
+  </data>
+  <data name="lblUploadOptionIEText" xml:space="preserve">
+    <value>Browse to select files in the box below to upload them.</value>
+  </data>
+  <data name="lbt3DViewer.Text" xml:space="preserve">
+    <value>3D查看器</value>
+  </data>
+  <data name="Legend_Attributes.Text" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="legend_Preview.Text" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="Msg_CheckedOutBy" xml:space="preserve">
+    <value>签出</value>
+  </data>
+  <data name="rbnOverwriteDuplicateFile.Text" xml:space="preserve">
+    <value>Overwrite duplicate files. (Does not apply to Checked Out files or to files in Workflow.)</value>
+  </data>
+  <data name="rbnSkipDuplicateFile.Text" xml:space="preserve">
+    <value>Skip duplicate files</value>
+  </data>
+  <data name="rfvAttributeName.ErrorMessage" xml:space="preserve">
+    <value>需要</value>
+  </data>
+  <data name="tab_Attributes.Text" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="tab_Files.Text" xml:space="preserve">
+    <value>档</value>
+  </data>
+  <data name="tab_Permissions.Text" xml:space="preserve">
+    <value>权限</value>
+  </data>
+  <data name="tab_Revision.Text" xml:space="preserve">
+    <value>调整</value>
+  </data>
+  <data name="WarningMsg_CheckoutNeedSelectedFile" xml:space="preserve">
+    <value>请选择一个文件，然后退房。</value>
+  </data>
+  <data name="WarningMsg_DeleteSelectedFile" xml:space="preserve">
+    <value>删除选定的文件吗？</value>
+  </data>
+  <data name="WarningMsg_DeleteSelectedFolder" xml:space="preserve">
+    <value>删除无法恢复。\ n您确定要继续吗？</value>
+  </data>
+  <data name="WarningMsg_DeleteSelectedFolderWithSubFolders" xml:space="preserve">
+    <value>您将删除选定的文件夹，子文件夹，这些文件夹内的所有的文件。这个过程不能被恢复。\ n您确定要继续吗？</value>
+  </data>
+  <data name="WarningMsg_FileExtension" xml:space="preserve">
+    <value>Is A Restricted File Type. Valid File Types Include ( {0} ). Please Contact Your System Administrator If You Need To Upload A File Type Which Is Not Supported.</value>
+  </data>
+  <data name="WarningMsg_InvalidFile" xml:space="preserve">
+    <value>Invalid file extension or maximum file size exceeded</value>
+  </data>
+  <data name="WarningMsg_UnableDeleteCheckoutFile" xml:space="preserve">
+    <value>此文件不能被删除，直到它已签入。</value>
+  </data>
+  <data name="WarningMsg_UnableToDelete" xml:space="preserve">
+    <value>You don't have permission to delete one or more from the selected file(s). </value>
+  </data>
+</root>
