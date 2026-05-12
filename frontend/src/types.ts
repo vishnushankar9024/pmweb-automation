@@ -5,12 +5,10 @@ export interface ChatMessage {
 }
 
 export interface ExecutedAction {
-  tool: string;
-  args: Record<string, unknown>;
-  result: {
-    status: string;
-    [key: string]: unknown;
-  };
+  step: number;
+  action: string;
+  result?: string | Record<string, unknown>;
+  error?: string;
 }
 
 export interface ChatResponse {

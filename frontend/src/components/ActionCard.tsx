@@ -1,63 +1,51 @@
 import type { ExecutedAction } from "../types";
 
-const TOOL_LABELS: Record<string, string> = {
-  create_security_group: "Security Group Created",
-  create_user: "User Created",
-  set_user_access: "User Access Updated",
-  set_password_policy: "Password Policy Updated",
-  create_workflow: "Workflow Created",
-  create_form: "Form Created",
-};
-
-const TOOL_ICONS: Record<string, string> = {
-  create_security_group: "🔒",
-  create_user: "👤",
-  set_user_access: "🔑",
-  set_password_policy: "🛡️",
-  create_workflow: "🔄",
-  create_form: "📋",
-};
-
 export function ActionCard({ action }: { action: ExecutedAction }) {
-  const label = TOOL_LABELS[action.tool] || action.tool;
-  const icon = TOOL_ICONS[action.tool] || "⚡";
-  const isSuccess = action.result.status === "created" || action.result.status === "updated";
+  const hasError = !!action.error;
+  const resultText =
+    typeof action.result === "string"
+      ? action.result
+      : action.result
+      ? JSON.stringify(action.result, null, 2)
+      : "";
 
   return (
     <div
       style={{
-        background: isSuccess ? "#f0fdf4" : "#fef2f2",
-        border: `1px solid ${isSuccess ? "#bbf7d0" : "#fecaca"}`,
+        background: hasError ? "#fef2f2" : "#f0fdf4",
+        border: `1px solid ${hasError ? "#fecaca" : "#bbf7d0"}`,
         borderRadius: 8,
-        padding: "10px 14px",
-        marginTop: 8,
-        fontSize: 13,
+        padding: "8px 12px",
+        marginTop: 6,
+        fontSize: 12,
       }}
     >
-      <div style={{ fontWeight: 600, marginBottom: 4 }}>
-        {icon} {label}
+      <div style={{ fontWeight: 600, marginBottom: 2 }}>
+        <span style={{ color: "#64748b" }}>Step {action.step}:</span>{" "}
+        {action.action}
         <span
           style={{
             marginLeft: 8,
-            fontSize: 11,
-            color: isSuccess ? "#16a34a" : "#dc2626",
+            fontSize: 10,
+            color: hasError ? "#dc2626" : "#16a34a",
             textTransform: "uppercase",
           }}
         >
-          {action.result.status}
+          {hasError ? "ERROR" : "OK"}
         </span>
       </div>
-      <pre
-        style={{
-          margin: 0,
-          fontSize: 11,
-          color: "#475569",
-          whiteSpace: "pre-wrap",
-          wordBreak: "break-word",
-        }}
-      >
-        {JSON.stringify(action.args, null, 2)}
-      </pre>
+      {(resultText || action.error) && (
+        <div
+          style={{
+            fontSize: 11,
+            color: hasError ? "#dc2626" : "#475569",
+            marginTop: 2,
+            wordBreak: "break-word",
+          }}
+        >
+          {hasError ? action.error : resultText}
+        </div>
+      )}
     </div>
   );
 }
