@@ -1,17 +1,22 @@
 """PMWeb browser connection management."""
 
+import asyncio
+
 from fastapi import APIRouter, HTTPException
 
-from app.api.chat import agent
+from app.api.chat import agent, executor
 
 router = APIRouter(prefix="/api/pmweb", tags=["pmweb"])
 
 
 @router.post("/connect")
 async def connect_pmweb() -> dict:
-    result = agent.login()
+    loop = asyncio.get_event_loop()
+    result = await loop.run_in_executor(executor, agent.login)
     if result["status"] != "success":
-        raise HTTPException(status_code=401, detail=result.get("message"))
+        raise HTTPException(
+            status_code=401, detail=result.get("message")
+        )
     return {"status": "connected"}
 
 

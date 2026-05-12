@@ -201,7 +201,14 @@ class HybridAgent:
         except Exception as exc:
             return {"status": "error", "message": str(exc)}
 
+    def run_task_sync(self, task: str) -> dict[str, Any]:
+        """Synchronous version for thread pool execution."""
+        return self._run_task_impl(task)
+
     async def run_task(self, task: str) -> dict[str, Any]:
+        return self._run_task_impl(task)
+
+    def _run_task_impl(self, task: str) -> dict[str, Any]:
         if not self._logged_in:
             r = self.login()
             if r["status"] != "success":
