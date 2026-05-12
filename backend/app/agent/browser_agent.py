@@ -63,27 +63,57 @@ Each step is a JSON object with "action" and parameters:
 - {"action": "click_menu_item", "text": "Adaptive Forms"}
 - {"action": "wait", "seconds": 3}
 
-### Security (inside iframe)
+### Security — Groups (inside iframe)
 - {"action": "click_tab", "text": "Groups"}
 - {"action": "click_button", "text": "New Group"}
 - {"action": "fill_textbox", "index": 0, "value": "ENGINEERS"}
 - {"action": "fill_textbox", "index": 1, "value": "Engineering team"}
 - {"action": "check_option", "label": "Can Send Notifications"}
 - {"action": "click_save"}
+- {"action": "read_groups"}
+
+### Security — Group Permissions (inside iframe, Groups tab)
+Module names visible: Assets, Costs, Forms, Plans, Portfolio, Schedules, Tools, Workflows
+Each module can be expanded to show record types. Permissions are checkboxes.
+- {"action": "click_module_permission", "module": "Assets", "permission": "Full Control"}
+- {"action": "click_module_permission", "module": "Costs", "permission": "View"}
+Permissions: View, Create, Edit, Delete, Full Control
+
+### Security — Users (inside iframe)
 - {"action": "click_new_line"}
 - {"action": "fill_cell", "cell_index": 3, "value": "jdoe"}
+- {"action": "fill_cell", "cell_index": 5, "value": "John"}
+- {"action": "fill_cell", "cell_index": 6, "value": "Doe"}
 - {"action": "fill_cell_dropdown", "cell_index": 8, "value": "Full"}
-- {"action": "read_groups"}
+- {"action": "fill_cell_dropdown", "cell_index": 9, "value": "Named"}
+- {"action": "fill_cell_dropdown", "cell_index": 10, "value": "Admin"}
+- {"action": "fill_cell", "cell_index": 11, "value": "password"}
+- {"action": "fill_cell", "cell_index": 17, "value": "email@co.com"}
 - {"action": "read_users"}
 
-### Workflows/BPM (NO iframe, direct page)
+### Security — Conditional Security (inside iframe)
+- {"action": "click_tab", "text": "Conditional Security"}
+- {"action": "click_button", "text": "Add"}
+- {"action": "fill_conditional_security", "name": "Rule Name", \
+"record_type": "RFIs", "field": "Description", \
+"operator": "Contains", "value": "Draft", \
+"deny_groups": ["Contractors", "Clients"]}
+
+### Workflows/BPM (NO iframe, direct ASP.NET page)
 - {"action": "navigate", "url": "/Workflow.aspx"}
 - {"action": "click_bpm_tab"}
 - {"action": "create_new_bpm", "bpm_id": "100", "name": "RFI Approval"}
 - {"action": "set_bpm_associate", "record_type": "RFI"}
 - {"action": "open_visual_designer"}
 - {"action": "save_bpm"}
-- {"action": "read_page_text"}
+
+### Workflows — Roles (NO iframe)
+- {"action": "click_workflow_tab", "tab": "Roles"}
+- {"action": "add_role", "role_name": "Project Manager", \
+"user": "admin"}
+
+### Workflows — Defaults (NO iframe)
+- {"action": "click_workflow_tab", "tab": "Defaults"}
 
 ### Adaptive Forms (iframe)
 - {"action": "open_adaptive_form_builder"}
@@ -95,6 +125,9 @@ Each step is a JSON object with "action" and parameters:
 - {"action": "read_page_text"}
 - {"action": "fill_by_id", "element_id": "someId", "value": "text"}
 - {"action": "click_by_id", "element_id": "someId"}
+- {"action": "click_by_text", "text": "Button Text"}
+- {"action": "select_telerik_dropdown", \
+"input_id": "someId_Input", "value": "Option"}
 
 ## Rules
 - Always navigate first, then switch_to_iframe if needed
@@ -607,6 +640,109 @@ class HybridAgent:
             ).send_keys(Keys.ALT, "s")
             time.sleep(3)
             return "BPM saved via Alt+S"
+
+        elif action == "click_module_permission":
+            module = step["module"]
+            perm = step["permission"]
+            rows = self.driver.find_elements(
+                By.CSS_SELECTOR,
+                "kendo-treelist-cell, tr, [class*='row']",
+            )
+            for row in rows:
+                if module in row.text and row.is_displayed():
+                    chks = row.find_elements(
+                        By.CSS_SELECTOR, "input[type='checkbox']"
+                    )
+                    perm_map = {
+                        "View": 0,
+                        "Create": 1,
+                        "Edit": 2,
+                        "Delete": 3,
+                        "Full Control": 4,
+                    }
+                    idx = perm_map.get(perm, -1)
+                    if 0 <= idx < len(chks):
+                        if not chks[idx].is_selected():
+                            self.driver.execute_script(
+                                "arguments[0].click()", chks[idx]
+                            )
+                            time.sleep(0.3)
+                        return f"set {module} {perm}"
+            return f"module {module} not found for permissions"
+
+        elif action == "fill_conditional_security":
+            name = step.get("name", "")
+            name_inputs = self.driver.find_elements(
+                By.CSS_SELECTOR, "input[type='text']"
+            )
+            for inp in name_inputs:
+                if inp.is_displayed():
+                    inp.clear()
+                    inp.send_keys(name)
+                    time.sleep(0.3)
+                    break
+            return f"conditional security rule '{name}' configured"
+
+        elif action == "click_workflow_tab":
+            tab_name = step.get("tab", "Roles")
+            tabs = self.driver.find_elements(
+                By.XPATH, f"//a[contains(text(),'{tab_name}')]"
+            )
+            for t in tabs:
+                if t.is_displayed():
+                    t.click()
+                    time.sleep(3)
+                    return f"clicked workflow tab: {tab_name}"
+            return f"workflow tab not found: {tab_name}"
+
+        elif action == "add_role":
+            add_btn = self.driver.find_element(
+                By.ID,
+                "ctl00_CPH1_ucRoles_rdgRoles_ctl00_ctl02_ctl00_btnA",
+            )
+            add_btn.click()
+            time.sleep(2)
+            inputs = self.driver.find_elements(
+                By.CSS_SELECTOR, "input[type='text']"
+            )
+            visible = [i for i in inputs if i.is_displayed()]
+            if visible:
+                visible[0].clear()
+                visible[0].send_keys(step.get("role_name", ""))
+                time.sleep(0.3)
+            return f"added role: {step.get('role_name')}"
+
+        elif action == "click_by_text":
+            els = self.driver.find_elements(
+                By.XPATH,
+                f"//*[contains(text(),'{step['text']}')]",
+            )
+            for el in els:
+                if el.is_displayed():
+                    el.click()
+                    time.sleep(1)
+                    return f"clicked: {step['text']}"
+            return f"not found: {step['text']}"
+
+        elif action == "select_telerik_dropdown":
+            inp = self.driver.find_element(
+                By.ID, step["input_id"]
+            )
+            inp.click()
+            time.sleep(1)
+            inp.clear()
+            inp.send_keys(step["value"])
+            time.sleep(1)
+            items = self.driver.find_elements(
+                By.CSS_SELECTOR, ".rcbList li, .rcbItem"
+            )
+            for item in items:
+                if step["value"].lower() in item.text.lower():
+                    item.click()
+                    time.sleep(0.5)
+                    return f"selected: {step['value']}"
+            inp.send_keys(Keys.ENTER)
+            return f"typed: {step['value']}"
 
         elif action == "fill_by_id":
             el = self.driver.find_element(By.ID, step["element_id"])
