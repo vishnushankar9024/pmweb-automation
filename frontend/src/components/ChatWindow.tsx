@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { sendMessage, getPmwebStatus, connectPmweb } from "../services/api";
 import type { ChatMessage } from "../types";
 import { MessageBubble } from "./MessageBubble";
-import { PMWebViewer } from "./PMWebViewer";
 
 const SUGGESTIONS = [
   "Create security groups for a construction project",
@@ -86,12 +85,11 @@ export function ChatWindow() {
       {/* Left: Chat Panel */}
       <div
         style={{
-          width: pmwebConnected ? "40%" : "100%",
-          maxWidth: pmwebConnected ? undefined : 800,
-          margin: pmwebConnected ? undefined : "0 auto",
+          width: "100%",
+          maxWidth: 800,
+          margin: "0 auto",
           display: "flex",
           flexDirection: "column",
-          borderRight: pmwebConnected ? "1px solid #e2e8f0" : "none",
           transition: "width 0.3s ease",
         }}
       >
@@ -277,11 +275,6 @@ export function ChatWindow() {
           </button>
         </div>
       </div>
-
-      {/* Right: Live PMWeb Browser View */}
-      {pmwebConnected && (
-        <PMWebViewer isLoading={loading} />
-      )}
 
       <style>{`
         @keyframes bounce {

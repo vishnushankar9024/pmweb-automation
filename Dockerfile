@@ -2,10 +2,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install ALL system deps in one layer: Chrome, VNC, noVNC, git, Node
+# Install Chrome for Selenium + Node.js for frontend build
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc wget gnupg2 unzip curl git \
-    xvfb x11vnc fluxbox \
+    gcc wget gnupg2 curl \
     && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub \
        | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg \
     && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] \
@@ -15,15 +14,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get install -y google-chrome-stable \
     && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs \
-    && git clone --depth 1 https://github.com/novnc/noVNC.git /opt/noVNC \
-    && git clone --depth 1 https://github.com/novnc/websockify.git /opt/noVNC/utils/websockify \
-    && ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
+# Python deps
 COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt \
-    && pip install --no-cache-dir gunicorn websockets
+    && pip install --no-cache-dir gunicorn
 
 # Build frontend
 COPY frontend/ ./frontend/
@@ -36,18 +32,13 @@ COPY backend/pyproject.toml ./
 # Move frontend build
 RUN mv frontend/dist ./static
 
-# Startup script
-COPY start.sh ./start.sh
-RUN chmod +x start.sh
-
 ENV PORT=8080
-ENV DISPLAY=:99
-ENV PMWEB_HEADLESS=false
+ENV PMWEB_HEADLESS=true
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8080
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
     CMD python -c "import requests; requests.get('http://localhost:8080/health', timeout=5)"
 
-CMD ["./start.sh"]
+CMD exec gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 300 --worker-class uvicorn.workers.UvicornWorker app.main:app
