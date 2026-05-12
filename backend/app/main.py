@@ -1,7 +1,7 @@
 import logging
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -35,7 +35,53 @@ app.include_router(health_router)
 app.include_router(chat_router)
 app.include_router(pmweb_router)
 
-# Serve frontend static files (built output)
+
+@app.websocket("/ws/vnc")
+async def vnc_proxy(websocket: WebSocket):
+    """Proxy VNC WebSocket to local websockify for live browser view."""
+    import asyncio
+
+    import websockets
+
+    await websocket.accept()
+    try:
+        async with websockets.connect(
+            "ws://localhost:6081/websockify"
+        ) as vnc:
+
+            async def to_vnc():
+                try:
+                    while True:
+                        data = await websocket.receive_bytes()
+                        await vnc.send(data)
+                except Exception:
+                    pass
+
+            async def to_client():
+                try:
+                    async for msg in vnc:
+                        if isinstance(msg, bytes):
+                            await websocket.send_bytes(msg)
+                        else:
+                            await websocket.send_text(msg)
+                except Exception:
+                    pass
+
+            await asyncio.gather(to_vnc(), to_client())
+    except Exception:
+        pass
+
+
+# Serve noVNC static files
+novnc_path = "/opt/noVNC"
+if os.path.isdir(novnc_path):
+    app.mount(
+        "/novnc",
+        StaticFiles(directory=novnc_path, html=True),
+        name="novnc",
+    )
+
+# Serve frontend
 static_dir = os.path.join(os.path.dirname(__file__), "..", "static")
 frontend_dist = os.path.join(
     os.path.dirname(__file__), "..", "..", "frontend", "dist"
@@ -43,5 +89,7 @@ frontend_dist = os.path.join(
 serve_dir = static_dir if os.path.isdir(static_dir) else frontend_dist
 if os.path.isdir(serve_dir):
     app.mount(
-        "/", StaticFiles(directory=serve_dir, html=True), name="frontend"
+        "/",
+        StaticFiles(directory=serve_dir, html=True),
+        name="frontend",
     )

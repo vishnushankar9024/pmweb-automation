@@ -2,52 +2,52 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies including Chrome for Selenium
+# Install ALL system deps in one layer: Chrome, VNC, noVNC, git, Node
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    wget \
-    gnupg2 \
-    unzip \
-    curl \
-    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg \
-    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    gcc wget gnupg2 unzip curl git \
+    xvfb x11vnc fluxbox \
+    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub \
+       | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] \
+       http://dl.google.com/linux/chrome/deb/ stable main" \
+       > /etc/apt/sources.list.d/google-chrome.list \
     && apt-get update \
     && apt-get install -y google-chrome-stable \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Node.js for frontend build
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs \
+    && git clone --depth 1 https://github.com/novnc/noVNC.git /opt/noVNC \
+    && git clone --depth 1 https://github.com/novnc/websockify.git /opt/noVNC/utils/websockify \
+    && ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy and install Python dependencies
+# Install Python dependencies
 COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt \
-    && pip install --no-cache-dir gunicorn pymongo
+    && pip install --no-cache-dir gunicorn websockets
 
 # Build frontend
 COPY frontend/ ./frontend/
 RUN cd frontend && npm install && npm run build
 
-# Copy backend code
+# Copy backend
 COPY backend/app/ ./app/
 COPY backend/pyproject.toml ./
 
-# Move frontend build to static serving location
+# Move frontend build
 RUN mv frontend/dist ./static
 
-# Environment variables
+# Startup script
+COPY start.sh ./start.sh
+RUN chmod +x start.sh
+
 ENV PORT=8080
-ENV PMWEB_BASE_URL=https://cmcs.pmweb.com/2025_1_00/pmweb/
-ENV PMWEB_USERNAME=admin
-ENV PMWEB_PASSWORD=pmweb2
-ENV PMWEB_HEADLESS=true
+ENV DISPLAY=:99
+ENV PMWEB_HEADLESS=false
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8080
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
     CMD python -c "import requests; requests.get('http://localhost:8080/health', timeout=5)"
 
-# Run with gunicorn
-CMD exec gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 300 --worker-class uvicorn.workers.UvicornWorker app.main:app
+CMD ["./start.sh"]
