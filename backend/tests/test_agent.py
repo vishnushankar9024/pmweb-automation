@@ -9,7 +9,6 @@ from app.services.pmweb_browser import (
 )
 from app.services.pmweb_client import PMWebClient
 
-
 SECURITY_GROUP_PAGE_TEXT = """
 Security
 Manage your group and user security settings

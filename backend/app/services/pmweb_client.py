@@ -20,7 +20,10 @@ class PMWebClient:
         }
 
     def _get_browser(self):
-        from app.api.pmweb import get_browser_if_connected
+        try:
+            from app.api.pmweb import get_browser_if_connected
+        except ImportError:
+            return None
 
         return get_browser_if_connected()
 
