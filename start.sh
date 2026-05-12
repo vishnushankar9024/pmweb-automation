@@ -19,7 +19,9 @@ sleep 1
 echo "Starting PMWeb Agent on port ${PORT:-8080}..."
 exec gunicorn \
     --bind 0.0.0.0:${PORT:-8080} \
-    --workers 2 \
-    --timeout 300 \
+    --workers 1 \
+    --timeout 600 \
+    --graceful-timeout 600 \
+    --keep-alive 120 \
     --worker-class uvicorn.workers.UvicornWorker \
     app.main:app

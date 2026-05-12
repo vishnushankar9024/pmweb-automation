@@ -51,22 +51,40 @@ export function ChatWindow() {
     setLoading(true);
 
     try {
-      const res = await sendMessage(msg, conversationId);
-      setConversationId(res.conversation_id);
-      const assistantMsg: ChatMessage = {
-        role: "assistant",
-        content: res.reply,
-        actions: res.executed_actions,
-      };
-      setMessages((prev) => [...prev, assistantMsg]);
-    } catch {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 300000);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL || ""}/api/chat`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: msg,
+            conversation_id: conversationId,
+          }),
+          signal: controller.signal,
+        }
+      );
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error(`API ${res.status}`);
+      const data = await res.json();
+      setConversationId(data.conversation_id);
       setMessages((prev) => [
         ...prev,
         {
-          role: "assistant",
-          content:
-            "Sorry, I encountered an error. Please check that the backend is running.",
+          role: "assistant" as const,
+          content: data.reply,
+          actions: data.executed_actions,
         },
+      ]);
+    } catch (err) {
+      const msg2 =
+        err instanceof DOMException && err.name === "AbortError"
+          ? "Request timed out (5 min). The agent may still be working — check the live browser view."
+          : "Sorry, an error occurred. The agent may still be working in PMWeb.";
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant" as const, content: msg2 },
       ]);
     } finally {
       setLoading(false);
