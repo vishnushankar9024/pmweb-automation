@@ -13,11 +13,7 @@ class Settings(BaseSettings):
     pmweb_password: str = ""
     pmweb_headless: bool = False
 
-    cors_origins: list[str] = [
-        "http://localhost:5173",
-        "http://localhost:3000",
-        "https://everyone-perth-sep-herbal.trycloudflare.com",
-    ]
+    cors_origins: list[str] = ["*"]
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 

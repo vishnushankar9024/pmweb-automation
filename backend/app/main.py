@@ -35,10 +35,13 @@ app.include_router(health_router)
 app.include_router(chat_router)
 app.include_router(pmweb_router)
 
+# Serve frontend static files (built output)
+static_dir = os.path.join(os.path.dirname(__file__), "..", "static")
 frontend_dist = os.path.join(
     os.path.dirname(__file__), "..", "..", "frontend", "dist"
 )
-if os.path.isdir(frontend_dist):
+serve_dir = static_dir if os.path.isdir(static_dir) else frontend_dist
+if os.path.isdir(serve_dir):
     app.mount(
-        "/", StaticFiles(directory=frontend_dist, html=True), name="frontend"
+        "/", StaticFiles(directory=serve_dir, html=True), name="frontend"
     )
