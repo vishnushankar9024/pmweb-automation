@@ -11,3 +11,4 @@ ruff>=0.8.0
 selenium>=4.25.0
 webdriver-manager>=4.0.0
 gunicorn>=21.2.0
+pymongo>=4.6.0
