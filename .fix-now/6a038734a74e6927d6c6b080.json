@@ -1,0 +1,14 @@
+{
+  "feedback_id": "6a038734a74e6927d6c6b080",
+  "prompt": "hi",
+  "expected": "start with \"whats up\"",
+  "actual": "I'm here to help! How can I assist you with PMWeb automation today?",
+  "diagnosis": {
+    "prompt": "hi",
+    "actual_result": "I'm here to help! How can I assist you with PMWeb automation today?",
+    "expected_result": "start with \"whats up\"",
+    "issues": [],
+    "summary": "User expected: 'start with \"whats up\"' but got: 'I'm here to help! How can I assist you with PMWeb automation today?'"
+  },
+  "timestamp": "20260512200157"
+}
