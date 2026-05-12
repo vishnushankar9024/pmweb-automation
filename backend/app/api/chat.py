@@ -1,28 +1,21 @@
 from fastapi import APIRouter, HTTPException
 
-from app.agent.core import PMWebAgent
+from app.agent.browser_agent import BrowserAgent
 from app.models.chat import ChatRequest, ChatResponse
 
 router = APIRouter(prefix="/api", tags=["chat"])
 
-agent = PMWebAgent()
+agent = BrowserAgent()
 
 
 @router.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest) -> ChatResponse:
     try:
-        result = await agent.chat(
-            message=request.message,
-            conversation_id=request.conversation_id,
+        result = await agent.run_task(request.message)
+        return ChatResponse(
+            reply=result["reply"],
+            conversation_id=request.conversation_id or "default",
+            executed_actions=result.get("actions", []),
         )
-        return ChatResponse(**result)
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
-
-
-@router.get("/conversations/{conversation_id}/summary")
-async def get_summary(conversation_id: str) -> dict:
-    if conversation_id not in agent._conversations:
-        raise HTTPException(status_code=404, detail="Conversation not found")
-    state = agent._conversations[conversation_id]
-    return state.pmweb.get_summary()
