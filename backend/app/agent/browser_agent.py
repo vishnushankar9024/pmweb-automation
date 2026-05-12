@@ -156,6 +156,16 @@ class HybridAgent:
         self._driver: webdriver.Chrome | None = None
         self._logged_in = False
         self._client: OpenAI | None = None
+        self._stop_requested = False
+
+    def request_stop(self) -> None:
+        self._stop_requested = True
+
+    def _check_stop(self) -> bool:
+        if self._stop_requested:
+            self._stop_requested = False
+            return True
+        return False
 
     @property
     def client(self) -> OpenAI:
@@ -208,18 +218,53 @@ class HybridAgent:
     async def run_task(self, task: str) -> dict[str, Any]:
         return self._run_task_impl(task)
 
+    def run_task_with_context(
+        self, task: str, file_context: str = ""
+    ) -> dict[str, Any]:
+        """Run task with optional file context injected."""
+        full_task = task
+        if file_context:
+            full_task = (
+                f"{task}\n\n"
+                f"--- Attached file content ---\n"
+                f"{file_context[:5000]}"
+            )
+        return self._run_task_impl(full_task)
+
     def _run_task_impl(self, task: str) -> dict[str, Any]:
+        self._stop_requested = False
+
         if not self._logged_in:
             r = self.login()
             if r["status"] != "success":
-                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
+                return {
+                    "reply": f"Cannot connect: {r.get('message')}",
+                    "actions": [],
+                }
 
-        # Step 1: Ask GPT-4o to plan (ONE call, text only, no screenshots)
+        # Check for similar past successful plans
+        from app.services.learning_store import LearningStore
+
+        learner = LearningStore()
+        similar = learner.find_similar(task)
+        examples = ""
+        if similar:
+            examples = "\n\nPrevious successful plans:\n"
+            for s in similar[:2]:
+                examples += (
+                    f"- Prompt: {s['prompt'][:80]}\n"
+                    f"  Plan: {json.dumps(s['plan'][:5])}\n"
+                )
+
+        # Step 1: Ask GPT-4o to plan
         response = self.client.chat.completions.create(
             model=settings.openai_model,
             messages=[
                 {"role": "system", "content": PLANNER_PROMPT},
-                {"role": "user", "content": task},
+                {
+                    "role": "user",
+                    "content": task + examples,
+                },
             ],
             temperature=0,
             max_tokens=2000,
@@ -227,7 +272,6 @@ class HybridAgent:
 
         plan_text = response.choices[0].message.content or "[]"
 
-        # Extract JSON from response
         try:
             start = plan_text.index("[")
             end = plan_text.rindex("]") + 1
@@ -235,22 +279,52 @@ class HybridAgent:
         except (ValueError, json.JSONDecodeError):
             return {"reply": plan_text, "actions": []}
 
-        # Step 2: Execute each step via Selenium
+        # Step 2: Execute with stop check
         results = []
+        stopped = False
         for i, step in enumerate(steps):
+            if self._check_stop():
+                stopped = True
+                results.append({
+                    "step": i + 1,
+                    "action": "STOPPED",
+                    "result": f"Stopped by user at step {i + 1}",
+                })
+                break
+
             action = step.get("action", "")
-            logger.info(
-                "Step %d: %s %s", i + 1, action, {k: v for k, v in step.items() if k != "action"}
-            )
+            logger.info("Step %d: %s", i + 1, action)
             try:
                 result = self._execute_step(step)
-                results.append({"step": i + 1, "action": action, "result": result})
-                logger.info("  -> %s", str(result)[:200])
+                results.append({
+                    "step": i + 1,
+                    "action": action,
+                    "result": result,
+                })
             except Exception as exc:
                 logger.exception("Step %d failed", i + 1)
-                results.append({"step": i + 1, "action": action, "error": str(exc)})
+                results.append({
+                    "step": i + 1,
+                    "action": action,
+                    "error": str(exc),
+                })
 
-        # Step 3: Summarize results (ONE more call)
+        # Store interaction for learning
+        has_errors = any("error" in r for r in results)
+        if not stopped:
+            if has_errors:
+                learner.store_failure(task, steps, results)
+            else:
+                learner.store_success(task, steps, results)
+
+        if stopped:
+            return {
+                "reply": f"Stopped after step {len(results)}. "
+                f"Completed steps may have been saved in PMWeb.",
+                "actions": results,
+            }
+
+        # Step 3: Summarize results
         summary_response = self.client.chat.completions.create(
             model=settings.openai_model,
             messages=[
