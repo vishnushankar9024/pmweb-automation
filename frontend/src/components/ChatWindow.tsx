@@ -3,6 +3,7 @@ import { sendMessage, getPmwebStatus, connectPmweb } from "../services/api";
 import type { ChatMessage } from "../types";
 import { MessageBubble } from "./MessageBubble";
 import { PMWebViewer } from "./PMWebViewer";
+import { FeedbackPanel } from "./FeedbackPanel";
 
 const SUGGESTIONS = [
   "Create security groups for a construction project",
@@ -11,11 +12,16 @@ const SUGGESTIONS = [
   "Set up user accounts with different access levels",
 ];
 
-export function ChatWindow() {
+interface ChatWindowProps {
+  initialSessionId?: string;
+  onSessionChange?: (id: string) => void;
+}
+
+export function ChatWindow({ initialSessionId, onSessionChange }: ChatWindowProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [conversationId, setConversationId] = useState<string>();
+  const [conversationId, setConversationId] = useState<string | undefined>(initialSessionId);
   const [pmwebConnected, setPmwebConnected] = useState(false);
   const [pmwebConnecting, setPmwebConnecting] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -54,6 +60,7 @@ export function ChatWindow() {
     try {
       const res = await sendMessage(msg, conversationId);
       setConversationId(res.conversation_id);
+      onSessionChange?.(res.conversation_id);
       const assistantMsg: ChatMessage = {
         role: "assistant",
         content: res.reply,
@@ -78,7 +85,7 @@ export function ChatWindow() {
     <div
       style={{
         display: "flex",
-        height: "100vh",
+        flex: 1,
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       }}
@@ -198,7 +205,16 @@ export function ChatWindow() {
           )}
 
           {messages.map((msg, i) => (
-            <MessageBubble key={i} message={msg} />
+            <div key={i}>
+              <MessageBubble message={msg} />
+              {msg.role === "assistant" && (
+                <FeedbackPanel
+                  sessionId={conversationId}
+                  messageIndex={i}
+                  actionName={msg.actions?.[0]?.tool}
+                />
+              )}
+            </div>
           ))}
 
           {loading && (

@@ -6,8 +6,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.api.chat import router as chat_router
+from app.api.feedback import router as feedback_router
 from app.api.health import router as health_router
+from app.api.mlops import router as mlops_router
 from app.api.pmweb import router as pmweb_router
+from app.api.sessions import router as sessions_router
 from app.config import settings
 
 logging.basicConfig(
@@ -34,6 +37,9 @@ app.add_middleware(
 app.include_router(health_router)
 app.include_router(chat_router)
 app.include_router(pmweb_router)
+app.include_router(sessions_router)
+app.include_router(feedback_router)
+app.include_router(mlops_router)
 
 frontend_dist = os.path.join(
     os.path.dirname(__file__), "..", "..", "frontend", "dist"

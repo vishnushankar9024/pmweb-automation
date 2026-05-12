@@ -49,3 +49,55 @@ export async function connectPmweb(): Promise<{
   }
   return res.json();
 }
+
+// ── Session management ──────────────────────────────────────────────
+
+export async function getSessionList(): Promise<string[]> {
+  const res = await fetch(`${API_BASE}/api/sessions`);
+  if (!res.ok) return [];
+  return res.json();
+}
+
+export async function deleteSession(sessionId: string): Promise<void> {
+  await fetch(`${API_BASE}/api/sessions/${sessionId}`, { method: "DELETE" });
+}
+
+// ── Feedback ────────────────────────────────────────────────────────
+
+export interface FeedbackPayload {
+  session_id: string;
+  message_index: number;
+  rating: number;
+  comment: string;
+  action_name: string;
+}
+
+export async function submitFeedback(payload: FeedbackPayload): Promise<{ feedback_id: string }> {
+  const res = await fetch(`${API_BASE}/api/feedback`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    throw new Error(`Feedback submit failed: ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function getFeedbackSummary(): Promise<{
+  total: number;
+  positive: number;
+  negative: number;
+  neutral: number;
+  satisfaction_rate: number | null;
+}> {
+  const res = await fetch(`${API_BASE}/api/feedback/summary`);
+  return res.json();
+}
+
+// ── MLOps / Performance ─────────────────────────────────────────────
+
+export async function getPerformanceReport(): Promise<Record<string, unknown>> {
+  const res = await fetch(`${API_BASE}/api/mlops/report`);
+  return res.json();
+}
