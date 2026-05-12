@@ -255,4 +255,32 @@ TOOLS: list[dict] = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_security_groups",
+            "description": (
+                "List all existing security groups in PMWeb. "
+                "Opens the Security page and reads the group names."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {},
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_users",
+            "description": (
+                "List existing users in PMWeb. "
+                "Opens the Security Users tab and reads user details."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {},
+            },
+        },
+    },
 ]

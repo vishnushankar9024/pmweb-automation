@@ -82,6 +82,24 @@ class PMWebClient:
         self._store["workflows"].append(bpm.model_dump())
         return {"status": "created", "workflow": bpm.model_dump()}
 
+    def list_security_groups(self, **kw: Any) -> dict[str, Any]:
+        browser = self._get_browser()
+        if browser:
+            return browser.list_security_groups()
+        return {
+            "status": "not_connected",
+            "message": "Connect to PMWeb first",
+        }
+
+    def list_users(self, **kw: Any) -> dict[str, Any]:
+        browser = self._get_browser()
+        if browser:
+            return browser.list_users()
+        return {
+            "status": "not_connected",
+            "message": "Connect to PMWeb first",
+        }
+
     def get_summary(self) -> dict[str, Any]:
         return {k: len(v) for k, v in self._store.items()}
 

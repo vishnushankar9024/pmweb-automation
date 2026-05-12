@@ -497,20 +497,113 @@ class PMWebBrowser:
                 break
 
     # ------------------------------------------------------------------ #
-    #  Utility
+    #  Read / Query
     # ------------------------------------------------------------------ #
 
-    def get_page_info(self) -> dict[str, Any]:
-        return {
-            "url": self.driver.current_url,
-            "title": self.driver.title,
-        }
+    def list_security_groups(self) -> dict[str, Any]:
+        """Read all security group names from the Groups tab."""
+        try:
+            self._go_to_security()
+            self._click_tab("Groups")
+            time.sleep(2)
+            body = self.driver.find_element(
+                By.TAG_NAME, "body"
+            ).text
+            # Groups are listed after the options checkboxes
+            # Extract group names from the page text
+            lines = body.split("\n")
+            groups = []
+            skip = {
+                "Default Group", "Guest Users",
+                "Adaptive Form Administrator",
+                "Can change Due Date in Procurement",
+                "Can Copy Project", "Can Edit WBS In Program",
+                "Can Edit WBS In Project", "Can Execute Move",
+                "Can Lock/Unlock Schedules",
+                "Can Make Vendors Active/Inactive",
+                "Can Make Locations Active/Inactive",
+                "Can Make Projects Active/Inactive",
+                "Can Send Notifications",
+                "Custom Form Administrator",
+                "Document Manager Administrator",
+                "Events Administrator", "Lease Administrator",
+                "PMWeb Report Administrator",
+                "Procurement Administrator",
+                "Report Manager Administrator",
+                "Assets", "Costs", "Forms", "Plans",
+                "Portfolio", "Schedules", "Tools", "Workflows",
+                "View: Filtered", "Duplicate", "Delete",
+                "New Group", "Group*", "Description*", "Option",
+                "Logged into: All Levels", "Need Help?",
+                "Security",
+                "Manage your group and user security settings",
+            }
+            for line in lines:
+                stripped = line.strip()
+                if not stripped or len(stripped) > 60:
+                    continue
+                if stripped in skip:
+                    continue
+                if stripped.startswith("Licenses"):
+                    continue
+                if any(
+                    stripped.startswith(p)
+                    for p in ["Groups", "Users", "User Access",
+                              "Conditional", "Activity", "Password",
+                              "External"]
+                ):
+                    continue
+                if stripped.isdigit():
+                    continue
+                # Remaining text after known UI elements = group names
+                if "aS" == stripped or len(stripped) < 2:
+                    continue
+                groups.append(stripped)
+            self._switch_to_main()
+            return {
+                "status": "success",
+                "groups": groups,
+                "count": len(groups),
+            }
+        except Exception as exc:
+            self._switch_to_main()
+            return {"status": "error", "message": str(exc)}
 
-    def take_screenshot(
-        self, path: str = "/tmp/pmweb_screenshot.png"
-    ) -> str:
-        self.driver.save_screenshot(path)
-        return path
+    def list_users(self) -> dict[str, Any]:
+        """Read user list from the Users tab."""
+        try:
+            self._go_to_security()
+            self._click_tab("Users")
+            time.sleep(3)
+            rows = self.driver.find_elements(
+                By.CSS_SELECTOR, "kendo-grid tr.k-table-row"
+            )
+            users = []
+            for row in rows[:50]:
+                cells = row.find_elements(By.CSS_SELECTOR, "td")
+                if len(cells) >= 6:
+                    texts = [c.text.strip() for c in cells[:8]]
+                    if texts[1]:
+                        users.append({
+                            "id": texts[1],
+                            "first_name": texts[3] if len(texts) > 3 else "",
+                            "last_name": texts[4] if len(texts) > 4 else "",
+                            "license_type": texts[5] if len(texts) > 5 else "",
+                            "group": texts[7] if len(texts) > 7 else "",
+                        })
+            self._switch_to_main()
+            return {
+                "status": "success",
+                "users": users,
+                "count": len(users),
+            }
+        except Exception as exc:
+            self._switch_to_main()
+            return {"status": "error", "message": str(exc)}
+
+    # ------------------------------------------------------------------ #
+    #  Utility
+    # ------------------------------------------------------------------ #
 
     def close(self) -> None:
         if self._driver:
