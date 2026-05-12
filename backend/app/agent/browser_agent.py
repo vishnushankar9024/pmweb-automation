@@ -21,6 +21,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from app.config import settings
+from app.services.pmweb_browser import (
+    extract_security_group_names,
+    format_security_group_list,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -71,6 +75,13 @@ Each step is a JSON object with "action" and parameters:
 - {"action": "check_option", "label": "Can Send Notifications"}
 - {"action": "click_save"}
 - {"action": "read_groups"}
+For requests like "list/show/read security groups", use:
+[
+  {"action": "navigate", "url": "/Security.aspx"},
+  {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"},
+  {"action": "click_tab", "text": "Groups"},
+  {"action": "read_groups"}
+]
 
 ### Security — Group Permissions (inside iframe, Groups tab)
 Module names visible: Assets, Costs, Forms, Plans, Portfolio, Schedules, Tools, Workflows
@@ -133,7 +144,9 @@ Permissions: View, Create, Edit, Delete, Full Control
 - Always navigate first, then switch_to_iframe if needed
 - For Security: navigate to Security.aspx, switch_to_iframe, then act
 - After filling forms, always click_save
-- For reading data, use read_groups or read_users
+- For reading data, use read_groups or read_users. These actions return
+  user-facing text; summaries must present the names as a clean list,
+  not raw JSON.
 - For adaptive forms: open_adaptive_form_builder, set_form_title, add fields, save_adaptive_form
 - Return ONLY a JSON array of steps, nothing else
 
@@ -333,6 +346,8 @@ class HybridAgent:
                     "content": (
                         "You are a PMWeb assistant. Summarize what was "
                         "done based on the execution results. "
+                        "When a read action returns a list, present the "
+                        "names as a clean bullet list and never show raw JSON. "
                         "Be concise and helpful."
                     ),
                 },
@@ -482,73 +497,8 @@ class HybridAgent:
 
         elif action == "read_groups":
             body = self.driver.find_element(By.TAG_NAME, "body").text
-            lines = body.split("\n")
-            skip = {
-                "Default Group",
-                "Guest Users",
-                "Adaptive Form Administrator",
-                "Can change Due Date in Procurement",
-                "Can Copy Project",
-                "Can Edit WBS In Program",
-                "Can Edit WBS In Project",
-                "Can Execute Move",
-                "Can Lock/Unlock Schedules",
-                "Can Make Vendors Active/Inactive",
-                "Can Make Locations Active/Inactive",
-                "Can Make Projects Active/Inactive",
-                "Can Send Notifications",
-                "Custom Form Administrator",
-                "Document Manager Administrator",
-                "Events Administrator",
-                "Lease Administrator",
-                "PMWeb Report Administrator",
-                "Procurement Administrator",
-                "Report Manager Administrator",
-                "Assets",
-                "Costs",
-                "Forms",
-                "Plans",
-                "Portfolio",
-                "Schedules",
-                "Tools",
-                "Workflows",
-                "View: Filtered",
-                "Duplicate",
-                "Delete",
-                "New Group",
-                "Group*",
-                "Description*",
-                "Option",
-                "Logged into: All Levels",
-                "Need Help?",
-                "Security",
-                "Manage your group and user security settings",
-                "Licenses",
-                "Save",
-                "Cancel",
-                "aS",
-            }
-            groups = []
-            for line in lines:
-                s = line.strip()
-                if not s or len(s) > 50 or s in skip or s.isdigit():
-                    continue
-                if any(
-                    s.startswith(p)
-                    for p in [
-                        "Groups",
-                        "Users",
-                        "User Access",
-                        "Conditional",
-                        "Activity",
-                        "Password",
-                        "External",
-                    ]
-                ):
-                    continue
-                if len(s) >= 2:
-                    groups.append(s)
-            return {"groups": groups}
+            groups = extract_security_group_names(body)
+            return format_security_group_list(groups)
 
         elif action == "read_users":
             rows = self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row")

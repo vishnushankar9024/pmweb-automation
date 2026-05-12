@@ -23,6 +23,92 @@ logger = logging.getLogger(__name__)
 PMWEB_URL = "https://cmcs.pmweb.com/2025_1_00/pmweb/"
 
 
+SECURITY_GROUP_SKIP_LABELS = {
+    "Default Group",
+    "Guest Users",
+    "Adaptive Form Administrator",
+    "Can change Due Date in Procurement",
+    "Can Copy Project",
+    "Can Edit WBS In Program",
+    "Can Edit WBS In Project",
+    "Can Execute Move",
+    "Can Lock/Unlock Schedules",
+    "Can Make Vendors Active/Inactive",
+    "Can Make Locations Active/Inactive",
+    "Can Make Projects Active/Inactive",
+    "Can Send Notifications",
+    "Custom Form Administrator",
+    "Document Manager Administrator",
+    "Events Administrator",
+    "Lease Administrator",
+    "PMWeb Report Administrator",
+    "Procurement Administrator",
+    "Report Manager Administrator",
+    "Assets",
+    "Costs",
+    "Forms",
+    "Plans",
+    "Portfolio",
+    "Schedules",
+    "Tools",
+    "Workflows",
+    "View: Filtered",
+    "Duplicate",
+    "Delete",
+    "New Group",
+    "Group*",
+    "Description*",
+    "Option",
+    "Logged into: All Levels",
+    "Need Help?",
+    "Security",
+    "Manage your group and user security settings",
+    "Licenses",
+    "Save",
+    "Cancel",
+    "aS",
+}
+
+SECURITY_GROUP_SKIP_PREFIXES = (
+    "Groups",
+    "Users",
+    "User Access",
+    "Conditional",
+    "Activity",
+    "Password",
+    "External",
+)
+
+
+def extract_security_group_names(page_text: str) -> list[str]:
+    """Extract group names from PMWeb Security page text."""
+    groups: list[str] = []
+    seen: set[str] = set()
+    for line in page_text.split("\n"):
+        stripped = line.strip()
+        if not stripped or len(stripped) > 60:
+            continue
+        if stripped in SECURITY_GROUP_SKIP_LABELS:
+            continue
+        if stripped.startswith(SECURITY_GROUP_SKIP_PREFIXES):
+            continue
+        if stripped.isdigit() or len(stripped) < 2:
+            continue
+        if stripped not in seen:
+            groups.append(stripped)
+            seen.add(stripped)
+    return groups
+
+
+def format_security_group_list(groups: list[str]) -> str:
+    """Return a clean user-facing list of security group names."""
+    if not groups:
+        return "No security groups found."
+    lines = [f"Security groups ({len(groups)}):"]
+    lines.extend(f"- {group}" for group in groups)
+    return "\n".join(lines)
+
+
 class PMWebBrowser:
     """Full PMWeb automation via a VISIBLE browser."""
 
@@ -509,61 +595,13 @@ class PMWebBrowser:
             body = self.driver.find_element(
                 By.TAG_NAME, "body"
             ).text
-            # Groups are listed after the options checkboxes
-            # Extract group names from the page text
-            lines = body.split("\n")
-            groups = []
-            skip = {
-                "Default Group", "Guest Users",
-                "Adaptive Form Administrator",
-                "Can change Due Date in Procurement",
-                "Can Copy Project", "Can Edit WBS In Program",
-                "Can Edit WBS In Project", "Can Execute Move",
-                "Can Lock/Unlock Schedules",
-                "Can Make Vendors Active/Inactive",
-                "Can Make Locations Active/Inactive",
-                "Can Make Projects Active/Inactive",
-                "Can Send Notifications",
-                "Custom Form Administrator",
-                "Document Manager Administrator",
-                "Events Administrator", "Lease Administrator",
-                "PMWeb Report Administrator",
-                "Procurement Administrator",
-                "Report Manager Administrator",
-                "Assets", "Costs", "Forms", "Plans",
-                "Portfolio", "Schedules", "Tools", "Workflows",
-                "View: Filtered", "Duplicate", "Delete",
-                "New Group", "Group*", "Description*", "Option",
-                "Logged into: All Levels", "Need Help?",
-                "Security",
-                "Manage your group and user security settings",
-            }
-            for line in lines:
-                stripped = line.strip()
-                if not stripped or len(stripped) > 60:
-                    continue
-                if stripped in skip:
-                    continue
-                if stripped.startswith("Licenses"):
-                    continue
-                if any(
-                    stripped.startswith(p)
-                    for p in ["Groups", "Users", "User Access",
-                              "Conditional", "Activity", "Password",
-                              "External"]
-                ):
-                    continue
-                if stripped.isdigit():
-                    continue
-                # Remaining text after known UI elements = group names
-                if "aS" == stripped or len(stripped) < 2:
-                    continue
-                groups.append(stripped)
+            groups = extract_security_group_names(body)
             self._switch_to_main()
             return {
                 "status": "success",
                 "groups": groups,
                 "count": len(groups),
+                "message": format_security_group_list(groups),
             }
         except Exception as exc:
             self._switch_to_main()
