@@ -20,13 +20,11 @@ export function FeedbackPanel({
   const [file, setFile] = useState<File | null>(null);
   const [busy, setBusy] = useState(false);
   const [ticketId, setTicketId] = useState<string | null>(null);
-  const [fixMode, setFixMode] = useState<"now" | "later" | null>(null);
   const [prUrl, setPrUrl] = useState<string | null>(null);
 
   const submit = async (mode: "now" | "later") => {
     if (!expected.trim()) return;
     setBusy(true);
-    setFixMode(mode);
 
     const form = new FormData();
     form.append("session_id", sessionId);

@@ -1,5 +1,6 @@
 import logging
 import os
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,25 +14,21 @@ from app.config import settings
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 
-app = FastAPI(title=settings.app_name, version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(application: FastAPI):
+    from app.services.scheduler import start_scheduler, stop_scheduler
+    start_scheduler()
+    yield
+    stop_scheduler()
+
+
+app = FastAPI(title=settings.app_name, version="0.1.0", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 app.include_router(health_router)
 app.include_router(chat_router)
 app.include_router(pmweb_router)
 app.include_router(mlops_router)
-
-
-@app.on_event("startup")
-async def startup_event():
-    from app.services.scheduler import start_scheduler
-    start_scheduler()
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    from app.services.scheduler import stop_scheduler
-    stop_scheduler()
-
 
 static_dir = os.path.join(os.path.dirname(__file__), "..", "static")
 frontend_dist = os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")

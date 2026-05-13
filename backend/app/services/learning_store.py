@@ -141,7 +141,6 @@ class LearningStore:
 
     def get_stats(self) -> dict[str, Any]:
         """Return aggregate statistics for the /api/learning/stats endpoint."""
-        records = self.get_all()
         success_count = 0
         failure_count = 0
         for line_file, status_key in [
