@@ -2,7 +2,7 @@
 
 import pytest
 
-from app.agent.browser_agent import PLANNER_PROMPT, HybridAgent
+from app.agent.browser_agent import PLANNER_PROMPT, HybridAgent, UnsafePlanError
 
 
 @pytest.mark.parametrize(
@@ -88,9 +88,20 @@ def test_execute_ask_user_returns_message():
     assert result == "Please provide the group name and description."
 
 
+@pytest.mark.parametrize("action", ["click_button", "click_by_text"])
+def test_execute_blocks_unsafe_new_group_click(action):
+    agent = HybridAgent()
+
+    with pytest.raises(UnsafePlanError) as exc_info:
+        agent._execute_step({"action": action, "text": "New Group"})
+
+    assert "what should the security group be called" in str(exc_info.value).lower()
+
+
 def test_planner_prompt_documents_security_group_clarification():
     assert '"action": "ask_user"' in PLANNER_PROMPT
     assert "Do not create or save a Security Group unless" in PLANNER_PROMPT
+    assert 'Never click "New Group"' in PLANNER_PROMPT
 
 
 def test_planned_security_group_creation_is_blocked_without_details():

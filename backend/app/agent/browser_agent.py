@@ -51,6 +51,10 @@ GENERIC_SECURITY_GROUP_DETAIL_WORDS = {
     "with",
 }
 
+
+class UnsafePlanError(RuntimeError):
+    """Raised when the planner asks Selenium to perform an unsafe write."""
+
 PLANNER_PROMPT = """\
 You are a PMWeb automation planner. Given a user request, output a JSON \
 array of steps the browser should execute on PMWeb.
@@ -134,6 +138,8 @@ with a concise question. Do not navigate, click, fill, or save in that case
 - For a bare request like "create a security group", ask for the group name, \
 description, and whether the group should be based on a team/role or uploaded \
 details
+- Never click "New Group" as a placeholder or default response. The executor \
+will reject that action unless the request includes the required group details
 - For Adaptive Forms: open_adaptive_form_builder → set_form_title \
 → add fields → save_adaptive_form
 - For BPM: navigate to /Workflow.aspx → click_bpm_tab → create → save
@@ -149,6 +155,7 @@ class HybridAgent:
         self._logged_in = False
         self._client: OpenAI | None = None
         self._stop_requested = False
+        self._allow_security_group_creation = False
 
     def request_stop(self) -> None:
         self._stop_requested = True
@@ -218,6 +225,7 @@ class HybridAgent:
 
     def _run_task_impl(self, task: str) -> dict[str, Any]:
         self._stop_requested = False
+        self._allow_security_group_creation = False
         clarification = self._clarification_for_missing_required_fields(task)
         if clarification:
             return {"reply": clarification, "actions": []}
@@ -263,6 +271,7 @@ class HybridAgent:
 
         # Step 2: Execute
         results = []
+        self._allow_security_group_creation = self._security_group_request_has_required_details(task)
         for i, step in enumerate(steps):
             if self._check_stop():
                 results.append({"step": i + 1, "action": "STOPPED", "result": "Stopped by user"})
@@ -272,6 +281,10 @@ class HybridAgent:
             try:
                 result = self._execute_step(step)
                 results.append({"step": i + 1, "action": action, "result": result})
+            except UnsafePlanError as exc:
+                logger.warning("Step %d blocked as unsafe: %s", i + 1, exc)
+                results.append({"step": i + 1, "action": action, "error": str(exc)})
+                break
             except Exception as exc:
                 logger.exception("Step %d failed", i + 1)
                 results.append({"step": i + 1, "action": action, "error": str(exc)})
@@ -336,6 +349,8 @@ class HybridAgent:
             return f"tab not found: {step['text']}"
 
         elif action == "click_button":
+            if self._is_new_group_click(step) and not self._allow_security_group_creation:
+                raise UnsafePlanError(SECURITY_GROUP_CLARIFICATION)
             btn = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, f"//*[contains(text(),'{step['text']}')]"))
             )
@@ -578,6 +593,8 @@ class HybridAgent:
             return f"not found: {step['text']}"
 
         elif action == "click_by_text":
+            if self._is_new_group_click(step) and not self._allow_security_group_creation:
+                raise UnsafePlanError(SECURITY_GROUP_CLARIFICATION)
             els = self.driver.find_elements(By.XPATH, f"//*[contains(text(),'{step['text']}')]")
             for el in els:
                 if el.is_displayed():
@@ -695,6 +712,9 @@ class HybridAgent:
             if action in {"click_button", "click_by_text"} and "new group" in text:
                 return True
         return False
+
+    def _is_new_group_click(self, step: dict[str, Any]) -> bool:
+        return str(step.get("text", "")).strip().lower() == "new group"
 
     def _find_edit_row(self):
         for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
