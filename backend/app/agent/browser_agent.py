@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from typing import Any
 
@@ -51,6 +52,7 @@ array of steps the browser should execute on PMWeb.
 - {"action": "switch_to_main"}
 - {"action": "click_sidebar", "module": "Tools"}
 - {"action": "click_menu_item", "text": "Adaptive Forms"}
+- {"action": "ask_user", "message": "Question to ask before changing PMWeb"}
 - {"action": "wait", "seconds": 3}
 
 ### Security — Groups (inside iframe)
@@ -98,6 +100,10 @@ array of steps the browser should execute on PMWeb.
 ## Rules
 - Always navigate first, then switch_to_iframe if needed
 - For Security: navigate → switch_to_iframe → act → click_save
+- Do not create or save a Security Group unless the user provided an \
+explicit group name and enough description/role details to fill required fields
+- If a create request is missing required fields, return one ask_user step \
+with a concise question. Do not navigate, click, fill, or save in that case
 - For Adaptive Forms: open_adaptive_form_builder → set_form_title \
 → add fields → save_adaptive_form
 - For BPM: navigate to /Workflow.aspx → click_bpm_tab → create → save
@@ -182,10 +188,9 @@ class HybridAgent:
 
     def _run_task_impl(self, task: str) -> dict[str, Any]:
         self._stop_requested = False
-        if not self._logged_in:
-            r = self.login()
-            if r["status"] != "success":
-                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
+        clarification = self._clarification_for_missing_required_fields(task)
+        if clarification:
+            return {"reply": clarification, "actions": []}
 
         # Few-shot from past successes
         examples = ""
@@ -216,6 +221,15 @@ class HybridAgent:
             steps = json.loads(plan_text[start:end])
         except (ValueError, json.JSONDecodeError):
             return {"reply": plan_text, "actions": []}
+
+        clarification = self._clarification_from_plan(steps)
+        if clarification:
+            return {"reply": clarification, "actions": []}
+
+        if not self._logged_in:
+            r = self.login()
+            if r["status"] != "success":
+                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
 
         # Step 2: Execute
         results = []
@@ -275,6 +289,9 @@ class HybridAgent:
             self.driver.switch_to.frame(iframe)
             time.sleep(3)
             return "switched to iframe"
+
+        elif action == "ask_user":
+            return step["message"]
 
         elif action == "switch_to_main":
             self.driver.switch_to.default_content()
@@ -556,6 +573,29 @@ class HybridAgent:
             return "waited"
 
         return f"unknown action: {action}"
+
+    def _clarification_for_missing_required_fields(self, task: str) -> str | None:
+        text = re.sub(r"\s+", " ", task).strip().lower()
+        bare_security_group_request = re.fullmatch(
+            r"(please\s+)?(create|add|make|set\s+up|setup)(\s+(a|new))?\s+security\s+groups?[.!?]?",
+            text,
+        )
+        if not bare_security_group_request:
+            return None
+        return (
+            "What should the security group be called, what description should I use, "
+            "and should it be based on a specific team/role or details from a file you can upload?"
+        )
+
+    def _clarification_from_plan(self, steps: Any) -> str | None:
+        if not isinstance(steps, list):
+            return None
+        for step in steps:
+            if isinstance(step, dict) and step.get("action") == "ask_user":
+                message = step.get("message")
+                if isinstance(message, str) and message.strip():
+                    return message.strip()
+        return None
 
     def _find_edit_row(self):
         for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
