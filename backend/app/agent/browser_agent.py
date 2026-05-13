@@ -359,6 +359,8 @@ class HybridAgent:
             return f"clicked: {step['text']}"
 
         elif action == "fill_textbox":
+            if not self._allow_security_group_creation:
+                raise UnsafePlanError(SECURITY_GROUP_CLARIFICATION)
             tbs = self.driver.find_elements(By.CSS_SELECTOR, "kendo-textbox input.k-input-inner")
             idx = step.get("index", 0)
             if idx < len(tbs):
@@ -370,6 +372,8 @@ class HybridAgent:
             return f"textbox[{idx}] not found"
 
         elif action == "check_option":
+            if not self._allow_security_group_creation:
+                raise UnsafePlanError(SECURITY_GROUP_CLARIFICATION)
             rows = self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row")
             for row in rows:
                 cells = row.find_elements(By.CSS_SELECTOR, "td")
@@ -383,6 +387,8 @@ class HybridAgent:
             return f"option not found: {step['label']}"
 
         elif action == "click_module_permission":
+            if not self._allow_security_group_creation:
+                raise UnsafePlanError(SECURITY_GROUP_CLARIFICATION)
             module = step["module"]
             perm = step["permission"]
             rows = self.driver.find_elements(By.CSS_SELECTOR, "tr, [class*='row']")
@@ -635,7 +641,7 @@ class HybridAgent:
                 if isinstance(message, str) and message.strip():
                     return message.strip()
         if (
-            self._plan_creates_security_group(steps)
+            self._plan_writes_security_group(steps)
             and not self._security_group_request_has_required_details(task)
         ):
             return SECURITY_GROUP_CLARIFICATION
@@ -703,13 +709,20 @@ class HybridAgent:
                     return True
         return False
 
-    def _plan_creates_security_group(self, steps: list[Any]) -> bool:
+    def _plan_writes_security_group(self, steps: list[Any]) -> bool:
+        on_groups_tab = True
         for step in steps:
             if not isinstance(step, dict):
                 continue
             action = step.get("action")
             text = str(step.get("text", "")).lower()
+            if action == "click_tab":
+                on_groups_tab = text == "groups"
             if action in {"click_button", "click_by_text"} and "new group" in text:
+                return True
+            if action in {"fill_textbox", "check_option", "click_module_permission"}:
+                return True
+            if action == "click_save" and on_groups_tab:
                 return True
         return False
 
