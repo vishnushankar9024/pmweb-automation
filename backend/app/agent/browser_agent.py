@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from typing import Any
 
@@ -23,6 +24,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from app.config import settings
 
 logger = logging.getLogger(__name__)
+
+CLARIFICATION_MESSAGE = (
+    "Hi! What would you like me to configure or look up in PMWeb? "
+    "Please include the PMWeb area, such as Security Groups, Users, Workflows/BPM, "
+    "or Adaptive Forms, plus the required names, IDs, permissions, or pasted/uploaded details."
+)
 
 PLANNER_PROMPT = """\
 You are a PMWeb automation planner. Given a user request, output a JSON \
@@ -90,6 +97,7 @@ array of steps the browser should execute on PMWeb.
 - {"action": "save_adaptive_form"}
 
 ### General
+- {"action": "ask_user", "message": "Question to ask before taking PMWeb action"}
 - {"action": "read_page_text"}
 - {"action": "fill_by_id", "element_id": "id", "value": "text"}
 - {"action": "click_by_id", "element_id": "id"}
@@ -101,6 +109,14 @@ array of steps the browser should execute on PMWeb.
 - For Adaptive Forms: open_adaptive_form_builder → set_form_title \
 → add fields → save_adaptive_form
 - For BPM: navigate to /Workflow.aspx → click_bpm_tab → create → save
+- Never invent group names, user IDs, people names, emails, passwords, \
+workflow IDs, form names, descriptions, permissions, or field names
+- If the request is a greeting, small talk, test message, ambiguous, or \
+missing required values, return exactly one ask_user step and no browser steps
+- Ask for input before creating or changing PMWeb records when the user did \
+not provide the required details in chat, pasted text, or an uploaded file
+- Treat past successful plans only as examples for clearly matching explicit \
+requests; never let them override the current user's intent
 - Return ONLY a JSON array of steps
 """
 
@@ -182,10 +198,8 @@ class HybridAgent:
 
     def _run_task_impl(self, task: str) -> dict[str, Any]:
         self._stop_requested = False
-        if not self._logged_in:
-            r = self.login()
-            if r["status"] != "success":
-                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
+        if self._should_ask_before_planning(task):
+            return self._clarification_response()
 
         # Few-shot from past successes
         examples = ""
@@ -217,7 +231,15 @@ class HybridAgent:
         except (ValueError, json.JSONDecodeError):
             return {"reply": plan_text, "actions": []}
 
-        # Step 2: Execute
+        if self._is_clarification_plan(steps):
+            return self._clarification_response(self._clarification_message_from_plan(steps))
+
+        if not self._logged_in:
+            r = self.login()
+            if r["status"] != "success":
+                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
+
+        # Step 2: Execute browser actions
         results = []
         for i, step in enumerate(steps):
             if self._check_stop():
@@ -260,7 +282,10 @@ class HybridAgent:
         action = step["action"]
         base = settings.pmweb_base_url.rstrip("/")
 
-        if action == "navigate":
+        if action == "ask_user":
+            return step.get("message", CLARIFICATION_MESSAGE)
+
+        elif action == "navigate":
             url = step["url"]
             if url.startswith("/"):
                 url = base + url
@@ -556,6 +581,87 @@ class HybridAgent:
             return "waited"
 
         return f"unknown action: {action}"
+
+    def _should_ask_before_planning(self, task: str) -> bool:
+        user_text, attachment_text = self._split_user_and_attachment_text(task)
+        if attachment_text:
+            return False
+
+        normalized = re.sub(r"[\W_]+", " ", user_text.lower()).strip()
+        if not normalized:
+            return True
+
+        greetings = {
+            "hi",
+            "hi there",
+            "hello",
+            "hello there",
+            "hey",
+            "hey there",
+            "good morning",
+            "good afternoon",
+            "good evening",
+            "test",
+            "testing",
+            "thanks",
+            "thank you",
+        }
+        if normalized in greetings:
+            return True
+
+        pmweb_intent_terms = {
+            "add",
+            "adaptive",
+            "bpm",
+            "change",
+            "configure",
+            "create",
+            "delete",
+            "form",
+            "group",
+            "groups",
+            "list",
+            "navigate",
+            "permission",
+            "permissions",
+            "read",
+            "security",
+            "show",
+            "update",
+            "user",
+            "users",
+            "workflow",
+            "workflows",
+        }
+        words = normalized.split()
+        return len(words) <= 3 and not any(word in pmweb_intent_terms for word in words)
+
+    @staticmethod
+    def _split_user_and_attachment_text(task: str) -> tuple[str, str]:
+        user_text, _, attachment_text = task.partition("\n\n--- Attached file ---\n")
+        return user_text.strip(), attachment_text.strip()
+
+    @staticmethod
+    def _is_clarification_plan(steps: Any) -> bool:
+        if not isinstance(steps, list) or not steps:
+            return True
+        return any(isinstance(step, dict) and step.get("action") == "ask_user" for step in steps)
+
+    @staticmethod
+    def _clarification_message_from_plan(steps: list[Any]) -> str:
+        for step in steps:
+            if isinstance(step, dict) and step.get("action") == "ask_user":
+                message = step.get("message")
+                if isinstance(message, str) and message.strip():
+                    return message.strip()
+        return CLARIFICATION_MESSAGE
+
+    @staticmethod
+    def _clarification_response(message: str = CLARIFICATION_MESSAGE) -> dict[str, Any]:
+        return {
+            "reply": message,
+            "actions": [{"step": 1, "action": "ask_user", "result": message}],
+        }
 
     def _find_edit_row(self):
         for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
