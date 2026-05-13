@@ -309,16 +309,18 @@ class HybridAgent:
         except Exception as exc:
             return {"status": "error", "message": str(exc)}
 
-    def run_task_sync(self, task: str) -> dict[str, Any]:
-        return self._run_task_impl(task)
+    def run_task_sync(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any]:
+        return self._run_task_impl(task, history=history)
 
-    def run_task_with_context(self, task: str, file_context: str = "") -> dict[str, Any]:
+    def run_task_with_context(
+        self, task: str, file_context: str = "", history: list[dict[str, str]] | None = None,
+    ) -> dict[str, Any]:
         full = task
         if file_context:
             full = f"{task}\n\n--- Attached file ---\n{file_context[:5000]}"
-        return self._run_task_impl(full)
+        return self._run_task_impl(full, history=history)
 
-    def _run_task_impl(self, task: str) -> dict[str, Any]:
+    def _run_task_impl(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any]:
         self._stop_requested = False
         self._allow_security_group_creation = False
         self._on_security_page = False
@@ -340,12 +342,15 @@ class HybridAgent:
         except Exception:
             pass
 
+        messages: list[dict[str, str]] = [{"role": "system", "content": PLANNER_PROMPT}]
+        if history:
+            for msg in history[-10:]:
+                messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")[:500]})
+        messages.append({"role": "user", "content": task + examples})
+
         response = self.client.chat.completions.create(
             model=settings.openai_model,
-            messages=[
-                {"role": "system", "content": PLANNER_PROMPT},
-                {"role": "user", "content": task + examples},
-            ],
+            messages=messages,
             temperature=0,
             max_tokens=2000,
         )

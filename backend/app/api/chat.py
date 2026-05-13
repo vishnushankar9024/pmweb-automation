@@ -20,6 +20,21 @@ feedback_store = FeedbackStore()
 learning_store = LearningStore()
 
 
+def _get_history(session_id: str) -> list[dict[str, str]]:
+    """Load recent conversation messages for LLM context."""
+    session = store.get_session(session_id)
+    if not session:
+        return []
+    msgs = session.get("messages", [])
+    history = []
+    for m in msgs[-10:]:
+        role = m.get("role", "user")
+        content = m.get("content", "")
+        if role in ("user", "assistant") and content:
+            history.append({"role": role, "content": content})
+    return history
+
+
 @router.post("/chat")
 async def chat(request: ChatRequest) -> ChatResponse:
     sid = request.conversation_id
@@ -27,8 +42,9 @@ async def chat(request: ChatRequest) -> ChatResponse:
         s = store.create_session(title=request.message[:50])
         sid = s["id"]
     store.add_message(sid, "user", request.message)
+    history = _get_history(sid)
     loop = asyncio.get_event_loop()
-    result = await loop.run_in_executor(executor, agent.run_task_sync, request.message)
+    result = await loop.run_in_executor(executor, agent.run_task_sync, request.message, history)
     store.add_message(sid, "assistant", result["reply"], result.get("actions", []))
     return ChatResponse(reply=result["reply"], conversation_id=sid, executed_actions=result.get("actions", []))
 
@@ -44,8 +60,9 @@ async def chat_with_file(message: str = Form(...), conversation_id: str = Form(N
         s = store.create_session(title=message[:50])
         sid = s["id"]
     store.add_message(sid, "user", f"{message}\n[Attached: {file.filename}]" if file else message)
+    history = _get_history(sid)
     loop = asyncio.get_event_loop()
-    result = await loop.run_in_executor(executor, agent.run_task_with_context, message, file_context)
+    result = await loop.run_in_executor(executor, agent.run_task_with_context, message, file_context, history)
     store.add_message(sid, "assistant", result["reply"], result.get("actions", []))
     return {"reply": result["reply"], "conversation_id": sid, "executed_actions": result.get("actions", [])}
 
