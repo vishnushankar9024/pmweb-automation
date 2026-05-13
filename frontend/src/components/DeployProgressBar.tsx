@@ -69,10 +69,10 @@ export function DeployProgressBar({
   const steps = progress.steps?.length
     ? progress.steps
     : [
-        { name: "Analyzing feedback", status: "pending" as const },
-        { name: "Generating fix", status: "pending" as const },
-        { name: "Creating PR", status: "pending" as const },
-        { name: "Deploying", status: "pending" as const },
+        { name: "Analyzing", status: "pending" as const },
+        { name: "Creating issue", status: "pending" as const },
+        { name: "Triggering deploy", status: "pending" as const },
+        { name: "Deploying to VM", status: "pending" as const },
       ];
 
   return (
@@ -87,12 +87,18 @@ export function DeployProgressBar({
     >
       <div style={{ fontSize: 12, fontWeight: 600, color: "#334155", marginBottom: 10 }}>
         {progress.status === "completed"
-          ? "Fix deployed successfully"
+          ? "Auto-deploy triggered — deploying to VM"
+          : progress.status === "deploy_failed"
+          ? "Issue created but deploy trigger failed"
           : progress.status === "failed"
           ? "Fix failed"
           : progress.status === "queued"
-          ? "Queued for batch processing (7 PM IST)"
-          : "Deploying fix..."}
+          ? "Queued for batch deploy (7 PM IST)"
+          : progress.status === "deploying"
+          ? "Deploying to VM..."
+          : progress.status === "triggering_deploy"
+          ? "Triggering auto-deploy pipeline..."
+          : "Processing fix..."}
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 0 }}>

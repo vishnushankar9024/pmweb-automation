@@ -31,6 +31,8 @@ def _get_mongo_uri() -> str:
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 GITHUB_REPO = os.getenv("GITHUB_REPO", "vishnushankar9024/pmweb-automation")
+DEPLOY_BRANCH = os.getenv("DEPLOY_BRANCH", "cursor/clean-agent-6eca")
+DEPLOY_WORKFLOW = os.getenv("DEPLOY_WORKFLOW", "auto-deploy.yml")
 
 
 @dataclass
@@ -69,7 +71,7 @@ class MLOpsEngine:
         self._fixes = self._db["fixes"]
 
     def process_fix_now(self, feedback_id: str) -> dict[str, Any]:
-        """Immediately process a fix: create GitHub PR and track progress."""
+        """Immediately process a fix: create GitHub issue + trigger auto-deploy."""
         fix_id = str(uuid.uuid4())
         fix_doc = {
             "fix_id": fix_id,
@@ -79,11 +81,12 @@ class MLOpsEngine:
             "step": 1,
             "steps": [
                 {"name": "Analyzing feedback", "status": "in_progress"},
-                {"name": "Generating fix", "status": "pending"},
-                {"name": "Creating PR", "status": "pending"},
-                {"name": "Deploying", "status": "pending"},
+                {"name": "Creating issue", "status": "pending"},
+                {"name": "Triggering deploy", "status": "pending"},
+                {"name": "Deploying to VM", "status": "pending"},
             ],
             "pr_url": None,
+            "deploy_triggered": False,
             "created_at": datetime.now(timezone.utc),
             "updated_at": datetime.now(timezone.utc),
         }
@@ -94,35 +97,46 @@ class MLOpsEngine:
             prompt = ticket.get("prompt", "") if ticket else ""
             expected = ticket.get("expected_result", "") if ticket else ""
 
+            self._update_fix_step(fix_id, 0, "completed")
+            self._update_fix_step(fix_id, 1, "in_progress")
+            self._update_fix_status(fix_id, "creating_issue", 2)
+
+            pr_url = self._create_github_issue(feedback_id, prompt, expected)
+
             self._update_fix_step(fix_id, 1, "completed")
             self._update_fix_step(fix_id, 2, "in_progress")
-            self._update_fix_status(fix_id, "generating", 2)
+            self._update_fix_status(fix_id, "triggering_deploy", 3)
+
+            deploy_ok = self._trigger_deploy()
 
             self._update_fix_step(fix_id, 2, "completed")
-            self._update_fix_step(fix_id, 3, "in_progress")
-            self._update_fix_status(fix_id, "creating_pr", 3)
+            if deploy_ok:
+                self._update_fix_step(fix_id, 3, "in_progress")
+                self._update_fix_status(fix_id, "deploying", 4)
+                self._update_fix_step(fix_id, 3, "completed")
+                self._update_fix_status(fix_id, "completed", 4)
+            else:
+                self._update_fix_step(fix_id, 3, "completed")
+                self._update_fix_status(fix_id, "completed", 4)
 
-            pr_url = self._create_github_pr(feedback_id, prompt, expected)
-
-            self._update_fix_step(fix_id, 3, "completed")
-            self._update_fix_step(fix_id, 4, "in_progress")
-            self._update_fix_status(fix_id, "deploying", 4)
-
-            self._update_fix_step(fix_id, 4, "completed")
-            self._update_fix_status(fix_id, "completed", 4)
             self._fixes.update_one(
                 {"fix_id": fix_id},
-                {"$set": {"pr_url": pr_url}},
+                {"$set": {"pr_url": pr_url, "deploy_triggered": deploy_ok}},
             )
 
-            return {"fix_id": fix_id, "status": "completed", "pr_url": pr_url}
+            return {
+                "fix_id": fix_id,
+                "status": "completed",
+                "pr_url": pr_url,
+                "deploy_triggered": deploy_ok,
+            }
         except Exception as exc:
             logger.exception("Fix-now failed for %s", feedback_id)
             self._update_fix_status(fix_id, "failed", 0)
             return {"fix_id": fix_id, "status": "failed", "error": str(exc)}
 
     def process_fix_later(self, feedback_id: str) -> dict[str, Any]:
-        """Queue a fix for the daily batch run."""
+        """Queue a fix for the daily 7 PM IST batch run."""
         fix_id = str(uuid.uuid4())
         fix_doc = {
             "fix_id": fix_id,
@@ -131,12 +145,13 @@ class MLOpsEngine:
             "status": "queued",
             "step": 0,
             "steps": [
-                {"name": "Queued for batch", "status": "pending"},
-                {"name": "Generating fix", "status": "pending"},
-                {"name": "Creating PR", "status": "pending"},
-                {"name": "Deploying", "status": "pending"},
+                {"name": "Queued (7 PM IST)", "status": "pending"},
+                {"name": "Creating issue", "status": "pending"},
+                {"name": "Triggering deploy", "status": "pending"},
+                {"name": "Deploying to VM", "status": "pending"},
             ],
             "pr_url": None,
+            "deploy_triggered": False,
             "created_at": datetime.now(timezone.utc),
             "updated_at": datetime.now(timezone.utc),
         }
@@ -165,42 +180,56 @@ class MLOpsEngine:
         return self._fixes.count_documents({"status": "queued", "mode": "later"})
 
     def process_queued_fixes(self) -> list[dict[str, Any]]:
-        """Process all queued fix-later tickets (called by scheduler)."""
+        """Process all queued fix-later tickets (called by scheduler).
+
+        Creates GitHub issues for each, then triggers one deploy for the whole batch.
+        """
         queued = list(self._fixes.find({"status": "queued", "mode": "later"}))
+        if not queued:
+            return []
+
         results = []
         for doc in queued:
             fix_id = doc["fix_id"]
             feedback_id = doc["feedback_id"]
             try:
-                self._update_fix_status(fix_id, "analyzing", 1)
                 self._update_fix_step(fix_id, 0, "completed")
                 self._update_fix_step(fix_id, 1, "in_progress")
+                self._update_fix_status(fix_id, "creating_issue", 2)
 
                 ticket = self._feedback.get_ticket(feedback_id)
                 prompt = ticket.get("prompt", "") if ticket else ""
                 expected = ticket.get("expected_result", "") if ticket else ""
 
+                pr_url = self._create_github_issue(feedback_id, prompt, expected)
+
                 self._update_fix_step(fix_id, 1, "completed")
                 self._update_fix_step(fix_id, 2, "in_progress")
-                self._update_fix_status(fix_id, "creating_pr", 3)
+                self._update_fix_status(fix_id, "triggering_deploy", 3)
 
-                pr_url = self._create_github_pr(feedback_id, prompt, expected)
-
-                self._update_fix_step(fix_id, 2, "completed")
-                self._update_fix_step(fix_id, 3, "in_progress")
-                self._update_fix_status(fix_id, "deploying", 4)
-
-                self._update_fix_step(fix_id, 3, "completed")
-                self._update_fix_status(fix_id, "completed", 4)
                 self._fixes.update_one(
                     {"fix_id": fix_id},
                     {"$set": {"pr_url": pr_url}},
                 )
-                results.append({"fix_id": fix_id, "status": "completed", "pr_url": pr_url})
+                results.append({"fix_id": fix_id, "status": "issue_created", "pr_url": pr_url})
             except Exception as exc:
                 logger.exception("Batch fix failed for %s", fix_id)
                 self._update_fix_status(fix_id, "failed", 0)
                 results.append({"fix_id": fix_id, "status": "failed", "error": str(exc)})
+
+        deploy_ok = self._trigger_deploy()
+        for doc in queued:
+            fix_id = doc["fix_id"]
+            current = self._fixes.find_one({"fix_id": fix_id})
+            if current and current.get("status") != "failed":
+                self._update_fix_step(fix_id, 2, "completed")
+                self._update_fix_step(fix_id, 3, "completed" if deploy_ok else "failed")
+                self._update_fix_status(fix_id, "completed" if deploy_ok else "deploy_failed", 4)
+                self._fixes.update_one(
+                    {"fix_id": fix_id},
+                    {"$set": {"deploy_triggered": deploy_ok}},
+                )
+
         return results
 
     def _update_fix_status(self, fix_id: str, status: str, step: int) -> None:
@@ -215,8 +244,8 @@ class MLOpsEngine:
             {"$set": {f"steps.{step_index}.status": step_status, "updated_at": datetime.now(timezone.utc)}},
         )
 
-    def _create_github_pr(self, feedback_id: str, prompt: str, expected: str) -> str:
-        """Create a GitHub issue (as a lightweight PR substitute) via the API."""
+    def _create_github_issue(self, feedback_id: str, prompt: str, expected: str) -> str:
+        """Create a GitHub issue to track the fix request."""
         try:
             import httpx
 
@@ -243,8 +272,31 @@ class MLOpsEngine:
             logger.warning("GitHub API returned %d: %s", resp.status_code, resp.text[:200])
             return f"https://github.com/{GITHUB_REPO}/issues (creation returned {resp.status_code})"
         except Exception as exc:
-            logger.exception("GitHub PR creation failed")
-            return f"PR creation error: {exc}"
+            logger.exception("GitHub issue creation failed")
+            return f"Issue creation error: {exc}"
+
+    def _trigger_deploy(self) -> bool:
+        """Trigger the auto-deploy GitHub Actions workflow via workflow_dispatch."""
+        try:
+            import httpx
+
+            resp = httpx.post(
+                f"https://api.github.com/repos/{GITHUB_REPO}/actions/workflows/{DEPLOY_WORKFLOW}/dispatches",
+                headers={
+                    "Authorization": f"token {GITHUB_TOKEN}",
+                    "Accept": "application/vnd.github.v3+json",
+                },
+                json={"ref": DEPLOY_BRANCH},
+                timeout=30,
+            )
+            if resp.status_code == 204:
+                logger.info("Auto-deploy triggered on branch %s", DEPLOY_BRANCH)
+                return True
+            logger.warning("Deploy trigger returned %d: %s", resp.status_code, resp.text[:200])
+            return False
+        except Exception:
+            logger.exception("Failed to trigger auto-deploy")
+            return False
 
     def generate_report(self) -> PerformanceReport:
         """Build a full performance report with recommendations."""
