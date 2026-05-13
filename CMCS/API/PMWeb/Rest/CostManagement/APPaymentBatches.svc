@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="VB" Debug="true" Service="API.RestAPPaymentBatches" CodeBehind="APPaymentBatches.svc.vb" %>

@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="VB" Debug="true" Service="API.RestJournalEntries" CodeBehind="JournalEntries.svc.vb" %>
