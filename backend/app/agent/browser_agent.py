@@ -25,58 +25,39 @@ from app.config import settings
 
 logger = logging.getLogger(__name__)
 
-SECURITY_GROUP_CLARIFICATION = (
-    "What should the security group be called, what description should I use, "
-    "and should it be based on a specific team/role or details from a file you can upload?"
-)
-
-GENERIC_SECURITY_GROUP_DETAIL_WORDS = {
-    "access",
-    "and",
-    "based",
-    "description",
-    "described",
-    "detail",
-    "details",
-    "field",
-    "fields",
-    "for",
-    "group",
-    "name",
-    "or",
-    "permission",
-    "permissions",
-    "role",
-    "security",
-    "team",
-    "with",
-}
-
-
-class UnsafePlanError(RuntimeError):
-    """Raised when a planned browser write is unsafe to execute."""
-
-
 PLANNER_PROMPT = """\
 You are a PMWeb automation planner. Given a user request, output a JSON \
 array of steps the browser should execute on PMWeb.
 
-## IMPORTANT — Clarification Rule
-If the user's request is missing required information (e.g. group name, \
-user details, workflow name, form fields), output a single step:
-[{"action": "ask_user", "question": "What name/details would you like?"}]
-Do NOT guess or use placeholder values like GROUP_NAME or Description. \
-Always ask the user for the specific values they want.
+## CRITICAL — Always Ask First Rule
+Before executing ANY create/write action, you MUST ask the user for the \
+required input fields UNLESS:
+1. The user already provided all required values in their message
+2. The user explicitly says "generic" or "default" or "sample"
+3. The user attached a file — use the extracted file data as input
 
-## Security Group Safety Rule
-Do not create or save a Security Group unless the user provided an explicit \
-group name and enough description/role/permission details to fill required \
-fields. For a bare request like "create a security group", output only:
-[{"action": "ask_user", "question": "What should the security group be \
-called, what description should I use, and should it be based on a specific \
-team/role or details from a file you can upload?"}]
-Never click "New Group", fill group fields, toggle options, set permissions, \
-or save as a placeholder/default response.
+For every PMWeb record type, here are the required fields to ask about:
+
+### Security Groups: group name, description, permissions, options
+### Users: user ID, first name, last name, email, password, license, group
+### Workflows/BPM: template ID, name, statuses, role assignments
+### APM Rules: rule name, module, level (project/programme/system), template
+### Adaptive Forms: form title, field names, field types, dropdown choices
+### Document Folders: folder name, parent folder, group permissions
+
+If ANY required field is missing, output:
+[{"action": "ask_user", "question": "I need a few details to create this. \
+Please provide: <list missing fields>. You can also upload a file \
+(Excel, PDF, Word, drawing, etc.) with the details."}]
+
+## File-Based Input
+When the user attaches a file, the extracted text will appear after \
+"--- Attached file ---" in the message. Parse the file data to extract \
+field values (names, descriptions, lists, table rows, etc.) and use them \
+directly — do NOT ask again for information that's already in the file.
+
+For bulk operations from files (e.g. Excel with multiple rows), create \
+multiple records by repeating the create+save steps for each row.
 
 ## PMWeb Navigation
 - Home: /Home.aspx
@@ -99,7 +80,7 @@ or save as a placeholder/default response.
 ## Available Actions
 
 ### Clarification
-- {"action": "ask_user", "question": "What group name would you like?"}
+- {"action": "ask_user", "question": "I need details: ..."}
 
 ### Navigation
 - {"action": "navigate", "url": "/Security.aspx"}
@@ -142,31 +123,22 @@ or save as a placeholder/default response.
 - {"action": "click_tab", "text": "Conditional Security"}
 - {"action": "read_conditional_security"}
 
-### Workflows/BPM (NO iframe — direct ASP.NET)
+### Workflows/BPM (NO iframe)
 - {"action": "navigate", "url": "/Workflow.aspx"}
 - {"action": "click_workflow_tab", "tab": "Roles"}
 - {"action": "click_workflow_tab", "tab": "Business Processes"}
 - {"action": "click_workflow_tab", "tab": "Defaults"}
 - {"action": "click_workflow_tab", "tab": "APM Rules"}
-
-#### Roles
 - {"action": "add_workflow_role", "role_name": "Project Manager"}
 - {"action": "read_workflow_roles"}
-
-#### BPM
 - {"action": "create_new_bpm", "bpm_id": "100", "name": "RFI Approval"}
 - {"action": "add_bpm_status", "status_name": "Draft", "sequence": 1}
-- {"action": "add_bpm_status", "status_name": "Submitted", "sequence": 2}
-- {"action": "add_bpm_status", "status_name": "Approved", "sequence": 3}
 - {"action": "assign_bpm_role", "status": "Submitted", \
 "role": "Project Manager", "action_type": "Approve"}
 - {"action": "read_bpm_statuses"}
 - {"action": "save_bpm"}
-
-#### APM Rules
 - {"action": "create_apm_rule", "rule_name": "RFI Auto-Route", \
-"module": "RFI", "level": "Project", \
-"template": "RFI Approval"}
+"module": "RFI", "level": "Project", "template": "RFI Approval"}
 - {"action": "read_apm_rules"}
 - {"action": "save_apm_rules"}
 
@@ -185,7 +157,6 @@ or save as a placeholder/default response.
 "field_type": "boolean"}
 - {"action": "add_form_field", "label": "Rating", \
 "field_type": "rating"}
-- {"action": "reorder_form_field", "label": "Status", "position": 2}
 - {"action": "save_adaptive_form"}
 
 ### Document Management (NO iframe)
@@ -211,7 +182,9 @@ or save as a placeholder/default response.
 "value": "Option"}
 
 ## Rules
-- If the user doesn't specify names/values, use ask_user to ask
+- ALWAYS ask for missing required fields before creating anything
+- If file data is attached, parse it and use the values directly
+- For bulk file imports: repeat create+save for each row/entry
 - Always navigate first, then switch_to_iframe if needed
 - For Security: navigate → switch_to_iframe → act → click_save
 - For Adaptive Forms: open_adaptive_form_builder → set_form_title \
@@ -233,7 +206,6 @@ class HybridAgent:
         self._logged_in = False
         self._client: OpenAI | None = None
         self._stop_requested = False
-        self._allow_security_group_creation = False
 
     def request_stop(self) -> None:
         self._stop_requested = True
@@ -299,11 +271,10 @@ class HybridAgent:
 
     def _run_task_impl(self, task: str) -> dict[str, Any]:
         self._stop_requested = False
-        self._allow_security_group_creation = False
-
-        clarification = self._clarification_for_missing_required_fields(task)
-        if clarification:
-            return {"reply": clarification, "actions": []}
+        if not self._logged_in:
+            r = self.login()
+            if r["status"] != "success":
+                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
 
         examples = ""
         try:
@@ -333,17 +304,10 @@ class HybridAgent:
         except (ValueError, json.JSONDecodeError):
             return {"reply": plan_text, "actions": []}
 
-        clarification = self._clarification_from_plan(steps, task)
-        if clarification:
-            return {"reply": clarification, "actions": []}
-
-        if not self._logged_in:
-            r = self.login()
-            if r["status"] != "success":
-                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
+        if len(steps) == 1 and steps[0].get("action") == "ask_user":
+            return {"reply": steps[0].get("question", "Could you provide more details?"), "actions": []}
 
         results = []
-        self._allow_security_group_creation = self._security_group_request_has_required_details(task)
         for i, step in enumerate(steps):
             if self._check_stop():
                 results.append({"step": i + 1, "action": "STOPPED", "result": "Stopped by user"})
@@ -353,10 +317,6 @@ class HybridAgent:
             try:
                 result = self._execute_step(step)
                 results.append({"step": i + 1, "action": action, "result": result})
-            except UnsafePlanError as exc:
-                logger.warning("Step %d blocked as unsafe: %s", i + 1, exc)
-                results.append({"step": i + 1, "action": action, "error": str(exc)})
-                break
             except Exception as exc:
                 logger.exception("Step %d failed", i + 1)
                 results.append({"step": i + 1, "action": action, "error": str(exc)})
@@ -389,8 +349,6 @@ class HybridAgent:
         action = step["action"]
         base = settings.pmweb_base_url.rstrip("/")
 
-        # ── Navigation ───────────────────────────────────────────────
-
         if action == "navigate":
             url = step["url"]
             if url.startswith("/"):
@@ -416,9 +374,7 @@ class HybridAgent:
             return "waited"
 
         elif action == "ask_user":
-            return step.get("question") or step.get("message", "Need more info")
-
-        # ── Tab / button clicks ──────────────────────────────────────
+            return step.get("question", "Need more info")
 
         elif action == "click_tab":
             for tab in self.driver.find_elements(By.CSS_SELECTOR, "li.k-item.k-tabstrip-item"):
@@ -429,7 +385,6 @@ class HybridAgent:
             return f"tab not found: {step['text']}"
 
         elif action == "click_button":
-            self._raise_if_unsafe_security_group_step(step)
             btn = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, f"//*[contains(text(),'{step['text']}')]"))
             )
@@ -462,10 +417,7 @@ class HybridAgent:
             time.sleep(3)
             return "new line added"
 
-        # ── Form filling ─────────────────────────────────────────────
-
         elif action == "fill_textbox":
-            self._raise_if_unsafe_security_group_step(step)
             tbs = self.driver.find_elements(By.CSS_SELECTOR, "kendo-textbox input.k-input-inner")
             idx = step.get("index", 0)
             if idx < len(tbs):
@@ -536,7 +488,6 @@ class HybridAgent:
             return f"clicked #{step['element_id']}"
 
         elif action == "click_by_text":
-            self._raise_if_unsafe_security_group_step(step)
             els = self.driver.find_elements(By.XPATH, f"//*[contains(text(),'{step['text']}')]")
             for el in els:
                 if el.is_displayed():
@@ -571,23 +522,16 @@ class HybridAgent:
                     return f"clicked: {step['text']}"
             return f"not found: {step['text']}"
 
-        # ── Security — Options / Permissions ─────────────────────────
-
         elif action == "check_option":
-            self._raise_if_unsafe_security_group_step(step)
             return self._toggle_option(step["label"], check=True)
 
         elif action == "uncheck_option":
-            self._raise_if_unsafe_security_group_step(step)
             return self._toggle_option(step["label"], check=False)
 
         elif action == "click_module_permission":
-            self._raise_if_unsafe_security_group_step(step)
-            module = step["module"]
-            perm = step["permission"]
-            rows = self.driver.find_elements(By.CSS_SELECTOR, "tr, [class*='row']")
+            module, perm = step["module"], step["permission"]
             perm_map = {"View": 0, "Create": 1, "Edit": 2, "Delete": 3, "Full Control": 4}
-            for row in rows:
+            for row in self.driver.find_elements(By.CSS_SELECTOR, "tr, [class*='row']"):
                 if module in row.text and row.is_displayed():
                     chks = row.find_elements(By.CSS_SELECTOR, "input[type='checkbox']")
                     idx = perm_map.get(perm, -1)
@@ -599,29 +543,22 @@ class HybridAgent:
             return f"module {module} not found"
 
         elif action == "assign_user_to_group":
-            user = step["user"]
-            group = step["group"]
-            rows = self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row")
-            for row in rows:
+            user, group = step["user"], step["group"]
+            for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row"):
                 if user.lower() in row.text.lower():
-                    dds = row.find_elements(By.CSS_SELECTOR, "kendo-dropdownlist")
-                    for dd in dds:
+                    for dd in row.find_elements(By.CSS_SELECTOR, "kendo-dropdownlist"):
                         if dd.is_displayed():
                             dd.click()
                             time.sleep(1)
-                            items = WebDriverWait(self.driver, 5).until(
+                            for item in WebDriverWait(self.driver, 5).until(
                                 EC.presence_of_all_elements_located((By.CSS_SELECTOR, "kendo-popup li"))
-                            )
-                            for item in items:
+                            ):
                                 if group.lower() in item.text.lower():
                                     item.click()
                                     time.sleep(0.5)
                                     return f"assigned {user} to {group}"
                             dd.send_keys(Keys.ESCAPE)
-                            return f"group '{group}' not in dropdown"
-            return f"user '{user}' not found"
-
-        # ── Security — Read ──────────────────────────────────────────
+            return f"user '{user}' or group '{group}' not found"
 
         elif action == "read_groups":
             body = self.driver.find_element(By.TAG_NAME, "body").text
@@ -652,9 +589,8 @@ class HybridAgent:
             return {"groups": groups}
 
         elif action == "read_users":
-            rows = self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row")
             users = []
-            for row in rows[:30]:
+            for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row")[:30]:
                 cells = row.find_elements(By.CSS_SELECTOR, "td")
                 if len(cells) >= 8:
                     texts = [c.text.strip() for c in cells[:8]]
@@ -662,35 +598,23 @@ class HybridAgent:
                         users.append({"id": texts[1], "name": f"{texts[3]} {texts[4]}".strip()})
             return {"users": users}
 
-        elif action == "read_conditional_security":
-            return self._read_grid_text()
+        elif action in ("read_conditional_security", "read_grid_data"):
+            return self._read_grid_text(max_rows=step.get("max_rows", 20))
 
         elif action == "read_group_permissions":
-            group_name = step.get("group_name", "")
-            body = self.driver.find_element(By.TAG_NAME, "body").text
-            return {"group": group_name, "page_text": body[:3000]}
+            return {"group": step.get("group_name", ""), "page_text": self.driver.find_element(By.TAG_NAME, "body").text[:3000]}
 
         elif action == "read_page_text":
             return self.driver.find_element(By.TAG_NAME, "body").text[:3000]
 
-        elif action == "read_grid_data":
-            return self._read_grid_text(max_rows=step.get("max_rows", 20))
-
-        # ── Workflow — Tabs ──────────────────────────────────────────
-
         elif action == "click_workflow_tab":
-            tab = step.get("tab", "")
             tab_map = {
-                "Roles": "Roles",
-                "Business Processes": "Business Processes",
-                "BPM": "Business Processes",
-                "Defaults": "Defaults",
-                "APM Rules": "APM Rules",
-                "APM": "APM Rules",
+                "Roles": "Roles", "Business Processes": "Business Processes",
+                "BPM": "Business Processes", "Defaults": "Defaults",
+                "APM Rules": "APM Rules", "APM": "APM Rules",
             }
-            target = tab_map.get(tab, tab)
-            els = self.driver.find_elements(By.XPATH, f"//span[contains(text(),'{target}')]")
-            for el in els:
+            target = tab_map.get(step.get("tab", ""), step.get("tab", ""))
+            for el in self.driver.find_elements(By.XPATH, f"//span[contains(text(),'{target}')]"):
                 if el.is_displayed():
                     el.click()
                     time.sleep(3)
@@ -700,29 +624,22 @@ class HybridAgent:
         elif action == "click_bpm_tab":
             return self._execute_step({"action": "click_workflow_tab", "tab": "Business Processes"})
 
-        # ── Workflow — Roles ─────────────────────────────────────────
-
         elif action == "add_workflow_role":
-            role_name = step["role_name"]
-            add_btns = self.driver.find_elements(By.XPATH, "//*[contains(@title,'Add') or contains(text(),'Add')]")
-            for btn in add_btns:
-                if btn.is_displayed() and ("role" in btn.text.lower() or "add" in btn.get_attribute("title").lower()):
+            for btn in self.driver.find_elements(By.XPATH, "//*[contains(@title,'Add') or contains(text(),'Add')]"):
+                if btn.is_displayed():
                     btn.click()
                     time.sleep(2)
                     break
-            inputs = self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']")
-            for inp in reversed(inputs):
+            for inp in reversed(self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']")):
                 if inp.is_displayed() and not inp.get_attribute("value"):
                     inp.click()
-                    inp.send_keys(role_name)
+                    inp.send_keys(step["role_name"])
                     time.sleep(0.3)
-                    return f"added role: {role_name}"
-            return f"could not add role: {role_name}"
+                    return f"added role: {step['role_name']}"
+            return f"could not add role: {step['role_name']}"
 
         elif action == "read_workflow_roles":
             return self._read_grid_text()
-
-        # ── Workflow — BPM ───────────────────────────────────────────
 
         elif action == "create_new_bpm":
             self.driver.find_element(By.ID, "ctl00_CPH1_ucBusinessProcesses_txtTemplateId").clear()
@@ -733,51 +650,38 @@ class HybridAgent:
             return f"BPM ID={step['bpm_id']}, name={step['name']}"
 
         elif action == "add_bpm_status":
-            status_name = step["status_name"]
-            seq = step.get("sequence", "")
-            add_btns = self.driver.find_elements(By.XPATH, "//*[contains(@title,'Add') or contains(text(),'New')]")
-            for btn in add_btns:
+            for btn in self.driver.find_elements(By.XPATH, "//*[contains(@title,'Add') or contains(text(),'New')]"):
                 if btn.is_displayed():
                     btn.click()
                     time.sleep(2)
                     break
-            inputs = self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']")
-            filled = False
-            for inp in reversed(inputs):
+            for inp in reversed(self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']")):
                 if inp.is_displayed() and not inp.get_attribute("value"):
                     inp.click()
-                    inp.send_keys(status_name)
-                    filled = True
-                    break
-            time.sleep(0.3)
-            return f"added BPM status: {status_name} (seq {seq})" if filled else f"could not add status: {status_name}"
+                    inp.send_keys(step["status_name"])
+                    return f"added status: {step['status_name']} (seq {step.get('sequence', '')})"
+            return f"could not add status: {step['status_name']}"
 
         elif action == "assign_bpm_role":
-            status = step.get("status", "")
-            role = step.get("role", "")
-            rows = self.driver.find_elements(By.CSS_SELECTOR, "tr")
-            for row in rows:
+            status, role = step.get("status", ""), step.get("role", "")
+            for row in self.driver.find_elements(By.CSS_SELECTOR, "tr"):
                 if status.lower() in row.text.lower() and row.is_displayed():
-                    dds = row.find_elements(By.CSS_SELECTOR, "select, kendo-dropdownlist")
-                    for dd in dds:
+                    for dd in row.find_elements(By.CSS_SELECTOR, "select, kendo-dropdownlist"):
                         if dd.is_displayed():
                             dd.click()
                             time.sleep(1)
-                            items = self.driver.find_elements(By.CSS_SELECTOR, "kendo-popup li, option")
-                            for item in items:
+                            for item in self.driver.find_elements(By.CSS_SELECTOR, "kendo-popup li, option"):
                                 if role.lower() in item.text.lower():
                                     item.click()
                                     time.sleep(0.5)
-                                    return f"assigned role '{role}' to status '{status}'"
-                            return f"role '{role}' not found for status '{status}'"
-            return f"status '{status}' not found"
+                                    return f"assigned '{role}' to '{status}'"
+            return f"status '{status}' or role '{role}' not found"
 
         elif action == "read_bpm_statuses":
             return self._read_grid_text()
 
         elif action == "save_bpm":
-            saves = self.driver.find_elements(By.XPATH, "//*[contains(@title,'Save')]")
-            for btn in saves:
+            for btn in self.driver.find_elements(By.XPATH, "//*[contains(@title,'Save')]"):
                 if btn.is_displayed():
                     btn.click()
                     time.sleep(3)
@@ -786,38 +690,28 @@ class HybridAgent:
             time.sleep(3)
             return "BPM saved via Alt+S"
 
-        # ── Workflow — APM Rules ─────────────────────────────────────
-
         elif action == "create_apm_rule":
-            rule_name = step.get("rule_name", "")
-            module = step.get("module", "")
-            level = step.get("level", "Project")
-            template = step.get("template", "")
-            add_btns = self.driver.find_elements(By.XPATH, "//*[contains(@title,'Add') or contains(text(),'New') or contains(text(),'Add')]")
-            for btn in add_btns:
+            for btn in self.driver.find_elements(By.XPATH, "//*[contains(@title,'Add') or contains(text(),'New') or contains(text(),'Add')]"):
                 if btn.is_displayed():
                     btn.click()
                     time.sleep(2)
                     break
-            inputs = self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']")
-            for inp in inputs:
+            for inp in self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']"):
                 if inp.is_displayed() and not inp.get_attribute("value"):
                     inp.click()
-                    inp.send_keys(rule_name)
+                    inp.send_keys(step.get("rule_name", ""))
                     break
-            self._try_select_dropdown_by_text(module)
-            self._try_select_dropdown_by_text(level)
-            self._try_select_dropdown_by_text(template)
+            self._try_select_dropdown_by_text(step.get("module", ""))
+            self._try_select_dropdown_by_text(step.get("level", ""))
+            self._try_select_dropdown_by_text(step.get("template", ""))
             time.sleep(0.5)
-            return f"APM rule: {rule_name} ({module}/{level}/{template})"
+            return f"APM rule: {step.get('rule_name', '')} ({step.get('module', '')}/{step.get('level', '')}/{step.get('template', '')})"
 
         elif action == "read_apm_rules":
             return self._read_grid_text()
 
         elif action == "save_apm_rules":
             return self._execute_step({"action": "save_bpm"})
-
-        # ── Adaptive Forms ───────────────────────────────────────────
 
         elif action == "open_adaptive_form_builder":
             self.driver.switch_to.default_content()
@@ -846,40 +740,25 @@ class HybridAgent:
             label = step.get("label", "Field")
             field_type = step.get("field_type", "text")
             choices = step.get("choices", [])
-
-            type_map = {
-                "text": "Single-Line Input",
-                "textarea": "Long Text",
-                "date": "Single-Line Input",
-                "number": "Single-Line Input",
-                "dropdown": "Dropdown",
-                "checkbox": "Checkboxes",
-                "radio": "Radio Button Group",
-                "boolean": "Yes/No (Boolean)",
-                "file": "File Upload",
-                "rating": "Rating",
-                "comment": "Long Text",
-                "signature": "Signature",
-            }
-
+            type_map = {"text": "Single-Line Input", "textarea": "Long Text", "date": "Single-Line Input",
+                        "number": "Single-Line Input", "dropdown": "Dropdown", "checkbox": "Checkboxes",
+                        "radio": "Radio Button Group", "boolean": "Yes/No (Boolean)", "file": "File Upload",
+                        "rating": "Rating", "comment": "Long Text", "signature": "Signature"}
             toolbox_name = type_map.get(field_type, "Single-Line Input")
-            toolbox_items = self.driver.find_elements(By.CSS_SELECTOR, ".svc-toolbox__item")
             added = False
-            for item in toolbox_items:
+            for item in self.driver.find_elements(By.CSS_SELECTOR, ".svc-toolbox__item"):
                 if toolbox_name.lower() in item.text.lower() and item.is_displayed():
                     item.click()
                     time.sleep(2)
                     added = True
                     break
-
             if not added:
-                add_btns = self.driver.find_elements(By.XPATH, "//span[contains(text(),'Add Field')]")
-                visible = [b for b in add_btns if b.is_displayed()]
-                if visible:
-                    visible[-1].click()
-                    time.sleep(2)
-                    added = True
-
+                for b in self.driver.find_elements(By.XPATH, "//span[contains(text(),'Add Field')]"):
+                    if b.is_displayed():
+                        b.click()
+                        time.sleep(2)
+                        added = True
+                        break
             if added:
                 for fl in reversed(self.driver.find_elements(By.CSS_SELECTOR, "span.sv-string-editor")):
                     if fl.is_displayed() and (fl.text.startswith("field") or fl.text.startswith("question")):
@@ -890,25 +769,17 @@ class HybridAgent:
                         self.driver.find_element(By.TAG_NAME, "body").click()
                         time.sleep(0.5)
                         break
-
             if choices and field_type in ("dropdown", "checkbox", "radio"):
-                choice_editors = self.driver.find_elements(By.CSS_SELECTOR, "span.sv-string-editor")
-                choice_slots = [e for e in choice_editors if e.is_displayed() and e.text.startswith("Item")]
+                slots = [e for e in self.driver.find_elements(By.CSS_SELECTOR, "span.sv-string-editor") if e.is_displayed() and e.text.startswith("Item")]
                 for i, choice in enumerate(choices):
-                    if i < len(choice_slots):
-                        choice_slots[i].click()
+                    if i < len(slots):
+                        slots[i].click()
                         time.sleep(0.2)
                         ActionChains(self.driver).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
                         ActionChains(self.driver).send_keys(choice).perform()
                         self.driver.find_element(By.TAG_NAME, "body").click()
                         time.sleep(0.3)
-
             return f"added field: {label} (type={field_type})"
-
-        elif action == "reorder_form_field":
-            label = step.get("label", "")
-            position = step.get("position", 0)
-            return f"reorder not supported in SurveyJS via automation — {label} at position {position}"
 
         elif action == "save_adaptive_form":
             btn = self.driver.find_element(By.CSS_SELECTOR, "input[value='SaveTemplate']")
@@ -920,25 +791,19 @@ class HybridAgent:
             fid = int(m.group(1)) if m else None
             return f"saved as ID={fid}"
 
-        # ── Document Management ──────────────────────────────────────
-
         elif action == "create_doc_folder":
-            folder_name = step.get("folder_name", "")
-            parent = step.get("parent", "Root")
-            tree_items = self.driver.find_elements(By.CSS_SELECTOR, ".k-treeview-item, [class*='tree'] li")
-            for item in tree_items:
+            folder_name, parent = step.get("folder_name", ""), step.get("parent", "Root")
+            for item in self.driver.find_elements(By.CSS_SELECTOR, ".k-treeview-item, [class*='tree'] li"):
                 if parent.lower() in item.text.lower() and item.is_displayed():
                     ActionChains(self.driver).context_click(item).perform()
                     time.sleep(1)
                     break
-            menu_items = self.driver.find_elements(By.CSS_SELECTOR, ".k-context-menu li, [class*='menu'] li")
-            for mi in menu_items:
+            for mi in self.driver.find_elements(By.CSS_SELECTOR, ".k-context-menu li, [class*='menu'] li"):
                 if "new" in mi.text.lower() or "add" in mi.text.lower():
                     mi.click()
                     time.sleep(2)
                     break
-            inputs = self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']")
-            for inp in inputs:
+            for inp in self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']"):
                 if inp.is_displayed() and not inp.get_attribute("value"):
                     inp.click()
                     inp.send_keys(folder_name)
@@ -948,151 +813,29 @@ class HybridAgent:
             return f"could not create folder: {folder_name}"
 
         elif action == "set_folder_security":
-            folder = step.get("folder", "")
-            group = step.get("group", "")
-            perm = step.get("permission", "Read")
-            tree_items = self.driver.find_elements(By.CSS_SELECTOR, ".k-treeview-item, [class*='tree'] li")
-            for item in tree_items:
+            folder, group, perm = step.get("folder", ""), step.get("group", ""), step.get("permission", "Read")
+            for item in self.driver.find_elements(By.CSS_SELECTOR, ".k-treeview-item, [class*='tree'] li"):
                 if folder.lower() in item.text.lower() and item.is_displayed():
                     ActionChains(self.driver).context_click(item).perform()
                     time.sleep(1)
                     break
-            menu_items = self.driver.find_elements(By.CSS_SELECTOR, ".k-context-menu li, [class*='menu'] li")
-            for mi in menu_items:
+            for mi in self.driver.find_elements(By.CSS_SELECTOR, ".k-context-menu li, [class*='menu'] li"):
                 if "security" in mi.text.lower() or "permission" in mi.text.lower():
                     mi.click()
                     time.sleep(2)
                     break
-            body_text = self.driver.find_element(By.TAG_NAME, "body").text
-            return f"folder security dialog opened for '{folder}' — set {group}={perm} (page: {body_text[:500]})"
+            return f"folder security for '{folder}': {group}={perm}"
 
         elif action == "read_doc_folders":
-            tree_items = self.driver.find_elements(By.CSS_SELECTOR, ".k-treeview-item, [class*='tree'] li")
-            folders = [item.text.strip().split("\n")[0] for item in tree_items if item.is_displayed()]
+            folders = [item.text.strip().split("\n")[0] for item in self.driver.find_elements(By.CSS_SELECTOR, ".k-treeview-item, [class*='tree'] li") if item.is_displayed()]
             return {"folders": folders[:50]}
 
-        # ── Data extraction ──────────────────────────────────────────
-
         elif action == "read_workflow_config":
-            body = self.driver.find_element(By.TAG_NAME, "body").text
-            return {"workflow_config": body[:3000]}
-
-        # ── Unknown ──────────────────────────────────────────────────
+            return {"workflow_config": self.driver.find_element(By.TAG_NAME, "body").text[:3000]}
 
         return f"unknown action: {action}"
 
     # ── Helpers ──────────────────────────────────────────────────────
-
-    def _clarification_for_missing_required_fields(self, task: str) -> str | None:
-        if self._security_group_request_missing_details(task):
-            return SECURITY_GROUP_CLARIFICATION
-        return None
-
-    def _clarification_from_plan(self, steps: Any, task: str = "") -> str | None:
-        if not isinstance(steps, list):
-            return None
-        for step in steps:
-            if not isinstance(step, dict) or step.get("action") != "ask_user":
-                continue
-            message = step.get("question") or step.get("message")
-            if isinstance(message, str) and message.strip():
-                return message.strip()
-        if self._plan_writes_security_group(steps) and not self._security_group_request_has_required_details(task):
-            return SECURITY_GROUP_CLARIFICATION
-        return None
-
-    def _security_group_request_missing_details(self, task: str) -> bool:
-        text = re.sub(r"\s+", " ", task).strip().lower()
-        if not self._is_security_group_create_request(text):
-            return False
-        return not self._security_group_request_has_required_details(task)
-
-    def _security_group_request_has_required_details(self, task: str) -> bool:
-        text = re.sub(r"\s+", " ", task).strip().lower()
-        if not self._is_security_group_create_request(text):
-            return False
-        if self._attached_file_has_security_group_details(text):
-            return True
-        return self._has_security_group_name(text) and self._has_security_group_context(text)
-
-    def _is_security_group_create_request(self, text: str) -> bool:
-        return bool(
-            re.search(r"\b(create|add|make|setup|set up)\b", text)
-            and re.search(r"\bsecurity\s+groups?\b", text)
-        )
-
-    def _attached_file_has_security_group_details(self, text: str) -> bool:
-        attached = re.search(r"---\s*attached file\s*---\s*(?P<content>.+)", text)
-        if not attached:
-            return False
-        content = attached.group("content")
-        return self._has_security_group_name(content) and self._has_security_group_context(content)
-
-    def _has_security_group_name(self, text: str) -> bool:
-        patterns = [
-            r"\b(?:named|called)\s+(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\b(?:group\s+)?name\s*(?:is|:|=|-)\s*(?P<value>[a-z0-9][\w -]{1,80})",
-        ]
-        return self._has_concrete_value_after(patterns, text)
-
-    def _has_security_group_context(self, text: str) -> bool:
-        if re.search(r"\b(view|edit|delete|full control)\b", text):
-            return True
-        patterns = [
-            r"\bdescription\s*(?:is|:|=|-)?\s*(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\bdescribed as\s+(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\bfor\s+(?!me\b)(?!my\b)(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\bbased on\s+(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\b(?:team|role|department)\s*(?:is|:|=|-)\s*(?P<value>[a-z0-9][\w -]{1,80})",
-        ]
-        return self._has_concrete_value_after(patterns, text)
-
-    def _has_concrete_value_after(self, patterns: list[str], text: str) -> bool:
-        for pattern in patterns:
-            for match in re.finditer(pattern, text):
-                value = match.group("value")
-                words = re.findall(r"[a-z0-9][a-z0-9_-]*", value.lower())
-                if any(word not in GENERIC_SECURITY_GROUP_DETAIL_WORDS for word in words[:4]):
-                    return True
-        return False
-
-    def _plan_writes_security_group(self, steps: list[Any]) -> bool:
-        on_security_page = False
-        on_groups_tab = False
-        for step in steps:
-            if not isinstance(step, dict):
-                continue
-            action = step.get("action")
-            text = str(step.get("text", "")).strip().lower()
-            url = str(step.get("url", "")).strip().lower()
-            if action == "navigate":
-                on_security_page = "security.aspx" in url
-                on_groups_tab = False
-            elif action == "click_tab":
-                on_groups_tab = text == "groups"
-            if action in {"click_button", "click_by_text"} and text == "new group":
-                return True
-            if action in {"fill_textbox", "check_option", "uncheck_option", "click_module_permission"} and (
-                on_security_page or on_groups_tab
-            ):
-                return True
-            if action == "click_save" and (on_security_page or on_groups_tab):
-                return True
-        return False
-
-    def _raise_if_unsafe_security_group_step(self, step: dict[str, Any]) -> None:
-        if self._allow_security_group_creation:
-            return
-        if self._step_writes_security_group(step):
-            raise UnsafePlanError(SECURITY_GROUP_CLARIFICATION)
-
-    def _step_writes_security_group(self, step: dict[str, Any]) -> bool:
-        action = step.get("action")
-        text = str(step.get("text", "")).strip().lower()
-        return (
-            (action in {"click_button", "click_by_text"} and text == "new group")
-            or action in {"fill_textbox", "check_option", "uncheck_option", "click_module_permission"}
-        )
 
     def _find_edit_row(self):
         for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
@@ -1102,8 +845,7 @@ class HybridAgent:
         return None
 
     def _toggle_option(self, label: str, check: bool) -> str:
-        rows = self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row")
-        for row in rows:
+        for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row"):
             cells = row.find_elements(By.CSS_SELECTOR, "td")
             if len(cells) >= 2 and label in cells[1].text:
                 chk = cells[0].find_elements(By.CSS_SELECTOR, "input[type='checkbox']")
@@ -1121,11 +863,9 @@ class HybridAgent:
         return f"option not found: {label}"
 
     def _read_grid_text(self, max_rows: int = 20) -> dict[str, Any]:
-        rows = self.driver.find_elements(By.CSS_SELECTOR, "tr")
         data = []
-        for row in rows[:max_rows]:
-            cells = row.find_elements(By.CSS_SELECTOR, "td, th")
-            texts = [c.text.strip() for c in cells if c.text.strip()]
+        for row in self.driver.find_elements(By.CSS_SELECTOR, "tr")[:max_rows]:
+            texts = [c.text.strip() for c in row.find_elements(By.CSS_SELECTOR, "td, th") if c.text.strip()]
             if texts:
                 data.append(texts)
         return {"rows": data}
@@ -1133,14 +873,12 @@ class HybridAgent:
     def _try_select_dropdown_by_text(self, text: str) -> bool:
         if not text:
             return False
-        dds = self.driver.find_elements(By.CSS_SELECTOR, "select, kendo-dropdownlist")
-        for dd in dds:
+        for dd in self.driver.find_elements(By.CSS_SELECTOR, "select, kendo-dropdownlist"):
             if dd.is_displayed():
                 try:
                     dd.click()
                     time.sleep(0.5)
-                    items = self.driver.find_elements(By.CSS_SELECTOR, "kendo-popup li, option")
-                    for item in items:
+                    for item in self.driver.find_elements(By.CSS_SELECTOR, "kendo-popup li, option"):
                         if text.lower() in item.text.lower():
                             item.click()
                             time.sleep(0.3)
