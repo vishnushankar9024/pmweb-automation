@@ -54,6 +54,9 @@ array of steps the browser should execute on PMWeb.
 - {"action": "wait", "seconds": 3}
 
 ### Security — Groups (inside iframe)
+- {"action": "create_security_group", "group_name": "GROUP_NAME", \
+"description": "Description", "options": ["Can Send Notifications"], \
+"module_permissions": [{"module": "Assets", "permission": "Full Control"}]}
 - {"action": "click_tab", "text": "Groups"}
 - {"action": "click_button", "text": "New Group"}
 - {"action": "fill_textbox", "index": 0, "value": "GROUP_NAME"}
@@ -98,6 +101,11 @@ array of steps the browser should execute on PMWeb.
 ## Rules
 - Always navigate first, then switch_to_iframe if needed
 - For Security: navigate → switch_to_iframe → act → click_save
+- Prefer create_security_group for group creation requests. It navigates, \
+switches into the iframe, fills the form, saves, and returns structured UI data.
+- Never copy literal placeholders such as GROUP_NAME or Description into PMWeb. \
+If a group name or description is not provided, omit it and the executor will \
+generate a safe default.
 - For Adaptive Forms: open_adaptive_form_builder → set_form_title \
 → add fields → save_adaptive_form
 - For BPM: navigate to /Workflow.aspx → click_bpm_tab → create → save
@@ -236,13 +244,18 @@ class HybridAgent:
         try:
             from app.services.learning_store import LearningStore
             ls = LearningStore()
-            has_err = any("error" in r for r in results)
+            has_err = any(
+                "error" in r or self._is_failure_result(r.get("result"))
+                for r in results
+            )
             if has_err:
                 ls.store_failure(task, steps, results)
             else:
                 ls.store_success(task, steps, results)
         except Exception:
             pass
+
+        action_cards = self._format_executed_actions(steps, results)
 
         # Step 3: Summarize
         summary_response = self.client.chat.completions.create(
@@ -254,11 +267,229 @@ class HybridAgent:
             max_tokens=500,
         )
         summary = summary_response.choices[0].message.content or "Done."
-        return {"reply": summary, "actions": results}
+        return {"reply": summary, "actions": action_cards}
+
+    def _format_executed_actions(
+        self,
+        steps: list[dict[str, Any]],
+        results: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
+        """Convert Selenium traces into the action-card schema used by the UI."""
+        cards: list[dict[str, Any]] = []
+        for step, entry in zip(steps, results, strict=False):
+            if entry.get("action") != "create_security_group":
+                continue
+
+            raw = entry.get("result", {})
+            if isinstance(raw, dict):
+                result = raw
+            else:
+                result = {"status": "error", "message": str(raw)}
+
+            args = self._security_group_args_from_result(step, result)
+            cards.append(
+                {
+                    "tool": "create_security_group",
+                    "args": args,
+                    "result": result,
+                }
+            )
+
+        if cards:
+            return cards
+
+        security_group_card = self._format_granular_security_group_action(
+            steps,
+            results,
+        )
+        return [security_group_card] if security_group_card else []
+
+    def _security_group_args_from_result(
+        self,
+        step: dict[str, Any],
+        result: dict[str, Any],
+    ) -> dict[str, Any]:
+        args: dict[str, Any] = {
+            "group_name": result.get("group_name") or step.get("group_name"),
+            "description": result.get("description") or step.get("description"),
+        }
+        options = result.get("options_enabled") or step.get("options")
+        if options:
+            args["options"] = options
+        module_permissions = result.get("module_permissions") or step.get(
+            "module_permissions"
+        )
+        if module_permissions:
+            args["module_permissions"] = module_permissions
+        return {k: v for k, v in args.items() if v}
+
+    def _format_granular_security_group_action(
+        self,
+        steps: list[dict[str, Any]],
+        results: list[dict[str, Any]],
+    ) -> dict[str, Any] | None:
+        creates_group = any(
+            step.get("action") == "click_button"
+            and "new group" in step.get("text", "").lower()
+            for step in steps
+        )
+        if not creates_group:
+            return None
+
+        args = self._security_group_args_from_steps(steps)
+        failure = self._first_step_failure(results)
+        status = "error" if failure else "created"
+        group_name = args.get("group_name", "security group")
+        result: dict[str, Any] = {
+            "status": status,
+            "group_name": group_name,
+            "description": args.get("description", ""),
+            "options_enabled": args.get("options", []),
+            "module_permissions": args.get("module_permissions", []),
+        }
+        if failure:
+            result["message"] = failure
+        else:
+            result["message"] = f"Security group '{group_name}' created in PMWeb"
+
+        return {
+            "tool": "create_security_group",
+            "args": args,
+            "result": result,
+        }
+
+    def _security_group_args_from_steps(
+        self,
+        steps: list[dict[str, Any]],
+    ) -> dict[str, Any]:
+        args: dict[str, Any] = {}
+        options: list[str] = []
+        module_permissions: list[dict[str, str]] = []
+
+        for step in steps:
+            action = step.get("action")
+            if action == "fill_textbox":
+                if step.get("index") == 0 and step.get("value"):
+                    args["group_name"] = step["value"]
+                elif step.get("index") == 1 and step.get("value"):
+                    args["description"] = step["value"]
+            elif action == "check_option" and step.get("label"):
+                options.append(step["label"])
+            elif action == "click_module_permission":
+                module = step.get("module")
+                permission = step.get("permission")
+                if module and permission:
+                    module_permissions.append(
+                        {"module": module, "permission": permission}
+                    )
+
+        if options:
+            args["options"] = options
+        if module_permissions:
+            args["module_permissions"] = module_permissions
+        return args
+
+    def _first_step_failure(self, results: list[dict[str, Any]]) -> str | None:
+        for entry in results:
+            if entry.get("error"):
+                return str(entry["error"])
+            result = entry.get("result")
+            if self._is_failure_result(result):
+                return str(result)
+        return None
+
+    def _is_failure_result(self, result: Any) -> bool:
+        if isinstance(result, dict):
+            return result.get("status") == "error"
+        if not isinstance(result, str):
+            return False
+        text = result.lower()
+        failure_markers = (
+            "not found",
+            "no edit row",
+            "not fillable",
+            "no dropdown",
+            "could not",
+            "unknown action",
+        )
+        return any(marker in text for marker in failure_markers)
+
+    def _default_security_group_name(self) -> str:
+        return f"SECURITY_GROUP_{time.strftime('%Y%m%d_%H%M%S')}"
+
+    def _execute_create_security_group(self, step: dict[str, Any]) -> dict[str, Any]:
+        group_name = step.get("group_name")
+        if not group_name or group_name == "GROUP_NAME":
+            group_name = self._default_security_group_name()
+
+        description = step.get("description")
+        if not description or description == "Description":
+            description = f"Security group {group_name}"
+
+        trace = [
+            self._execute_step({"action": "navigate", "url": "/Security.aspx"}),
+            self._execute_step(
+                {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"}
+            ),
+            self._execute_step({"action": "click_tab", "text": "Groups"}),
+            self._execute_step({"action": "click_button", "text": "New Group"}),
+            self._execute_step(
+                {"action": "fill_textbox", "index": 0, "value": group_name}
+            ),
+            self._execute_step(
+                {"action": "fill_textbox", "index": 1, "value": description}
+            ),
+        ]
+
+        options = step.get("options", [])
+        for option in options:
+            trace.append(
+                self._execute_step({"action": "check_option", "label": option})
+            )
+
+        module_permissions = step.get("module_permissions", [])
+        for item in module_permissions:
+            trace.append(
+                self._execute_step(
+                    {
+                        "action": "click_module_permission",
+                        "module": item["module"],
+                        "permission": item["permission"],
+                    }
+                )
+            )
+
+        trace.append(self._execute_step({"action": "click_save"}))
+        groups = self._execute_step({"action": "read_groups"})
+        trace.append(groups)
+
+        failure = next(
+            (str(item) for item in trace if self._is_failure_result(item)),
+            None,
+        )
+        status = "error" if failure else "created"
+        result: dict[str, Any] = {
+            "status": status,
+            "group_name": group_name,
+            "description": description,
+            "options_enabled": options,
+            "module_permissions": module_permissions,
+            "trace": trace,
+        }
+        if isinstance(groups, dict):
+            result["groups"] = groups.get("groups", [])
+        if failure:
+            result["message"] = failure
+        else:
+            result["message"] = f"Security group '{group_name}' created in PMWeb"
+        return result
 
     def _execute_step(self, step: dict) -> Any:
         action = step["action"]
         base = settings.pmweb_base_url.rstrip("/")
+
+        if action == "create_security_group":
+            return self._execute_create_security_group(step)
 
         if action == "navigate":
             url = step["url"]
