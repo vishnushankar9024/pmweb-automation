@@ -252,6 +252,9 @@ class HybridAgent:
         self._client: OpenAI | None = None
         self._stop_requested = False
         self._allow_security_group_creation = False
+        self._on_security_page = False
+        self._active_security_tab = ""
+        self._pending_security_group_write = False
 
     def request_stop(self) -> None:
         self._stop_requested = True
@@ -318,6 +321,9 @@ class HybridAgent:
     def _run_task_impl(self, task: str) -> dict[str, Any]:
         self._stop_requested = False
         self._allow_security_group_creation = False
+        self._on_security_page = False
+        self._active_security_tab = ""
+        self._pending_security_group_write = False
 
         clarification = self._clarification_for_missing_required_fields(task)
         if clarification:
@@ -411,6 +417,10 @@ class HybridAgent:
             url = step["url"]
             if url.startswith("/"):
                 url = base + url
+            self._on_security_page = "security.aspx" in url.lower()
+            if not self._on_security_page:
+                self._active_security_tab = ""
+                self._pending_security_group_write = False
             self.driver.get(url)
             time.sleep(3)
             return "navigated"
@@ -438,6 +448,12 @@ class HybridAgent:
             for tab in self.driver.find_elements(By.CSS_SELECTOR, "li.k-item.k-tabstrip-item"):
                 if step["text"].lower() in tab.text.lower():
                     tab.click()
+                    if self._on_security_page:
+                        self._active_security_tab = step["text"].strip().lower()
+                    else:
+                        self._active_security_tab = ""
+                    if not self._on_security_page or self._active_security_tab != "groups":
+                        self._pending_security_group_write = False
                     time.sleep(2)
                     return f"clicked tab: {step['text']}"
             return f"tab not found: {step['text']}"
@@ -452,6 +468,7 @@ class HybridAgent:
             return f"clicked: {step['text']}"
 
         elif action == "click_save":
+            self._raise_if_unsafe_security_group_step(step)
             spans = self.driver.find_elements(
                 By.XPATH, "//span[contains(@class,'k-button-text') and contains(text(),'Save')]"
             )
@@ -779,6 +796,9 @@ class HybridAgent:
 
         elif action == "open_adaptive_form_builder":
             self.driver.switch_to.default_content()
+            self._on_security_page = False
+            self._active_security_tab = ""
+            self._pending_security_group_write = False
             self.driver.get(f"{base}/AdaptiveFormBuilder.aspx?id=0&ModuleId=8&PageId=371")
             time.sleep(8)
             iframe = WebDriverWait(self.driver, 15).until(
@@ -992,19 +1012,19 @@ class HybridAgent:
                 on_security_page = "security.aspx" in url
                 on_groups_tab = False
             elif action == "click_tab":
-                on_groups_tab = text == "groups"
+                on_groups_tab = on_security_page and text == "groups"
             if action in {"click_button", "click_by_text"} and text == "new group":
                 return True
-            if action in {"fill_textbox", "check_option", "uncheck_option", "click_module_permission"} and (
-                on_security_page or on_groups_tab
-            ):
+            if action in {"fill_textbox", "check_option", "uncheck_option", "click_module_permission"} and on_groups_tab:
                 return True
-            if action == "click_save" and (on_security_page or on_groups_tab):
+            if action == "click_save" and on_groups_tab:
                 return True
         return False
 
     def _raise_if_unsafe_security_group_step(self, step: dict[str, Any]) -> None:
         if self._allow_security_group_creation:
+            if self._step_writes_security_group(step):
+                self._pending_security_group_write = True
             return
         if self._step_writes_security_group(step):
             raise UnsafePlanError(SECURITY_GROUP_CLARIFICATION)
@@ -1015,6 +1035,11 @@ class HybridAgent:
         return (
             (action in {"click_button", "click_by_text"} and text == "new group")
             or action in {"fill_textbox", "check_option", "uncheck_option", "click_module_permission"}
+            or (
+                action == "click_save"
+                and self._on_security_page
+                and (self._active_security_tab == "groups" or self._pending_security_group_write)
+            )
         )
 
     def _find_edit_row(self):

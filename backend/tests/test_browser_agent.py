@@ -105,6 +105,17 @@ def test_execute_blocks_security_group_writes_without_required_details(step):
     assert "what should the security group be called" in str(exc_info.value).lower()
 
 
+def test_execute_blocks_security_group_save_without_required_details():
+    agent = HybridAgent()
+    agent._on_security_page = True
+    agent._active_security_tab = "groups"
+
+    with pytest.raises(UnsafePlanError) as exc_info:
+        agent._execute_step({"action": "click_save"})
+
+    assert "what should the security group be called" in str(exc_info.value).lower()
+
+
 def test_planned_security_group_creation_is_blocked_without_details():
     agent = HybridAgent()
     plan = [
@@ -140,6 +151,22 @@ def test_planned_security_group_field_writes_are_blocked_without_details():
 
     assert message is not None
     assert "what should the security group be called" in message.lower()
+
+
+def test_planned_security_user_save_is_not_blocked_as_security_group():
+    agent = HybridAgent()
+    plan = [
+        {"action": "navigate", "url": "/Security.aspx"},
+        {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"},
+        {"action": "click_tab", "text": "Users"},
+        {"action": "click_new_line"},
+        {"action": "fill_cell", "cell_index": 3, "value": "jsmith"},
+        {"action": "click_save"},
+    ]
+
+    message = agent._clarification_from_plan(plan, "create user John Smith")
+
+    assert message is None
 
 
 def test_planner_prompt_documents_security_group_clarification():
