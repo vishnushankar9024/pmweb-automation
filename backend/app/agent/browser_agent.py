@@ -596,19 +596,25 @@ class HybridAgent:
                 message = step.get("message")
                 if isinstance(message, str) and message.strip():
                     return message.strip()
-        if task and self._security_group_request_missing_details(task) and self._plan_creates_security_group(steps):
+        if (
+            self._plan_creates_security_group(steps)
+            and not self._security_group_request_has_required_details(task)
+        ):
             return SECURITY_GROUP_CLARIFICATION
         return None
 
     def _security_group_request_missing_details(self, task: str) -> bool:
         text = re.sub(r"\s+", " ", task).strip().lower()
-        if not re.search(r"\b(create|add|make|setup|set up)\b", text):
+        if not self._is_security_group_create_request(text):
             return False
-        if not re.search(r"\bsecurity\s+groups?\b", text):
+        return not self._security_group_request_has_required_details(task)
+
+    def _security_group_request_has_required_details(self, task: str) -> bool:
+        text = re.sub(r"\s+", " ", task).strip().lower()
+        if not self._is_security_group_create_request(text):
             return False
         if re.search(r"---\s*attached file\s*---\s*\S", text):
-            return False
-
+            return True
         name_patterns = [
             r"\b(group\s+)?name(d)?\b",
             r"\bcalled\b",
@@ -623,7 +629,13 @@ class HybridAgent:
         ]
         has_name = any(re.search(pattern, text) for pattern in name_patterns)
         has_context = any(re.search(pattern, text) for pattern in context_patterns)
-        return not (has_name and has_context)
+        return has_name and has_context
+
+    def _is_security_group_create_request(self, text: str) -> bool:
+        return bool(
+            re.search(r"\b(create|add|make|setup|set up)\b", text)
+            and re.search(r"\bsecurity\s+groups?\b", text)
+        )
 
     def _plan_creates_security_group(self, steps: list[Any]) -> bool:
         for step in steps:

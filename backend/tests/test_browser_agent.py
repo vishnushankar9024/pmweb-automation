@@ -104,3 +104,19 @@ def test_planned_security_group_creation_is_blocked_without_details():
 
     assert message is not None
     assert "what should the security group be called" in message.lower()
+
+
+def test_hallucinated_security_group_creation_is_blocked_for_unrelated_prompt():
+    agent = HybridAgent()
+    plan = [
+        {"action": "navigate", "url": "/Security.aspx"},
+        {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"},
+        {"action": "click_tab", "text": "Groups"},
+        {"action": "click_button", "text": "New Group"},
+        {"action": "click_save"},
+    ]
+
+    message = agent._clarification_from_plan(plan, "hi")
+
+    assert message is not None
+    assert "what should the security group be called" in message.lower()
