@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="VB" Debug="true" Service="Service.RFI" CodeBehind="RFI.svc.vb" %>

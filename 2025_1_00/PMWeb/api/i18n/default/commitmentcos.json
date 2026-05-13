@@ -1,5 +1,0 @@
-{
-    "LinkCOCEPopup.WarningMsg_CostCodeRequired": "Cost Code is required. The lines without cost codes will not be saved.",
-    "LinkCOCEPopup.FilterLabel": "Filter Commitment",
-    "LinkCOOCRPopup.WarningMsg_CostCodeRequired": "Cost Codes are required! Lines without cost codes cannot be selected to link."
-}

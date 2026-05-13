@@ -1,1 +1,0 @@
-Maybe use visio file as well as PDF for those without visio.  using visio lets people have starter diagrams for their own scenarios.
