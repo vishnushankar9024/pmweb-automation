@@ -21,51 +21,47 @@ jobs:
         with:
           ref: cursor/clean-agent-6eca
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1
-        with:
-          host: 35.224.6.237
-          username: ${{ secrets.VM_SSH_USER }}
-          key: ${{ secrets.VM_SSH_KEY }}
-          script: |
-            cd ~/pmweb-automation || git clone https://github.com/vishnushankar9024/pmweb-automation.git ~/pmweb-automation
-            cd ~/pmweb-automation
-            git fetch origin cursor/clean-agent-6eca
-            git checkout cursor/clean-agent-6eca
-            git reset --hard origin/cursor/clean-agent-6eca
-            sudo docker rm -f $(sudo docker ps -aq) 2>/dev/null || true
-            sudo docker build -t pmweb-agent .
-            sudo docker run -d --name pmweb-agent \
-              -p 8080:8080 -p 6081:6081 \
-              -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
-              -e GITHUB_TOKEN=${{ secrets.GH_TOKEN }} \
-              -e MONGO_URI='${{ secrets.MONGO_URI }}' \
-              -e PMWEB_BASE_URL=https://cmcs.pmweb.com/2025_1_00/pmweb/ \
-              -e PMWEB_USERNAME=admin \
-              -e PMWEB_PASSWORD=pmweb2 \
-              -e PMWEB_HEADLESS=false \
-              -e DISPLAY=:99 \
-              pmweb-agent
-
-      - name: Verify deployment
-        run: |
-          sleep 30
-          curl -f http://35.224.6.237:8080/health || echo "Health check failed - container may still be starting"
-
-      - name: Deploy via GCP (fallback)
-        if: failure()
+      - name: Auth to GCP
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Set up Cloud SDK (fallback)
-        if: failure()
+      - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: GCP SSH Deploy (fallback)
-        if: failure()
+      - name: Deploy to VM
         run: |
           gcloud compute ssh pmweb-agent-vm \
             --zone=us-central1-a \
             --project=pmweb-automation \
-            --command="cd ~/pmweb-automation && git fetch origin cursor/clean-agent-6eca && git checkout cursor/clean-agent-6eca && git reset --hard origin/cursor/clean-agent-6eca && sudo docker rm -f \$(sudo docker ps -aq) 2>/dev/null; sudo docker build -t pmweb-agent . && sudo docker run -d --name pmweb-agent -p 8080:8080 -p 6081:6081 -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} -e GITHUB_TOKEN=${{ secrets.GH_TOKEN }} -e MONGO_URI='${{ secrets.MONGO_URI }}' -e PMWEB_BASE_URL=https://cmcs.pmweb.com/2025_1_00/pmweb/ -e PMWEB_USERNAME=admin -e PMWEB_PASSWORD=pmweb2 -e PMWEB_HEADLESS=false -e DISPLAY=:99 pmweb-agent"
+            --command='
+              set -e
+              REPO_DIR="$HOME/pmweb-automation"
+              if [ ! -d "$REPO_DIR" ]; then
+                git clone https://github.com/vishnushankar9024/pmweb-automation.git "$REPO_DIR"
+              fi
+              cd "$REPO_DIR"
+              git fetch origin cursor/clean-agent-6eca
+              git checkout cursor/clean-agent-6eca
+              git reset --hard origin/cursor/clean-agent-6eca
+              sudo docker rm -f $(sudo docker ps -aq) 2>/dev/null || true
+              sudo docker build -t pmweb-agent .
+              sudo docker run -d --name pmweb-agent \
+                -p 8080:8080 -p 6081:6081 \
+                -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
+                -e GITHUB_TOKEN=${{ secrets.GH_TOKEN }} \
+                -e MONGO_URI="${{ secrets.MONGO_URI }}" \
+                -e PMWEB_BASE_URL=https://cmcs.pmweb.com/2025_1_00/pmweb/ \
+                -e PMWEB_USERNAME=admin \
+                -e PMWEB_PASSWORD=pmweb2 \
+                -e PMWEB_HEADLESS=false \
+                -e DISPLAY=:99 \
+                pmweb-agent
+              echo "Deploy complete! Checking container..."
+              sudo docker ps --filter name=pmweb-agent
+            '
+
+      - name: Verify deployment
+        run: |
+          sleep 30
+          curl -f http://35.224.6.237:8080/health || echo "Health check pending - container may still be starting"
