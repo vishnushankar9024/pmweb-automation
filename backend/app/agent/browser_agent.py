@@ -25,6 +25,38 @@ from app.config import settings
 
 logger = logging.getLogger(__name__)
 
+SECURITY_GROUP_CLARIFICATION = (
+    "What should the security group be called, what description should I use, "
+    "and should it be based on a specific team/role or details from a file you can upload?"
+)
+
+GENERIC_SECURITY_GROUP_DETAIL_WORDS = {
+    "access",
+    "and",
+    "based",
+    "description",
+    "described",
+    "detail",
+    "details",
+    "field",
+    "fields",
+    "for",
+    "group",
+    "name",
+    "or",
+    "permission",
+    "permissions",
+    "role",
+    "security",
+    "team",
+    "with",
+}
+
+
+class UnsafePlanError(RuntimeError):
+    """Raised when a planned browser write is unsafe to execute."""
+
+
 PLANNER_PROMPT = """\
 You are a PMWeb automation planner. Given a user request, output a JSON \
 array of steps the browser should execute on PMWeb.
@@ -35,6 +67,16 @@ user details, workflow name, form fields), output a single step:
 [{"action": "ask_user", "question": "What name/details would you like?"}]
 Do NOT guess or use placeholder values like GROUP_NAME or Description. \
 Always ask the user for the specific values they want.
+
+## Security Group Safety Rule
+Do not create or save a Security Group unless the user provided an explicit \
+group name and enough description/role/permission details to fill required \
+fields. For a bare request like "create a security group", output only:
+[{"action": "ask_user", "question": "What should the security group be \
+called, what description should I use, and should it be based on a specific \
+team/role or details from a file you can upload?"}]
+Never click "New Group", fill group fields, toggle options, set permissions, \
+or save as a placeholder/default response.
 
 ## PMWeb Navigation
 - Home: /Home.aspx
@@ -191,6 +233,7 @@ class HybridAgent:
         self._logged_in = False
         self._client: OpenAI | None = None
         self._stop_requested = False
+        self._allow_security_group_creation = False
 
     def request_stop(self) -> None:
         self._stop_requested = True
@@ -256,10 +299,11 @@ class HybridAgent:
 
     def _run_task_impl(self, task: str) -> dict[str, Any]:
         self._stop_requested = False
-        if not self._logged_in:
-            r = self.login()
-            if r["status"] != "success":
-                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
+        self._allow_security_group_creation = False
+
+        clarification = self._clarification_for_missing_required_fields(task)
+        if clarification:
+            return {"reply": clarification, "actions": []}
 
         examples = ""
         try:
@@ -289,10 +333,17 @@ class HybridAgent:
         except (ValueError, json.JSONDecodeError):
             return {"reply": plan_text, "actions": []}
 
-        if len(steps) == 1 and steps[0].get("action") == "ask_user":
-            return {"reply": steps[0].get("question", "Could you provide more details?"), "actions": []}
+        clarification = self._clarification_from_plan(steps, task)
+        if clarification:
+            return {"reply": clarification, "actions": []}
+
+        if not self._logged_in:
+            r = self.login()
+            if r["status"] != "success":
+                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
 
         results = []
+        self._allow_security_group_creation = self._security_group_request_has_required_details(task)
         for i, step in enumerate(steps):
             if self._check_stop():
                 results.append({"step": i + 1, "action": "STOPPED", "result": "Stopped by user"})
@@ -302,6 +353,10 @@ class HybridAgent:
             try:
                 result = self._execute_step(step)
                 results.append({"step": i + 1, "action": action, "result": result})
+            except UnsafePlanError as exc:
+                logger.warning("Step %d blocked as unsafe: %s", i + 1, exc)
+                results.append({"step": i + 1, "action": action, "error": str(exc)})
+                break
             except Exception as exc:
                 logger.exception("Step %d failed", i + 1)
                 results.append({"step": i + 1, "action": action, "error": str(exc)})
@@ -361,7 +416,7 @@ class HybridAgent:
             return "waited"
 
         elif action == "ask_user":
-            return step.get("question", "Need more info")
+            return step.get("question") or step.get("message", "Need more info")
 
         # ── Tab / button clicks ──────────────────────────────────────
 
@@ -374,6 +429,7 @@ class HybridAgent:
             return f"tab not found: {step['text']}"
 
         elif action == "click_button":
+            self._raise_if_unsafe_security_group_step(step)
             btn = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, f"//*[contains(text(),'{step['text']}')]"))
             )
@@ -409,6 +465,7 @@ class HybridAgent:
         # ── Form filling ─────────────────────────────────────────────
 
         elif action == "fill_textbox":
+            self._raise_if_unsafe_security_group_step(step)
             tbs = self.driver.find_elements(By.CSS_SELECTOR, "kendo-textbox input.k-input-inner")
             idx = step.get("index", 0)
             if idx < len(tbs):
@@ -479,6 +536,7 @@ class HybridAgent:
             return f"clicked #{step['element_id']}"
 
         elif action == "click_by_text":
+            self._raise_if_unsafe_security_group_step(step)
             els = self.driver.find_elements(By.XPATH, f"//*[contains(text(),'{step['text']}')]")
             for el in els:
                 if el.is_displayed():
@@ -516,12 +574,15 @@ class HybridAgent:
         # ── Security — Options / Permissions ─────────────────────────
 
         elif action == "check_option":
+            self._raise_if_unsafe_security_group_step(step)
             return self._toggle_option(step["label"], check=True)
 
         elif action == "uncheck_option":
+            self._raise_if_unsafe_security_group_step(step)
             return self._toggle_option(step["label"], check=False)
 
         elif action == "click_module_permission":
+            self._raise_if_unsafe_security_group_step(step)
             module = step["module"]
             perm = step["permission"]
             rows = self.driver.find_elements(By.CSS_SELECTOR, "tr, [class*='row']")
@@ -921,6 +982,117 @@ class HybridAgent:
         return f"unknown action: {action}"
 
     # ── Helpers ──────────────────────────────────────────────────────
+
+    def _clarification_for_missing_required_fields(self, task: str) -> str | None:
+        if self._security_group_request_missing_details(task):
+            return SECURITY_GROUP_CLARIFICATION
+        return None
+
+    def _clarification_from_plan(self, steps: Any, task: str = "") -> str | None:
+        if not isinstance(steps, list):
+            return None
+        for step in steps:
+            if not isinstance(step, dict) or step.get("action") != "ask_user":
+                continue
+            message = step.get("question") or step.get("message")
+            if isinstance(message, str) and message.strip():
+                return message.strip()
+        if self._plan_writes_security_group(steps) and not self._security_group_request_has_required_details(task):
+            return SECURITY_GROUP_CLARIFICATION
+        return None
+
+    def _security_group_request_missing_details(self, task: str) -> bool:
+        text = re.sub(r"\s+", " ", task).strip().lower()
+        if not self._is_security_group_create_request(text):
+            return False
+        return not self._security_group_request_has_required_details(task)
+
+    def _security_group_request_has_required_details(self, task: str) -> bool:
+        text = re.sub(r"\s+", " ", task).strip().lower()
+        if not self._is_security_group_create_request(text):
+            return False
+        if self._attached_file_has_security_group_details(text):
+            return True
+        return self._has_security_group_name(text) and self._has_security_group_context(text)
+
+    def _is_security_group_create_request(self, text: str) -> bool:
+        return bool(
+            re.search(r"\b(create|add|make|setup|set up)\b", text)
+            and re.search(r"\bsecurity\s+groups?\b", text)
+        )
+
+    def _attached_file_has_security_group_details(self, text: str) -> bool:
+        attached = re.search(r"---\s*attached file\s*---\s*(?P<content>.+)", text)
+        if not attached:
+            return False
+        content = attached.group("content")
+        return self._has_security_group_name(content) and self._has_security_group_context(content)
+
+    def _has_security_group_name(self, text: str) -> bool:
+        patterns = [
+            r"\b(?:named|called)\s+(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\b(?:group\s+)?name\s*(?:is|:|=|-)\s*(?P<value>[a-z0-9][\w -]{1,80})",
+        ]
+        return self._has_concrete_value_after(patterns, text)
+
+    def _has_security_group_context(self, text: str) -> bool:
+        if re.search(r"\b(view|edit|delete|full control)\b", text):
+            return True
+        patterns = [
+            r"\bdescription\s*(?:is|:|=|-)?\s*(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\bdescribed as\s+(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\bfor\s+(?!me\b)(?!my\b)(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\bbased on\s+(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\b(?:team|role|department)\s*(?:is|:|=|-)\s*(?P<value>[a-z0-9][\w -]{1,80})",
+        ]
+        return self._has_concrete_value_after(patterns, text)
+
+    def _has_concrete_value_after(self, patterns: list[str], text: str) -> bool:
+        for pattern in patterns:
+            for match in re.finditer(pattern, text):
+                value = match.group("value")
+                words = re.findall(r"[a-z0-9][a-z0-9_-]*", value.lower())
+                if any(word not in GENERIC_SECURITY_GROUP_DETAIL_WORDS for word in words[:4]):
+                    return True
+        return False
+
+    def _plan_writes_security_group(self, steps: list[Any]) -> bool:
+        on_security_page = False
+        on_groups_tab = False
+        for step in steps:
+            if not isinstance(step, dict):
+                continue
+            action = step.get("action")
+            text = str(step.get("text", "")).strip().lower()
+            url = str(step.get("url", "")).strip().lower()
+            if action == "navigate":
+                on_security_page = "security.aspx" in url
+                on_groups_tab = False
+            elif action == "click_tab":
+                on_groups_tab = text == "groups"
+            if action in {"click_button", "click_by_text"} and text == "new group":
+                return True
+            if action in {"fill_textbox", "check_option", "uncheck_option", "click_module_permission"} and (
+                on_security_page or on_groups_tab
+            ):
+                return True
+            if action == "click_save" and (on_security_page or on_groups_tab):
+                return True
+        return False
+
+    def _raise_if_unsafe_security_group_step(self, step: dict[str, Any]) -> None:
+        if self._allow_security_group_creation:
+            return
+        if self._step_writes_security_group(step):
+            raise UnsafePlanError(SECURITY_GROUP_CLARIFICATION)
+
+    def _step_writes_security_group(self, step: dict[str, Any]) -> bool:
+        action = step.get("action")
+        text = str(step.get("text", "")).strip().lower()
+        return (
+            (action in {"click_button", "click_by_text"} and text == "new group")
+            or action in {"fill_textbox", "check_option", "uncheck_option", "click_module_permission"}
+        )
 
     def _find_edit_row(self):
         for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
