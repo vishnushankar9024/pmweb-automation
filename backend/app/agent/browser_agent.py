@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from typing import Any
 
@@ -23,6 +24,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from app.config import settings
 
 logger = logging.getLogger(__name__)
+
+SECURITY_GROUP_CLARIFICATION = (
+    "Before I create the security group, please provide the group name and "
+    "description/purpose. Also tell me which option checkboxes or module "
+    "permissions to enable, or say to use defaults. You can upload a "
+    "requirements file if you want me to derive the settings."
+)
+
+SECURITY_GROUP_CREATE_RE = re.compile(
+    r"\b(create|add|make|set\s*up|setup)\b.*\bsecurity\s+group\b",
+    re.IGNORECASE,
+)
 
 PLANNER_PROMPT = """\
 You are a PMWeb automation planner. Given a user request, output a JSON \
@@ -90,6 +103,7 @@ array of steps the browser should execute on PMWeb.
 - {"action": "save_adaptive_form"}
 
 ### General
+- {"action": "ask_user", "message": "Question to ask before taking action"}
 - {"action": "read_page_text"}
 - {"action": "fill_by_id", "element_id": "id", "value": "text"}
 - {"action": "click_by_id", "element_id": "id"}
@@ -97,6 +111,14 @@ array of steps the browser should execute on PMWeb.
 
 ## Rules
 - Always navigate first, then switch_to_iframe if needed
+- Required fields must come from the user or an attached file. Do NOT invent \
+generic record names, descriptions, IDs, users, passwords, options, or \
+permissions.
+- If required fields are missing or the request is broad/generic, return one \
+ask_user step and no navigation or save steps.
+- For Security Groups: group name and description/purpose are required. Ask \
+which option checkboxes and module permissions to enable, or whether to use \
+defaults.
 - For Security: navigate → switch_to_iframe → act → click_save
 - For Adaptive Forms: open_adaptive_form_builder → set_form_title \
 → add fields → save_adaptive_form
@@ -182,10 +204,10 @@ class HybridAgent:
 
     def _run_task_impl(self, task: str) -> dict[str, Any]:
         self._stop_requested = False
-        if not self._logged_in:
-            r = self.login()
-            if r["status"] != "success":
-                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
+
+        clarification = self._clarify_missing_required_inputs(task)
+        if clarification:
+            return self._clarification_response(clarification)
 
         # Few-shot from past successes
         examples = ""
@@ -216,6 +238,15 @@ class HybridAgent:
             steps = json.loads(plan_text[start:end])
         except (ValueError, json.JSONDecodeError):
             return {"reply": plan_text, "actions": []}
+
+        clarification = self._extract_clarification(steps)
+        if clarification:
+            return self._clarification_response(clarification)
+
+        if not self._logged_in:
+            r = self.login()
+            if r["status"] != "success":
+                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
 
         # Step 2: Execute
         results = []
@@ -398,6 +429,9 @@ class HybridAgent:
         elif action == "read_page_text":
             return self.driver.find_element(By.TAG_NAME, "body").text[:3000]
 
+        elif action == "ask_user":
+            return step["message"]
+
         elif action == "read_groups":
             body = self.driver.find_element(By.TAG_NAME, "body").text
             skip = {"Default Group", "Guest Users", "Adaptive Form Administrator",
@@ -556,6 +590,51 @@ class HybridAgent:
             return "waited"
 
         return f"unknown action: {action}"
+
+    def _clarify_missing_required_inputs(self, task: str) -> str | None:
+        """Stop underspecified create requests before they become generic records."""
+        if not SECURITY_GROUP_CREATE_RE.search(task):
+            return None
+
+        normalized = task.lower()
+        has_name = any(
+            marker in normalized
+            for marker in (
+                " group name ",
+                " group name:",
+                " named ",
+                " called ",
+                " name is ",
+                " name:",
+            )
+        )
+        has_description = any(
+            marker in normalized
+            for marker in (
+                " description ",
+                " description:",
+                " purpose ",
+                " purpose:",
+                " described as ",
+            )
+        )
+        if has_name and has_description:
+            return None
+        return SECURITY_GROUP_CLARIFICATION
+
+    def _extract_clarification(self, steps: list[dict[str, Any]]) -> str | None:
+        for step in steps:
+            if step.get("action") == "ask_user":
+                return str(step.get("message") or SECURITY_GROUP_CLARIFICATION)
+        return None
+
+    def _clarification_response(self, message: str) -> dict[str, Any]:
+        return {
+            "reply": message,
+            "actions": [
+                {"step": 1, "action": "ask_user", "result": message},
+            ],
+        }
 
     def _find_edit_row(self):
         for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
