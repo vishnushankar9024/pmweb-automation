@@ -29,6 +29,27 @@ SECURITY_GROUP_CLARIFICATION = (
     "What should the security group be called, what description should I use, "
     "and should it be based on a specific team/role or details from a file you can upload?"
 )
+GENERIC_SECURITY_GROUP_DETAIL_WORDS = {
+    "access",
+    "and",
+    "based",
+    "description",
+    "described",
+    "detail",
+    "details",
+    "field",
+    "fields",
+    "for",
+    "group",
+    "name",
+    "or",
+    "permission",
+    "permissions",
+    "role",
+    "security",
+    "team",
+    "with",
+}
 
 PLANNER_PROMPT = """\
 You are a PMWeb automation planner. Given a user request, output a JSON \
@@ -613,29 +634,57 @@ class HybridAgent:
         text = re.sub(r"\s+", " ", task).strip().lower()
         if not self._is_security_group_create_request(text):
             return False
-        if re.search(r"---\s*attached file\s*---\s*\S", text):
+        if self._attached_file_has_security_group_details(text):
             return True
-        name_patterns = [
-            r"\b(group\s+)?name(d)?\b",
-            r"\bcalled\b",
-        ]
-        context_patterns = [
-            r"\bdescription\b",
-            r"\bdescribed as\b",
-            r"\bfor\s+(?!me\b)(?!my\b)[\w -]+",
-            r"\bbased\s+on\s+(?:a\s+)?(team|role|department)\b",
-            r"\b(role|department|permission|permissions|access)\b",
-            r"\b(view|edit|delete|full control)\b",
-        ]
-        has_name = any(re.search(pattern, text) for pattern in name_patterns)
-        has_context = any(re.search(pattern, text) for pattern in context_patterns)
-        return has_name and has_context
+        return self._has_security_group_name(text) and self._has_security_group_context(text)
 
     def _is_security_group_create_request(self, text: str) -> bool:
         return bool(
             re.search(r"\b(create|add|make|setup|set up)\b", text)
             and re.search(r"\bsecurity\s+groups?\b", text)
         )
+
+    def _attached_file_has_security_group_details(self, text: str) -> bool:
+        attached = re.search(r"---\s*attached file\s*---\s*(?P<content>.+)", text)
+        if not attached:
+            return False
+        content = attached.group("content")
+        return (
+            self._has_security_group_name(content)
+            and self._has_security_group_context(content)
+        )
+
+    def _has_security_group_name(self, text: str) -> bool:
+        patterns = [
+            r"\b(?:named|called)\s+(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\b(?:group\s+)?name\s*(?:is|:|=|-)\s*(?P<value>[a-z0-9][\w -]{1,80})",
+        ]
+        return self._has_concrete_value_after(patterns, text)
+
+    def _has_security_group_context(self, text: str) -> bool:
+        if re.search(r"\b(view|edit|delete|full control)\b", text):
+            return True
+
+        patterns = [
+            r"\bdescription\s*(?:is|:|=|-)?\s*(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\bdescribed as\s+(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\bfor\s+(?!me\b)(?!my\b)(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\bbased on\s+(?P<value>[a-z0-9][\w -]{1,80})",
+            (
+                r"\b(?:team|role|department)\s*(?:is|:|=|-)\s*"
+                r"(?P<value>[a-z0-9][\w -]{1,80})"
+            ),
+        ]
+        return self._has_concrete_value_after(patterns, text)
+
+    def _has_concrete_value_after(self, patterns: list[str], text: str) -> bool:
+        for pattern in patterns:
+            for match in re.finditer(pattern, text):
+                value = match.group("value")
+                words = re.findall(r"[a-z0-9][a-z0-9_-]*", value.lower())
+                if any(word not in GENERIC_SECURITY_GROUP_DETAIL_WORDS for word in words[:4]):
+                    return True
+        return False
 
     def _plan_creates_security_group(self, steps: list[Any]) -> bool:
         for step in steps:
