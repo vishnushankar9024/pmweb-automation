@@ -32,7 +32,6 @@ def _get_mongo_uri() -> str:
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 GITHUB_REPO = os.getenv("GITHUB_REPO", "vishnushankar9024/pmweb-automation")
 DEPLOY_BRANCH = os.getenv("DEPLOY_BRANCH", "cursor/clean-agent-6eca")
-DEPLOY_WORKFLOW = os.getenv("DEPLOY_WORKFLOW", "auto-deploy.yml")
 
 
 @dataclass
@@ -71,7 +70,7 @@ class MLOpsEngine:
         self._fixes = self._db["fixes"]
 
     def process_fix_now(self, feedback_id: str) -> dict[str, Any]:
-        """Immediately process a fix: create GitHub issue + trigger auto-deploy."""
+        """Create GitHub issue → Cursor Automation fixes code → auto-deploy."""
         fix_id = str(uuid.uuid4())
         fix_doc = {
             "fix_id": fix_id,
@@ -80,13 +79,12 @@ class MLOpsEngine:
             "status": "analyzing",
             "step": 1,
             "steps": [
-                {"name": "Analyzing feedback", "status": "in_progress"},
+                {"name": "Analyzing", "status": "in_progress"},
                 {"name": "Creating issue", "status": "pending"},
-                {"name": "Triggering deploy", "status": "pending"},
-                {"name": "Deploying to VM", "status": "pending"},
+                {"name": "AI fixing code", "status": "pending"},
+                {"name": "Auto-deploy", "status": "pending"},
             ],
             "pr_url": None,
-            "deploy_triggered": False,
             "created_at": datetime.now(timezone.utc),
             "updated_at": datetime.now(timezone.utc),
         }
@@ -101,34 +99,21 @@ class MLOpsEngine:
             self._update_fix_step(fix_id, 1, "in_progress")
             self._update_fix_status(fix_id, "creating_issue", 2)
 
-            pr_url = self._create_github_issue(feedback_id, prompt, expected)
+            issue_url = self._create_github_issue(feedback_id, prompt, expected)
 
             self._update_fix_step(fix_id, 1, "completed")
             self._update_fix_step(fix_id, 2, "in_progress")
-            self._update_fix_status(fix_id, "triggering_deploy", 3)
-
-            deploy_ok = self._trigger_deploy()
-
-            self._update_fix_step(fix_id, 2, "completed")
-            if deploy_ok:
-                self._update_fix_step(fix_id, 3, "in_progress")
-                self._update_fix_status(fix_id, "deploying", 4)
-                self._update_fix_step(fix_id, 3, "completed")
-                self._update_fix_status(fix_id, "completed", 4)
-            else:
-                self._update_fix_step(fix_id, 3, "completed")
-                self._update_fix_status(fix_id, "completed", 4)
+            self._update_fix_status(fix_id, "ai_fixing", 3)
 
             self._fixes.update_one(
                 {"fix_id": fix_id},
-                {"$set": {"pr_url": pr_url, "deploy_triggered": deploy_ok}},
+                {"$set": {"pr_url": issue_url}},
             )
 
             return {
                 "fix_id": fix_id,
-                "status": "completed",
-                "pr_url": pr_url,
-                "deploy_triggered": deploy_ok,
+                "status": "ai_fixing",
+                "pr_url": issue_url,
             }
         except Exception as exc:
             logger.exception("Fix-now failed for %s", feedback_id)
@@ -147,11 +132,10 @@ class MLOpsEngine:
             "steps": [
                 {"name": "Queued (7 PM IST)", "status": "pending"},
                 {"name": "Creating issue", "status": "pending"},
-                {"name": "Triggering deploy", "status": "pending"},
-                {"name": "Deploying to VM", "status": "pending"},
+                {"name": "AI fixing code", "status": "pending"},
+                {"name": "Auto-deploy", "status": "pending"},
             ],
             "pr_url": None,
-            "deploy_triggered": False,
             "created_at": datetime.now(timezone.utc),
             "updated_at": datetime.now(timezone.utc),
         }
@@ -182,7 +166,8 @@ class MLOpsEngine:
     def process_queued_fixes(self) -> list[dict[str, Any]]:
         """Process all queued fix-later tickets (called by scheduler).
 
-        Creates GitHub issues for each, then triggers one deploy for the whole batch.
+        Creates GitHub issues for each — Cursor Automation picks them up,
+        fixes the code, opens PRs, and the push triggers auto-deploy.
         """
         queued = list(self._fixes.find({"status": "queued", "mode": "later"}))
         if not queued:
@@ -201,34 +186,21 @@ class MLOpsEngine:
                 prompt = ticket.get("prompt", "") if ticket else ""
                 expected = ticket.get("expected_result", "") if ticket else ""
 
-                pr_url = self._create_github_issue(feedback_id, prompt, expected)
+                issue_url = self._create_github_issue(feedback_id, prompt, expected)
 
                 self._update_fix_step(fix_id, 1, "completed")
                 self._update_fix_step(fix_id, 2, "in_progress")
-                self._update_fix_status(fix_id, "triggering_deploy", 3)
+                self._update_fix_status(fix_id, "ai_fixing", 3)
 
                 self._fixes.update_one(
                     {"fix_id": fix_id},
-                    {"$set": {"pr_url": pr_url}},
+                    {"$set": {"pr_url": issue_url}},
                 )
-                results.append({"fix_id": fix_id, "status": "issue_created", "pr_url": pr_url})
+                results.append({"fix_id": fix_id, "status": "ai_fixing", "pr_url": issue_url})
             except Exception as exc:
                 logger.exception("Batch fix failed for %s", fix_id)
                 self._update_fix_status(fix_id, "failed", 0)
                 results.append({"fix_id": fix_id, "status": "failed", "error": str(exc)})
-
-        deploy_ok = self._trigger_deploy()
-        for doc in queued:
-            fix_id = doc["fix_id"]
-            current = self._fixes.find_one({"fix_id": fix_id})
-            if current and current.get("status") != "failed":
-                self._update_fix_step(fix_id, 2, "completed")
-                self._update_fix_step(fix_id, 3, "completed" if deploy_ok else "failed")
-                self._update_fix_status(fix_id, "completed" if deploy_ok else "deploy_failed", 4)
-                self._fixes.update_one(
-                    {"fix_id": fix_id},
-                    {"$set": {"deploy_triggered": deploy_ok}},
-                )
 
         return results
 
@@ -245,17 +217,43 @@ class MLOpsEngine:
         )
 
     def _create_github_issue(self, feedback_id: str, prompt: str, expected: str) -> str:
-        """Create a GitHub issue to track the fix request."""
+        """Create a GitHub issue with rich context for Cursor Automation to fix."""
         try:
             import httpx
 
+            ticket = self._feedback.get_ticket(feedback_id)
+            actual = ticket.get("actual_result", "") if ticket else ""
+            session_id = ticket.get("session_id", "") if ticket else ""
+
             title = f"[Auto-Fix] {prompt[:80]}" if prompt else f"[Auto-Fix] Feedback {feedback_id[:8]}"
             body = (
-                f"## Automated Fix Request\n\n"
-                f"**Feedback ID:** `{feedback_id}`\n\n"
-                f"**Original Prompt:**\n{prompt}\n\n"
-                f"**Expected Result:**\n{expected}\n\n"
-                f"---\n*Created by PMWeb Automation Agent*"
+                f"## Auto-Fix Request\n\n"
+                f"A user reported that the PMWeb Automation Agent did not work as expected.\n\n"
+                f"### What the user asked\n"
+                f"```\n{prompt}\n```\n\n"
+                f"### What actually happened\n"
+                f"```\n{actual}\n```\n\n"
+                f"### What should have happened\n"
+                f"```\n{expected}\n```\n\n"
+                f"### Instructions for the fixing agent\n\n"
+                f"1. Read the HybridAgent in `backend/app/agent/browser_agent.py` — "
+                f"this is the GPT-4o planner + Selenium executor that automates PMWeb.\n"
+                f"2. Read the planner prompt (`PLANNER_PROMPT`) and the `_execute_step()` method.\n"
+                f"3. Identify why the user's request failed — missing action, wrong selector, "
+                f"incorrect navigation flow, etc.\n"
+                f"4. Fix the code so the request would succeed next time.\n"
+                f"5. If new Selenium actions are needed, add them to both `PLANNER_PROMPT` "
+                f"(so GPT-4o knows about them) and `_execute_step()` (so they execute).\n"
+                f"6. Run `cd backend && ruff check app/` to ensure no lint errors.\n"
+                f"7. Open a PR with the fix on branch `cursor/clean-agent-6eca`.\n\n"
+                f"### Key files\n"
+                f"- `backend/app/agent/browser_agent.py` — HybridAgent (planner + executor)\n"
+                f"- `backend/app/api/chat.py` — API endpoints\n"
+                f"- `backend/app/services/learning_store.py` — learning from past runs\n\n"
+                f"### Metadata\n"
+                f"- **Feedback ID:** `{feedback_id}`\n"
+                f"- **Session ID:** `{session_id}`\n\n"
+                f"---\n*Created automatically by PMWeb Automation Agent — Fix Now*"
             )
 
             resp = httpx.post(
@@ -274,29 +272,6 @@ class MLOpsEngine:
         except Exception as exc:
             logger.exception("GitHub issue creation failed")
             return f"Issue creation error: {exc}"
-
-    def _trigger_deploy(self) -> bool:
-        """Trigger the auto-deploy GitHub Actions workflow via workflow_dispatch."""
-        try:
-            import httpx
-
-            resp = httpx.post(
-                f"https://api.github.com/repos/{GITHUB_REPO}/actions/workflows/{DEPLOY_WORKFLOW}/dispatches",
-                headers={
-                    "Authorization": f"token {GITHUB_TOKEN}",
-                    "Accept": "application/vnd.github.v3+json",
-                },
-                json={"ref": DEPLOY_BRANCH},
-                timeout=30,
-            )
-            if resp.status_code == 204:
-                logger.info("Auto-deploy triggered on branch %s", DEPLOY_BRANCH)
-                return True
-            logger.warning("Deploy trigger returned %d: %s", resp.status_code, resp.text[:200])
-            return False
-        except Exception:
-            logger.exception("Failed to trigger auto-deploy")
-            return False
 
     def generate_report(self) -> PerformanceReport:
         """Build a full performance report with recommendations."""

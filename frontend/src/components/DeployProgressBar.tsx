@@ -49,7 +49,7 @@ export function DeployProgressBar({
         if (res.ok) {
           const data: ProgressData = await res.json();
           setProgress(data);
-          if (data.status === "completed" || data.status === "failed" || data.status === "not_found") {
+          if (data.status === "completed" || data.status === "ai_fixing" || data.status === "failed" || data.status === "not_found") {
             setPolling(false);
             onComplete?.(data.pr_url ?? undefined);
           }
@@ -87,17 +87,15 @@ export function DeployProgressBar({
     >
       <div style={{ fontSize: 12, fontWeight: 600, color: "#334155", marginBottom: 10 }}>
         {progress.status === "completed"
-          ? "Auto-deploy triggered — deploying to VM"
-          : progress.status === "deploy_failed"
-          ? "Issue created but deploy trigger failed"
+          ? "Fix deployed to VM"
+          : progress.status === "ai_fixing"
+          ? "Cursor AI agent is fixing the code..."
           : progress.status === "failed"
           ? "Fix failed"
           : progress.status === "queued"
-          ? "Queued for batch deploy (7 PM IST)"
-          : progress.status === "deploying"
-          ? "Deploying to VM..."
-          : progress.status === "triggering_deploy"
-          ? "Triggering auto-deploy pipeline..."
+          ? "Queued for batch (7 PM IST)"
+          : progress.status === "creating_issue"
+          ? "Creating GitHub issue..."
           : "Processing fix..."}
       </div>
 
