@@ -163,6 +163,22 @@ class MLOpsEngine:
         """Count fixes waiting in the batch queue."""
         return self._fixes.count_documents({"status": "queued", "mode": "later"})
 
+    def get_fix_history(self, limit: int = 20) -> list[dict[str, Any]]:
+        """Return recent fix requests with their status."""
+        docs = self._fixes.find({}, sort=[("created_at", -1)], limit=limit)
+        history = []
+        for doc in docs:
+            history.append({
+                "fix_id": doc.get("fix_id"),
+                "feedback_id": doc.get("feedback_id"),
+                "mode": doc.get("mode"),
+                "status": doc.get("status"),
+                "steps": doc.get("steps", []),
+                "pr_url": doc.get("pr_url"),
+                "created_at": doc.get("created_at", "").isoformat() if hasattr(doc.get("created_at", ""), "isoformat") else str(doc.get("created_at", "")),
+            })
+        return history
+
     def process_queued_fixes(self) -> list[dict[str, Any]]:
         """Process all queued fix-later tickets (called by scheduler).
 

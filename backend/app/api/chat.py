@@ -93,6 +93,12 @@ async def queued_count():
     return {"count": engine.get_queued_count()}
 
 
+@router.get("/feedback/history")
+async def fix_history():
+    engine = get_mlops_engine()
+    return engine.get_fix_history()
+
+
 @router.get("/sessions")
 async def list_sessions():
     return store.list_sessions()

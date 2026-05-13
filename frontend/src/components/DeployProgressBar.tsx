@@ -30,8 +30,6 @@ const STEP_COLORS: Record<string, string> = {
   failed: "#dc2626",
 };
 
-const STEP_TIMES = ["~5s", "~10s", "~3 min", "~5 min"];
-
 function getProgressPercent(steps: ProgressStep[]): number {
   const completed = steps.filter((s) => s.status === "completed").length;
   const inProgress = steps.filter((s) => s.status === "in_progress").length;
@@ -39,27 +37,27 @@ function getProgressPercent(steps: ProgressStep[]): number {
   return Math.round(((completed + inProgress * 0.5) / total) * 100);
 }
 
-function getEta(steps: ProgressStep[]): string {
-  const currentIdx = steps.findIndex((s) => s.status === "in_progress");
-  if (currentIdx === -1) {
-    const allDone = steps.every((s) => s.status === "completed");
-    return allDone ? "Done!" : "Waiting...";
+function getStatusText(status: string): string {
+  switch (status) {
+    case "completed": return "Fix deployed to VM";
+    case "ai_fixing": return "Cursor AI agent is fixing the code...";
+    case "failed": return "Fix failed";
+    case "queued": return "Queued for batch (7 PM IST)";
+    case "creating_issue": return "Creating GitHub issue...";
+    case "analyzing": return "Analyzing feedback...";
+    default: return "Processing...";
   }
-  const remaining = steps.slice(currentIdx).filter((s) => s.status !== "completed");
-  if (remaining.length <= 1) return "Almost done...";
-  if (currentIdx <= 1) return "~4 min remaining";
-  return "~2 min remaining";
 }
 
-export function DeployProgressBar({
-  feedbackId,
-  onComplete,
-}: {
-  feedbackId: string;
-  onComplete?: (prUrl?: string) => void;
-}) {
+export function DeployProgressBar({ feedbackId }: { feedbackId: string }) {
   const [progress, setProgress] = useState<ProgressData | null>(null);
   const [polling, setPolling] = useState(true);
+  const [elapsed, setElapsed] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setElapsed((e) => e + 1), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (!feedbackId || !polling) return;
@@ -70,47 +68,31 @@ export function DeployProgressBar({
         if (res.ok) {
           const data: ProgressData = await res.json();
           setProgress(data);
-          if (data.status === "completed" || data.status === "ai_fixing" || data.status === "failed" || data.status === "not_found") {
+          if (data.status === "completed" || data.status === "ai_fixing" || data.status === "failed") {
             setPolling(false);
-            onComplete?.(data.pr_url ?? undefined);
           }
         }
       } catch {
-        /* retry next interval */
+        /* retry */
       }
     };
 
     poll();
-    const interval = setInterval(poll, 1500);
+    const interval = setInterval(poll, 2000);
     return () => clearInterval(interval);
-  }, [feedbackId, polling, onComplete]);
+  }, [feedbackId, polling]);
 
-  if (!progress || progress.status === "not_found") return null;
-
-  const steps = progress.steps?.length
+  const steps = progress?.steps?.length
     ? progress.steps
     : [
-        { name: "Analyzing", status: "pending" as const },
-        { name: "Creating issue", status: "pending" as const },
-        { name: "AI fixing code", status: "pending" as const },
+        { name: "Analyzing", status: (elapsed < 1 ? "in_progress" : "completed") as ProgressStep["status"] },
+        { name: "Creating issue", status: (elapsed < 1 ? "pending" : elapsed < 3 ? "in_progress" : "completed") as ProgressStep["status"] },
+        { name: "AI fixing code", status: (elapsed < 3 ? "pending" : "in_progress") as ProgressStep["status"] },
         { name: "Auto-deploy", status: "pending" as const },
       ];
 
-  const percent = getProgressPercent(steps);
-  const eta = getEta(steps);
-
-  const statusText =
-    progress.status === "completed"
-      ? "Fix deployed to VM"
-      : progress.status === "ai_fixing"
-      ? "Cursor AI agent is fixing the code..."
-      : progress.status === "failed"
-      ? "Fix failed"
-      : progress.status === "queued"
-      ? "Queued for batch (7 PM IST)"
-      : progress.status === "creating_issue"
-      ? "Creating GitHub issue..."
-      : "Processing fix...";
+  const percent = progress ? getProgressPercent(steps) : Math.min(elapsed * 8, 60);
+  const statusText = progress ? getStatusText(progress.status) : (elapsed < 3 ? "Creating GitHub issue..." : "Cursor AI agent is fixing the code...");
 
   return (
     <div
@@ -119,7 +101,7 @@ export function DeployProgressBar({
         border: "1px solid #e2e8f0",
         borderRadius: 10,
         padding: 14,
-        marginTop: 10,
+        marginTop: 8,
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
@@ -127,37 +109,37 @@ export function DeployProgressBar({
           {statusText}
         </div>
         <div style={{ fontSize: 11, color: "#64748b", fontWeight: 500 }}>
-          {percent}%
+          {percent}% · {elapsed}s
         </div>
       </div>
 
-      {/* Overall progress bar */}
+      {/* Progress bar */}
       <div style={{ height: 6, background: "#e2e8f0", borderRadius: 3, marginBottom: 10, overflow: "hidden" }}>
         <div
           style={{
             height: "100%",
             width: `${percent}%`,
-            background: progress.status === "failed" ? "#dc2626" : "linear-gradient(90deg, #2563eb, #16a34a)",
+            background: progress?.status === "failed" ? "#dc2626" : "linear-gradient(90deg, #2563eb, #16a34a)",
             borderRadius: 3,
-            transition: "width 0.5s ease",
+            transition: "width 0.8s ease",
           }}
         />
       </div>
 
-      {/* Step indicators */}
-      <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+      {/* Steps */}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 0 }}>
         {steps.map((step, i) => (
           <div key={i} style={{ display: "flex", alignItems: "center", flex: 1 }}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: 50 }}>
               <div
                 style={{
-                  width: 26,
-                  height: 26,
+                  width: 24,
+                  height: 24,
                   borderRadius: "50%",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: 13,
+                  fontSize: 12,
                   fontWeight: 700,
                   color: "#fff",
                   background: STEP_COLORS[step.status] || "#94a3b8",
@@ -173,15 +155,12 @@ export function DeployProgressBar({
                   color: STEP_COLORS[step.status] || "#94a3b8",
                   marginTop: 3,
                   textAlign: "center",
-                  maxWidth: 65,
+                  maxWidth: 60,
                   lineHeight: 1.2,
                   fontWeight: step.status === "in_progress" ? 600 : 400,
                 }}
               >
                 {step.name}
-              </div>
-              <div style={{ fontSize: 7, color: "#94a3b8", marginTop: 1 }}>
-                {step.status === "in_progress" ? STEP_TIMES[i] || "" : ""}
               </div>
             </div>
             {i < steps.length - 1 && (
@@ -190,7 +169,7 @@ export function DeployProgressBar({
                   flex: 1,
                   height: 2,
                   background: step.status === "completed" ? "#16a34a" : "#e2e8f0",
-                  marginBottom: 22,
+                  marginBottom: 16,
                   transition: "background 0.3s ease",
                 }}
               />
@@ -199,19 +178,9 @@ export function DeployProgressBar({
         ))}
       </div>
 
-      {/* ETA */}
-      <div style={{ textAlign: "center", fontSize: 10, color: "#94a3b8", marginTop: 6 }}>
-        {eta}
-      </div>
-
-      {progress.pr_url && (
+      {progress?.pr_url && (
         <div style={{ marginTop: 8, fontSize: 11, textAlign: "center" }}>
-          <a
-            href={progress.pr_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "#2563eb", textDecoration: "underline" }}
-          >
+          <a href={progress.pr_url} target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb" }}>
             View on GitHub →
           </a>
         </div>

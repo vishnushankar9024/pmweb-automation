@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getPmwebStatus, connectPmweb, getSession } from "../services/api";
 import type { ChatMessage } from "../types";
+import { FixHistory } from "./FixHistory";
 import { MessageBubble } from "./MessageBubble";
 
 const API = import.meta.env.VITE_API_URL || "";
@@ -17,6 +18,7 @@ export function ChatWindow({ sessionId, onSessionCreated }: Props) {
   const [loading, setLoading] = useState(false);
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
+  const [showFixHistory, setShowFixHistory] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -77,6 +79,10 @@ export function ChatWindow({ sessionId, onSessionCreated }: Props) {
           <p style={{ margin: 0, fontSize: 11, color: "#94a3b8" }}>Chat to configure PMWeb</p>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={() => setShowFixHistory(!showFixHistory)}
+            style={{ padding: "6px 12px", borderRadius: 8, border: showFixHistory ? "1px solid #c7d2fe" : "1px solid #cbd5e1", background: showFixHistory ? "#eef2ff" : "#fff", fontSize: 11, color: "#475569", cursor: "pointer" }}>
+            🔧 Fix History
+          </button>
           <a href={`${window.location.protocol}//${window.location.hostname}:6081/vnc.html?autoconnect=true&resize=scale&view_only=true`} target="_blank"
             style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid #cbd5e1", fontSize: 11, color: "#475569", textDecoration: "none" }}>
             Live View
@@ -134,6 +140,7 @@ export function ChatWindow({ sessionId, onSessionCreated }: Props) {
         )}
       </div>
       <style>{`@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }`}</style>
+      {showFixHistory && <FixHistory onClose={() => setShowFixHistory(false)} />}
     </div>
   );
 }

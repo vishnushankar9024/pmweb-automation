@@ -20,12 +20,13 @@ export function FeedbackPanel({
   const [file, setFile] = useState<File | null>(null);
   const [busy, setBusy] = useState(false);
   const [ticketId, setTicketId] = useState<string | null>(null);
+  const [fixMode, setFixMode] = useState<"now" | "later" | null>(null);
   const [issueUrl, setIssueUrl] = useState<string | null>(null);
-  const [done, setDone] = useState(false);
 
   const submit = async (mode: "now" | "later") => {
     if (!expected.trim()) return;
     setBusy(true);
+    setFixMode(mode);
 
     const form = new FormData();
     form.append("session_id", sessionId);
@@ -38,21 +39,23 @@ export function FeedbackPanel({
       const r = await fetch(API + "/api/feedback", { method: "POST", body: form });
       const data = await r.json();
       const tid = data.ticket_id;
+      if (!tid) return;
 
-      if (tid) {
-        setTicketId(tid);
-        const f2 = new FormData();
-        f2.append("feedback_id", tid);
-        const fixRes = await fetch(API + `/api/feedback/fix-${mode}`, { method: "POST", body: f2 });
-        const fixData = await fixRes.json();
-        if (fixData.pr_url) setIssueUrl(fixData.pr_url);
-      }
+      setTicketId(tid);
+
+      const f2 = new FormData();
+      f2.append("feedback_id", tid);
+      const fixRes = await fetch(API + `/api/feedback/fix-${mode}`, { method: "POST", body: f2 });
+      const fixData = await fixRes.json();
+      if (fixData.pr_url) setIssueUrl(fixData.pr_url);
     } catch {
-      /* handled by progress bar */
+      /* progress bar handles display */
     } finally {
       setBusy(false);
     }
   };
+
+  const isSubmitted = !!ticketId;
 
   return (
     <div
@@ -66,17 +69,17 @@ export function FeedbackPanel({
     >
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
         <b style={{ fontSize: 13, color: "#92400e" }}>
-          {done ? "Fix submitted" : "What should have happened?"}
+          {isSubmitted ? (fixMode === "later" ? "Queued for Fix Later" : "Fix in Progress") : "What should have happened?"}
         </b>
         <button
-          onClick={() => { if (done) onSubmitted(); else onClose(); }}
+          onClick={() => { if (isSubmitted) onSubmitted(); else onClose(); }}
           style={{ background: "none", border: "none", cursor: "pointer", color: "#92400e" }}
         >
           ✕
         </button>
       </div>
 
-      {!ticketId && !done && (
+      {!isSubmitted && (
         <>
           <textarea
             value={expected}
@@ -123,7 +126,7 @@ export function FeedbackPanel({
                 opacity: busy || !expected.trim() ? 0.5 : 1,
               }}
             >
-              🚀 Fix Now
+              {busy && fixMode === "now" ? "Submitting..." : "🚀 Fix Now"}
             </button>
             <button
               onClick={() => submit("later")}
@@ -139,50 +142,48 @@ export function FeedbackPanel({
                 opacity: busy || !expected.trim() ? 0.5 : 1,
               }}
             >
-              📋 Fix Later
+              {busy && fixMode === "later" ? "Queuing..." : "📋 Fix Later"}
             </button>
           </div>
         </>
       )}
 
-      {ticketId && !done && (
-        <DeployProgressBar
-          feedbackId={ticketId}
-          onComplete={(url) => {
-            if (url) setIssueUrl(url);
-            setDone(true);
-          }}
-        />
-      )}
+      {isSubmitted && (
+        <>
+          <DeployProgressBar feedbackId={ticketId} />
 
-      {done && (
-        <div style={{ fontSize: 12, color: "#334155", marginTop: 4 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
-            <span style={{ fontSize: 16 }}>🤖</span>
-            <span>Cursor AI agent is working on the fix. It will open a PR and auto-deploy when done.</span>
+          <div style={{ fontSize: 12, color: "#334155", marginTop: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+              <span style={{ fontSize: 14 }}>🤖</span>
+              <span>
+                {fixMode === "later"
+                  ? "Queued — will be processed at 7 PM IST."
+                  : "Cursor AI agent will fix the code, open a PR, and auto-deploy."}
+              </span>
+            </div>
+            {issueUrl && (
+              <a href={issueUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb", fontSize: 11 }}>
+                Track on GitHub →
+              </a>
+            )}
+            <div style={{ marginTop: 8 }}>
+              <button
+                onClick={onSubmitted}
+                style={{
+                  padding: "4px 12px",
+                  borderRadius: 6,
+                  border: "1px solid #e2e8f0",
+                  background: "#fff",
+                  fontSize: 11,
+                  cursor: "pointer",
+                  color: "#64748b",
+                }}
+              >
+                Dismiss
+              </button>
+            </div>
           </div>
-          {issueUrl && (
-            <a href={issueUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb", fontSize: 11 }}>
-              Track progress on GitHub →
-            </a>
-          )}
-          <div style={{ marginTop: 8 }}>
-            <button
-              onClick={onSubmitted}
-              style={{
-                padding: "4px 12px",
-                borderRadius: 6,
-                border: "1px solid #e2e8f0",
-                background: "#fff",
-                fontSize: 11,
-                cursor: "pointer",
-                color: "#64748b",
-              }}
-            >
-              Dismiss
-            </button>
-          </div>
-        </div>
+        </>
       )}
     </div>
   );
