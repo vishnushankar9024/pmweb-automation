@@ -1,21 +1,24 @@
-name: Auto-Deploy on PR Merge
+name: Auto-Deploy to GCE VM
 
 on:
+  push:
+    branches:
+      - cursor/clean-agent-6eca
   pull_request:
     types: [closed]
     branches:
-      - cursor/pmweb-agent-6eca
+      - main
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
+    if: github.event_name == 'push' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: cursor/pmweb-agent-6eca
+          ref: cursor/clean-agent-6eca
 
       - name: Auth to GCP
         uses: google-github-actions/auth@v2
@@ -30,7 +33,7 @@ jobs:
           gcloud compute ssh pmweb-agent-vm \
             --zone=us-central1-a \
             --project=pmweb-automation \
-            --command="cd ~/pmweb-automation && git fetch origin cursor/pmweb-agent-6eca && git reset --hard origin/cursor/pmweb-agent-6eca && sudo docker rm -f \$(sudo docker ps -aq) 2>/dev/null; sudo docker build -t pmweb-agent . && sudo docker run -d --name pmweb-agent -p 8080:8080 -p 6081:6081 -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} -e GITHUB_TOKEN=${{ secrets.GH_TOKEN }} -e PMWEB_BASE_URL=https://cmcs.pmweb.com/2025_1_00/pmweb/ -e PMWEB_USERNAME=admin -e PMWEB_PASSWORD=pmweb2 -e PMWEB_HEADLESS=false -e DISPLAY=:99 pmweb-agent"
+            --command="cd ~/pmweb-automation && git fetch origin cursor/clean-agent-6eca && git checkout cursor/clean-agent-6eca && git reset --hard origin/cursor/clean-agent-6eca && sudo docker rm -f \$(sudo docker ps -aq) 2>/dev/null; sudo docker build -t pmweb-agent . && sudo docker run -d --name pmweb-agent -p 8080:8080 -p 6081:6081 -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} -e GITHUB_TOKEN=${{ secrets.GH_TOKEN }} -e MONGO_URI='${{ secrets.MONGO_URI }}' -e PMWEB_BASE_URL=https://cmcs.pmweb.com/2025_1_00/pmweb/ -e PMWEB_USERNAME=admin -e PMWEB_PASSWORD=pmweb2 -e PMWEB_HEADLESS=false -e DISPLAY=:99 pmweb-agent"
 
       - name: Verify deployment
         run: |
