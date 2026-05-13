@@ -617,7 +617,8 @@ class HybridAgent:
             r"\bdescription\b",
             r"\bdescribed as\b",
             r"\bfor\s+(?!me\b)(?!my\b)[\w -]+",
-            r"\b(team|role|department|permission|permissions|access)\b",
+            r"\bbased\s+on\s+(?:a\s+)?(team|role|department)\b",
+            r"\b(role|department|permission|permissions|access)\b",
             r"\b(view|edit|delete|full control)\b",
         ]
         has_name = any(re.search(pattern, text) for pattern in name_patterns)
