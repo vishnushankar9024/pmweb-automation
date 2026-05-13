@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.chat import router as chat_router
 from app.api.health import router as health_router
+from app.api.mlops import router as mlops_router
 from app.api.pmweb import router as pmweb_router
 from app.config import settings
 
@@ -17,6 +18,20 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, 
 app.include_router(health_router)
 app.include_router(chat_router)
 app.include_router(pmweb_router)
+app.include_router(mlops_router)
+
+
+@app.on_event("startup")
+async def startup_event():
+    from app.services.scheduler import start_scheduler
+    start_scheduler()
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    from app.services.scheduler import stop_scheduler
+    stop_scheduler()
+
 
 static_dir = os.path.join(os.path.dirname(__file__), "..", "static")
 frontend_dist = os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")

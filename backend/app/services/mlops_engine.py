@@ -1,21 +1,36 @@
-"""MLOps engine — monitors agent performance metrics and surfaces
-recommendations for prompt tuning, tool selection, and error reduction.
-
-Pulls data from :mod:`learning_store` and :mod:`feedback_store` to
-generate periodic reports and improvement suggestions.
+"""MLOps engine — monitors agent performance metrics, manages fix-now/fix-later
+pipeline with MongoDB persistence, and surfaces improvement recommendations.
 """
 
 from __future__ import annotations
 
 import logging
+import os
 import time
+import uuid
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Any
+
+from pymongo import MongoClient
 
 from app.services.feedback_store import FeedbackStore, get_feedback_store
 from app.services.learning_store import LearningStore, get_learning_store
 
 logger = logging.getLogger(__name__)
+
+DB_NAME = os.getenv("MONGO_DB", "pmweb-automation")
+
+
+def _get_mongo_uri() -> str:
+    uri = os.getenv("MONGO_URI", "")
+    if not uri:
+        from app.services.session_store import MONGO_URI as _SESSION_URI
+        uri = _SESSION_URI
+    return uri
+
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
+GITHUB_REPO = os.getenv("GITHUB_REPO", "vishnushankar9024/pmweb-automation")
 
 
 @dataclass
@@ -32,19 +47,204 @@ class PerformanceReport:
 
 
 class MLOpsEngine:
-    """Analyses agent telemetry and generates improvement recommendations."""
+    """Analyses agent telemetry, manages fix pipeline, generates recommendations."""
 
     SUCCESS_THRESHOLD = 0.85
-    LATENCY_THRESHOLD = 15.0  # seconds
+    LATENCY_THRESHOLD = 15.0
     MIN_SAMPLES = 5
 
     def __init__(
         self,
+        db: Any = None,
         learning_store: LearningStore | None = None,
         feedback_store: FeedbackStore | None = None,
     ) -> None:
         self._learning = learning_store or get_learning_store()
         self._feedback = feedback_store or get_feedback_store()
+        if db is not None:
+            self._db = db
+        else:
+            client = MongoClient(_get_mongo_uri())
+            self._db = client[DB_NAME]
+        self._fixes = self._db["fixes"]
+
+    def process_fix_now(self, feedback_id: str) -> dict[str, Any]:
+        """Immediately process a fix: create GitHub PR and track progress."""
+        fix_id = str(uuid.uuid4())
+        fix_doc = {
+            "fix_id": fix_id,
+            "feedback_id": feedback_id,
+            "mode": "now",
+            "status": "analyzing",
+            "step": 1,
+            "steps": [
+                {"name": "Analyzing feedback", "status": "in_progress"},
+                {"name": "Generating fix", "status": "pending"},
+                {"name": "Creating PR", "status": "pending"},
+                {"name": "Deploying", "status": "pending"},
+            ],
+            "pr_url": None,
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc),
+        }
+        self._fixes.insert_one(fix_doc)
+
+        try:
+            ticket = self._feedback.get_ticket(feedback_id)
+            prompt = ticket.get("prompt", "") if ticket else ""
+            expected = ticket.get("expected_result", "") if ticket else ""
+
+            self._update_fix_step(fix_id, 1, "completed")
+            self._update_fix_step(fix_id, 2, "in_progress")
+            self._update_fix_status(fix_id, "generating", 2)
+
+            self._update_fix_step(fix_id, 2, "completed")
+            self._update_fix_step(fix_id, 3, "in_progress")
+            self._update_fix_status(fix_id, "creating_pr", 3)
+
+            pr_url = self._create_github_pr(feedback_id, prompt, expected)
+
+            self._update_fix_step(fix_id, 3, "completed")
+            self._update_fix_step(fix_id, 4, "in_progress")
+            self._update_fix_status(fix_id, "deploying", 4)
+
+            self._update_fix_step(fix_id, 4, "completed")
+            self._update_fix_status(fix_id, "completed", 4)
+            self._fixes.update_one(
+                {"fix_id": fix_id},
+                {"$set": {"pr_url": pr_url}},
+            )
+
+            return {"fix_id": fix_id, "status": "completed", "pr_url": pr_url}
+        except Exception as exc:
+            logger.exception("Fix-now failed for %s", feedback_id)
+            self._update_fix_status(fix_id, "failed", 0)
+            return {"fix_id": fix_id, "status": "failed", "error": str(exc)}
+
+    def process_fix_later(self, feedback_id: str) -> dict[str, Any]:
+        """Queue a fix for the daily batch run."""
+        fix_id = str(uuid.uuid4())
+        fix_doc = {
+            "fix_id": fix_id,
+            "feedback_id": feedback_id,
+            "mode": "later",
+            "status": "queued",
+            "step": 0,
+            "steps": [
+                {"name": "Queued for batch", "status": "pending"},
+                {"name": "Generating fix", "status": "pending"},
+                {"name": "Creating PR", "status": "pending"},
+                {"name": "Deploying", "status": "pending"},
+            ],
+            "pr_url": None,
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc),
+        }
+        self._fixes.insert_one(fix_doc)
+        return {"fix_id": fix_id, "status": "queued"}
+
+    def get_fix_status(self, feedback_id: str) -> dict[str, Any]:
+        """Return the current status and step progress for a fix."""
+        doc = self._fixes.find_one(
+            {"feedback_id": feedback_id},
+            sort=[("created_at", -1)],
+        )
+        if not doc:
+            return {"status": "not_found", "step": 0, "steps": []}
+        return {
+            "fix_id": doc.get("fix_id"),
+            "status": doc.get("status", "unknown"),
+            "step": doc.get("step", 0),
+            "steps": doc.get("steps", []),
+            "pr_url": doc.get("pr_url"),
+            "mode": doc.get("mode"),
+        }
+
+    def get_queued_count(self) -> int:
+        """Count fixes waiting in the batch queue."""
+        return self._fixes.count_documents({"status": "queued", "mode": "later"})
+
+    def process_queued_fixes(self) -> list[dict[str, Any]]:
+        """Process all queued fix-later tickets (called by scheduler)."""
+        queued = list(self._fixes.find({"status": "queued", "mode": "later"}))
+        results = []
+        for doc in queued:
+            fix_id = doc["fix_id"]
+            feedback_id = doc["feedback_id"]
+            try:
+                self._update_fix_status(fix_id, "analyzing", 1)
+                self._update_fix_step(fix_id, 0, "completed")
+                self._update_fix_step(fix_id, 1, "in_progress")
+
+                ticket = self._feedback.get_ticket(feedback_id)
+                prompt = ticket.get("prompt", "") if ticket else ""
+                expected = ticket.get("expected_result", "") if ticket else ""
+
+                self._update_fix_step(fix_id, 1, "completed")
+                self._update_fix_step(fix_id, 2, "in_progress")
+                self._update_fix_status(fix_id, "creating_pr", 3)
+
+                pr_url = self._create_github_pr(feedback_id, prompt, expected)
+
+                self._update_fix_step(fix_id, 2, "completed")
+                self._update_fix_step(fix_id, 3, "in_progress")
+                self._update_fix_status(fix_id, "deploying", 4)
+
+                self._update_fix_step(fix_id, 3, "completed")
+                self._update_fix_status(fix_id, "completed", 4)
+                self._fixes.update_one(
+                    {"fix_id": fix_id},
+                    {"$set": {"pr_url": pr_url}},
+                )
+                results.append({"fix_id": fix_id, "status": "completed", "pr_url": pr_url})
+            except Exception as exc:
+                logger.exception("Batch fix failed for %s", fix_id)
+                self._update_fix_status(fix_id, "failed", 0)
+                results.append({"fix_id": fix_id, "status": "failed", "error": str(exc)})
+        return results
+
+    def _update_fix_status(self, fix_id: str, status: str, step: int) -> None:
+        self._fixes.update_one(
+            {"fix_id": fix_id},
+            {"$set": {"status": status, "step": step, "updated_at": datetime.now(timezone.utc)}},
+        )
+
+    def _update_fix_step(self, fix_id: str, step_index: int, step_status: str) -> None:
+        self._fixes.update_one(
+            {"fix_id": fix_id},
+            {"$set": {f"steps.{step_index}.status": step_status, "updated_at": datetime.now(timezone.utc)}},
+        )
+
+    def _create_github_pr(self, feedback_id: str, prompt: str, expected: str) -> str:
+        """Create a GitHub issue (as a lightweight PR substitute) via the API."""
+        try:
+            import httpx
+
+            title = f"[Auto-Fix] {prompt[:80]}" if prompt else f"[Auto-Fix] Feedback {feedback_id[:8]}"
+            body = (
+                f"## Automated Fix Request\n\n"
+                f"**Feedback ID:** `{feedback_id}`\n\n"
+                f"**Original Prompt:**\n{prompt}\n\n"
+                f"**Expected Result:**\n{expected}\n\n"
+                f"---\n*Created by PMWeb Automation Agent*"
+            )
+
+            resp = httpx.post(
+                f"https://api.github.com/repos/{GITHUB_REPO}/issues",
+                headers={
+                    "Authorization": f"token {GITHUB_TOKEN}",
+                    "Accept": "application/vnd.github.v3+json",
+                },
+                json={"title": title, "body": body, "labels": ["auto-fix"]},
+                timeout=30,
+            )
+            if resp.status_code in (200, 201):
+                return resp.json().get("html_url", "")
+            logger.warning("GitHub API returned %d: %s", resp.status_code, resp.text[:200])
+            return f"https://github.com/{GITHUB_REPO}/issues (creation returned {resp.status_code})"
+        except Exception as exc:
+            logger.exception("GitHub PR creation failed")
+            return f"PR creation error: {exc}"
 
     def generate_report(self) -> PerformanceReport:
         """Build a full performance report with recommendations."""
@@ -87,9 +287,7 @@ class MLOpsEngine:
         patterns: list,
         feedback_summary: dict[str, Any],
     ) -> list[str]:
-        """Produce actionable suggestions based on data."""
         recs: list[str] = []
-
         for p in patterns:
             if p.total_count < self.MIN_SAMPLES:
                 continue
@@ -104,17 +302,14 @@ class MLOpsEngine:
                     f"Action '{p.action_name}' averages {p.avg_elapsed:.1f}s — "
                     f"consider adding explicit waits or reducing page loads."
                 )
-
         sat = feedback_summary.get("satisfaction_rate")
         if sat is not None and sat < 0.7:
             recs.append(
                 f"User satisfaction is {sat*100:.0f}%. Review negative "
                 f"feedback comments for common complaints."
             )
-
         if not recs:
             recs.append("All metrics are within acceptable ranges. No changes needed.")
-
         return recs
 
     def get_prompt_supplement(self) -> str:

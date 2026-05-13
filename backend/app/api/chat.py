@@ -8,6 +8,7 @@ from app.models.chat import ChatRequest, ChatResponse
 from app.services.feedback_store import FeedbackStore
 from app.services.file_extractor import extract_text
 from app.services.learning_store import LearningStore
+from app.services.mlops_engine import get_mlops_engine
 from app.services.session_store import SessionStore
 
 router = APIRouter(prefix="/api", tags=["chat"])
@@ -70,38 +71,26 @@ async def submit_feedback(session_id: str = Form(...), prompt: str = Form(...), 
 
 @router.post("/feedback/fix-now")
 async def fix_now(feedback_id: str = Form(...)):
-    from pymongo import MongoClient
-
-    from app.services.mlops_engine import MLOpsEngine
-    client = MongoClient("mongodb+srv://pmwebxadmin:sa_admin2025@cluster0.oddu5r6.mongodb.net/")
-    return MLOpsEngine(client["pmweb-automation"]).process_fix_now(feedback_id)
+    engine = get_mlops_engine()
+    return engine.process_fix_now(feedback_id)
 
 
 @router.post("/feedback/fix-later")
 async def fix_later(feedback_id: str = Form(...)):
-    from pymongo import MongoClient
-
-    from app.services.mlops_engine import MLOpsEngine
-    client = MongoClient("mongodb+srv://pmwebxadmin:sa_admin2025@cluster0.oddu5r6.mongodb.net/")
-    return MLOpsEngine(client["pmweb-automation"]).process_fix_later(feedback_id)
+    engine = get_mlops_engine()
+    return engine.process_fix_later(feedback_id)
 
 
 @router.get("/feedback/progress/{feedback_id}")
 async def fix_progress(feedback_id: str):
-    from pymongo import MongoClient
-
-    from app.services.mlops_engine import MLOpsEngine
-    client = MongoClient("mongodb+srv://pmwebxadmin:sa_admin2025@cluster0.oddu5r6.mongodb.net/")
-    return MLOpsEngine(client["pmweb-automation"]).get_fix_status(feedback_id)
+    engine = get_mlops_engine()
+    return engine.get_fix_status(feedback_id)
 
 
 @router.get("/feedback/queued-count")
 async def queued_count():
-    from pymongo import MongoClient
-
-    from app.services.mlops_engine import MLOpsEngine
-    client = MongoClient("mongodb+srv://pmwebxadmin:sa_admin2025@cluster0.oddu5r6.mongodb.net/")
-    return {"count": MLOpsEngine(client["pmweb-automation"]).get_queued_count()}
+    engine = get_mlops_engine()
+    return {"count": engine.get_queued_count()}
 
 
 @router.get("/sessions")

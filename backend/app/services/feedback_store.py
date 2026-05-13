@@ -91,6 +91,64 @@ class FeedbackStore:
         """Return feedback entries for a specific session."""
         return [e for e in self.get_all() if e.session_id == session_id]
 
+    def store_file(self, filename: str, content: bytes, content_type: str, extracted_text: str) -> str:
+        """Persist an uploaded evidence file and return its ID."""
+        file_id = str(uuid.uuid4())
+        files_dir = self._dir / "files"
+        files_dir.mkdir(exist_ok=True)
+        (files_dir / f"{file_id}_{filename}").write_bytes(content)
+        meta = {
+            "file_id": file_id,
+            "filename": filename,
+            "content_type": content_type,
+            "extracted_text": extracted_text,
+            "created_at": time.time(),
+        }
+        with (self._dir / "file_meta.jsonl").open("a") as f:
+            f.write(json.dumps(meta, default=str) + "\n")
+        return file_id
+
+    def create_ticket(
+        self,
+        session_id: str,
+        prompt: str,
+        actual_result: str,
+        expected_result: str,
+        file_ids: list[str] | None = None,
+    ) -> dict[str, Any]:
+        """Create a feedback ticket and return it with an ID."""
+        ticket_id = str(uuid.uuid4())
+        ticket = {
+            "id": ticket_id,
+            "session_id": session_id,
+            "prompt": prompt,
+            "actual_result": actual_result,
+            "expected_result": expected_result,
+            "file_ids": file_ids or [],
+            "status": "open",
+            "created_at": time.time(),
+        }
+        with (self._dir / "tickets.jsonl").open("a") as f:
+            f.write(json.dumps(ticket, default=str) + "\n")
+        logger.info("Feedback ticket created: %s", ticket_id)
+        return ticket
+
+    def get_ticket(self, ticket_id: str) -> dict[str, Any] | None:
+        """Retrieve a ticket by ID."""
+        tickets_file = self._dir / "tickets.jsonl"
+        if not tickets_file.exists():
+            return None
+        for line in tickets_file.read_text().splitlines():
+            if not line.strip():
+                continue
+            try:
+                t = json.loads(line)
+                if t.get("id") == ticket_id:
+                    return t
+            except json.JSONDecodeError:
+                continue
+        return None
+
     def summary(self) -> dict[str, Any]:
         """Aggregate feedback statistics."""
         entries = self.get_all()

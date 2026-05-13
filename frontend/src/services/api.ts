@@ -102,5 +102,11 @@ export async function getPerformanceReport(): Promise<Record<string, unknown>> {
   return res.json();
 }
 
+export async function getSession(sessionId: string) {
+  const res = await fetch(`${API_BASE}/api/sessions/${sessionId}`);
+  if (!res.ok) throw new Error(`Session not found: ${res.status}`);
+  return res.json();
+}
+
 export async function listSessions() { const r = await fetch((import.meta.env.VITE_API_URL || "") + "/api/sessions"); return r.json(); }
 
