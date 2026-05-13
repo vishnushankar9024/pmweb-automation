@@ -11,6 +11,9 @@ from app.agent.browser_agent import PLANNER_PROMPT, HybridAgent
         "create a security group",
         "Can you create a security group?",
         "please set up new security groups",
+        "create a security group for me",
+        "create a security group for the procurement team",
+        "create a security group named Safety Team",
     ],
 )
 def test_bare_security_group_create_request_asks_for_details(monkeypatch, task):
@@ -32,7 +35,7 @@ def test_bare_security_group_create_request_asks_for_details(monkeypatch, task):
     "task",
     [
         "create a security group named Safety Team with description Safety access",
-        "create a security group for the procurement team",
+        "create a security group called Safety Team for the procurement team",
         "create a security group\n\n--- Attached file ---\nName: Safety Team\nDescription: Safety access",
     ],
 )

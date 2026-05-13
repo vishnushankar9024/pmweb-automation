@@ -609,16 +609,20 @@ class HybridAgent:
         if re.search(r"---\s*attached file\s*---\s*\S", text):
             return False
 
-        detail_patterns = [
+        name_patterns = [
             r"\b(group\s+)?name(d)?\b",
             r"\bcalled\b",
+        ]
+        context_patterns = [
             r"\bdescription\b",
             r"\bdescribed as\b",
             r"\bfor\s+(?!me\b)(?!my\b)[\w -]+",
             r"\b(team|role|department|permission|permissions|access)\b",
             r"\b(view|edit|delete|full control)\b",
         ]
-        if any(re.search(pattern, text) for pattern in detail_patterns):
+        has_name = any(re.search(pattern, text) for pattern in name_patterns)
+        has_context = any(re.search(pattern, text) for pattern in context_patterns)
+        if has_name and has_context:
             return False
 
         generic = re.sub(
