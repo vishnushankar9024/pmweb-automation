@@ -1,63 +1,102 @@
-import type { ExecutedAction } from "../types";
-
-const TOOL_LABELS: Record<string, string> = {
-  create_security_group: "Security Group Created",
-  create_user: "User Created",
-  set_user_access: "User Access Updated",
-  set_password_policy: "Password Policy Updated",
-  create_workflow: "Workflow Created",
-  create_form: "Form Created",
+const ACTION_ICONS: Record<string, string> = {
+  navigate: "🌐",
+  switch_to_iframe: "🖼️",
+  switch_to_main: "🖼️",
+  click_tab: "📑",
+  click_button: "👆",
+  fill_textbox: "✏️",
+  check_option: "☑️",
+  click_module_permission: "🔑",
+  click_save: "💾",
+  click_new_line: "➕",
+  fill_cell: "✏️",
+  fill_cell_dropdown: "📋",
+  read_page_text: "📖",
+  read_groups: "🔒",
+  read_users: "👥",
+  open_adaptive_form_builder: "📝",
+  set_form_title: "📝",
+  add_form_field: "📝",
+  save_adaptive_form: "💾",
+  click_bpm_tab: "🔄",
+  create_new_bpm: "🔄",
+  save_bpm: "💾",
+  wait: "⏳",
+  STOPPED: "🛑",
 };
 
-const TOOL_ICONS: Record<string, string> = {
-  create_security_group: "🔒",
-  create_user: "👤",
-  set_user_access: "🔑",
-  set_password_policy: "🛡️",
-  create_workflow: "🔄",
-  create_form: "📋",
-};
+export function ActionCard({ action }: { action: Record<string, unknown> }) {
+  const actionName = (action.action as string) || (action.tool as string) || "unknown";
+  const step = action.step as number | undefined;
+  const result = action.result as string | Record<string, unknown> | undefined;
+  const error = action.error as string | undefined;
+  const args = action.args as Record<string, unknown> | undefined;
 
-export function ActionCard({ action }: { action: ExecutedAction }) {
-  const label = TOOL_LABELS[action.tool] || action.tool;
-  const icon = TOOL_ICONS[action.tool] || "⚡";
-  const isSuccess = action.result.status === "created" || action.result.status === "updated";
+  const hasError = !!error;
+  const icon = ACTION_ICONS[actionName] || "⚡";
+
+  const resultText = error
+    ? error
+    : typeof result === "string"
+    ? result
+    : result
+    ? JSON.stringify(result, null, 2)
+    : "";
 
   return (
     <div
       style={{
-        background: isSuccess ? "#f0fdf4" : "#fef2f2",
-        border: `1px solid ${isSuccess ? "#bbf7d0" : "#fecaca"}`,
+        background: hasError ? "#fef2f2" : "#f0fdf4",
+        border: `1px solid ${hasError ? "#fecaca" : "#bbf7d0"}`,
         borderRadius: 8,
-        padding: "10px 14px",
-        marginTop: 8,
-        fontSize: 13,
+        padding: "8px 12px",
+        marginTop: 6,
+        fontSize: 12,
       }}
     >
-      <div style={{ fontWeight: 600, marginBottom: 4 }}>
-        {icon} {label}
+      <div style={{ fontWeight: 600, marginBottom: 2, display: "flex", alignItems: "center", gap: 6 }}>
+        <span>{icon}</span>
+        <span>
+          {step ? `Step ${step}: ` : ""}
+          {actionName.replace(/_/g, " ")}
+        </span>
         <span
           style={{
-            marginLeft: 8,
-            fontSize: 11,
-            color: isSuccess ? "#16a34a" : "#dc2626",
+            fontSize: 10,
+            color: hasError ? "#dc2626" : "#16a34a",
             textTransform: "uppercase",
+            marginLeft: "auto",
           }}
         >
-          {action.result.status}
+          {hasError ? "ERROR" : "OK"}
         </span>
       </div>
-      <pre
-        style={{
-          margin: 0,
-          fontSize: 11,
-          color: "#475569",
-          whiteSpace: "pre-wrap",
-          wordBreak: "break-word",
-        }}
-      >
-        {JSON.stringify(action.args, null, 2)}
-      </pre>
+      {resultText && (
+        <pre
+          style={{
+            margin: 0,
+            fontSize: 10,
+            color: hasError ? "#991b1b" : "#475569",
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-word",
+          }}
+        >
+          {resultText}
+        </pre>
+      )}
+      {args && (
+        <pre
+          style={{
+            margin: "2px 0 0",
+            fontSize: 10,
+            color: "#94a3b8",
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-word",
+          }}
+        >
+          {JSON.stringify(args, null, 2)}
+        </pre>
+      )}
     </div>
   );
 }
