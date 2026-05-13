@@ -12,8 +12,7 @@ from app.agent.browser_agent import PLANNER_PROMPT, HybridAgent, UnsafePlanError
         "Can you create a security group?",
         "please set up new security groups",
         "create a security group for me",
-        "create a security group for the procurement team",
-        "create a security group named Safety Team",
+        "create a security group for my team",
     ],
 )
 def test_bare_security_group_create_request_asks_for_details(monkeypatch, task):
@@ -36,6 +35,9 @@ def test_bare_security_group_create_request_asks_for_details(monkeypatch, task):
     [
         "create a security group named Safety Team with description Safety access",
         "create a security group called Safety Team with full control for Assets",
+        "Create a security group for contractors",
+        "create a security group for the procurement team",
+        "create a security group named Safety Team",
         "create a security group\n\n--- Attached file ---\nName: Safety Team\nDescription: Safety access",
     ],
 )
@@ -70,6 +72,62 @@ def test_security_group_create_request_with_details_can_be_planned(monkeypatch, 
     result = agent.run_task_sync(task)
 
     assert result["reply"] == "Cannot connect: planner reached"
+
+
+def test_security_group_for_role_uses_inferred_name_when_planner_asks(monkeypatch):
+    agent = HybridAgent()
+    agent._logged_in = True
+    executed_steps = []
+
+    class FakeCompletions:
+        calls = 0
+
+        def create(self, **kwargs):
+            self.calls += 1
+
+            class Choice:
+                class Message:
+                    content = (
+                        '[{"action": "ask_user", "question": '
+                        '"What should the security group be called?"}]'
+                    )
+
+                message = Message()
+
+            class Response:
+                choices = [Choice()]
+
+            if self.calls == 2:
+                Response.choices[0].message.content = "Created the group."
+            return Response()
+
+    class FakeChat:
+        completions = FakeCompletions()
+
+    class FakeClient:
+        chat = FakeChat()
+
+    def fake_execute(step):
+        executed_steps.append(step)
+        return "ok"
+
+    monkeypatch.setattr(agent, "_client", FakeClient())
+    monkeypatch.setattr(agent, "_execute_step", fake_execute)
+
+    result = agent.run_task_sync("Create a security group for contractors")
+
+    assert result["reply"] == "Created the group."
+    assert [step["action"] for step in executed_steps] == [
+        "navigate",
+        "switch_to_iframe",
+        "click_tab",
+        "click_button",
+        "fill_textbox",
+        "fill_textbox",
+        "click_save",
+    ]
+    assert executed_steps[4]["value"] == "Contractors"
+    assert executed_steps[5]["value"] == "Security group for contractors"
 
 
 def test_execute_ask_user_supports_question_and_message():

@@ -71,7 +71,10 @@ required input fields UNLESS:
 
 For every PMWeb record type, here are the required fields to ask about:
 
-### Security Groups: group name, description, permissions, options
+### Security Groups: group name. Description can be supplied by the user or
+### derived as "Security group for <group name>". Permissions and options are
+### optional; only set them when the user/file asks for them or asks for a
+### generic/default/sample group.
 ### Users: user ID, first name, last name, email, password, license, group
 ### Workflows/BPM: template ID, name, statuses, role assignments
 ### APM Rules: rule name, module, level (project/programme/system), template
@@ -84,10 +87,12 @@ Please provide: <list missing fields>. You can also upload a file \
 (Excel, PDF, Word, drawing, etc.) with the details."}]
 
 ## Security Group Safety Rule
-Do not create or save a Security Group unless the user provided an explicit \
-group name and enough description/role/permission details to fill required \
-fields, explicitly asked for a generic/default/sample group, or attached a \
-file with the details. For a bare request like "create a security group", \
+Do not create or save a Security Group unless the user provided or implied a \
+group name, explicitly asked for a generic/default/sample group, or attached a \
+file with the details. Treat "create a security group for contractors" as a \
+request to create a group named "Contractors" with description "Security group \
+for contractors"; do not ask for the name again. For a bare request like \
+"create a security group", \
 output only:
 [{"action": "ask_user", "question": "What should the security group be \
 called, what description should I use, and should it be based on a specific \
@@ -139,7 +144,7 @@ multiple records by repeating the create+save steps for each row.
 - {"action": "click_tab", "text": "Groups"}
 - {"action": "click_button", "text": "New Group"}
 - {"action": "fill_textbox", "index": 0, "value": "Contractors"}
-- {"action": "fill_textbox", "index": 1, "value": "External contractors"}
+- {"action": "fill_textbox", "index": 1, "value": "Security group for contractors"}
 - {"action": "check_option", "label": "Can Send Notifications"}
 - {"action": "uncheck_option", "label": "Can Copy Project"}
 - {"action": "click_module_permission", "module": "Assets", \
@@ -227,7 +232,9 @@ multiple records by repeating the create+save steps for each row.
 "value": "Option"}
 
 ## Rules
-- ALWAYS ask for missing required fields before creating anything
+- ALWAYS ask for missing required fields before creating anything. For Security
+  Groups, "for <team/role/name>" supplies the group name; derive a simple
+  description if none is provided.
 - If file data is attached, parse it and use the values directly
 - For bulk file imports: repeat create+save for each row/entry
 - Always navigate first, then switch_to_iframe if needed
@@ -361,6 +368,12 @@ class HybridAgent:
             steps = json.loads(plan_text[start:end])
         except (ValueError, json.JSONDecodeError):
             return {"reply": plan_text, "actions": []}
+
+        fallback_steps = self._security_group_plan_for_unneeded_clarification(
+            steps, task
+        )
+        if fallback_steps:
+            steps = fallback_steps
 
         clarification = self._clarification_from_plan(steps, task)
         if clarification:
@@ -931,6 +944,37 @@ class HybridAgent:
             return SECURITY_GROUP_CLARIFICATION
         return None
 
+    def _security_group_plan_for_unneeded_clarification(
+        self, steps: Any, task: str
+    ) -> list[dict[str, Any]] | None:
+        if not (
+            isinstance(steps, list)
+            and steps
+            and all(
+                isinstance(step, dict) and step.get("action") == "ask_user"
+                for step in steps
+            )
+        ):
+            return None
+
+        details = self._security_group_details_from_request(task)
+        if not details:
+            return None
+
+        return [
+            {"action": "navigate", "url": "/Security.aspx"},
+            {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"},
+            {"action": "click_tab", "text": "Groups"},
+            {"action": "click_button", "text": "New Group"},
+            {"action": "fill_textbox", "index": 0, "value": details["group_name"]},
+            {
+                "action": "fill_textbox",
+                "index": 1,
+                "value": details["description"],
+            },
+            {"action": "click_save"},
+        ]
+
     def _clarification_from_plan(self, steps: Any, task: str = "") -> str | None:
         if not isinstance(steps, list):
             return None
@@ -958,6 +1002,8 @@ class HybridAgent:
             return True
         if self._attached_file_has_security_group_details(text):
             return True
+        if self._security_group_details_from_request(task):
+            return True
         return self._has_security_group_name(text) and self._has_security_group_context(text)
 
     def _is_security_group_create_request(self, text: str) -> bool:
@@ -980,6 +1026,7 @@ class HybridAgent:
         patterns = [
             r"\b(?:named|called)\s+(?P<value>[a-z0-9][\w -]{1,80})",
             r"\b(?:group\s+)?name\s*(?:is|:|=|-)\s*(?P<value>[a-z0-9][\w -]{1,80})",
+            r"\bsecurity\s+groups?\s+for\s+(?!me\b)(?!my\b)(?P<value>[a-z0-9][\w -]{1,80})",
         ]
         return self._has_concrete_value_after(patterns, text)
 
@@ -1003,6 +1050,91 @@ class HybridAgent:
                 if any(word not in GENERIC_SECURITY_GROUP_DETAIL_WORDS for word in words[:4]):
                     return True
         return False
+
+    def _security_group_details_from_request(
+        self, task: str
+    ) -> dict[str, str] | None:
+        text = re.sub(r"\s+", " ", task).strip()
+        if not self._is_security_group_create_request(text.lower()):
+            return None
+
+        name = self._extract_security_group_value(
+            [
+                r"\b(?:named|called)\s+(?P<value>[a-z0-9][\w &/-]{1,80}?)"
+                r"(?=\s+(?:with|and|using|based on|description|permissions?|options?)\b|[.?!,\n]|$)",
+                r"\b(?:group\s+)?name\s*(?:is|:|=|-)\s*"
+                r"(?P<value>[a-z0-9][\w &/-]{1,80}?)"
+                r"(?=\s+(?:with|and|using|based on|description|permissions?|options?)\b|[.?!,\n]|$)",
+            ],
+            text,
+        )
+        role_or_team = self._extract_security_group_value(
+            [
+                r"\bsecurity\s+groups?\s+for\s+(?!me\b)(?!my\b)"
+                r"(?P<value>[a-z0-9][\w &/-]{1,80}?)"
+                r"(?=\s+(?:with|and|using|based on|description|permissions?|options?)\b|[.?!,\n]|$)",
+                r"\bgroups?\s+for\s+(?!me\b)(?!my\b)"
+                r"(?P<value>[a-z0-9][\w &/-]{1,80}?)"
+                r"(?=\s+(?:with|and|using|based on|description|permissions?|options?)\b|[.?!,\n]|$)",
+            ],
+            text,
+        )
+        if not name:
+            name = role_or_team
+        if not name:
+            return None
+
+        description = self._extract_security_group_value(
+            [
+                r"\bdescription\s*(?:is|:|=|-)?\s*"
+                r"(?P<value>[a-z0-9][\w &/-]{1,80}?)"
+                r"(?=\s+(?:with|and|using|based on|permissions?|options?)\b|[.?!,\n]|$)",
+                r"\bdescribed as\s+(?P<value>[a-z0-9][\w &/-]{1,80}?)"
+                r"(?=\s+(?:with|and|using|based on|permissions?|options?)\b|[.?!,\n]|$)",
+            ],
+            text,
+        )
+        if description:
+            formatted_description = self._format_security_group_description(
+                description
+            )
+        else:
+            subject = self._strip_security_group_articles(role_or_team or name)
+            formatted_description = f"Security group for {subject}"
+
+        return {
+            "group_name": self._format_security_group_name(name),
+            "description": formatted_description,
+        }
+
+    def _extract_security_group_value(
+        self, patterns: list[str], text: str
+    ) -> str | None:
+        for pattern in patterns:
+            match = re.search(pattern, text, flags=re.IGNORECASE)
+            if not match:
+                continue
+            value = self._strip_security_group_articles(match.group("value"))
+            words = re.findall(r"[a-z0-9][a-z0-9_-]*", value.lower())
+            if any(word not in GENERIC_SECURITY_GROUP_DETAIL_WORDS for word in words):
+                return value
+        return None
+
+    def _strip_security_group_articles(self, value: str) -> str:
+        cleaned = re.sub(r"\s+", " ", value).strip(" .,:;-")
+        return re.sub(r"^(?:the|a|an)\s+", "", cleaned, flags=re.IGNORECASE)
+
+    def _format_security_group_name(self, value: str) -> str:
+        cleaned = self._strip_security_group_articles(value)
+        if cleaned.islower():
+            return cleaned.title()
+        return cleaned
+
+    def _format_security_group_description(self, value: str) -> str:
+        cleaned = self._strip_security_group_articles(value)
+        if cleaned.islower():
+            return cleaned[:1].upper() + cleaned[1:]
+        return cleaned
 
     def _plan_writes_security_group(self, steps: list[Any]) -> bool:
         on_security_page = False
