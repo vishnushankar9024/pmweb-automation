@@ -6,14 +6,14 @@ from app.agent.browser_agent import PLANNER_PROMPT, HybridAgent
 
 
 @pytest.mark.parametrize(
-    "request",
+    "task",
     [
         "create a security group",
         "Can you create a security group?",
         "please set up new security groups",
     ],
 )
-def test_bare_security_group_create_request_asks_for_details(monkeypatch, request):
+def test_bare_security_group_create_request_asks_for_details(monkeypatch, task):
     agent = HybridAgent()
 
     def fail_login():
@@ -21,7 +21,7 @@ def test_bare_security_group_create_request_asks_for_details(monkeypatch, reques
 
     monkeypatch.setattr(agent, "login", fail_login)
 
-    result = agent.run_task_sync(request)
+    result = agent.run_task_sync(task)
 
     assert result["actions"] == []
     assert "what should the security group be called" in result["reply"].lower()
@@ -29,14 +29,14 @@ def test_bare_security_group_create_request_asks_for_details(monkeypatch, reques
 
 
 @pytest.mark.parametrize(
-    "request",
+    "task",
     [
         "create a security group named Safety Team with description Safety access",
         "create a security group for the procurement team",
         "create a security group\n\n--- Attached file ---\nName: Safety Team\nDescription: Safety access",
     ],
 )
-def test_security_group_create_request_with_details_can_be_planned(monkeypatch, request):
+def test_security_group_create_request_with_details_can_be_planned(monkeypatch, task):
     agent = HybridAgent()
 
     def fake_login():
@@ -64,7 +64,7 @@ def test_security_group_create_request_with_details_can_be_planned(monkeypatch, 
     monkeypatch.setattr(agent, "_client", FakeClient())
     monkeypatch.setattr(agent, "login", fake_login)
 
-    result = agent.run_task_sync(request)
+    result = agent.run_task_sync(task)
 
     assert result["reply"] == "Cannot connect: planner reached"
 
