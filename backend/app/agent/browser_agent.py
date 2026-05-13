@@ -622,16 +622,7 @@ class HybridAgent:
         ]
         has_name = any(re.search(pattern, text) for pattern in name_patterns)
         has_context = any(re.search(pattern, text) for pattern in context_patterns)
-        if has_name and has_context:
-            return False
-
-        generic = re.sub(
-            r"\b(please|can you|could you|create|add|make|setup|set up|a|an|new|security|group|groups|generic|pmweb|in|on|the|for me)\b",
-            " ",
-            text,
-        )
-        generic = re.sub(r"[^a-z0-9]+", " ", generic).strip()
-        return not generic
+        return not (has_name and has_context)
 
     def _plan_creates_security_group(self, steps: list[Any]) -> bool:
         for step in steps:
