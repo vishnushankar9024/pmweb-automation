@@ -25,6 +25,11 @@ from app.config import settings
 
 logger = logging.getLogger(__name__)
 
+SECURITY_GROUP_CLARIFICATION = (
+    "What should the security group be called, what description should I use, "
+    "and should it be based on a specific team/role or details from a file you can upload?"
+)
+
 PLANNER_PROMPT = """\
 You are a PMWeb automation planner. Given a user request, output a JSON \
 array of steps the browser should execute on PMWeb.
@@ -101,9 +106,13 @@ array of steps the browser should execute on PMWeb.
 - Always navigate first, then switch_to_iframe if needed
 - For Security: navigate → switch_to_iframe → act → click_save
 - Do not create or save a Security Group unless the user provided an \
-explicit group name and enough description/role details to fill required fields
+explicit group name and enough description/role/permission details to fill \
+required fields
 - If a create request is missing required fields, return one ask_user step \
 with a concise question. Do not navigate, click, fill, or save in that case
+- For a bare request like "create a security group", ask for the group name, \
+description, and whether the group should be based on a team/role or uploaded \
+details
 - For Adaptive Forms: open_adaptive_form_builder → set_form_title \
 → add fields → save_adaptive_form
 - For BPM: navigate to /Workflow.aspx → click_bpm_tab → create → save
@@ -222,7 +231,7 @@ class HybridAgent:
         except (ValueError, json.JSONDecodeError):
             return {"reply": plan_text, "actions": []}
 
-        clarification = self._clarification_from_plan(steps)
+        clarification = self._clarification_from_plan(steps, task)
         if clarification:
             return {"reply": clarification, "actions": []}
 
@@ -575,19 +584,11 @@ class HybridAgent:
         return f"unknown action: {action}"
 
     def _clarification_for_missing_required_fields(self, task: str) -> str | None:
-        text = re.sub(r"\s+", " ", task).strip().lower()
-        bare_security_group_request = re.fullmatch(
-            r"(please\s+)?(create|add|make|set\s+up|setup)(\s+(a|new))?\s+security\s+groups?[.!?]?",
-            text,
-        )
-        if not bare_security_group_request:
-            return None
-        return (
-            "What should the security group be called, what description should I use, "
-            "and should it be based on a specific team/role or details from a file you can upload?"
-        )
+        if self._security_group_request_missing_details(task):
+            return SECURITY_GROUP_CLARIFICATION
+        return None
 
-    def _clarification_from_plan(self, steps: Any) -> str | None:
+    def _clarification_from_plan(self, steps: Any, task: str = "") -> str | None:
         if not isinstance(steps, list):
             return None
         for step in steps:
@@ -595,7 +596,48 @@ class HybridAgent:
                 message = step.get("message")
                 if isinstance(message, str) and message.strip():
                     return message.strip()
+        if task and self._security_group_request_missing_details(task) and self._plan_creates_security_group(steps):
+            return SECURITY_GROUP_CLARIFICATION
         return None
+
+    def _security_group_request_missing_details(self, task: str) -> bool:
+        text = re.sub(r"\s+", " ", task).strip().lower()
+        if not re.search(r"\b(create|add|make|setup|set up)\b", text):
+            return False
+        if not re.search(r"\bsecurity\s+groups?\b", text):
+            return False
+        if re.search(r"---\s*attached file\s*---\s*\S", text):
+            return False
+
+        detail_patterns = [
+            r"\b(group\s+)?name(d)?\b",
+            r"\bcalled\b",
+            r"\bdescription\b",
+            r"\bdescribed as\b",
+            r"\bfor\s+[\w -]+",
+            r"\b(team|role|department|permission|permissions|access)\b",
+            r"\b(view|create|edit|delete|full control)\b",
+        ]
+        if any(re.search(pattern, text) for pattern in detail_patterns):
+            return False
+
+        generic = re.sub(
+            r"\b(please|can you|could you|create|add|make|setup|set up|a|an|new|security|group|groups|generic|pmweb|in|on|the|for me)\b",
+            " ",
+            text,
+        )
+        generic = re.sub(r"[^a-z0-9]+", " ", generic).strip()
+        return not generic
+
+    def _plan_creates_security_group(self, steps: list[Any]) -> bool:
+        for step in steps:
+            if not isinstance(step, dict):
+                continue
+            action = step.get("action")
+            text = str(step.get("text", "")).lower()
+            if action in {"click_button", "click_by_text"} and "new group" in text:
+                return True
+        return False
 
     def _find_edit_row(self):
         for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
