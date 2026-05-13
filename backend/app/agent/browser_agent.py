@@ -614,9 +614,9 @@ class HybridAgent:
             r"\bcalled\b",
             r"\bdescription\b",
             r"\bdescribed as\b",
-            r"\bfor\s+[\w -]+",
+            r"\bfor\s+(?!me\b)(?!my\b)[\w -]+",
             r"\b(team|role|department|permission|permissions|access)\b",
-            r"\b(view|create|edit|delete|full control)\b",
+            r"\b(view|edit|delete|full control)\b",
         ]
         if any(re.search(pattern, text) for pattern in detail_patterns):
             return False
