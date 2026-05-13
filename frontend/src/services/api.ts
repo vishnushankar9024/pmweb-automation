@@ -1,6 +1,6 @@
 import type { ChatResponse } from "../types";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_URL || "";
 
 export async function sendMessage(
   message: string,
@@ -101,3 +101,6 @@ export async function getPerformanceReport(): Promise<Record<string, unknown>> {
   const res = await fetch(`${API_BASE}/api/mlops/report`);
   return res.json();
 }
+
+export async function listSessions() { const r = await fetch((import.meta.env.VITE_API_URL || "") + "/api/sessions"); return r.json(); }
+

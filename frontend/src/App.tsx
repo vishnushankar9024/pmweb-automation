@@ -1,33 +1,14 @@
 import { useState } from "react";
-import { ChatWindow } from "./components/ChatWindow";
 import { Sidebar } from "./components/Sidebar";
+import { ChatWindow } from "./components/ChatWindow";
 
 function App() {
-  const [sessionId, setSessionId] = useState<string | undefined>();
-  const [sessionKey, setSessionKey] = useState(0);
-
-  const handleNewSession = () => {
-    setSessionId(undefined);
-    setSessionKey((k) => k + 1);
-  };
-
+  const [sid, setSid] = useState<string | null>(null);
   return (
     <div style={{ display: "flex", height: "100vh" }}>
-      <Sidebar
-        currentSessionId={sessionId}
-        onSelectSession={(id) => {
-          setSessionId(id);
-          setSessionKey((k) => k + 1);
-        }}
-        onNewSession={handleNewSession}
-      />
-      <ChatWindow
-        key={sessionKey}
-        initialSessionId={sessionId}
-        onSessionChange={setSessionId}
-      />
+      <Sidebar activeSessionId={sid} onSelectSession={setSid} onNewChat={() => setSid(null)} />
+      <ChatWindow sessionId={sid} onSessionCreated={setSid} />
     </div>
   );
 }
-
 export default App;

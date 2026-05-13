@@ -1,134 +1,34 @@
 import { useState } from "react";
-import { submitFeedback } from "../services/api";
-
-interface FeedbackPanelProps {
-  sessionId?: string;
-  messageIndex: number;
-  actionName?: string;
-}
-
-export function FeedbackPanel({
-  sessionId,
-  messageIndex,
-  actionName,
-}: FeedbackPanelProps) {
-  const [rating, setRating] = useState<number | null>(null);
-  const [comment, setComment] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [showComment, setShowComment] = useState(false);
-
-  const handleSubmit = async (value: number) => {
-    setRating(value);
-    try {
-      await submitFeedback({
-        session_id: sessionId || "",
-        message_index: messageIndex,
-        rating: value,
-        comment,
-        action_name: actionName || "",
-      });
-      setSubmitted(true);
-    } catch {
-      /* ignore */
-    }
+const API = import.meta.env.VITE_API_URL || "";
+export function FeedbackPanel({ sessionId, prompt, actualResult, onClose, onSubmitted }: { sessionId: string; prompt: string; actualResult: string; onClose: () => void; onSubmitted: () => void; }) {
+  const [expected, setExpected] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [busy, setBusy] = useState(false);
+  const submit = async (mode: string) => {
+    if (!expected.trim()) return;
+    setBusy(true);
+    const form = new FormData();
+    form.append("session_id", sessionId); form.append("prompt", prompt);
+    form.append("actual_result", actualResult); form.append("expected_result", expected);
+    if (file) form.append("file", file);
+    const r = await fetch(API + "/api/feedback", { method: "POST", body: form });
+    const data = await r.json();
+    if (mode === "now" && data.ticket_id) { const f2 = new FormData(); f2.append("feedback_id", data.ticket_id); await fetch(API + "/api/feedback/fix-now", { method: "POST", body: f2 }); }
+    if (mode === "later" && data.ticket_id) { const f2 = new FormData(); f2.append("feedback_id", data.ticket_id); await fetch(API + "/api/feedback/fix-later", { method: "POST", body: f2 }); }
+    setBusy(false); onSubmitted();
   };
-
-  if (submitted) {
-    return (
-      <div
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 4,
-          fontSize: 11,
-          color: "#64748b",
-          marginTop: 4,
-        }}
-      >
-        <span>{rating === 1 ? "👍" : "👎"}</span>
-        <span>Thanks for your feedback!</span>
-      </div>
-    );
-  }
-
   return (
-    <div style={{ marginTop: 6 }}>
-      <div
-        style={{
-          display: "inline-flex",
-          gap: 4,
-          alignItems: "center",
-        }}
-      >
-        <button
-          onClick={() => handleSubmit(1)}
-          style={{
-            background: "none",
-            border: "1px solid #e2e8f0",
-            borderRadius: 4,
-            padding: "2px 6px",
-            cursor: "pointer",
-            fontSize: 14,
-            lineHeight: 1,
-          }}
-          title="Helpful"
-        >
-          👍
-        </button>
-        <button
-          onClick={() => {
-            setShowComment(true);
-            setRating(-1);
-          }}
-          style={{
-            background: "none",
-            border: "1px solid #e2e8f0",
-            borderRadius: 4,
-            padding: "2px 6px",
-            cursor: "pointer",
-            fontSize: 14,
-            lineHeight: 1,
-          }}
-          title="Not helpful"
-        >
-          👎
-        </button>
+    <div style={{ background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 8, padding: 12, marginTop: 8 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+        <b style={{ fontSize: 13, color: "#92400e" }}>What should have happened?</b>
+        <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "#92400e" }}>x</button>
       </div>
-
-      {showComment && (
-        <div style={{ marginTop: 6, display: "flex", gap: 4 }}>
-          <input
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="What went wrong?"
-            style={{
-              flex: 1,
-              padding: "4px 8px",
-              borderRadius: 4,
-              border: "1px solid #cbd5e1",
-              fontSize: 11,
-              outline: "none",
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSubmit(-1);
-            }}
-          />
-          <button
-            onClick={() => handleSubmit(-1)}
-            style={{
-              padding: "4px 10px",
-              borderRadius: 4,
-              border: "none",
-              background: "#2563eb",
-              color: "#fff",
-              fontSize: 11,
-              cursor: "pointer",
-            }}
-          >
-            Send
-          </button>
-        </div>
-      )}
+      <textarea value={expected} onChange={e => setExpected(e.target.value)} placeholder="Describe expected result..." style={{ width: "100%", minHeight: 50, padding: 6, borderRadius: 6, border: "1px solid #fde68a", fontSize: 12 }} />
+      <div style={{ marginTop: 8, display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <label style={{ padding: "4px 10px", borderRadius: 6, border: "1px solid #fde68a", fontSize: 11, cursor: "pointer" }}>{file ? file.name : "📎 Attach"}<input type="file" onChange={e => setFile(e.target.files?.[0]||null)} style={{ display: "none" }} /></label>
+        <button onClick={() => submit("now")} disabled={busy||!expected.trim()} style={{ padding: "4px 12px", borderRadius: 6, border: "none", background: "#dc2626", color: "#fff", fontSize: 12, cursor: "pointer" }}>🚀 Fix Now</button>
+        <button onClick={() => submit("later")} disabled={busy||!expected.trim()} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid #f59e0b", background: "#fff", color: "#f59e0b", fontSize: 12, cursor: "pointer" }}>📋 Fix Later</button>
+      </div>
     </div>
   );
 }
