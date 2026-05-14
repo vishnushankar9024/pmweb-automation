@@ -245,16 +245,34 @@ class MLOpsEngine:
         if not ticket:
             raise ValueError(f"Feedback ticket {feedback_id} was not found")
 
+        return self._validated_issue_context(
+            feedback_id=feedback_id,
+            prompt=ticket.get("prompt", ""),
+            actual=ticket.get("actual_result", ""),
+            expected=ticket.get("expected_result", ""),
+            session_id=ticket.get("session_id", ""),
+        )
+
+    def _validated_issue_context(
+        self,
+        *,
+        feedback_id: str | None = None,
+        prompt: Any,
+        actual: Any,
+        expected: Any,
+        session_id: Any,
+    ) -> dict[str, str]:
         context = {
-            "prompt": self._clean_feedback_field(ticket.get("prompt", "")),
-            "actual": self._clean_feedback_field(ticket.get("actual_result", "")),
-            "expected": self._clean_feedback_field(ticket.get("expected_result", "")),
-            "session_id": self._clean_feedback_field(ticket.get("session_id", "")),
+            "prompt": self._clean_feedback_field(prompt),
+            "actual": self._clean_feedback_field(actual),
+            "expected": self._clean_feedback_field(expected),
+            "session_id": self._clean_feedback_field(session_id),
         }
         missing = [name for name in ("prompt", "actual", "expected") if not context[name]]
         if missing:
             fields = ", ".join(missing)
-            raise ValueError(f"Feedback ticket {feedback_id} is missing required context: {fields}")
+            subject = f"Feedback ticket {feedback_id}" if feedback_id else "Auto-fix issue"
+            raise ValueError(f"{subject} is missing required context: {fields}")
         return context
 
     def _clean_feedback_field(self, value: Any) -> str:
@@ -264,10 +282,22 @@ class MLOpsEngine:
 
     def _create_github_issue(self, feedback_id: str, prompt: str, expected: str, actual: str, session_id: str) -> str:
         """Create a GitHub issue with rich context for Cursor Automation to fix."""
+        context = self._validated_issue_context(
+            feedback_id=feedback_id,
+            prompt=prompt,
+            actual=actual,
+            expected=expected,
+            session_id=session_id,
+        )
+        prompt = context["prompt"]
+        actual = context["actual"]
+        expected = context["expected"]
+        session_id = context["session_id"]
+
         try:
             import httpx
 
-            title = f"[Auto-Fix] {prompt[:80]}" if prompt else f"[Auto-Fix] Feedback {feedback_id[:8]}"
+            title = f"[Auto-Fix] {prompt[:80]}"
             body = (
                 f"## Auto-Fix Request\n\n"
                 f"A user reported that the PMWeb Automation Agent did not work as expected.\n\n"
