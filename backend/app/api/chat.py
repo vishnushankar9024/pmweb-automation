@@ -35,6 +35,24 @@ def _get_history(session_id: str) -> list[dict[str, str]]:
     return history
 
 
+def _get_session_safely(session_id: str) -> dict | None:
+    try:
+        return store.get_session(session_id)
+    except Exception:
+        return None
+
+
+def _latest_message_content(session: dict | None, role: str) -> str:
+    if not session:
+        return ""
+    for message in reversed(session.get("messages", [])):
+        if message.get("role") == role:
+            content = message.get("content", "")
+            if isinstance(content, str) and content.strip():
+                return content.strip()
+    return ""
+
+
 @router.post("/chat")
 async def chat(request: ChatRequest) -> ChatResponse:
     sid = request.conversation_id
@@ -75,6 +93,29 @@ async def stop():
 
 @router.post("/feedback")
 async def submit_feedback(session_id: str = Form(...), prompt: str = Form(...), actual_result: str = Form(...), expected_result: str = Form(...), file: UploadFile = File(None)):
+    session_id = session_id.strip()
+    prompt = prompt.strip()
+    actual_result = actual_result.strip()
+    expected_result = expected_result.strip()
+
+    if not session_id:
+        raise HTTPException(status_code=400, detail="session_id is required")
+    if not expected_result:
+        raise HTTPException(status_code=400, detail="expected_result is required")
+
+    session = None
+    if not prompt or not actual_result:
+        session = _get_session_safely(session_id)
+        if not prompt:
+            prompt = _latest_message_content(session, "user")
+        if not actual_result:
+            actual_result = _latest_message_content(session, "assistant")
+
+    if not prompt:
+        raise HTTPException(status_code=400, detail="prompt is required")
+    if not actual_result:
+        raise HTTPException(status_code=400, detail="actual_result is required")
+
     file_ids = []
     if file:
         content = await file.read()

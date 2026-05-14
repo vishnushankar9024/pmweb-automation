@@ -91,15 +91,19 @@ class MLOpsEngine:
         self._fixes.insert_one(fix_doc)
 
         try:
-            ticket = self._feedback.get_ticket(feedback_id)
-            prompt = ticket.get("prompt", "") if ticket else ""
-            expected = ticket.get("expected_result", "") if ticket else ""
+            context = self._issue_context_for_feedback(feedback_id)
 
             self._update_fix_step(fix_id, 0, "completed")
             self._update_fix_step(fix_id, 1, "in_progress")
             self._update_fix_status(fix_id, "creating_issue", 2)
 
-            issue_url = self._create_github_issue(feedback_id, prompt, expected)
+            issue_url = self._create_github_issue(
+                feedback_id,
+                context["prompt"],
+                context["expected"],
+                context["actual"],
+                context["session_id"],
+            )
 
             self._update_fix_step(fix_id, 1, "completed")
             self._update_fix_step(fix_id, 2, "in_progress")
@@ -198,11 +202,15 @@ class MLOpsEngine:
                 self._update_fix_step(fix_id, 1, "in_progress")
                 self._update_fix_status(fix_id, "creating_issue", 2)
 
-                ticket = self._feedback.get_ticket(feedback_id)
-                prompt = ticket.get("prompt", "") if ticket else ""
-                expected = ticket.get("expected_result", "") if ticket else ""
+                context = self._issue_context_for_feedback(feedback_id)
 
-                issue_url = self._create_github_issue(feedback_id, prompt, expected)
+                issue_url = self._create_github_issue(
+                    feedback_id,
+                    context["prompt"],
+                    context["expected"],
+                    context["actual"],
+                    context["session_id"],
+                )
 
                 self._update_fix_step(fix_id, 1, "completed")
                 self._update_fix_step(fix_id, 2, "in_progress")
@@ -232,14 +240,32 @@ class MLOpsEngine:
             {"$set": {f"steps.{step_index}.status": step_status, "updated_at": datetime.now(timezone.utc)}},
         )
 
-    def _create_github_issue(self, feedback_id: str, prompt: str, expected: str) -> str:
+    def _issue_context_for_feedback(self, feedback_id: str) -> dict[str, str]:
+        ticket = self._feedback.get_ticket(feedback_id)
+        if not ticket:
+            raise ValueError(f"Feedback ticket {feedback_id} was not found")
+
+        context = {
+            "prompt": self._clean_feedback_field(ticket.get("prompt", "")),
+            "actual": self._clean_feedback_field(ticket.get("actual_result", "")),
+            "expected": self._clean_feedback_field(ticket.get("expected_result", "")),
+            "session_id": self._clean_feedback_field(ticket.get("session_id", "")),
+        }
+        missing = [name for name in ("prompt", "actual", "expected") if not context[name]]
+        if missing:
+            fields = ", ".join(missing)
+            raise ValueError(f"Feedback ticket {feedback_id} is missing required context: {fields}")
+        return context
+
+    def _clean_feedback_field(self, value: Any) -> str:
+        if not isinstance(value, str):
+            return ""
+        return value.strip()
+
+    def _create_github_issue(self, feedback_id: str, prompt: str, expected: str, actual: str, session_id: str) -> str:
         """Create a GitHub issue with rich context for Cursor Automation to fix."""
         try:
             import httpx
-
-            ticket = self._feedback.get_ticket(feedback_id)
-            actual = ticket.get("actual_result", "") if ticket else ""
-            session_id = ticket.get("session_id", "") if ticket else ""
 
             title = f"[Auto-Fix] {prompt[:80]}" if prompt else f"[Auto-Fix] Feedback {feedback_id[:8]}"
             body = (
