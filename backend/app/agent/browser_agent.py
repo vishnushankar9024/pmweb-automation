@@ -294,7 +294,25 @@ class HybridAgent:
     def login(self) -> dict[str, Any]:
         try:
             self.driver.get(settings.pmweb_base_url)
-            time.sleep(3)
+            time.sleep(5)
+
+            try:
+                user_field = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.ID, "txtUserName"))
+                )
+                user_field.click()
+                user_field.clear()
+                user_field.send_keys(settings.pmweb_username)
+                time.sleep(0.3)
+            except Exception:
+                try:
+                    user_dd = self.driver.find_element(By.ID, "ddlUsers")
+                    from selenium.webdriver.support.ui import Select
+                    Select(user_dd).select_by_visible_text(settings.pmweb_username)
+                    time.sleep(0.3)
+                except Exception:
+                    logger.warning("No username field found, proceeding with password only")
+
             pwd = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID, "txtPassword"))
             )
@@ -303,16 +321,18 @@ class HybridAgent:
             pwd.send_keys(settings.pmweb_password)
             time.sleep(0.5)
             self.driver.find_element(By.ID, "btnLogin").click()
-            time.sleep(3)
+            time.sleep(5)
             try:
                 WebDriverWait(self.driver, 5).until(EC.alert_is_present()).accept()
                 time.sleep(5)
             except Exception:
-                time.sleep(5)
-            if "Home" in self.driver.current_url:
+                time.sleep(3)
+            if "Home" in self.driver.current_url or "Default" in self.driver.current_url:
                 self._logged_in = True
+                logger.info("Logged in as %s", settings.pmweb_username)
                 return {"status": "success"}
-            return {"status": "error", "message": "Login failed"}
+            page_text = self.driver.find_element(By.TAG_NAME, "body").text[:200]
+            return {"status": "error", "message": f"Login may have failed. Page: {page_text}"}
         except Exception as exc:
             return {"status": "error", "message": str(exc)}
 

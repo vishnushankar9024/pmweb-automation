@@ -52,7 +52,7 @@ jobs:
                 -e GITHUB_TOKEN=${{ secrets.GH_TOKEN }} \
                 -e MONGO_URI="${{ secrets.MONGO_URI }}" \
                 -e PMWEB_BASE_URL=https://cmcs.pmweb.com/2025_1_00/pmweb/ \
-                -e PMWEB_USERNAME=admin \
+                -e PMWEB_USERNAME=Tiger \
                 -e PMWEB_PASSWORD=pmweb2 \
                 -e PMWEB_HEADLESS=false \
                 -e DISPLAY=:99 \
