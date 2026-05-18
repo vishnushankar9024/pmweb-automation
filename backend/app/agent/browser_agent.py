@@ -1,267 +1,102 @@
-"""Hybrid PMWeb agent — GPT-4o plans, Selenium executes.
+"""Hybrid PMWeb agent — GPT-4o parses intent, deterministic engine executes.
 
-One LLM call per user message. Selenium reads the DOM and acts.
-No screenshots sent to OpenAI. noVNC handles the live view.
+Architecture:
+  1. LLM receives user message + conversation history + registry of
+     available record types and their required fields
+  2. LLM outputs structured JSON: {intent, record_type, fields, actions}
+  3. Deterministic navigator executes using exact selectors from the
+     PMWeb 2025.1 User Guide — zero LLM involvement in DOM interaction
 """
 
 from __future__ import annotations
 
 import json
 import logging
-import re
 import time
 from typing import Any
 
 from openai import OpenAI
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from app.agent.pmweb_navigator import PMWebNavigator
+from app.agent.pmweb_registry import (
+    get_record_type,
+    get_required_fields,
+    list_record_types,
+)
 from app.config import settings
 
 logger = logging.getLogger(__name__)
 
-SECURITY_GROUP_CLARIFICATION = (
-    "What should the security group be called, what description should I use, "
-    "and should it be based on a specific team/role or details from a file you can upload?"
-)
+INTENT_PROMPT = """\
+You are a PMWeb automation assistant. Parse the user's request and output \
+a JSON object describing what they want to do.
 
-GENERIC_SECURITY_GROUP_DETAIL_WORDS = {
-    "access",
-    "and",
-    "based",
-    "create",
-    "description",
-    "described",
-    "detail",
-    "details",
-    "field",
-    "fields",
-    "for",
-    "group",
-    "name",
-    "or",
-    "permission",
-    "permissions",
-    "role",
-    "security",
-    "team",
-    "with",
-}
+## Available PMWeb Record Types
+{record_types}
 
-
-class UnsafePlanError(RuntimeError):
-    """Raised when a planned browser write is unsafe to execute."""
-
-
-PLANNER_PROMPT = """\
-You are a PMWeb automation planner. Given a user request, output a JSON \
-array of steps the browser should execute on PMWeb.
-
-## CRITICAL — Always Ask First Rule
-Before executing ANY create/write action, you MUST ask the user for the \
-required input fields UNLESS:
-1. The user already provided all required values in their message
-2. The user explicitly says "generic" or "default" or "sample"
-3. The user attached a file — use the extracted file data as input
-
-For every PMWeb record type, here are the required fields to ask about:
-
-### Security Groups: group name. Description can be supplied by the user or
-### derived as "Security group for <group name>". Permissions and options are
-### optional; only set them when the user/file asks for them or asks for a
-### generic/default/sample group.
-### Users: user ID, first name, last name, email, password, license, group
-### Workflows/BPM: template ID, name, statuses, role assignments
-### APM Rules: rule name, module, level (project/programme/system), template
-### Adaptive Forms: form title, field names, field types, dropdown choices
-### Document Folders: folder name, parent folder, group permissions
-
-If ANY required field is missing, output:
-[{"action": "ask_user", "question": "I need a few details to create this. \
-Please provide: <list missing fields>. You can also upload a file \
-(Excel, PDF, Word, drawing, etc.) with the details."}]
-
-## Security Group Safety Rule
-Do not create or save a Security Group unless the user provided or implied a \
-group name, explicitly asked for a generic/default/sample group, or attached a \
-file with the details. Treat "create a security group for contractors" as a \
-request to create a group named "Contractors" with description "Security group \
-for contractors"; do not ask for the name again. For a bare request like \
-"create a security group", \
-output only:
-[{"action": "ask_user", "question": "What should the security group be \
-called, what description should I use, and should it be based on a specific \
-team/role or details from a file you can upload?"}]
-Never click "New Group", fill group fields, toggle options, set permissions, \
-or save as a placeholder/default response.
-
-## File-Based Input
-When the user attaches a file, the extracted text will appear after \
-"--- Attached file ---" in the message. Parse the file data to extract \
-field values (names, descriptions, lists, table rows, etc.) and use them \
-directly — do NOT ask again for information that's already in the file.
-
-For bulk operations from files (e.g. Excel with multiple rows), create \
-multiple records by repeating the create+save steps for each row.
-
-## PMWeb Navigation
-- Home: /Home.aspx
-- Security: /Security.aspx (iframe id="ctl00_CPH1_ngFrame")
-  - Tabs: Groups, Users, User Access, Conditional Security
-  - Groups: "New Group" button, kendo-textbox for Group/Description
-  - Users: "New Line" button, grid row with cells
-  - Save: span.k-button-text "Save" → click parent
-- Adaptive Forms: /AdaptiveFormBuilder.aspx?id=0&ModuleId=8&PageId=371
-  - iframe with SurveyJS Creator
-  - Save: hidden input[value="SaveTemplate"]
-- Workflows/BPM: /Workflow.aspx (NO iframe, direct ASP.NET)
-  - Tabs: Roles, Business Processes (BPM), Defaults, APM Rules
-  - BPM: ctl00_CPH1_ucBusinessProcesses_txtTemplateId / txtTemplateName
-  - Roles: ctl00_CPH1_ucRoles_ prefix
-  - APM Rules: ctl00_CPH1_ucAPMRules_ prefix
-- Document Management: /DocumentManager.aspx (NO iframe)
-  - Tree view of folders, right-click for security
-
-## Available Actions
-
-### Clarification
-- {"action": "ask_user", "question": "I need details: ..."}
-
-### Navigation
-- {"action": "navigate", "url": "/Security.aspx"}
-- {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"}
-- {"action": "switch_to_main"}
-- {"action": "click_sidebar", "module": "Tools"}
-- {"action": "click_menu_item", "text": "Adaptive Forms"}
-- {"action": "wait", "seconds": 3}
-
-### Security — Groups (inside iframe)
-- {"action": "click_tab", "text": "Groups"}
-- {"action": "click_button", "text": "New Group"}
-- {"action": "fill_textbox", "index": 0, "value": "Contractors"}
-- {"action": "fill_textbox", "index": 1, "value": "Security group for contractors"}
-- {"action": "check_option", "label": "Can Send Notifications"}
-- {"action": "uncheck_option", "label": "Can Copy Project"}
-- {"action": "click_module_permission", "module": "Assets", \
-"permission": "Full Control"}
-- {"action": "click_save"}
-- {"action": "read_groups"}
-
-### Security — Users (inside iframe)
-- {"action": "click_tab", "text": "Users"}
-- {"action": "click_new_line"}
-- {"action": "fill_cell", "cell_index": 3, "value": "jsmith"}
-- {"action": "fill_cell", "cell_index": 5, "value": "John"}
-- {"action": "fill_cell", "cell_index": 6, "value": "Smith"}
-- {"action": "fill_cell_dropdown", "cell_index": 8, "value": "Full"}
-- {"action": "fill_cell_dropdown", "cell_index": 9, "value": "Named"}
-- {"action": "fill_cell_dropdown", "cell_index": 10, "value": "Admin"}
-- {"action": "fill_cell", "cell_index": 11, "value": "P@ssw0rd"}
-- {"action": "fill_cell", "cell_index": 17, "value": "jsmith@co.com"}
-- {"action": "read_users"}
-
-### Security — User Access (inside iframe)
-- {"action": "click_tab", "text": "User Access"}
-- {"action": "assign_user_to_group", "user": "jsmith", "group": "Admin"}
-
-### Security — Conditional Security (inside iframe)
-- {"action": "click_tab", "text": "Conditional Security"}
-- {"action": "read_conditional_security"}
-
-### Workflows/BPM (NO iframe)
-- {"action": "navigate", "url": "/Workflow.aspx"}
-- {"action": "click_workflow_tab", "tab": "Roles"}
-- {"action": "click_workflow_tab", "tab": "Business Processes"}
-- {"action": "click_workflow_tab", "tab": "Defaults"}
-- {"action": "click_workflow_tab", "tab": "APM Rules"}
-- {"action": "add_workflow_role", "role_name": "Project Manager"}
-- {"action": "read_workflow_roles"}
-- {"action": "create_new_bpm", "bpm_id": "100", "name": "RFI Approval"}
-- {"action": "add_bpm_status", "status_name": "Draft", "sequence": 1}
-- {"action": "assign_bpm_role", "status": "Submitted", \
-"role": "Project Manager", "action_type": "Approve"}
-- {"action": "read_bpm_statuses"}
-- {"action": "save_bpm"}
-- {"action": "create_apm_rule", "rule_name": "RFI Auto-Route", \
-"module": "RFI", "level": "Project", "template": "RFI Approval"}
-- {"action": "read_apm_rules"}
-- {"action": "save_apm_rules"}
-
-### Adaptive Forms (iframe)
-- {"action": "open_adaptive_form_builder"}
-- {"action": "set_form_title", "title": "Safety Inspection"}
-- {"action": "add_form_field", "label": "Inspector Name", \
-"field_type": "text"}
-- {"action": "add_form_field", "label": "Inspection Date", \
-"field_type": "date"}
-- {"action": "add_form_field", "label": "Status", "field_type": \
-"dropdown", "choices": ["Pass", "Fail", "Pending"]}
-- {"action": "add_form_field", "label": "Upload Photos", \
-"field_type": "file"}
-- {"action": "add_form_field", "label": "Compliant?", \
-"field_type": "boolean"}
-- {"action": "add_form_field", "label": "Rating", \
-"field_type": "rating"}
-- {"action": "save_adaptive_form"}
-
-### Document Management (NO iframe)
-- {"action": "navigate", "url": "/DocumentManager.aspx"}
-- {"action": "create_doc_folder", "folder_name": "RFI Documents", \
-"parent": "Root"}
-- {"action": "set_folder_security", "folder": "RFI Documents", \
-"group": "Contractors", "permission": "Read"}
-- {"action": "read_doc_folders"}
-
-### Data Read / Extract
-- {"action": "read_page_text"}
-- {"action": "read_grid_data", "max_rows": 20}
-- {"action": "read_workflow_config"}
-- {"action": "read_group_permissions", "group_name": "Admin"}
-
-### General
-- {"action": "fill_by_id", "element_id": "id", "value": "text"}
-- {"action": "click_by_id", "element_id": "id"}
-- {"action": "click_by_text", "text": "Button Text"}
-- {"action": "click_by_css", "selector": "button.my-class"}
-- {"action": "select_dropdown_by_id", "element_id": "id", \
-"value": "Option"}
+## Output Format
+Return ONLY a JSON object with these fields:
+{{
+  "intent": "create" | "read" | "update" | "delete" | "list" | "ask_user",
+  "record_type": "<exact record type name from the list above>",
+  "fields": {{
+    "<field_name>": "<value>",
+    ...
+  }},
+  "detail_lines": [
+    {{"<column>": "<value>", ...}},
+    ...
+  ],
+  "options": ["<option to check>", ...],
+  "permissions": {{"<module>": "<View|Create|Edit|Delete|Full Control>", ...}},
+  "message": "<only for ask_user intent — the question to ask>"
+}}
 
 ## Rules
-- ALWAYS ask for missing required fields before creating anything. For Security
-  Groups, "for <team/role/name>" supplies the group name; derive a simple
-  description if none is provided.
-- If file data is attached, parse it and use the values directly
-- For bulk file imports: repeat create+save for each row/entry
-- Always navigate first, then switch_to_iframe if needed
-- For Security: navigate → switch_to_iframe → act → click_save
-- For Adaptive Forms: open_adaptive_form_builder → set_form_title \
-→ add fields → save_adaptive_form
-- For BPM: navigate /Workflow.aspx → click_workflow_tab BPM → create \
-→ add statuses → assign roles → save_bpm
-- For APM Rules: navigate /Workflow.aspx → click_workflow_tab APM \
-→ create rules → save_apm_rules
-- For Documents: navigate /DocumentManager.aspx → create/set security
-- Return ONLY a JSON array of steps
+1. ALWAYS ask for required fields if they are missing from the user's \
+message. Set intent="ask_user" and list what's needed in "message".
+2. Required fields per record type:
+{required_fields}
+3. If the user says "generic", "default", or "sample", generate \
+reasonable values and set intent="create".
+4. If a file is attached (text after "--- Attached file ---"), extract \
+field values from it and use them directly.
+5. If the user asks to "list", "show", "read", or "get", set \
+intent="read".
+6. For bulk operations (multiple records), return detail_lines array.
+7. Return ONLY the JSON object, no markdown, no explanation.
 """
 
 
+def _build_registry_context() -> tuple[str, str]:
+    """Build the record type list and required fields for the LLM prompt."""
+    rt_lines = []
+    req_lines = []
+    for name in list_record_types():
+        rt = get_record_type(name)
+        if rt:
+            fields = [f.name for f in rt.header_fields]
+            rt_lines.append(f"- {name} (module: {rt.module}) — fields: {', '.join(fields)}")
+            req = get_required_fields(name)
+            if req:
+                req_lines.append(f"- {name}: {', '.join(req)}")
+    return "\n".join(rt_lines), "\n".join(req_lines)
+
+
 class HybridAgent:
-    """One GPT-4o call to plan, Selenium to execute."""
+    """GPT-4o parses intent, deterministic navigator executes."""
 
     def __init__(self) -> None:
         self._driver: webdriver.Chrome | None = None
         self._logged_in = False
         self._client: OpenAI | None = None
         self._stop_requested = False
-        self._allow_security_group_creation = False
-        self._on_security_page = False
-        self._active_security_tab = ""
-        self._pending_security_group_write = False
+        self._nav: PMWebNavigator | None = None
 
     def request_stop(self) -> None:
         self._stop_requested = True
@@ -291,11 +126,16 @@ class HybridAgent:
             self._driver = webdriver.Chrome(options=opts)
         return self._driver
 
+    @property
+    def nav(self) -> PMWebNavigator:
+        if self._nav is None:
+            self._nav = PMWebNavigator(self.driver, settings.pmweb_base_url)
+        return self._nav
+
     def login(self) -> dict[str, Any]:
         try:
             self.driver.get(settings.pmweb_base_url)
             time.sleep(5)
-
             try:
                 user_field = WebDriverWait(self.driver, 10).until(
                     EC.presence_of_element_located((By.ID, "txtUserName"))
@@ -311,8 +151,7 @@ class HybridAgent:
                     Select(user_dd).select_by_visible_text(settings.pmweb_username)
                     time.sleep(0.3)
                 except Exception:
-                    logger.warning("No username field found, proceeding with password only")
-
+                    logger.warning("No username field found")
             pwd = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.ID, "txtPassword"))
             )
@@ -331,8 +170,7 @@ class HybridAgent:
                 self._logged_in = True
                 logger.info("Logged in as %s", settings.pmweb_username)
                 return {"status": "success"}
-            page_text = self.driver.find_element(By.TAG_NAME, "body").text[:200]
-            return {"status": "error", "message": f"Login may have failed. Page: {page_text}"}
+            return {"status": "error", "message": "Login may have failed"}
         except Exception as exc:
             return {"status": "error", "message": str(exc)}
 
@@ -349,31 +187,22 @@ class HybridAgent:
 
     def _run_task_impl(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any]:
         self._stop_requested = False
-        self._allow_security_group_creation = False
-        self._on_security_page = False
-        self._active_security_tab = ""
-        self._pending_security_group_write = False
+        if not self._logged_in:
+            r = self.login()
+            if r["status"] != "success":
+                return {"reply": f"Cannot connect to PMWeb: {r.get('message')}", "actions": []}
 
-        clarification = self._clarification_for_missing_required_fields(task)
-        if clarification:
-            return {"reply": clarification, "actions": []}
+        record_types_ctx, required_fields_ctx = _build_registry_context()
+        system_prompt = INTENT_PROMPT.format(
+            record_types=record_types_ctx,
+            required_fields=required_fields_ctx,
+        )
 
-        examples = ""
-        try:
-            from app.services.learning_store import LearningStore
-            similar = LearningStore().find_similar(task)
-            if similar:
-                examples = "\n\nPast successful plans:\n"
-                for s in similar[:2]:
-                    examples += f"- {s['prompt'][:60]}: {json.dumps(s['plan'][:3])}\n"
-        except Exception:
-            pass
-
-        messages: list[dict[str, str]] = [{"role": "system", "content": PLANNER_PROMPT}]
+        messages: list[dict[str, str]] = [{"role": "system", "content": system_prompt}]
         if history:
             for msg in history[-10:]:
                 messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")[:500]})
-        messages.append({"role": "user", "content": task + examples})
+        messages.append({"role": "user", "content": task})
 
         response = self.client.chat.completions.create(
             model=settings.openai_model,
@@ -381,876 +210,255 @@ class HybridAgent:
             temperature=0,
             max_tokens=2000,
         )
-        plan_text = response.choices[0].message.content or "[]"
+        raw = response.choices[0].message.content or "{}"
+
         try:
-            start = plan_text.index("[")
-            end = plan_text.rindex("]") + 1
-            steps = json.loads(plan_text[start:end])
+            start = raw.index("{")
+            end = raw.rindex("}") + 1
+            parsed = json.loads(raw[start:end])
         except (ValueError, json.JSONDecodeError):
-            return {"reply": plan_text, "actions": []}
+            return {"reply": raw, "actions": []}
 
-        fallback_steps = self._security_group_plan_for_unneeded_clarification(
-            steps, task
-        )
-        if fallback_steps:
-            steps = fallback_steps
+        intent = parsed.get("intent", "ask_user")
 
-        clarification = self._clarification_from_plan(steps, task)
-        if clarification:
-            return {"reply": clarification, "actions": []}
+        if intent == "ask_user":
+            return {"reply": parsed.get("message", "Could you provide more details?"), "actions": []}
 
-        if not self._logged_in:
-            r = self.login()
-            if r["status"] != "success":
-                return {"reply": f"Cannot connect: {r.get('message')}", "actions": []}
+        return self._execute_intent(parsed, task)
 
-        results = []
-        self._allow_security_group_creation = self._security_group_request_has_required_details(task)
-        for i, step in enumerate(steps):
-            if self._check_stop():
-                results.append({"step": i + 1, "action": "STOPPED", "result": "Stopped by user"})
-                break
-            action = step.get("action", "")
-            logger.info("Step %d: %s", i + 1, action)
-            try:
-                result = self._execute_step(step)
-                results.append({"step": i + 1, "action": action, "result": result})
-            except UnsafePlanError as exc:
-                logger.warning("Step %d blocked as unsafe: %s", i + 1, exc)
-                results.append({"step": i + 1, "action": action, "error": str(exc)})
-                break
-            except Exception as exc:
-                logger.exception("Step %d failed", i + 1)
-                results.append({"step": i + 1, "action": action, "error": str(exc)})
+    # ── Deterministic execution ──────────────────────────────────────
 
+    def _execute_intent(self, parsed: dict[str, Any], task: str) -> dict[str, Any]:
+        """Execute a parsed intent using the deterministic navigator."""
+        intent = parsed.get("intent", "")
+        record_type_name = parsed.get("record_type", "")
+        fields = parsed.get("fields", {})
+        options = parsed.get("options", [])
+        permissions = parsed.get("permissions", {})
+        detail_lines = parsed.get("detail_lines", [])
+
+        rt = get_record_type(record_type_name)
+        results: list[dict[str, Any]] = []
+
+        if intent == "read" or intent == "list":
+            return self._execute_read(record_type_name, rt, results)
+
+        if intent in ("create", "update"):
+            return self._execute_create(record_type_name, rt, fields, options, permissions, detail_lines, results, task)
+
+        return {"reply": f"Unknown intent: {intent}", "actions": results}
+
+    def _execute_read(self, record_type_name: str, rt: Any, results: list) -> dict[str, Any]:
+        """Navigate to the record type and read data."""
+        step = 1
+        if rt:
+            if rt.url_fragment:
+                r = self.nav.navigate(rt.url_fragment)
+                results.append({"step": step, "action": "navigate", "result": r})
+                step += 1
+            if rt.uses_iframe:
+                r = self.nav.switch_to_iframe(rt.iframe_id)
+                results.append({"step": step, "action": "switch_to_iframe", "result": r})
+                step += 1
+        else:
+            r = self.nav.navigate("/Home.aspx")
+            results.append({"step": step, "action": "navigate", "result": r})
+            step += 1
+
+        data = self.nav.read_kendo_grid()
+        results.append({"step": step, "action": "read_grid", "result": {"rows": len(data), "data": data[:10]}})
+
+        summary = self._summarize(f"Read data for {record_type_name}", results)
+        return {"reply": summary, "actions": results}
+
+    def _execute_create(
+        self, record_type_name: str, rt: Any,
+        fields: dict, options: list, permissions: dict,
+        detail_lines: list, results: list, task: str,
+    ) -> dict[str, Any]:
+        """Navigate, fill fields, set options/permissions, save."""
+        step = 1
+
+        # Navigate
+        if rt and rt.url_fragment:
+            r = self.nav.navigate(rt.url_fragment)
+            results.append({"step": step, "action": "navigate", "result": r})
+            step += 1
+        elif rt:
+            r = self.nav.navigate_to_record_type(rt.module, rt.menu_item)
+            results.append({"step": step, "action": "navigate", "result": r})
+            step += 1
+
+        # Switch to iframe if needed
+        if rt and rt.uses_iframe:
+            r = self.nav.switch_to_iframe(rt.iframe_id)
+            results.append({"step": step, "action": "switch_to_iframe", "result": r})
+            step += 1
+
+        # Handle Security-specific flows
+        if record_type_name.lower() == "security groups":
+            return self._create_security_group(fields, options, permissions, results, step, task)
+        elif record_type_name.lower() == "users":
+            return self._create_user(fields, results, step, task)
+
+        # Generic record creation via breadcrumb/toolbar
+        r = self.nav.click_new_record()
+        results.append({"step": step, "action": "new_record", "result": r})
+        step += 1
+
+        # Fill header fields
+        for field_name, value in fields.items():
+            if value:
+                r = self.nav.fill_field_by_label(field_name, str(value))
+                results.append({"step": step, "action": f"fill_{field_name}", "result": r})
+                step += 1
+
+        # Add detail lines
+        for line in detail_lines:
+            r = self.nav.click_new_line()
+            results.append({"step": step, "action": "new_line", "result": r})
+            step += 1
+            for col, val in line.items():
+                if val:
+                    r = self.nav.fill_field_by_label(col, str(val))
+                    results.append({"step": step, "action": f"fill_{col}", "result": r})
+                    step += 1
+
+        # Save
+        r = self.nav.click_save()
+        results.append({"step": step, "action": "save", "result": r})
+
+        summary = self._summarize(task, results)
+        return {"reply": summary, "actions": results}
+
+    # ── Security Group creation (deterministic) ──────────────────────
+
+    def _create_security_group(
+        self, fields: dict, options: list, permissions: dict,
+        results: list, step: int, task: str,
+    ) -> dict[str, Any]:
+        # Click Groups tab
+        r = self.nav.click_tab("Groups")
+        results.append({"step": step, "action": "click_tab", "result": r})
+        step += 1
+
+        # Click New Group
+        r = self.nav.click_toolbar_button("New Group")
+        results.append({"step": step, "action": "click_new_group", "result": r})
+        step += 1
+
+        # Fill group name (textbox 0)
+        name = fields.get("Group Name", fields.get("group_name", fields.get("name", "")))
+        if name:
+            r = self.nav.fill_kendo_textbox(0, name)
+            results.append({"step": step, "action": "fill_group_name", "result": r})
+            step += 1
+
+        # Fill description (textbox 1)
+        desc = fields.get("Description", fields.get("description", ""))
+        if desc:
+            r = self.nav.fill_kendo_textbox(1, desc)
+            results.append({"step": step, "action": "fill_description", "result": r})
+            step += 1
+
+        # Set options
+        for opt in options:
+            r = self.nav.toggle_checkbox(opt, check=True)
+            results.append({"step": step, "action": f"check_{opt}", "result": r})
+            step += 1
+
+        # Set module permissions
+        for module, perm in permissions.items():
+            r = self.nav.set_module_permission(module, perm)
+            results.append({"step": step, "action": f"permission_{module}", "result": r})
+            step += 1
+
+        # Save
+        r = self.nav.click_save()
+        results.append({"step": step, "action": "save", "result": r})
+
+        summary = self._summarize(task, results)
+        return {"reply": summary, "actions": results}
+
+    # ── User creation (deterministic) ────────────────────────────────
+
+    def _create_user(
+        self, fields: dict, results: list, step: int, task: str,
+    ) -> dict[str, Any]:
+        r = self.nav.click_tab("Users")
+        results.append({"step": step, "action": "click_tab", "result": r})
+        step += 1
+
+        r = self.nav.click_new_line()
+        results.append({"step": step, "action": "new_line", "result": r})
+        step += 1
+
+        cell_map = {
+            "User ID": 3, "user_id": 3,
+            "First Name": 5, "first_name": 5,
+            "Last Name": 6, "last_name": 6,
+            "Password": 11, "password": 11,
+            "Email": 17, "email": 17,
+        }
+        dropdown_map = {
+            "License Type": 8, "license_type": 8,
+            "Named License": 9, "named_license": 9,
+            "Group": 10, "group": 10,
+        }
+
+        for field_name, value in fields.items():
+            if not value:
+                continue
+            if field_name in cell_map:
+                r = self.nav.fill_grid_cell(cell_map[field_name], str(value))
+                results.append({"step": step, "action": f"fill_{field_name}", "result": r})
+                step += 1
+            elif field_name in dropdown_map:
+                r = self.nav.select_grid_cell_dropdown(dropdown_map[field_name], str(value))
+                results.append({"step": step, "action": f"select_{field_name}", "result": r})
+                step += 1
+
+        r = self.nav.click_save()
+        results.append({"step": step, "action": "save", "result": r})
+
+        summary = self._summarize(task, results)
+        return {"reply": summary, "actions": results}
+
+    # ── Summarizer ───────────────────────────────────────────────────
+
+    def _summarize(self, task: str, results: list) -> str:
+        """Use LLM to summarize what was done."""
+        try:
+            resp = self.client.chat.completions.create(
+                model=settings.openai_model,
+                messages=[
+                    {"role": "system", "content": "Summarize what was done on PMWeb. Be concise and friendly."},
+                    {"role": "user", "content": f"Task: {task}\nResults:\n{json.dumps(results, indent=2, default=str)[:3000]}"},
+                ],
+                max_tokens=500,
+            )
+            return resp.choices[0].message.content or "Done."
+        except Exception:
+            has_errors = any("error" in r for r in results)
+            return "Completed with some errors." if has_errors else "Done."
+
+    # ── Learning hooks ───────────────────────────────────────────────
+
+    def _store_learning(self, task: str, parsed: dict, results: list) -> None:
         try:
             from app.services.learning_store import LearningStore
             ls = LearningStore()
             has_err = any("error" in r for r in results)
             if has_err:
-                ls.store_failure(task, steps, results)
+                ls.store_failure(task, [parsed], results)
             else:
-                ls.store_success(task, steps, results)
+                ls.store_success(task, [parsed], results)
         except Exception:
             pass
-
-        summary_response = self.client.chat.completions.create(
-            model=settings.openai_model,
-            messages=[
-                {"role": "system", "content": "Summarize what was done on PMWeb. Be concise."},
-                {"role": "user", "content": f"Task: {task}\nResults:\n{json.dumps(results, indent=2, default=str)[:3000]}"},
-            ],
-            max_tokens=500,
-        )
-        summary = summary_response.choices[0].message.content or "Done."
-        return {"reply": summary, "actions": results}
-
-    # ── Step executor ────────────────────────────────────────────────
-
-    def _execute_step(self, step: dict) -> Any:
-        action = step["action"]
-        base = settings.pmweb_base_url.rstrip("/")
-
-        if action == "navigate":
-            url = step["url"]
-            if url.startswith("/"):
-                url = base + url
-            self._on_security_page = "security.aspx" in url.lower()
-            if not self._on_security_page:
-                self._active_security_tab = ""
-                self._pending_security_group_write = False
-            self.driver.get(url)
-            time.sleep(3)
-            return "navigated"
-
-        elif action == "switch_to_iframe":
-            iframe = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.ID, step["id"]))
-            )
-            self.driver.switch_to.frame(iframe)
-            time.sleep(3)
-            return "switched to iframe"
-
-        elif action == "switch_to_main":
-            self.driver.switch_to.default_content()
-            return "switched to main"
-
-        elif action == "wait":
-            time.sleep(step.get("seconds", 3))
-            return "waited"
-
-        elif action == "ask_user":
-            return step.get("question") or step.get("message") or "Need more info"
-
-        elif action == "click_tab":
-            for tab in self.driver.find_elements(By.CSS_SELECTOR, "li.k-item.k-tabstrip-item"):
-                if step["text"].lower() in tab.text.lower():
-                    tab.click()
-                    if self._on_security_page:
-                        self._active_security_tab = step["text"].strip().lower()
-                    else:
-                        self._active_security_tab = ""
-                    if not self._on_security_page or self._active_security_tab != "groups":
-                        self._pending_security_group_write = False
-                    time.sleep(2)
-                    return f"clicked tab: {step['text']}"
-            return f"tab not found: {step['text']}"
-
-        elif action == "click_button":
-            self._raise_if_unsafe_security_group_step(step)
-            btn = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, f"//*[contains(text(),'{step['text']}')]"))
-            )
-            btn.click()
-            time.sleep(2)
-            return f"clicked: {step['text']}"
-
-        elif action == "click_save":
-            self._raise_if_unsafe_security_group_step(step)
-            spans = self.driver.find_elements(
-                By.XPATH, "//span[contains(@class,'k-button-text') and contains(text(),'Save')]"
-            )
-            for s in spans:
-                if s.is_displayed():
-                    s.find_element(By.XPATH, "./..").click()
-                    time.sleep(4)
-                    return "saved"
-            saves = self.driver.find_elements(By.XPATH, "//*[contains(@title,'Save')]")
-            for btn in saves:
-                if btn.is_displayed():
-                    btn.click()
-                    time.sleep(3)
-                    return "saved via title"
-            return "save button not found"
-
-        elif action == "click_new_line":
-            btn = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "//span[contains(text(),'New Line')]/.."))
-            )
-            btn.click()
-            time.sleep(3)
-            return "new line added"
-
-        elif action == "fill_textbox":
-            self._raise_if_unsafe_security_group_step(step)
-            tbs = self.driver.find_elements(By.CSS_SELECTOR, "kendo-textbox input.k-input-inner")
-            idx = step.get("index", 0)
-            if idx < len(tbs):
-                tbs[idx].click()
-                tbs[idx].clear()
-                tbs[idx].send_keys(step["value"])
-                time.sleep(0.3)
-                return f"filled textbox[{idx}]: {step['value']}"
-            return f"textbox[{idx}] not found"
-
-        elif action == "fill_cell":
-            row = self._find_edit_row()
-            if not row:
-                return "no edit row found"
-            cells = row.find_elements(By.CSS_SELECTOR, "td")
-            idx = step["cell_index"]
-            if idx < len(cells):
-                for inp in cells[idx].find_elements(By.CSS_SELECTOR, "input[type='text'], input[type='password']"):
-                    if inp.is_displayed():
-                        inp.click()
-                        inp.clear()
-                        inp.send_keys(step["value"])
-                        time.sleep(0.3)
-                        return f"filled cell[{idx}]: {step['value']}"
-            return f"cell[{idx}] not fillable"
-
-        elif action == "fill_cell_dropdown":
-            row = self._find_edit_row()
-            if not row:
-                return "no edit row found"
-            cells = row.find_elements(By.CSS_SELECTOR, "td")
-            idx = step["cell_index"]
-            if idx < len(cells):
-                dds = cells[idx].find_elements(By.CSS_SELECTOR, "kendo-dropdownlist")
-                for dd in dds:
-                    if dd.is_displayed():
-                        dd.click()
-                        time.sleep(1)
-                        items = WebDriverWait(self.driver, 5).until(
-                            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "kendo-popup li"))
-                        )
-                        for item in items:
-                            if item.text.strip().lower() == step["value"].lower():
-                                item.click()
-                                time.sleep(0.5)
-                                return f"selected {step['value']} in cell[{idx}]"
-                        dd.send_keys(Keys.ESCAPE)
-                        return f"option '{step['value']}' not in cell[{idx}]"
-            return f"cell[{idx}] no dropdown"
-
-        elif action == "fill_by_id":
-            el = self.driver.find_element(By.ID, step["element_id"])
-            el.clear()
-            el.send_keys(step["value"])
-            time.sleep(0.3)
-            return f"filled #{step['element_id']}"
-
-        elif action == "select_dropdown_by_id":
-            from selenium.webdriver.support.ui import Select
-            el = self.driver.find_element(By.ID, step["element_id"])
-            Select(el).select_by_visible_text(step["value"])
-            time.sleep(0.5)
-            return f"selected '{step['value']}' in #{step['element_id']}"
-
-        elif action == "click_by_id":
-            self.driver.find_element(By.ID, step["element_id"]).click()
-            time.sleep(1)
-            return f"clicked #{step['element_id']}"
-
-        elif action == "click_by_text":
-            self._raise_if_unsafe_security_group_step(step)
-            els = self.driver.find_elements(By.XPATH, f"//*[contains(text(),'{step['text']}')]")
-            for el in els:
-                if el.is_displayed():
-                    el.click()
-                    time.sleep(1)
-                    return f"clicked: {step['text']}"
-            return f"not found: {step['text']}"
-
-        elif action == "click_by_css":
-            el = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, step["selector"]))
-            )
-            el.click()
-            time.sleep(1)
-            return f"clicked: {step['selector']}"
-
-        elif action == "click_sidebar":
-            items = self.driver.find_elements(By.XPATH, f"//span[text()='{step['module']}']")
-            for item in items:
-                if item.is_displayed():
-                    item.click()
-                    time.sleep(2)
-                    return f"clicked sidebar: {step['module']}"
-            return f"not found: {step['module']}"
-
-        elif action == "click_menu_item":
-            items = self.driver.find_elements(By.XPATH, f"//span[text()='{step['text']}']")
-            for item in items:
-                if item.is_displayed():
-                    item.click()
-                    time.sleep(3)
-                    return f"clicked: {step['text']}"
-            return f"not found: {step['text']}"
-
-        elif action == "check_option":
-            self._raise_if_unsafe_security_group_step(step)
-            return self._toggle_option(step["label"], check=True)
-
-        elif action == "uncheck_option":
-            self._raise_if_unsafe_security_group_step(step)
-            return self._toggle_option(step["label"], check=False)
-
-        elif action == "click_module_permission":
-            self._raise_if_unsafe_security_group_step(step)
-            module, perm = step["module"], step["permission"]
-            perm_map = {"View": 0, "Create": 1, "Edit": 2, "Delete": 3, "Full Control": 4}
-            for row in self.driver.find_elements(By.CSS_SELECTOR, "tr, [class*='row']"):
-                if module in row.text and row.is_displayed():
-                    chks = row.find_elements(By.CSS_SELECTOR, "input[type='checkbox']")
-                    idx = perm_map.get(perm, -1)
-                    if 0 <= idx < len(chks):
-                        if not chks[idx].is_selected():
-                            self.driver.execute_script("arguments[0].click()", chks[idx])
-                            time.sleep(0.3)
-                        return f"set {module} {perm}"
-            return f"module {module} not found"
-
-        elif action == "assign_user_to_group":
-            user, group = step["user"], step["group"]
-            for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row"):
-                if user.lower() in row.text.lower():
-                    for dd in row.find_elements(By.CSS_SELECTOR, "kendo-dropdownlist"):
-                        if dd.is_displayed():
-                            dd.click()
-                            time.sleep(1)
-                            for item in WebDriverWait(self.driver, 5).until(
-                                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "kendo-popup li"))
-                            ):
-                                if group.lower() in item.text.lower():
-                                    item.click()
-                                    time.sleep(0.5)
-                                    return f"assigned {user} to {group}"
-                            dd.send_keys(Keys.ESCAPE)
-            return f"user '{user}' or group '{group}' not found"
-
-        elif action == "read_groups":
-            body = self.driver.find_element(By.TAG_NAME, "body").text
-            skip = {"Default Group", "Guest Users", "Adaptive Form Administrator",
-                    "Can change Due Date in Procurement", "Can Copy Project",
-                    "Can Edit WBS In Program", "Can Edit WBS In Project",
-                    "Can Execute Move", "Can Lock/Unlock Schedules",
-                    "Can Make Vendors Active/Inactive", "Can Make Locations Active/Inactive",
-                    "Can Make Projects Active/Inactive", "Can Send Notifications",
-                    "Custom Form Administrator", "Document Manager Administrator",
-                    "Events Administrator", "Lease Administrator",
-                    "PMWeb Report Administrator", "Procurement Administrator",
-                    "Report Manager Administrator", "Assets", "Costs", "Forms",
-                    "Plans", "Portfolio", "Schedules", "Tools", "Workflows",
-                    "View: Filtered", "Duplicate", "Delete", "New Group",
-                    "Group*", "Description*", "Option", "Logged into: All Levels",
-                    "Need Help?", "Security", "Manage your group and user security settings",
-                    "Licenses", "Save", "Cancel", "aS"}
-            groups = []
-            for line in body.split("\n"):
-                s = line.strip()
-                if not s or len(s) > 50 or s in skip or s.isdigit():
-                    continue
-                if any(s.startswith(p) for p in ["Groups", "Users", "User Access", "Conditional", "Activity", "Password", "External"]):
-                    continue
-                if len(s) >= 2:
-                    groups.append(s)
-            return {"groups": groups}
-
-        elif action == "read_users":
-            users = []
-            for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row")[:30]:
-                cells = row.find_elements(By.CSS_SELECTOR, "td")
-                if len(cells) >= 8:
-                    texts = [c.text.strip() for c in cells[:8]]
-                    if texts[1]:
-                        users.append({"id": texts[1], "name": f"{texts[3]} {texts[4]}".strip()})
-            return {"users": users}
-
-        elif action in ("read_conditional_security", "read_grid_data"):
-            return self._read_grid_text(max_rows=step.get("max_rows", 20))
-
-        elif action == "read_group_permissions":
-            return {"group": step.get("group_name", ""), "page_text": self.driver.find_element(By.TAG_NAME, "body").text[:3000]}
-
-        elif action == "read_page_text":
-            return self.driver.find_element(By.TAG_NAME, "body").text[:3000]
-
-        elif action == "click_workflow_tab":
-            tab_map = {
-                "Roles": "Roles", "Business Processes": "Business Processes",
-                "BPM": "Business Processes", "Defaults": "Defaults",
-                "APM Rules": "APM Rules", "APM": "APM Rules",
-            }
-            target = tab_map.get(step.get("tab", ""), step.get("tab", ""))
-            for el in self.driver.find_elements(By.XPATH, f"//span[contains(text(),'{target}')]"):
-                if el.is_displayed():
-                    el.click()
-                    time.sleep(3)
-                    return f"clicked workflow tab: {target}"
-            return f"workflow tab not found: {target}"
-
-        elif action == "click_bpm_tab":
-            return self._execute_step({"action": "click_workflow_tab", "tab": "Business Processes"})
-
-        elif action == "add_workflow_role":
-            for btn in self.driver.find_elements(By.XPATH, "//*[contains(@title,'Add') or contains(text(),'Add')]"):
-                if btn.is_displayed():
-                    btn.click()
-                    time.sleep(2)
-                    break
-            for inp in reversed(self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']")):
-                if inp.is_displayed() and not inp.get_attribute("value"):
-                    inp.click()
-                    inp.send_keys(step["role_name"])
-                    time.sleep(0.3)
-                    return f"added role: {step['role_name']}"
-            return f"could not add role: {step['role_name']}"
-
-        elif action == "read_workflow_roles":
-            return self._read_grid_text()
-
-        elif action == "create_new_bpm":
-            self.driver.find_element(By.ID, "ctl00_CPH1_ucBusinessProcesses_txtTemplateId").clear()
-            self.driver.find_element(By.ID, "ctl00_CPH1_ucBusinessProcesses_txtTemplateId").send_keys(step["bpm_id"])
-            self.driver.find_element(By.ID, "ctl00_CPH1_ucBusinessProcesses_txtTemplateName").clear()
-            self.driver.find_element(By.ID, "ctl00_CPH1_ucBusinessProcesses_txtTemplateName").send_keys(step["name"])
-            time.sleep(0.3)
-            return f"BPM ID={step['bpm_id']}, name={step['name']}"
-
-        elif action == "add_bpm_status":
-            for btn in self.driver.find_elements(By.XPATH, "//*[contains(@title,'Add') or contains(text(),'New')]"):
-                if btn.is_displayed():
-                    btn.click()
-                    time.sleep(2)
-                    break
-            for inp in reversed(self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']")):
-                if inp.is_displayed() and not inp.get_attribute("value"):
-                    inp.click()
-                    inp.send_keys(step["status_name"])
-                    return f"added status: {step['status_name']} (seq {step.get('sequence', '')})"
-            return f"could not add status: {step['status_name']}"
-
-        elif action == "assign_bpm_role":
-            status, role = step.get("status", ""), step.get("role", "")
-            for row in self.driver.find_elements(By.CSS_SELECTOR, "tr"):
-                if status.lower() in row.text.lower() and row.is_displayed():
-                    for dd in row.find_elements(By.CSS_SELECTOR, "select, kendo-dropdownlist"):
-                        if dd.is_displayed():
-                            dd.click()
-                            time.sleep(1)
-                            for item in self.driver.find_elements(By.CSS_SELECTOR, "kendo-popup li, option"):
-                                if role.lower() in item.text.lower():
-                                    item.click()
-                                    time.sleep(0.5)
-                                    return f"assigned '{role}' to '{status}'"
-            return f"status '{status}' or role '{role}' not found"
-
-        elif action == "read_bpm_statuses":
-            return self._read_grid_text()
-
-        elif action == "save_bpm":
-            for btn in self.driver.find_elements(By.XPATH, "//*[contains(@title,'Save')]"):
-                if btn.is_displayed():
-                    btn.click()
-                    time.sleep(3)
-                    return "BPM saved"
-            self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ALT, "s")
-            time.sleep(3)
-            return "BPM saved via Alt+S"
-
-        elif action == "create_apm_rule":
-            for btn in self.driver.find_elements(By.XPATH, "//*[contains(@title,'Add') or contains(text(),'New') or contains(text(),'Add')]"):
-                if btn.is_displayed():
-                    btn.click()
-                    time.sleep(2)
-                    break
-            for inp in self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']"):
-                if inp.is_displayed() and not inp.get_attribute("value"):
-                    inp.click()
-                    inp.send_keys(step.get("rule_name", ""))
-                    break
-            self._try_select_dropdown_by_text(step.get("module", ""))
-            self._try_select_dropdown_by_text(step.get("level", ""))
-            self._try_select_dropdown_by_text(step.get("template", ""))
-            time.sleep(0.5)
-            return f"APM rule: {step.get('rule_name', '')} ({step.get('module', '')}/{step.get('level', '')}/{step.get('template', '')})"
-
-        elif action == "read_apm_rules":
-            return self._read_grid_text()
-
-        elif action == "save_apm_rules":
-            return self._execute_step({"action": "save_bpm"})
-
-        elif action == "open_adaptive_form_builder":
-            self.driver.switch_to.default_content()
-            self._on_security_page = False
-            self._active_security_tab = ""
-            self._pending_security_group_write = False
-            self.driver.get(f"{base}/AdaptiveFormBuilder.aspx?id=0&ModuleId=8&PageId=371")
-            time.sleep(8)
-            iframe = WebDriverWait(self.driver, 15).until(
-                EC.presence_of_element_located((By.ID, "ctl00_CPH1_ngFrame"))
-            )
-            self.driver.switch_to.frame(iframe)
-            time.sleep(5)
-            return "form builder opened"
-
-        elif action == "set_form_title":
-            title_el = self.driver.find_element(
-                By.XPATH, "//span[contains(@class,'sv-string-editor') and text()='Default Adaptive Form']"
-            )
-            title_el.click()
-            time.sleep(0.3)
-            ActionChains(self.driver).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-            ActionChains(self.driver).send_keys(step["title"]).perform()
-            self.driver.find_element(By.TAG_NAME, "body").click()
-            time.sleep(1)
-            return f"title set: {step['title']}"
-
-        elif action == "add_form_field":
-            label = step.get("label", "Field")
-            field_type = step.get("field_type", "text")
-            choices = step.get("choices", [])
-            type_map = {"text": "Single-Line Input", "textarea": "Long Text", "date": "Single-Line Input",
-                        "number": "Single-Line Input", "dropdown": "Dropdown", "checkbox": "Checkboxes",
-                        "radio": "Radio Button Group", "boolean": "Yes/No (Boolean)", "file": "File Upload",
-                        "rating": "Rating", "comment": "Long Text", "signature": "Signature"}
-            toolbox_name = type_map.get(field_type, "Single-Line Input")
-            added = False
-            for item in self.driver.find_elements(By.CSS_SELECTOR, ".svc-toolbox__item"):
-                if toolbox_name.lower() in item.text.lower() and item.is_displayed():
-                    item.click()
-                    time.sleep(2)
-                    added = True
-                    break
-            if not added:
-                for b in self.driver.find_elements(By.XPATH, "//span[contains(text(),'Add Field')]"):
-                    if b.is_displayed():
-                        b.click()
-                        time.sleep(2)
-                        added = True
-                        break
-            if added:
-                for fl in reversed(self.driver.find_elements(By.CSS_SELECTOR, "span.sv-string-editor")):
-                    if fl.is_displayed() and (fl.text.startswith("field") or fl.text.startswith("question")):
-                        fl.click()
-                        time.sleep(0.3)
-                        ActionChains(self.driver).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-                        ActionChains(self.driver).send_keys(label).perform()
-                        self.driver.find_element(By.TAG_NAME, "body").click()
-                        time.sleep(0.5)
-                        break
-            if choices and field_type in ("dropdown", "checkbox", "radio"):
-                slots = [e for e in self.driver.find_elements(By.CSS_SELECTOR, "span.sv-string-editor") if e.is_displayed() and e.text.startswith("Item")]
-                for i, choice in enumerate(choices):
-                    if i < len(slots):
-                        slots[i].click()
-                        time.sleep(0.2)
-                        ActionChains(self.driver).key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).perform()
-                        ActionChains(self.driver).send_keys(choice).perform()
-                        self.driver.find_element(By.TAG_NAME, "body").click()
-                        time.sleep(0.3)
-            return f"added field: {label} (type={field_type})"
-
-        elif action == "save_adaptive_form":
-            btn = self.driver.find_element(By.CSS_SELECTOR, "input[value='SaveTemplate']")
-            self.driver.execute_script("arguments[0].click()", btn)
-            time.sleep(8)
-            self.driver.switch_to.default_content()
-            url = self.driver.current_url
-            m = re.search(r"[Ii]d=(\d+)", url)
-            fid = int(m.group(1)) if m else None
-            return f"saved as ID={fid}"
-
-        elif action == "create_doc_folder":
-            folder_name, parent = step.get("folder_name", ""), step.get("parent", "Root")
-            for item in self.driver.find_elements(By.CSS_SELECTOR, ".k-treeview-item, [class*='tree'] li"):
-                if parent.lower() in item.text.lower() and item.is_displayed():
-                    ActionChains(self.driver).context_click(item).perform()
-                    time.sleep(1)
-                    break
-            for mi in self.driver.find_elements(By.CSS_SELECTOR, ".k-context-menu li, [class*='menu'] li"):
-                if "new" in mi.text.lower() or "add" in mi.text.lower():
-                    mi.click()
-                    time.sleep(2)
-                    break
-            for inp in self.driver.find_elements(By.CSS_SELECTOR, "input[type='text']"):
-                if inp.is_displayed() and not inp.get_attribute("value"):
-                    inp.click()
-                    inp.send_keys(folder_name)
-                    inp.send_keys(Keys.ENTER)
-                    time.sleep(1)
-                    return f"created folder: {folder_name} under {parent}"
-            return f"could not create folder: {folder_name}"
-
-        elif action == "set_folder_security":
-            folder, group, perm = step.get("folder", ""), step.get("group", ""), step.get("permission", "Read")
-            for item in self.driver.find_elements(By.CSS_SELECTOR, ".k-treeview-item, [class*='tree'] li"):
-                if folder.lower() in item.text.lower() and item.is_displayed():
-                    ActionChains(self.driver).context_click(item).perform()
-                    time.sleep(1)
-                    break
-            for mi in self.driver.find_elements(By.CSS_SELECTOR, ".k-context-menu li, [class*='menu'] li"):
-                if "security" in mi.text.lower() or "permission" in mi.text.lower():
-                    mi.click()
-                    time.sleep(2)
-                    break
-            return f"folder security for '{folder}': {group}={perm}"
-
-        elif action == "read_doc_folders":
-            folders = [item.text.strip().split("\n")[0] for item in self.driver.find_elements(By.CSS_SELECTOR, ".k-treeview-item, [class*='tree'] li") if item.is_displayed()]
-            return {"folders": folders[:50]}
-
-        elif action == "read_workflow_config":
-            return {"workflow_config": self.driver.find_element(By.TAG_NAME, "body").text[:3000]}
-
-        return f"unknown action: {action}"
-
-    # ── Helpers ──────────────────────────────────────────────────────
-
-    def _clarification_for_missing_required_fields(self, task: str) -> str | None:
-        if self._security_group_request_missing_details(task):
-            return SECURITY_GROUP_CLARIFICATION
-        return None
-
-    def _security_group_plan_for_unneeded_clarification(
-        self, steps: Any, task: str
-    ) -> list[dict[str, Any]] | None:
-        if not (
-            isinstance(steps, list)
-            and steps
-            and all(
-                isinstance(step, dict) and step.get("action") == "ask_user"
-                for step in steps
-            )
-        ):
-            return None
-
-        details = self._security_group_details_from_request(task)
-        if not details:
-            return None
-
-        return [
-            {"action": "navigate", "url": "/Security.aspx"},
-            {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"},
-            {"action": "click_tab", "text": "Groups"},
-            {"action": "click_button", "text": "New Group"},
-            {"action": "fill_textbox", "index": 0, "value": details["group_name"]},
-            {
-                "action": "fill_textbox",
-                "index": 1,
-                "value": details["description"],
-            },
-            {"action": "click_save"},
-        ]
-
-    def _clarification_from_plan(self, steps: Any, task: str = "") -> str | None:
-        if not isinstance(steps, list):
-            return None
-        for step in steps:
-            if not isinstance(step, dict) or step.get("action") != "ask_user":
-                continue
-            message = step.get("question") or step.get("message")
-            if isinstance(message, str) and message.strip():
-                return message.strip()
-        if self._plan_writes_security_group(steps) and not self._security_group_request_has_required_details(task):
-            return SECURITY_GROUP_CLARIFICATION
-        return None
-
-    def _security_group_request_missing_details(self, task: str) -> bool:
-        text = re.sub(r"\s+", " ", task).strip().lower()
-        if not self._is_security_group_create_request(text):
-            return False
-        return not self._security_group_request_has_required_details(task)
-
-    def _security_group_request_has_required_details(self, task: str) -> bool:
-        text = re.sub(r"\s+", " ", task).strip().lower()
-        if not self._is_security_group_create_request(text):
-            return False
-        if self._requests_generic_security_group(text):
-            return True
-        if self._attached_file_has_security_group_details(text):
-            return True
-        if self._security_group_details_from_request(task):
-            return True
-        return self._has_security_group_name(text) and self._has_security_group_context(text)
-
-    def _is_security_group_create_request(self, text: str) -> bool:
-        return bool(
-            re.search(r"\b(create|add|make|setup|set up)\b", text)
-            and re.search(r"\bsecurity\s+groups?\b", text)
-        )
-
-    def _requests_generic_security_group(self, text: str) -> bool:
-        return bool(re.search(r"\b(generic|default|sample)\b", text))
-
-    def _attached_file_has_security_group_details(self, text: str) -> bool:
-        attached = re.search(r"---\s*attached file\s*---\s*(?P<content>.+)", text)
-        if not attached:
-            return False
-        content = attached.group("content")
-        return self._has_security_group_name(content) and self._has_security_group_context(content)
-
-    def _has_security_group_name(self, text: str) -> bool:
-        patterns = [
-            r"\b(?:named|called)\s+(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\b(?:group\s+)?name\s*(?:is|:|=|-)\s*(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\bsecurity\s+groups?\s+for\s+(?!me\b)(?!my\b)(?P<value>[a-z0-9][\w -]{1,80})",
-        ]
-        return self._has_concrete_value_after(patterns, text)
-
-    def _has_security_group_context(self, text: str) -> bool:
-        if re.search(r"\b(view|edit|delete|full control)\b", text):
-            return True
-        patterns = [
-            r"\bdescription\s*(?:is|:|=|-)?\s*(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\bdescribed as\s+(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\bfor\s+(?!me\b)(?!my\b)(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\bbased on\s+(?P<value>[a-z0-9][\w -]{1,80})",
-            r"\b(?:team|role|department)\s*(?:is|:|=|-)\s*(?P<value>[a-z0-9][\w -]{1,80})",
-        ]
-        return self._has_concrete_value_after(patterns, text)
-
-    def _has_concrete_value_after(self, patterns: list[str], text: str) -> bool:
-        for pattern in patterns:
-            for match in re.finditer(pattern, text):
-                value = match.group("value")
-                words = re.findall(r"[a-z0-9][a-z0-9_-]*", value.lower())
-                if any(word not in GENERIC_SECURITY_GROUP_DETAIL_WORDS for word in words[:4]):
-                    return True
-        return False
-
-    def _security_group_details_from_request(
-        self, task: str
-    ) -> dict[str, str] | None:
-        text = re.sub(r"\s+", " ", task).strip()
-        if not self._is_security_group_create_request(text.lower()):
-            return None
-
-        name = self._extract_security_group_value(
-            [
-                r"\b(?:named|called)\s+(?P<value>[a-z0-9][\w &/-]{1,80}?)"
-                r"(?=\s+(?:with|and|using|based on|description|permissions?|options?)\b|[.?!,\n]|$)",
-                r"\b(?:group\s+)?name\s*(?:is|:|=|-)\s*"
-                r"(?P<value>[a-z0-9][\w &/-]{1,80}?)"
-                r"(?=\s+(?:with|and|using|based on|description|permissions?|options?)\b|[.?!,\n]|$)",
-            ],
-            text,
-        )
-        role_or_team = self._extract_security_group_value(
-            [
-                r"\bsecurity\s+groups?\s+for\s+(?!me\b)(?!my\b)"
-                r"(?P<value>[a-z0-9][\w &/-]{1,80}?)"
-                r"(?=\s+(?:with|and|using|based on|description|permissions?|options?)\b|[.?!,\n]|$)",
-                r"\bgroups?\s+for\s+(?!me\b)(?!my\b)"
-                r"(?P<value>[a-z0-9][\w &/-]{1,80}?)"
-                r"(?=\s+(?:with|and|using|based on|description|permissions?|options?)\b|[.?!,\n]|$)",
-            ],
-            text,
-        )
-        if not name:
-            name = role_or_team
-        if not name:
-            return None
-
-        description = self._extract_security_group_value(
-            [
-                r"\bdescription\s*(?:is|:|=|-)?\s*"
-                r"(?P<value>[a-z0-9][\w &/-]{1,80}?)"
-                r"(?=\s+(?:with|and|using|based on|permissions?|options?)\b|[.?!,\n]|$)",
-                r"\bdescribed as\s+(?P<value>[a-z0-9][\w &/-]{1,80}?)"
-                r"(?=\s+(?:with|and|using|based on|permissions?|options?)\b|[.?!,\n]|$)",
-            ],
-            text,
-        )
-        if description:
-            formatted_description = self._format_security_group_description(
-                description
-            )
-        else:
-            subject = self._strip_security_group_articles(role_or_team or name)
-            formatted_description = f"Security group for {subject}"
-
-        return {
-            "group_name": self._format_security_group_name(name),
-            "description": formatted_description,
-        }
-
-    def _extract_security_group_value(
-        self, patterns: list[str], text: str
-    ) -> str | None:
-        for pattern in patterns:
-            match = re.search(pattern, text, flags=re.IGNORECASE)
-            if not match:
-                continue
-            value = self._strip_security_group_articles(match.group("value"))
-            words = re.findall(r"[a-z0-9][a-z0-9_-]*", value.lower())
-            if any(word not in GENERIC_SECURITY_GROUP_DETAIL_WORDS for word in words):
-                return value
-        return None
-
-    def _strip_security_group_articles(self, value: str) -> str:
-        cleaned = re.sub(r"\s+", " ", value).strip(" .,:;-")
-        return re.sub(r"^(?:the|a|an)\s+", "", cleaned, flags=re.IGNORECASE)
-
-    def _format_security_group_name(self, value: str) -> str:
-        cleaned = self._strip_security_group_articles(value)
-        if cleaned.islower():
-            return cleaned.title()
-        return cleaned
-
-    def _format_security_group_description(self, value: str) -> str:
-        cleaned = self._strip_security_group_articles(value)
-        if cleaned.islower():
-            return cleaned[:1].upper() + cleaned[1:]
-        return cleaned
-
-    def _plan_writes_security_group(self, steps: list[Any]) -> bool:
-        on_security_page = False
-        on_groups_tab = False
-        for step in steps:
-            if not isinstance(step, dict):
-                continue
-            action = step.get("action")
-            text = str(step.get("text", "")).strip().lower()
-            url = str(step.get("url", "")).strip().lower()
-            if action == "navigate":
-                on_security_page = "security.aspx" in url
-                on_groups_tab = False
-            elif action == "click_tab":
-                on_groups_tab = on_security_page and text == "groups"
-            if action in {"click_button", "click_by_text"} and text == "new group":
-                return True
-            if action in {"fill_textbox", "check_option", "uncheck_option", "click_module_permission"} and on_groups_tab:
-                return True
-            if action == "click_save" and on_groups_tab:
-                return True
-        return False
-
-    def _raise_if_unsafe_security_group_step(self, step: dict[str, Any]) -> None:
-        if self._allow_security_group_creation:
-            if self._step_writes_security_group(step):
-                self._pending_security_group_write = True
-            return
-        if self._step_writes_security_group(step):
-            raise UnsafePlanError(SECURITY_GROUP_CLARIFICATION)
-
-    def _step_writes_security_group(self, step: dict[str, Any]) -> bool:
-        action = step.get("action")
-        text = str(step.get("text", "")).strip().lower()
-        return (
-            (action in {"click_button", "click_by_text"} and text == "new group")
-            or action in {"fill_textbox", "check_option", "uncheck_option", "click_module_permission"}
-            or (
-                action == "click_save"
-                and self._on_security_page
-                and (self._active_security_tab == "groups" or self._pending_security_group_write)
-            )
-        )
-
-    def _find_edit_row(self):
-        for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
-            inputs = row.find_elements(By.CSS_SELECTOR, "input:not([type='hidden']), kendo-dropdownlist")
-            if sum(1 for i in inputs if i.is_displayed()) > 5:
-                return row
-        return None
-
-    def _toggle_option(self, label: str, check: bool) -> str:
-        for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row"):
-            cells = row.find_elements(By.CSS_SELECTOR, "td")
-            if len(cells) >= 2 and label in cells[1].text:
-                chk = cells[0].find_elements(By.CSS_SELECTOR, "input[type='checkbox']")
-                if chk:
-                    is_checked = chk[0].is_selected()
-                    if check and not is_checked:
-                        self.driver.execute_script("arguments[0].click()", chk[0])
-                        time.sleep(0.3)
-                        return f"checked: {label}"
-                    elif not check and is_checked:
-                        self.driver.execute_script("arguments[0].click()", chk[0])
-                        time.sleep(0.3)
-                        return f"unchecked: {label}"
-                    return f"already {'checked' if check else 'unchecked'}: {label}"
-        return f"option not found: {label}"
-
-    def _read_grid_text(self, max_rows: int = 20) -> dict[str, Any]:
-        data = []
-        for row in self.driver.find_elements(By.CSS_SELECTOR, "tr")[:max_rows]:
-            texts = [c.text.strip() for c in row.find_elements(By.CSS_SELECTOR, "td, th") if c.text.strip()]
-            if texts:
-                data.append(texts)
-        return {"rows": data}
-
-    def _try_select_dropdown_by_text(self, text: str) -> bool:
-        if not text:
-            return False
-        for dd in self.driver.find_elements(By.CSS_SELECTOR, "select, kendo-dropdownlist"):
-            if dd.is_displayed():
-                try:
-                    dd.click()
-                    time.sleep(0.5)
-                    for item in self.driver.find_elements(By.CSS_SELECTOR, "kendo-popup li, option"):
-                        if text.lower() in item.text.lower():
-                            item.click()
-                            time.sleep(0.3)
-                            return True
-                except Exception:
-                    pass
-        return False
 
     def close(self) -> None:
         if self._driver:
             self._driver.quit()
             self._driver = None
             self._logged_in = False
+            self._nav = None
