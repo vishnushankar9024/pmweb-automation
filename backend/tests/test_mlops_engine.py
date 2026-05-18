@@ -96,3 +96,22 @@ def test_process_fix_now_fails_before_issue_creation_for_blank_ticket():
     assert result["status"] == "failed"
     assert "missing required context: prompt, actual" in result["error"]
     assert engine._fixes.docs[0]["status"] == "failed"
+
+
+def test_auto_fix_issue_body_mentions_current_hybrid_agent_entry_points():
+    engine = make_engine({})
+
+    body = engine._build_github_issue_body(
+        feedback_id="feedback-id",
+        prompt="Create a security group",
+        expected="A group should be created",
+        actual="The action failed",
+        session_id="session-id",
+    )
+
+    assert "INTENT_PROMPT" in body
+    assert "_execute_intent()" in body
+    assert "_execute_create()" in body
+    assert "PMWebNavigator" in body
+    assert "PLANNER_PROMPT" not in body
+    assert "_execute_step()" not in body

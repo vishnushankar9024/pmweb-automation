@@ -280,6 +280,45 @@ class MLOpsEngine:
             return ""
         return value.strip()
 
+    def _build_github_issue_body(self, feedback_id: str, prompt: str, expected: str, actual: str, session_id: str) -> str:
+        """Build the auto-fix issue body with instructions matching the current agent."""
+        return (
+            f"## Auto-Fix Request\n\n"
+            f"A user reported that the PMWeb Automation Agent did not work as expected.\n\n"
+            f"### What the user asked\n"
+            f"```\n{prompt}\n```\n\n"
+            f"### What actually happened\n"
+            f"```\n{actual}\n```\n\n"
+            f"### What should have happened\n"
+            f"```\n{expected}\n```\n\n"
+            f"### Instructions for the fixing agent\n\n"
+            f"1. Read the HybridAgent in `backend/app/agent/browser_agent.py` — "
+            f"this is the GPT-4o intent parser plus deterministic Selenium executor for PMWeb.\n"
+            f"2. Read `INTENT_PROMPT`, `_execute_intent()`, `_execute_create()`, "
+            f"and any record-specific helper such as `_create_security_group()` or `_create_user()`.\n"
+            f"3. Read `backend/app/agent/pmweb_navigator.py` when the failure involves a selector, "
+            f"toolbar action, grid edit, tab click, iframe switch, or save behavior.\n"
+            f"4. Identify why the user's request failed — missing intent parsing guidance, "
+            f"wrong record registry metadata, missing navigator action, wrong selector, "
+            f"or incorrect navigation flow.\n"
+            f"5. Fix the code so the request would succeed next time.\n"
+            f"6. If new Selenium behavior is needed, add planner guidance to `INTENT_PROMPT`, "
+            f"route it from the relevant execution helper, and implement the DOM action in "
+            f"`PMWebNavigator`.\n"
+            f"7. Run `cd backend && ruff check app/` to ensure no lint errors.\n"
+            f"8. Open a PR with the fix on branch `cursor/clean-agent-6eca`.\n\n"
+            f"### Key files\n"
+            f"- `backend/app/agent/browser_agent.py` — HybridAgent (intent parsing and execution routing)\n"
+            f"- `backend/app/agent/pmweb_navigator.py` — deterministic Selenium DOM actions\n"
+            f"- `backend/app/agent/pmweb_registry.py` — PMWeb record metadata and required fields\n"
+            f"- `backend/app/api/chat.py` — API endpoints\n"
+            f"- `backend/app/services/learning_store.py` — learning from past runs\n\n"
+            f"### Metadata\n"
+            f"- **Feedback ID:** `{feedback_id}`\n"
+            f"- **Session ID:** `{session_id}`\n\n"
+            f"---\n*Created automatically by PMWeb Automation Agent — Fix Now*"
+        )
+
     def _create_github_issue(self, feedback_id: str, prompt: str, expected: str, actual: str, session_id: str) -> str:
         """Create a GitHub issue with rich context for Cursor Automation to fix."""
         context = self._validated_issue_context(
@@ -298,35 +337,7 @@ class MLOpsEngine:
             import httpx
 
             title = f"[Auto-Fix] {prompt[:80]}"
-            body = (
-                f"## Auto-Fix Request\n\n"
-                f"A user reported that the PMWeb Automation Agent did not work as expected.\n\n"
-                f"### What the user asked\n"
-                f"```\n{prompt}\n```\n\n"
-                f"### What actually happened\n"
-                f"```\n{actual}\n```\n\n"
-                f"### What should have happened\n"
-                f"```\n{expected}\n```\n\n"
-                f"### Instructions for the fixing agent\n\n"
-                f"1. Read the HybridAgent in `backend/app/agent/browser_agent.py` — "
-                f"this is the GPT-4o planner + Selenium executor that automates PMWeb.\n"
-                f"2. Read the planner prompt (`PLANNER_PROMPT`) and the `_execute_step()` method.\n"
-                f"3. Identify why the user's request failed — missing action, wrong selector, "
-                f"incorrect navigation flow, etc.\n"
-                f"4. Fix the code so the request would succeed next time.\n"
-                f"5. If new Selenium actions are needed, add them to both `PLANNER_PROMPT` "
-                f"(so GPT-4o knows about them) and `_execute_step()` (so they execute).\n"
-                f"6. Run `cd backend && ruff check app/` to ensure no lint errors.\n"
-                f"7. Open a PR with the fix on branch `cursor/clean-agent-6eca`.\n\n"
-                f"### Key files\n"
-                f"- `backend/app/agent/browser_agent.py` — HybridAgent (planner + executor)\n"
-                f"- `backend/app/api/chat.py` — API endpoints\n"
-                f"- `backend/app/services/learning_store.py` — learning from past runs\n\n"
-                f"### Metadata\n"
-                f"- **Feedback ID:** `{feedback_id}`\n"
-                f"- **Session ID:** `{session_id}`\n\n"
-                f"---\n*Created automatically by PMWeb Automation Agent — Fix Now*"
-            )
+            body = self._build_github_issue_body(feedback_id, prompt, expected, actual, session_id)
 
             resp = httpx.post(
                 f"https://api.github.com/repos/{GITHUB_REPO}/issues",
