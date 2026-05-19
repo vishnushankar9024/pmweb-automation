@@ -121,18 +121,24 @@ class HybridAgent:
             self.driver.get(settings.pmweb_base_url)
             time.sleep(5)
             try:
-                user_field = WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located((By.ID, "txtUserName"))
+                user_input = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located((By.ID, "cboUsers_Input"))
                 )
-                user_field.click()
-                user_field.clear()
-                user_field.send_keys(settings.pmweb_username)
-                time.sleep(0.3)
+                user_input.click()
+                user_input.clear()
+                user_input.send_keys(settings.pmweb_username)
+                time.sleep(1)
+                for opt in self.driver.find_elements(By.CSS_SELECTOR, "li.rcbItem, li.k-item"):
+                    if settings.pmweb_username.lower() in opt.text.lower():
+                        opt.click()
+                        time.sleep(0.5)
+                        break
             except Exception:
                 try:
-                    user_dd = self.driver.find_element(By.ID, "ddlUsers")
-                    from selenium.webdriver.support.ui import Select
-                    Select(user_dd).select_by_visible_text(settings.pmweb_username)
+                    user_field = self.driver.find_element(By.ID, "txtUserName")
+                    user_field.click()
+                    user_field.clear()
+                    user_field.send_keys(settings.pmweb_username)
                     time.sleep(0.3)
                 except Exception:
                     logger.warning("No username field found")
@@ -192,6 +198,20 @@ class HybridAgent:
         if intent == "ask_user":
             return {"reply": parsed.get("message", "Could you provide more details?"), "actions": []}
 
+        if intent == "create":
+            rt_name = parsed.get("record_type", "")
+            fields = parsed.get("fields", {})
+            filled = {k: v for k, v in fields.items() if v}
+            req = get_required_fields(rt_name)
+            if req and not filled:
+                return {
+                    "reply": (
+                        f"I'll create a {rt_name} record. First I need: {', '.join(req)}. "
+                        f"Please provide these details, or say 'generic' for defaults."
+                    ),
+                    "actions": [],
+                }
+
         flow_result = self._dispatch_to_flow(parsed)
 
         self._store_learning(task, parsed, flow_result.steps)
@@ -232,6 +252,14 @@ class HybridAgent:
 
         keyword_map = {
             "security group": "Security Groups",
+            "adaptive form": "Adaptive Forms",
+            "form builder": "Adaptive Forms",
+            "build a form": "Adaptive Forms",
+            "build a safety": "Adaptive Forms",
+            "build a inspection": "Adaptive Forms",
+            "safety inspection form": "Adaptive Forms",
+            "inspection form": "Adaptive Forms",
+            "custom form": "Adaptive Forms",
             "user": "Users",
             "inspection": "Inspections",
             "safety": "Safety Forms",
