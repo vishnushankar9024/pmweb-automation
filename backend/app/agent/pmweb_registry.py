@@ -93,20 +93,45 @@ MODULES = {
             "Payments": ["A/R and A/P Payments", "A/R and A/P Payment Batches"],
         },
     },
-    "Assets": {"sections": {}},
+    "Assets": {"sections": {}},  # Ch 6 not yet provided
     "Schedules": {
         "sections": {
             "Schedules": ["Schedules", "PPM", "Resources Availability"],
             "Setup": ["Link Setup", "Project Codes", "Calendars"],
         },
     },
-    "Portfolio": {"sections": {}},
+    "Portfolio": {
+        "sections": {
+            "Records": [
+                "Programs", "Projects", "Work Requests", "Companies",
+                "Labor Resources", "Equipment Resources", "Email Home", "PMWeb Calendar",
+            ],
+            "Reports": ["Search", "Portfolio View", "BI Reporting Center", "PMWeb Reporting Center", "Issues", "Document Log", "Audit Trail"],
+            "Administer": [
+                "Settings", "Security", "Items", "Currency", "Close-Open Periods",
+                "PMWeb Word", "Email Setup", "Message Templates", "Generating",
+                "Calendar Setup", "Event Center", "Define Reminders", "Define Report Schedules",
+            ],
+            "Define": [
+                "WBS", "PBS", "Distribution Lists", "Selection Lists", "Periods",
+                "Specifications", "User Defined Fields", "Checklists", "Adjustments",
+                "Adjustment Groups", "Scoring", "Clauses", "Pay Types",
+                "Classification Matrix", "CPI", "Inspection Types", "Profile",
+            ],
+        },
+    },
     "Tools": {
         "sections": {
-            "Security": ["Security Groups", "Users", "User Access", "Conditional Security"],
-            "Workflows": ["Roles", "Business Processes", "Defaults", "APM Rules"],
-            "Adaptive Forms": ["Adaptive Form Builder"],
-            "Document Management": ["Document Manager"],
+            "Activity Boards": ["Activity Boards"],
+            "Timesheets": ["Timesheets"],
+            "Risk Analysis": ["Risk Analysis"],
+            "Form Builders": ["Adaptive Forms", "Classic Form Builder"],
+            "Vendor Prequal": ["Vendor Prequal Designer", "Vendor Prequal Records"],
+            "Stage Gates": ["Stage Gates", "Stage Gates Setup"],
+            "Document Manager": ["Document Manager"],
+            "Integrations": ["Integration Manager", "Document Integrator", "LDAP Integration", "Bluebeam Markups"],
+            "Resource Management": ["Requirements", "Org Chart"],
+            "BIM": ["Model Manager", "COBie Manager"],
         },
     },
     "Workflows": {
@@ -1432,6 +1457,343 @@ _register(RecordType(
     detail_columns=["Date", "Type", "Description"],
     notes="Same structure as Schedules Calendars. Days off excluded from workflow due date calculations. "
           "Associate with project via Workflow Calendar field in Projects record.",
+))
+
+
+# ── PORTFOLIO module ──────────────────────────────────────────────
+
+_register(RecordType(
+    name="Programs",
+    module="Portfolio",
+    menu_item="Programs",
+    header_fields=[
+        FieldDef("Program #", required=True),
+        FieldDef("Name", required=True),
+        FieldDef("Description"), FieldDef("Notes", field_type="textarea"),
+        FieldDef("Director"), FieldDef("Manager"),
+        FieldDef("Program Manager"), FieldDef("Type", field_type="dropdown"),
+        FieldDef("Program Status", field_type="dropdown"),
+        FieldDef("Estimated Duration"), FieldDef("Estimated Cost"),
+    ],
+    notes="Top-level container. Projects Tab shows linked projects. Project Defaults section copied to new projects.",
+))
+
+_register(RecordType(
+    name="Projects",
+    module="Portfolio",
+    menu_item="Projects",
+    header_fields=[
+        FieldDef("Program"),
+        FieldDef("Project ID", required=True),
+        FieldDef("Name"),
+        FieldDef("Location"), FieldDef("Project Status", field_type="dropdown"),
+        FieldDef("Type", field_type="dropdown"), FieldDef("Category", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Currency", field_type="dropdown"),
+        FieldDef("Target Budget"), FieldDef("Target Revenue"),
+        FieldDef("Target Duration"), FieldDef("Target Start", field_type="date"),
+        FieldDef("Target Finish", field_type="date"),
+        FieldDef("Percent Complete"),
+        FieldDef("Scope", field_type="textarea"),
+        FieldDef("Workflow Calendar", field_type="dropdown"),
+    ],
+    notes="Primary operational record. Tabs: Locations, Phases, WBS, Users, Companies, Contacts. "
+          "Copy Project dialog. Link Schedule. Personnel section.",
+))
+
+_register(RecordType(
+    name="Work Requests",
+    module="Portfolio",
+    menu_item="Work Requests",
+    header_fields=[
+        FieldDef("Contact Name", required=True),
+        FieldDef("Record #", required=True),
+        FieldDef("Location"), FieldDef("Category", field_type="dropdown"),
+        FieldDef("Type", field_type="dropdown"), FieldDef("Description"),
+        FieldDef("WBS"), FieldDef("Scope", field_type="textarea"),
+        FieldDef("Status", field_type="dropdown"),
+    ],
+    notes="Generate into Work Orders, Initiatives, or Projects.",
+))
+
+_register(RecordType(
+    name="Companies",
+    module="Portfolio",
+    menu_item="Companies",
+    header_fields=[
+        FieldDef("Company ID", required=True),
+        FieldDef("Name", required=True),
+        FieldDef("Type", field_type="dropdown"), FieldDef("Abbreviation"),
+        FieldDef("Reference"), FieldDef("Account #"),
+        FieldDef("Country"), FieldDef("Billing Terms"),
+        FieldDef("Occupant", field_type="checkbox"),
+        FieldDef("Approved Bidder", field_type="checkbox"),
+    ],
+    notes="Tabs: Addresses, Departments, Contacts, Insurance, Resources. Purchase History tab.",
+))
+
+_register(RecordType(
+    name="Labor Resources",
+    module="Portfolio",
+    menu_item="Labor Resources",
+    header_fields=[
+        FieldDef("ID", required=True),
+        FieldDef("Company"), FieldDef("Contact"),
+        FieldDef("Last Name"), FieldDef("First Name"), FieldDef("Description"),
+        FieldDef("Resource Group"), FieldDef("Default Cost Code"),
+        FieldDef("Default Hours Per Day"),
+        FieldDef("Target Utilization %"),
+        FieldDef("Scheduling", field_type="checkbox"),
+    ],
+    notes="Used in Estimates, Timesheets, Schedules, Work Orders.",
+))
+
+_register(RecordType(
+    name="Equipment Resources",
+    module="Portfolio",
+    menu_item="Equipment Resources",
+    header_fields=[
+        FieldDef("ID", required=True),
+        FieldDef("Description"), FieldDef("Equipment Type"),
+        FieldDef("Condition", field_type="dropdown"),
+        FieldDef("Manager"), FieldDef("Default Cost Code"),
+        FieldDef("Target Utilization %"),
+    ],
+    notes="Used in Estimates, Timesheets, Schedules, Work Orders. Link to Asset Management Equipment.",
+))
+
+_register(RecordType(
+    name="Items",
+    module="Portfolio",
+    menu_item="Items",
+    header_fields=[
+        FieldDef("Item ID", read_only=True),
+        FieldDef("Description"),
+        FieldDef("Item Group", field_type="dropdown"),
+        FieldDef("Type", field_type="dropdown"), FieldDef("Category", field_type="dropdown"),
+        FieldDef("Manufacturer"), FieldDef("Mfr. Number"), FieldDef("BIM ID"),
+        FieldDef("UOM"), FieldDef("Currency", field_type="dropdown"), FieldDef("Cost"),
+    ],
+    notes="Catalogue of items. Drag-and-drop into Estimates, Commitments, etc. Items Tree View for folder structure.",
+))
+
+# ── TOOLS module ─────────────────────────────────────────────────
+
+_register(RecordType(
+    name="Activity Boards",
+    module="Tools",
+    menu_item="Activity Boards",
+    header_fields=[],
+    notes="Kanban-style boards. Card View and List View. Columns represent stages. "
+          "Tasks: drag-and-drop, assign users, due dates, subtasks, links to PMWeb records, "
+          "attachments, comments, likes, flags. Board Settings for membership and notifications.",
+))
+
+_register(RecordType(
+    name="Timesheets",
+    module="Tools",
+    menu_item="Timesheets",
+    header_fields=[
+        FieldDef("Timesheet #", required=True),
+        FieldDef("From", required=True, field_type="date"),
+        FieldDef("To", required=True, field_type="date"),
+        FieldDef("Resource"), FieldDef("Program", required=True),
+        FieldDef("Project"), FieldDef("Status", field_type="dropdown"),
+        FieldDef("Period"), FieldDef("Funding Code"),
+        FieldDef("Post to Non-commitment Costs", field_type="checkbox"),
+    ],
+    detail_columns=[
+        "Resource", "Project", "Attachments", "Cost Code",
+        "Description", "Task", "Day columns", "Total",
+        "% Complete", "Classification", "Pay Type", "Period", "Notes",
+    ],
+    notes="7-day max range. Generate Next increments sequence and advances dates by one week. "
+          "Posts to Cost Ledgers when Approved.",
+))
+
+_register(RecordType(
+    name="Risk Analysis",
+    module="Tools",
+    menu_item="Risk Analysis",
+    header_fields=[
+        FieldDef("Project", required=True),
+        FieldDef("Analysis #", required=True),
+        FieldDef("Description"), FieldDef("Phase"),
+        FieldDef("Analysis Date", field_type="date"),
+        FieldDef("Status", field_type="dropdown"),
+    ],
+    detail_columns=[
+        "Line #", "Attachments", "Risk", "Type", "Responsible",
+        "Probability", "Impact", "Risk Impact", "Risk Delay",
+        "Cost", "Risk Cost", "UOM", "Task", "Notes", "Action", "Rating", "Use",
+    ],
+    notes="Unlimited risks per project with contingency sub-table. Generate from Online Change Requests. "
+          "Generate Change Events.",
+))
+
+_register(RecordType(
+    name="Adaptive Forms",
+    module="Tools",
+    menu_item="Adaptive Forms",
+    header_fields=[],
+    notes="Modern form designer. Designer/Preview/JSON Editor/Translation sub-tabs. "
+          "Assign Permissions tab. Drag-and-drop layout. Integrated with Visual Workflow.",
+))
+
+_register(RecordType(
+    name="Classic Form Builder",
+    module="Tools",
+    menu_item="Classic Form Builder",
+    header_fields=[
+        FieldDef("ID", required=True),
+        FieldDef("Form Name", required=True),
+        FieldDef("Module", field_type="dropdown"),
+        FieldDef("Use With", field_type="dropdown", options=["Initiatives only", "Projects only", "Both"]),
+        FieldDef("Use Advanced Design", field_type="checkbox"),
+    ],
+    notes="System Fields, Custom Fields, Custom Tables sections. Designer Tab (drag-and-drop layout). "
+          "Permissions Tab. Design Table dialog for custom tables.",
+))
+
+_register(RecordType(
+    name="Vendor Prequal Designer",
+    module="Tools",
+    menu_item="Vendor Prequal",
+    header_fields=[],
+    notes="Design vendor application forms. Sections Table, Custom Fields, Custom Tables, Links. "
+          "Published to PMWeb site for external applicants.",
+))
+
+_register(RecordType(
+    name="Vendor Prequal Records",
+    module="Tools",
+    menu_item="Vendor Prequal",
+    header_fields=[
+        FieldDef("Prequalification ID", required=True),
+        FieldDef("Company Name"), FieldDef("Type", field_type="dropdown"),
+        FieldDef("Year"), FieldDef("Country"),
+        FieldDef("Prequalification Starts", field_type="date"),
+        FieldDef("Prequalification Ends", field_type="date"),
+        FieldDef("Status", field_type="dropdown"),
+    ],
+    notes="Create Company button when Approved. Tabs mirror Companies record. Applications tab.",
+))
+
+_register(RecordType(
+    name="Stage Gates",
+    module="Tools",
+    menu_item="Stage Gates",
+    header_fields=[
+        FieldDef("Project", required=True),
+        FieldDef("Stage"), FieldDef("Gate Keeper"),
+        FieldDef("Duration"), FieldDef("UOM"),
+        FieldDef("Type", field_type="dropdown"), FieldDef("Task"),
+        FieldDef("Lead Time"), FieldDef("Due", field_type="date"),
+        FieldDef("Done", field_type="checkbox"),
+    ],
+    detail_columns=[
+        "Link Records", "Done", "Line #", "Attachments",
+        "Record Type", "Record #", "Description", "Status",
+        "Responsible", "WBS", "Start Date", "Due Date", "Done Date",
+    ],
+    notes="Stages tree. Activities linked to PMWeb records. Real-time status from linked records.",
+))
+
+_register(RecordType(
+    name="Stage Gates Setup",
+    module="Tools",
+    menu_item="Stage Gates Setup",
+    header_fields=[],
+    notes="Reusable Stage Gate templates for project lifecycle.",
+))
+
+_register(RecordType(
+    name="Document Manager",
+    module="Tools",
+    menu_item="Document Manager",
+    header_fields=[],
+    notes="Full document management. Folder tree: Locations/Projects/Shared. Versioning, check in/out, "
+          "custom attributes, subscriptions. Card/List view. Drag-and-drop upload. PMWeb Viewer for "
+          "PDFs, images, CAD. Advanced Search. Edit Folder Dialog for permissions.",
+))
+
+_register(RecordType(
+    name="Integration Manager",
+    module="Tools",
+    menu_item="Integration Manager",
+    header_fields=[
+        FieldDef("Profile ID", required=True),
+        FieldDef("Description"),
+    ],
+    notes="Flat-file data exchange (Excel/CSV/XML). Out section for export, In section for import. "
+          "Schedule Tab for automatic runs. Projects Tab for scope.",
+))
+
+_register(RecordType(
+    name="Requirements",
+    module="Tools",
+    menu_item="Requirements",
+    header_fields=[
+        FieldDef("Requirement ID", required=True),
+        FieldDef("Based On", field_type="dropdown", options=["System", "Projects", "Locations"]),
+        FieldDef("Program"), FieldDef("Project"),
+        FieldDef("Description"), FieldDef("Resource Type"),
+        FieldDef("Classification"), FieldDef("Priority", field_type="dropdown"),
+        FieldDef("Start", required=True, field_type="date"),
+        FieldDef("Finish", required=True, field_type="date"),
+        FieldDef("Cost Code"),
+    ],
+    detail_columns=[
+        "Resource", "Resource Type", "Start", "Finish",
+        "Hours Per Day", "Assigned Hours", "% Effort",
+        "Classification", "Pay Type", "Rate", "Total", "Cost Code",
+    ],
+    notes="Staffing requirements linked to records. Assignments post to Cost Ledger if cost code set.",
+))
+
+_register(RecordType(
+    name="Org Chart",
+    module="Tools",
+    menu_item="Org Chart",
+    header_fields=[
+        FieldDef("Org Chart ID", required=True),
+        FieldDef("Based On", field_type="dropdown", options=["Projects", "Locations", "System"]),
+        FieldDef("Program"), FieldDef("Project"),
+        FieldDef("Description"), FieldDef("Status", field_type="dropdown"),
+    ],
+    notes="Interactive org chart builder. Drag resources from flyout onto groups. Export as image.",
+))
+
+_register(RecordType(
+    name="Model Manager",
+    module="Tools",
+    menu_item="Model Manager",
+    header_fields=[
+        FieldDef("Location", required=True),
+        FieldDef("Project", required=True),
+        FieldDef("Building"), FieldDef("ID", required=True),
+        FieldDef("Description"), FieldDef("BIM Application"),
+        FieldDef("BIM Model"), FieldDef("Owner"),
+        FieldDef("Type", field_type="dropdown"), FieldDef("Category", field_type="dropdown"),
+        FieldDef("LOD"), FieldDef("Status", field_type="dropdown"),
+    ],
+    notes="PMWeb 3D Viewer for .dwfx models. Snapshots, annotations. Revit Add-in integration.",
+))
+
+_register(RecordType(
+    name="COBie Manager",
+    module="Tools",
+    menu_item="COBie Manager",
+    header_fields=[
+        FieldDef("Location", required=True),
+        FieldDef("Project", required=True),
+        FieldDef("Building"), FieldDef("ID", required=True),
+        FieldDef("Description"), FieldDef("BIM Application"),
+        FieldDef("Owner"), FieldDef("Type", field_type="dropdown"),
+        FieldDef("Category", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+    ],
+    notes="COBie data tabs: Space, Zone, Type, Component, System. Revit Add-in integration.",
 ))
 
 
