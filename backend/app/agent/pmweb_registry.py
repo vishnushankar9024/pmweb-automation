@@ -94,7 +94,12 @@ MODULES = {
         },
     },
     "Assets": {"sections": {}},
-    "Schedules": {"sections": {}},
+    "Schedules": {
+        "sections": {
+            "Schedules": ["Schedules", "PPM", "Resources Availability"],
+            "Setup": ["Link Setup", "Project Codes", "Calendars"],
+        },
+    },
     "Portfolio": {"sections": {}},
     "Tools": {
         "sections": {
@@ -1232,6 +1237,113 @@ _register(RecordType(
     header_fields=[],
     detail_columns=["ID", "Exchange Rate", "Converted Amount"],
     notes="All fields read-only. Auto-created when cost ledger entries are saved. Click ID to navigate to original.",
+))
+
+
+# ── SCHEDULES module ─────────────────────────────────────────────
+
+_register(RecordType(
+    name="Schedules",
+    module="Schedules",
+    menu_item="Schedules",
+    header_fields=[
+        FieldDef("Project", required=True),
+        FieldDef("Description"), FieldDef("Type", field_type="dropdown"),
+        FieldDef("Category", field_type="dropdown"), FieldDef("Reference"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Calendar", field_type="dropdown"),
+        FieldDef("Set as Project Schedule", field_type="checkbox"),
+        FieldDef("Link % Complete to Actual Costs", field_type="checkbox"),
+        FieldDef("Link % Complete to Remaining Duration", field_type="checkbox"),
+        FieldDef("Schedule Tasks", field_type="dropdown", options=["Manually", "Auto", "Ask"]),
+        FieldDef("Status Date", field_type="date"),
+    ],
+    detail_columns=[
+        "ID", "Project", "Schedule", "Code", "Task", "Start",
+        "Finish", "%C", "TF", "Duration", "Summary",
+        "Rem. Duration", "WBS", "Phase", "Location",
+        "Baseline Start", "Baseline Finish", "Original Duration",
+        "Completed", "Actual Start", "Actual Finish",
+        "Revenue", "Cost", "Curve", "Resources", "Cost Code",
+        "Status", "Type",
+    ],
+    toolbar_actions=[
+        "new_record", "save", "cancel", "submit",
+        "copy_from_schedule", "link_schedule", "update_percent_from_timesheets",
+        "save_as_baseline", "lock_schedule", "display_task_tabs",
+    ],
+    notes="Interactive Gantt chart with Critical Path Management. Task bars draggable. "
+          "Dependency connectors: FS/FF/SS/SF with lag. Constraints: Early/Late Start/Finish. "
+          "Gantt toolbar: Calculate Dependencies, Save/Delete/Refresh Task, Excel export, Undo/Redo, "
+          "Add Task, Expand/Collapse, Show/Hide Columns, Zoom, Assign Resources. "
+          "Task Details tabs: Details, Dependencies, Resources, Checklists, Project Codes, Notes. "
+          "Link to MS Project or Primavera P6. Save as Baseline copies Start/Finish to Baseline fields.",
+))
+
+_register(RecordType(
+    name="PPM",
+    module="Schedules",
+    menu_item="PPM",
+    header_fields=[],
+    detail_columns=[],
+    notes="Multi-Project View. Read-only. Shows all project schedules in one screen. "
+          "Click Project Name hyperlink to navigate to editable Schedules page.",
+))
+
+_register(RecordType(
+    name="Resources Availability",
+    module="Schedules",
+    menu_item="Resources Availability",
+    header_fields=[
+        FieldDef("Resources", field_type="dropdown"),
+        FieldDef("From Date", field_type="date"),
+        FieldDef("To Date", field_type="date"),
+    ],
+    detail_columns=[],
+    notes="Read-only view of tasks assigned to selected resources in date range. "
+          "Only resources with Scheduling checkbox checked appear.",
+))
+
+_register(RecordType(
+    name="Link Setup",
+    module="Schedules",
+    menu_item="Link Setup",
+    header_fields=[
+        FieldDef("Primavera", field_type="checkbox"),
+    ],
+    detail_columns=[
+        "Default", "Web Service URL", "Use Network Credential",
+        "Web Service User", "Web Service Password", "Domain",
+        "Server Name", "Database", "Login", "Password", "Inactive",
+    ],
+    notes="Configure Primavera P6 database connections for external schedule linking.",
+))
+
+_register(RecordType(
+    name="Project Codes",
+    module="Schedules",
+    menu_item="Project Codes",
+    header_fields=[
+        FieldDef("Project", field_type="dropdown"),
+    ],
+    detail_columns=[
+        "Unique Name", "Header Text", "Width", "Order",
+        "Visible By Default", "On/Off", "BG-Color", "Font Color",
+    ],
+    notes="Up to 10 user-defined dropdown lists per project for schedule task metadata. "
+          "Values Button opens Project Code Items dialog. Copy Project Codes from other projects.",
+))
+
+_register(RecordType(
+    name="Calendars",
+    module="Schedules",
+    menu_item="Calendars",
+    header_fields=[
+        FieldDef("Description"),
+    ],
+    detail_columns=["Date", "Type", "Description"],
+    notes="Regular Days Off checkboxes (Mon-Sun). Days Off table: Exception (day off→working) "
+          "or Off (working→day off). Interactive calendar control. Apply Regular Days Off button.",
 ))
 
 
