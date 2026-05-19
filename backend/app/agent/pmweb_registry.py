@@ -58,7 +58,35 @@ SHORTCUTS = {
     "profile": "Ctrl+Alt+P",
     "university": "Ctrl+Alt+U",
     "reminder": "Ctrl+Alt+E",
+    "manager_page": "Ctrl+Alt+M",
 }
+
+STANDARD_RECORD_TABS = [
+    "Main", "Adjustments", "Specifications", "Checklists", "Scoring",
+    "Ratings", "Notes", "Attachments", "Clauses", "Workflow",
+    "Collaborate", "Notifications", "Components", "Payments",
+]
+
+HEADER_TOOLBAR_SECTIONS = {
+    "navigation": ["Manager Page", "Recent Records", "Tree Page", "Record Selector"],
+    "save_add_delete": ["Save Record", "Add Record", "Delete Record"],
+    "output": ["Notifications", "Print"],
+    "other": ["Submit", "Assign", "Generate"],
+}
+
+DETAILS_TOOLBAR_BUTTONS = [
+    "Edit Line", "Add Line", "Add Items", "Add Assembly",
+    "Add Resources", "Delete Line", "Refresh", "Use Units", "Preview Conversion",
+]
+
+DIALOG_TOOLBAR_BUTTONS = ["Cancel", "Delete", "OK", "Save & Exit", "Save"]
+
+WORKFLOW_ACTIONS = ["Submit", "Approve", "Final Approve", "Reject", "Return", "Withdraw", "Delegate", "Comment"]
+
+ADMIN_UTILITY_TABS = [
+    "General Settings", "Integrations", "Interface", "Login",
+    "Language Manager", "License", "SQL Command", "Email Settings", "SSRS",
+]
 
 MODULES = {
     "Plans": {
