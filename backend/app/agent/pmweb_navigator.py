@@ -289,19 +289,54 @@ class PMWebNavigator:
         cells = row.find_elements(By.CSS_SELECTOR, "td")
         if cell_index >= len(cells):
             return f"cell[{cell_index}] out of range"
-        for dd in cells[cell_index].find_elements(By.CSS_SELECTOR, "kendo-dropdownlist"):
-            if dd.is_displayed():
-                dd.click()
-                time.sleep(1)
-                for item in WebDriverWait(self.driver, 5).until(
-                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "kendo-popup li"))
-                ):
-                    if item.text.strip().lower() == value.lower():
-                        item.click()
-                        time.sleep(0.5)
-                        return f"selected {value} in cell[{cell_index}]"
-                dd.send_keys(Keys.ESCAPE)
-                return f"option '{value}' not found in cell[{cell_index}]"
+        cell = cells[cell_index]
+        dd_selectors = [
+            "kendo-dropdownlist",
+            "select",
+            "[class*='dropdown']",
+            "input[class*='combo']",
+            "span[class*='k-dropdown']",
+            "span[class*='k-widget']",
+        ]
+        for sel in dd_selectors:
+            for dd in cell.find_elements(By.CSS_SELECTOR, sel):
+                if dd.is_displayed():
+                    dd.click()
+                    time.sleep(1)
+                    popup_selectors = [
+                        "kendo-popup li", "ul.k-list li", "div.k-popup li",
+                        "div.k-animation-container li", "li.k-item",
+                    ]
+                    for ps in popup_selectors:
+                        items = self.driver.find_elements(By.CSS_SELECTOR, ps)
+                        for item in items:
+                            if item.is_displayed() and value.lower() in item.text.strip().lower():
+                                item.click()
+                                time.sleep(0.5)
+                                return f"selected {value} in cell[{cell_index}]"
+                    try:
+                        dd.send_keys(Keys.ESCAPE)
+                    except Exception:
+                        pass
+                    time.sleep(0.3)
+        inp = cell.find_elements(By.CSS_SELECTOR, "input")
+        for i in inp:
+            if i.is_displayed():
+                i.click()
+                i.clear()
+                i.send_keys(value)
+                time.sleep(0.5)
+                for ps in ["ul.k-list li", "li.k-item", "div.k-popup li", "div.k-animation-container li"]:
+                    items = self.driver.find_elements(By.CSS_SELECTOR, ps)
+                    for item in items:
+                        if item.is_displayed() and value.lower() in item.text.strip().lower():
+                            item.click()
+                            time.sleep(0.5)
+                            return f"selected {value} in cell[{cell_index}] (via type)"
+                i.send_keys(Keys.TAB)
+                time.sleep(0.3)
+                return f"typed {value} in cell[{cell_index}] (no popup match)"
+        return f"no dropdown in cell[{cell_index}]"
         return f"no dropdown in cell[{cell_index}]"
 
     def toggle_checkbox(self, label: str, check: bool = True) -> str:
@@ -453,10 +488,16 @@ class PMWebNavigator:
     # ── Helpers ──────────────────────────────────────────────────────
 
     def _find_edit_row(self) -> Any:
-        for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr"):
-            inputs = row.find_elements(By.CSS_SELECTOR, "input:not([type='hidden']), kendo-dropdownlist")
-            if sum(1 for i in inputs if i.is_displayed()) > 3:
-                return row
+        for selector in ["kendo-grid tr", "table tr", "tr.k-grid-edit-row", "tr"]:
+            for row in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                inputs = row.find_elements(
+                    By.CSS_SELECTOR,
+                    "input:not([type='hidden']), kendo-dropdownlist, select, "
+                    "[class*='dropdown'], [class*='combo']"
+                )
+                visible = sum(1 for i in inputs if i.is_displayed())
+                if visible > 3:
+                    return row
         return None
 
     def wait(self, seconds: float = 3) -> str:
