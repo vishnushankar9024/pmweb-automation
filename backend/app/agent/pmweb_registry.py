@@ -121,7 +121,15 @@ MODULES = {
             "Payments": ["A/R and A/P Payments", "A/R and A/P Payment Batches"],
         },
     },
-    "Assets": {"sections": {}},  # Ch 6 not yet provided
+    "Assets": {
+        "sections": {
+            "Assets": ["Locations", "Buildings", "Floors", "Spaces", "Equipment", "Inventory Locations"],
+            "Maintenance": ["Work Orders", "Dispatch Board", "Map View", "Maintenance Contracts"],
+            "Leasing": ["Suites", "Leases", "Lease Administrator", "Tenant Invoices"],
+            "Space Management": ["Assets Search", "Move Plans", "Reservation Requests", "Shared Assets"],
+            "Setup": ["Configure Dispatch Boards", "Lease Charges", "Location Programs"],
+        },
+    },
     "Schedules": {
         "sections": {
             "Schedules": ["Schedules", "PPM", "Resources Availability"],
@@ -1485,6 +1493,365 @@ _register(RecordType(
     detail_columns=["Date", "Type", "Description"],
     notes="Same structure as Schedules Calendars. Days off excluded from workflow due date calculations. "
           "Associate with project via Workflow Calendar field in Projects record.",
+))
+
+
+# ── ASSETS module ────────────────────────────────────────────────
+
+_register(RecordType(
+    name="Locations",
+    module="Assets",
+    menu_item="Locations",
+    header_fields=[
+        FieldDef("Program"),
+        FieldDef("Location ID", required=True),
+        FieldDef("Name", required=True),
+        FieldDef("Location Type", field_type="dropdown"),
+        FieldDef("Operating Project"),
+        FieldDef("Component Type", field_type="dropdown"),
+        FieldDef("Service Interval"),
+        FieldDef("In Service Date", field_type="date"),
+        FieldDef("Condition", field_type="dropdown"),
+        FieldDef("Condition Date", field_type="date"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Currency", field_type="dropdown"),
+        FieldDef("Target Budget"), FieldDef("Target Revenue"),
+        FieldDef("Target Occupancy"),
+        FieldDef("Barcode"),
+    ],
+    notes="Top-level real estate asset. Tabs: Details, Buildings, Floors, Spaces, Projects, Work Orders, Equipment. "
+          "Asset Explorer tree navigation. Personnel and Leasing sections.",
+))
+
+_register(RecordType(
+    name="Buildings",
+    module="Assets",
+    menu_item="Buildings",
+    header_fields=[
+        FieldDef("Location", required=True),
+        FieldDef("Building ID", required=True),
+        FieldDef("Name", required=True),
+        FieldDef("Type", field_type="dropdown"),
+        FieldDef("Component Type", field_type="dropdown"),
+        FieldDef("Service Interval"),
+        FieldDef("In Service Date", field_type="date"),
+        FieldDef("Condition", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Barcode"),
+    ],
+    notes="Child of Location. Tabs: Floors, Spaces, Work Orders, Equipment.",
+))
+
+_register(RecordType(
+    name="Floors",
+    module="Assets",
+    menu_item="Floors",
+    header_fields=[
+        FieldDef("Location", required=True),
+        FieldDef("Building", required=True),
+        FieldDef("Floor ID", required=True),
+        FieldDef("Name", required=True),
+        FieldDef("Component Type", field_type="dropdown"),
+        FieldDef("Service Interval"),
+        FieldDef("In Service Date", field_type="date"),
+        FieldDef("Condition", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Barcode"),
+    ],
+    notes="Child of Building. Floor Plan button opens PMWeb Viewer. Tabs: Spaces, Work Orders, Equipment.",
+))
+
+_register(RecordType(
+    name="Spaces",
+    module="Assets",
+    menu_item="Spaces",
+    header_fields=[
+        FieldDef("Building", required=True),
+        FieldDef("Floor", required=True),
+        FieldDef("Space ID", required=True),
+        FieldDef("Name", required=True),
+        FieldDef("Type", field_type="dropdown"),
+        FieldDef("Sub Type", field_type="dropdown"),
+        FieldDef("Category", field_type="dropdown"),
+        FieldDef("Condition", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Barcode"),
+    ],
+    notes="Lowest real estate level. Occupants Tab (Company/Department/Contact with move dates). "
+          "Leases, Work Orders, Equipment tabs. Space Planning section.",
+))
+
+_register(RecordType(
+    name="Equipment",
+    module="Assets",
+    menu_item="Equipment",
+    header_fields=[
+        FieldDef("Equipment ID", required=True),
+        FieldDef("Name", required=True),
+        FieldDef("Current Location", required=True),
+        FieldDef("Equipment Type", field_type="dropdown"),
+        FieldDef("Ownership", field_type="dropdown"),
+        FieldDef("Function Status", field_type="dropdown"),
+        FieldDef("Condition", field_type="dropdown"),
+        FieldDef("Condition Date", field_type="date"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("In Service Date", field_type="date"),
+        FieldDef("Vendor"), FieldDef("Manufacturer"),
+        FieldDef("Manufacturer #"), FieldDef("Serial #"), FieldDef("Lot #"),
+        FieldDef("Item"), FieldDef("Price"),
+        FieldDef("Warranty Expires", field_type="date"),
+        FieldDef("Track Use by"),
+        FieldDef("Or By Days", field_type="checkbox"),
+        FieldDef("Service Interval"),
+        FieldDef("Barcode"),
+    ],
+    notes="Tabs: Moves (location history), Components (predictive maintenance), Log (usage readings), "
+          "Work Orders, Cost Worksheet (depreciation + TCO). Drag in Asset Explorer to move. "
+          "Equipment Move Dialog for formal moves.",
+))
+
+_register(RecordType(
+    name="Inventory Locations",
+    module="Assets",
+    menu_item="Inventory Locations",
+    header_fields=[
+        FieldDef("Location ID", required=True),
+        FieldDef("Name"),
+        FieldDef("Linked To", required=True),
+        FieldDef("Location Type", field_type="dropdown"),
+        FieldDef("Capacity"), FieldDef("Capacity UOM"),
+    ],
+    detail_columns=[
+        "Stock #", "Sub-Location", "Item", "Description",
+        "Condition", "UOM", "Stocked", "Used", "Unusable",
+        "Moved", "On Hand", "Unit Cost", "Ext. Cost",
+        "Manufacturer", "Mfr. Number", "Serial #", "Lot #",
+    ],
+    notes="Sub-locations section. Stock Move Dialog for moving/using/marking unusable. "
+          "Pull inventory to Work Orders via Material Costs Tab.",
+))
+
+_register(RecordType(
+    name="Work Orders",
+    module="Assets",
+    menu_item="Work Orders",
+    header_fields=[
+        FieldDef("Location", required=True),
+        FieldDef("Project"),
+        FieldDef("Record #", required=True),
+        FieldDef("Description"),
+        FieldDef("Type", field_type="dropdown"),
+        FieldDef("Category", field_type="dropdown"),
+        FieldDef("WBS"), FieldDef("Progress", field_type="dropdown"),
+        FieldDef("Currency", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Scope", field_type="textarea"),
+        FieldDef("Priority", field_type="dropdown"),
+        FieldDef("Reported", field_type="date"),
+        FieldDef("Estimated Start", field_type="date"),
+        FieldDef("Finish", field_type="date"),
+        FieldDef("Contact Name"), FieldDef("Email"),
+        FieldDef("Maintenance Contract"),
+    ],
+    notes="Tabs: Preventive (recurring via frequency config), Estimate, Resources (labor/equipment), "
+          "Serviced (condition assessment → Update Assets), Material Costs (pick from inventory), "
+          "Cost Totals. On Demand, Preventive, or Predictive types. Dispatch Board integration.",
+))
+
+_register(RecordType(
+    name="Dispatch Board",
+    module="Assets",
+    menu_item="Dispatch Board",
+    header_fields=[],
+    notes="Visual scheduler. Drag work orders onto resource columns. Appointments update Work Orders Resources Tab. "
+          "Board Selector, Time Navigator, Unassigned Column, Show 24 Hours toggle.",
+))
+
+_register(RecordType(
+    name="Map View",
+    module="Assets",
+    menu_item="Map View",
+    header_fields=[],
+    notes="Interactive map of work orders with dispatch appointments. Click points for resource/date details.",
+))
+
+_register(RecordType(
+    name="Maintenance Contracts",
+    module="Assets",
+    menu_item="Maintenance Contracts",
+    header_fields=[
+        FieldDef("ID", required=True),
+        FieldDef("Description"),
+        FieldDef("Type", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Bill to", required=True),
+        FieldDef("Contact"),
+        FieldDef("Overview", field_type="textarea"),
+        FieldDef("Start", field_type="date"), FieldDef("End", field_type="date"),
+        FieldDef("Value"), FieldDef("Billing"),
+    ],
+    notes="Linked Work Orders section. Add button creates linked work order.",
+))
+
+_register(RecordType(
+    name="Suites",
+    module="Assets",
+    menu_item="Suites",
+    header_fields=[
+        FieldDef("Location", required=True),
+        FieldDef("Building"), FieldDef("Floor"),
+        FieldDef("ID", required=True),
+        FieldDef("Name"), FieldDef("Suite Type", field_type="dropdown"),
+        FieldDef("Sub-Type", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Barcode"),
+    ],
+    notes="Combine assets for leasing. Linked Gross/Usable/Rentable from assets. "
+          "Snapshot section with rent calculations. Leases Tab.",
+))
+
+_register(RecordType(
+    name="Leases",
+    module="Assets",
+    menu_item="Leases",
+    header_fields=[
+        FieldDef("Location", required=True),
+        FieldDef("Lease ID", required=True),
+        FieldDef("Description"),
+        FieldDef("Lease Type", field_type="dropdown"),
+        FieldDef("Post As", field_type="dropdown", options=["Cost", "Revenue"]),
+        FieldDef("Landlord"), FieldDef("Tenant"), FieldDef("Agent"),
+        FieldDef("Status", field_type="dropdown"),
+    ],
+    notes="Tabs: Abstract (lease terms, dates, payments), Charges (basic + advanced with "
+          "Escalations/Recoveries/Overages), Ledger (all transactions). Parent/Sub-lease support.",
+))
+
+_register(RecordType(
+    name="Lease Administrator",
+    module="Assets",
+    menu_item="Lease Administrator",
+    header_fields=[
+        FieldDef("Program", required=True),
+        FieldDef("Location", required=True),
+        FieldDef("Batch ID", required=True),
+        FieldDef("Description"),
+        FieldDef("Type", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Batch Date", field_type="date"),
+        FieldDef("Invoice Date", field_type="date"),
+        FieldDef("Posted Date", field_type="date"),
+        FieldDef("Deactivate Expiring Charges", field_type="checkbox"),
+    ],
+    notes="Post button processes batch. Tabs: Scheduled Charges, Recoveries, Overages, Escalations. "
+          "Creates Tenant Invoices, flags recovered costs, advances posting dates.",
+))
+
+_register(RecordType(
+    name="Tenant Invoices",
+    module="Assets",
+    menu_item="Tenant Invoices",
+    header_fields=[
+        FieldDef("Location", required=True),
+        FieldDef("Lease", required=True),
+        FieldDef("Invoice #", required=True),
+        FieldDef("Description"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Invoice Date", field_type="date"),
+        FieldDef("Billing Terms"), FieldDef("Due Date", field_type="date"),
+        FieldDef("Cost Period"), FieldDef("Type", field_type="dropdown"),
+        FieldDef("Category", field_type="dropdown"),
+        FieldDef("Paid in Full", field_type="checkbox"),
+    ],
+    detail_columns=[
+        "Line #", "Attachments", "Description", "Item", "UOM",
+        "Quantity", "Unit Cost", "Ext. Cost", "Adjustments",
+        "Unit Price", "Total Price", "Cost Code", "Charge Type", "Notes",
+    ],
+    notes="Created manually or by Lease Administrator batch. Posts to Cost Ledgers if Cost Code set.",
+))
+
+_register(RecordType(
+    name="Move Plans",
+    module="Assets",
+    menu_item="Move Plans",
+    header_fields=[
+        FieldDef("Move Plan ID"),
+        FieldDef("Description"),
+        FieldDef("Location"), FieldDef("Building"), FieldDef("Floor"),
+        FieldDef("Status", field_type="dropdown"),
+    ],
+    notes="Plan and execute moves of companies/departments/contacts/equipment between spaces. "
+          "Execute Moves button. Drag from Occupants/Companies onto Destination.",
+))
+
+_register(RecordType(
+    name="Reservation Requests",
+    module="Assets",
+    menu_item="Reservation Requests",
+    header_fields=[
+        FieldDef("Code", required=True),
+        FieldDef("Description"), FieldDef("Location"),
+        FieldDef("Building"), FieldDef("Floor"), FieldDef("Subject"),
+        FieldDef("Space"), FieldDef("Equipment"),
+        FieldDef("Start Date", required=True, field_type="date"),
+        FieldDef("Finish Date", required=True, field_type="date"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Notes", field_type="textarea"),
+    ],
+    notes="Works with Shared Assets scheduler. Drag onto scheduler to assign to spaces/equipment.",
+))
+
+_register(RecordType(
+    name="Shared Assets",
+    module="Assets",
+    menu_item="Shared Assets",
+    header_fields=[],
+    notes="Visual scheduler for shared spaces and equipment. Drag Reservation Requests onto asset columns. "
+          "Filter by location/building/floor. Week/Timeline views.",
+))
+
+_register(RecordType(
+    name="Configure Dispatch Boards",
+    module="Assets",
+    menu_item="Configure Dispatch Boards",
+    header_fields=[
+        FieldDef("Description"),
+        FieldDef("Default Board", field_type="checkbox"),
+        FieldDef("Default Start Time"),
+        FieldDef("Default Hours"),
+    ],
+    notes="Select labor and equipment resources to display as columns in the Dispatch Board.",
+))
+
+_register(RecordType(
+    name="Lease Charges",
+    module="Assets",
+    menu_item="Lease Charges",
+    header_fields=[],
+    detail_columns=[
+        "Charge ID", "Type", "Description", "Post Every",
+        "Est.", "UOM", "Quantity", "Unit Cost", "Amount",
+        "Annualized", "Cost Code", "Notes", "Inactive",
+    ],
+    notes="Predefined charges for drag-and-drop into Leases Charges Tab.",
+))
+
+_register(RecordType(
+    name="Location Programs",
+    module="Assets",
+    menu_item="Location Programs",
+    header_fields=[
+        FieldDef("Program ID", required=True),
+        FieldDef("Name"), FieldDef("Type", field_type="dropdown"),
+        FieldDef("Category", field_type="dropdown"),
+        FieldDef("Status", field_type="dropdown"),
+        FieldDef("Currency", field_type="dropdown"),
+        FieldDef("Target Budget"), FieldDef("Target Revenue"),
+        FieldDef("Director"), FieldDef("Manager"),
+        FieldDef("Program Manager"),
+    ],
+    notes="Grouping record for Locations. Location Defaults and Personnel auto-copied to new Locations.",
 ))
 
 
