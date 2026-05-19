@@ -109,7 +109,11 @@ MODULES = {
             "Document Management": ["Document Manager"],
         },
     },
-    "Workflows": {"sections": {}},
+    "Workflows": {
+        "sections": {
+            "Workflows": ["Inbox", "Business Processes", "Role Manager", "Email Templates", "Workflow Calendars"],
+        },
+    },
 }
 
 STANDARD_TOOLBAR = {
@@ -1344,6 +1348,90 @@ _register(RecordType(
     detail_columns=["Date", "Type", "Description"],
     notes="Regular Days Off checkboxes (Mon-Sun). Days Off table: Exception (day off→working) "
           "or Off (working→day off). Interactive calendar control. Apply Regular Days Off button.",
+))
+
+
+# ── WORKFLOWS module ─────────────────────────────────────────────
+
+_register(RecordType(
+    name="Inbox",
+    module="Workflows",
+    menu_item="Inbox",
+    header_fields=[],
+    detail_columns=["Document ID", "Record Type", "Module", "Status", "Step", "Role", "Due Date"],
+    notes="Read-only view of all records in workflow where logged-in user is current approver. "
+          "Click Document ID hyperlink to navigate to record.",
+))
+
+_register(RecordType(
+    name="Business Processes",
+    module="Workflows",
+    menu_item="Business Processes",
+    header_fields=[
+        FieldDef("BPM ID", required=True),
+        FieldDef("Template Name"),
+        FieldDef("Recalculate", field_type="checkbox"),
+        FieldDef("Single", field_type="checkbox"),
+        FieldDef("Associate With", field_type="multiselect"),
+    ],
+    detail_columns=[
+        "#", "Type", "Description", "Level", "Action",
+        "Return To", "Delegate", "DocuSign",
+    ],
+    toolbar_actions=["save", "use_visual_designer"],
+    notes="Central workflow config. 5 tabs: Select Level, Roles, BPM, Record Types, APM Rules. "
+          "Levels: System → Program → Project (inherited downward). "
+          "Visual Workflow Designer: drag Submit/Step/Branch/Finish elements. "
+          "Define Steps: evaluation order top-to-bottom, drag to reorder. "
+          "Actions: Next Step, Final Approve, Branch, Reject, Return. "
+          "BPM Managers can edit approved/rejected/withdrawn records. "
+          "Overdue Alerts: configurable days, roles, email/onscreen. "
+          "Roles Tab: Lock checkbox, Level, Role name, User assignment (drag-and-drop). "
+          "Options: Allow Users (multi-role), Allow Roles (duplicate in BPM). "
+          "Document Manager: CC, Notify On All, Can permissions. "
+          "Record Types Tab: assign template per record type per level. "
+          "Template options: Use System Default, Use Program Default, Do Not Use Workflow, or custom BPM.",
+))
+
+_register(RecordType(
+    name="Role Manager",
+    module="Workflows",
+    menu_item="Role Manager",
+    header_fields=[],
+    detail_columns=["Level", "Role", "User", "Locked"],
+    notes="Cross-level view: define/assign workflow roles at System, Program, and Project simultaneously. "
+          "Drag users from Users tree onto roles. Add/Edit/Delete Role buttons. "
+          "Locked checkbox: role can only be assigned at the level where it was defined.",
+))
+
+_register(RecordType(
+    name="Email Templates",
+    module="Workflows",
+    menu_item="Email Templates",
+    header_fields=[
+        FieldDef("Record Type", field_type="dropdown"),
+        FieldDef("Notification", field_type="dropdown"),
+        FieldDef("From Email", required=True),
+        FieldDef("Subject", required=True),
+    ],
+    detail_columns=[],
+    notes="Per record type + workflow action. Rich text editor with field tokens. "
+          "Special tokens: Approve/Final Approve/Reject action buttons in email. "
+          "Requires 'Display Email Buttons' in Define Role Step + Admin Utility setting. "
+          "Default Template: master for all types. Update Unlocked Templates copies design down. "
+          "Lock checkbox prevents overwrite. Attach to Email section for files/reports.",
+))
+
+_register(RecordType(
+    name="Workflow Calendars",
+    module="Workflows",
+    menu_item="Workflow Calendars",
+    header_fields=[
+        FieldDef("Description"),
+    ],
+    detail_columns=["Date", "Type", "Description"],
+    notes="Same structure as Schedules Calendars. Days off excluded from workflow due date calculations. "
+          "Associate with project via Workflow Calendar field in Projects record.",
 ))
 
 
