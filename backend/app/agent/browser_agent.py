@@ -25,61 +25,42 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from app.agent.pmweb_flows import PMWebFlows
 from app.agent.pmweb_navigator import PMWebNavigator
-from app.agent.pmweb_registry import get_record_type, get_required_fields, list_record_types
+from app.agent.pmweb_registry import get_record_type, get_required_fields
 from app.config import settings
 
 logger = logging.getLogger(__name__)
 
 INTENT_PROMPT = """\
-You are a PMWeb automation assistant. Parse the user's request and output \
-a JSON object describing what they want to do.
+You are a PMWeb automation assistant. Parse the user's request into JSON.
 
-## Available PMWeb Record Types
-{record_types}
+ALWAYS return a valid JSON object. Never refuse. Never say you can't understand.
 
-## Output Format
-Return ONLY a JSON object:
+## Common PMWeb Record Types
+Security Groups, Users, Inspections, Safety Forms, RFIs, Punch Lists, \
+Daily Reports, Meeting Minutes, Action Items, Budgets, Commitments, \
+Work Orders, Schedules, Projects, Programs, Companies, Estimates, \
+Bid Packages, Drawing Lists, Transmittals, Correspondence, \
+Adaptive Forms, Change Events, Progress Invoices, Leases, Equipment
+
+## JSON Format
 {{
-  "intent": "create" | "read" | "update" | "delete" | "list" | "ask_user",
-  "record_type": "<exact name from list above>",
-  "fields": {{"<field_name>": "<value>", ...}},
-  "detail_lines": [{{"<column>": "<value>", ...}}, ...],
-  "options": ["<option to check>", ...],
-  "permissions": {{"<module>": "<View|Create|Edit|Delete|Full Control>", ...}},
-  "form_fields": [{{"label": "Name", "field_type": "text", "choices": []}}, ...],
-  "workflow": {{"bpm_id": "", "name": "", "statuses": [{{"name": ""}}], "roles": []}},
-  "message": "<only for ask_user — question to ask>"
+  "intent": "create | read | list | update | ask_user",
+  "record_type": "<type name>",
+  "fields": {{}},
+  "message": "<question if ask_user>"
 }}
 
-## Rules
-1. Ask for required fields if missing. Set intent="ask_user".
-2. Required fields: {required_fields}
-3. "generic"/"default"/"sample" → generate reasonable values, intent="create".
-4. File attached ("--- Attached file ---") → extract values, use directly.
-5. "list"/"show"/"read"/"get" → intent="read".
-6. Bulk operations → detail_lines array.
-7. For adaptive forms → populate form_fields array.
-8. For workflows → populate workflow object.
-9. For Security Groups, populate fields["Group ID"] and fields["Description"].
-   If the user says "security group for <role>", derive a concise Group ID
-   from the role (for example "contractors" → "CONTRACTORS") and set a
-   descriptive Description (for example "Security group for contractors").
-   Do not use "Group Name" for the primary identifier.
-10. Return ONLY JSON, no markdown.
+## Intent Rules
+- "build/create/make/add/set up" → intent="create"
+- "show/list/read/get/find/what is/what are" → intent="read"
+- If user gives enough details to create → intent="create" with fields filled
+- If user says "generic/default/sample" → intent="create", generate reasonable values
+- If essential info is missing AND user did NOT say generic → intent="ask_user"
+- For "safety inspection form" → record_type="Inspections", intent depends on context
+- For "build a form" → record_type="Adaptive Forms"
+- For forms with specific fields → add form_fields array: [{{"label":"Name","field_type":"text"}}]
+- NEVER return empty JSON or refuse. Always pick the best matching record type.
 """
-
-
-def _build_registry_context() -> tuple[str, str]:
-    rt_lines, req_lines = [], []
-    for name in list_record_types():
-        rt = get_record_type(name)
-        if rt:
-            fields = [f.name for f in rt.header_fields]
-            rt_lines.append(f"- {name} (module: {rt.module}) — fields: {', '.join(fields)}")
-            req = get_required_fields(name)
-            if req:
-                req_lines.append(f"- {name}: {', '.join(req)}")
-    return "\n".join(rt_lines), "\n".join(req_lines)
 
 
 class HybridAgent:
@@ -206,8 +187,6 @@ class HybridAgent:
                 return {"reply": f"Cannot connect to PMWeb: {r.get('message')}", "actions": []}
 
         parsed = self._parse_intent(task, history)
-        if parsed is None:
-            return {"reply": "I couldn't understand that request. Could you rephrase?", "actions": []}
 
         intent = parsed.get("intent", "ask_user")
         if intent == "ask_user":
@@ -222,34 +201,113 @@ class HybridAgent:
 
     # ── LLM intent parsing (Layer 4's only LLM use) ──────────────────
 
-    def _parse_intent(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any] | None:
-        record_types_ctx, required_fields_ctx = _build_registry_context()
-        system_prompt = INTENT_PROMPT.format(
-            record_types=record_types_ctx,
-            required_fields=required_fields_ctx,
-        )
-
-        messages: list[dict[str, str]] = [{"role": "system", "content": system_prompt}]
+    def _parse_intent(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any]:
+        messages: list[dict[str, str]] = [{"role": "system", "content": INTENT_PROMPT}]
         if history:
             for msg in history[-10:]:
                 messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")[:500]})
         messages.append({"role": "user", "content": task})
 
-        response = self.client.chat.completions.create(
-            model=settings.openai_model,
-            messages=messages,
-            temperature=0,
-            max_tokens=2000,
-        )
-        raw = response.choices[0].message.content or "{}"
-
         try:
+            response = self.client.chat.completions.create(
+                model=settings.openai_model,
+                messages=messages,
+                temperature=0,
+                max_tokens=1000,
+            )
+            raw = response.choices[0].message.content or "{}"
             start = raw.index("{")
             end = raw.rindex("}") + 1
-            return json.loads(raw[start:end])
-        except (ValueError, json.JSONDecodeError):
-            logger.warning("Failed to parse LLM output: %s", raw[:200])
-            return None
+            parsed = json.loads(raw[start:end])
+            if parsed.get("intent") and parsed.get("record_type"):
+                return parsed
+        except Exception:
+            logger.exception("Intent parsing failed for: %s", task[:100])
+
+        return self._fallback_parse(task)
+
+    def _fallback_parse(self, task: str) -> dict[str, Any]:
+        """Rule-based fallback when LLM parsing fails."""
+        t = task.lower()
+
+        keyword_map = {
+            "security group": "Security Groups",
+            "user": "Users",
+            "inspection": "Inspections",
+            "safety": "Safety Forms",
+            "rfi": "RFIs",
+            "punch list": "Punch Lists",
+            "daily report": "Daily Reports",
+            "meeting minute": "Meeting Minutes",
+            "action item": "Action Items",
+            "correspondence": "Correspondence",
+            "transmittal": "Transmittals",
+            "drawing": "Drawing Lists",
+            "submittal": "Online Submittals",
+            "budget": "Budgets",
+            "commitment": "Commitments",
+            "contract": "Prime Contracts",
+            "invoice": "Progress Invoices",
+            "work order": "Work Orders",
+            "schedule": "Schedules",
+            "project": "Projects",
+            "program": "Programs",
+            "company": "Companies",
+            "estimate": "Estimates",
+            "bid": "Bid Packages",
+            "form": "Adaptive Forms",
+            "workflow": "Business Processes",
+            "equipment": "Equipment",
+            "lease": "Leases",
+            "location": "Locations",
+            "initiative": "Initiatives",
+            "funding": "Funding Records",
+            "change event": "Change Events",
+            "change order": "Commitment COs",
+            "change request": "Online Change Requests",
+            "risk": "Risk Analysis",
+            "timesheet": "Timesheets",
+            "forecast": "Forecasts",
+            "document": "Document Manager",
+        }
+
+        record_type = ""
+        for keyword, rt_name in keyword_map.items():
+            if keyword in t:
+                record_type = rt_name
+                break
+
+        create_words = ["create", "build", "make", "add", "set up", "new"]
+        read_words = ["show", "list", "read", "get", "find", "what", "last", "current", "view"]
+
+        intent = "ask_user"
+        if any(w in t for w in create_words):
+            intent = "create"
+        elif any(w in t for w in read_words):
+            intent = "read"
+
+        if not record_type:
+            return {
+                "intent": "ask_user",
+                "record_type": "",
+                "fields": {},
+                "message": (
+                    "I can help with that. Which PMWeb record type are you looking for? "
+                    "For example: Security Groups, Inspections, Work Orders, RFIs, Budgets, or Schedules."
+                ),
+            }
+
+        if intent == "create":
+            req = get_required_fields(record_type)
+            if req:
+                return {
+                    "intent": "ask_user",
+                    "record_type": record_type,
+                    "fields": {},
+                    "message": f"To create a {record_type} record, I need: {', '.join(req)}. Please provide these details, or say 'generic' for defaults.",
+                }
+
+        return {"intent": intent, "record_type": record_type, "fields": {}}
 
     # ── Flow dispatch ────────────────────────────────────────────────
 
