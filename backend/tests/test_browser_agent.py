@@ -141,3 +141,19 @@ def test_agent_dispatch_routes_security_group_fields_to_flow():
         "options": [],
         "permissions": {},
     }
+
+
+def test_blank_task_asks_for_details_without_login():
+    agent = HybridAgent()
+
+    def fail_login():
+        raise AssertionError("blank tasks should not log in to PMWeb")
+
+    agent.login = fail_login
+
+    result = agent.run_task_sync("   ")
+
+    assert result == {
+        "reply": "Please describe what you want me to do in PMWeb.",
+        "actions": [],
+    }

@@ -290,6 +290,18 @@ class MLOpsEngine:
 
     def _build_github_issue_body(self, feedback_id: str, prompt: str, expected: str, actual: str, session_id: str) -> str:
         """Build the auto-fix issue body with instructions matching the current agent."""
+        context = self._validated_issue_context(
+            feedback_id=feedback_id,
+            prompt=prompt,
+            actual=actual,
+            expected=expected,
+            session_id=session_id,
+        )
+        prompt = context["prompt"]
+        actual = context["actual"]
+        expected = context["expected"]
+        session_id = context["session_id"]
+
         return (
             f"## Auto-Fix Request\n\n"
             f"A user reported that the PMWeb Automation Agent did not work as expected.\n\n"

@@ -194,6 +194,12 @@ class HybridAgent:
 
     def _run_task_impl(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any]:
         self._stop_requested = False
+        if not task.strip():
+            return {
+                "reply": "Please describe what you want me to do in PMWeb.",
+                "actions": [],
+            }
+
         if not self._logged_in:
             r = self.login()
             if r["status"] != "success":

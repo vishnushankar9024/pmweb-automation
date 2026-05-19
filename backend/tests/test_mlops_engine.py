@@ -152,3 +152,18 @@ def test_auto_fix_issue_body_mentions_current_hybrid_agent_entry_points():
     assert "PMWebNavigator" in body
     assert "PLANNER_PROMPT" not in body
     assert "_execute_step()" not in body
+
+
+def test_auto_fix_issue_body_rejects_blank_required_context():
+    engine = make_engine({})
+
+    with pytest.raises(ValueError) as exc_info:
+        engine._build_github_issue_body(
+            feedback_id="feedback-id",
+            prompt="",
+            expected="",
+            actual="",
+            session_id="",
+        )
+
+    assert "missing required context: prompt, actual, expected" in str(exc_info.value)
