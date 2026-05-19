@@ -98,6 +98,42 @@ def test_process_fix_now_fails_before_issue_creation_for_blank_ticket():
     assert engine._fixes.docs[0]["status"] == "failed"
 
 
+def test_process_fix_later_rejects_blank_ticket_before_queueing():
+    engine = make_engine(
+        {
+            "id": "feedback-id",
+            "session_id": "",
+            "prompt": "",
+            "actual_result": "",
+            "expected_result": "It should work",
+        }
+    )
+
+    result = engine.process_fix_later("feedback-id")
+
+    assert result["status"] == "failed"
+    assert "missing required context: prompt, actual" in result["error"]
+    assert engine._fixes.docs[0]["status"] == "failed"
+
+
+def test_process_fix_later_queues_ticket_with_required_context():
+    engine = make_engine(
+        {
+            "id": "feedback-id",
+            "session_id": "session-id",
+            "prompt": "Create a security group",
+            "actual_result": "The action failed",
+            "expected_result": "The group should be created",
+        }
+    )
+
+    result = engine.process_fix_later("feedback-id")
+
+    assert result["status"] == "queued"
+    assert "error" not in result
+    assert engine._fixes.docs[0]["status"] == "queued"
+
+
 def test_auto_fix_issue_body_mentions_current_hybrid_agent_entry_points():
     engine = make_engine({})
 

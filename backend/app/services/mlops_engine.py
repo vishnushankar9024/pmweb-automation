@@ -144,6 +144,14 @@ class MLOpsEngine:
             "updated_at": datetime.now(timezone.utc),
         }
         self._fixes.insert_one(fix_doc)
+
+        try:
+            self._issue_context_for_feedback(feedback_id)
+        except Exception as exc:
+            logger.exception("Fix-later queueing failed for %s", feedback_id)
+            self._update_fix_status(fix_id, "failed", 0)
+            return {"fix_id": fix_id, "status": "failed", "error": str(exc)}
+
         return {"fix_id": fix_id, "status": "queued"}
 
     def get_fix_status(self, feedback_id: str) -> dict[str, Any]:
