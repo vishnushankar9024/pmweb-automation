@@ -1,11 +1,12 @@
-"""Hybrid PMWeb agent — GPT-4o parses intent, deterministic engine executes.
+"""PMWeb Automation Agent — 4-layer architecture.
 
-Architecture:
-  1. LLM receives user message + conversation history + registry of
-     available record types and their required fields
-  2. LLM outputs structured JSON: {intent, record_type, fields, actions}
-  3. Deterministic navigator executes using exact selectors from the
-     PMWeb 2025.1 User Guide — zero LLM involvement in DOM interaction
+Layer 1: pmweb_registry.py  — pure data (record types, fields, selectors)
+Layer 2: pmweb_navigator.py — atomic DOM actions (click, fill, read)
+Layer 3: pmweb_flows.py     — deterministic multi-step operation flows
+Layer 4: browser_agent.py   — LLM intent parser, delegates to flows
+
+This file is Layer 4. The LLM's ONLY job is to parse user intent into
+structured JSON. All DOM interaction is deterministic.
 """
 
 from __future__ import annotations
@@ -22,12 +23,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from app.agent.pmweb_flows import PMWebFlows
 from app.agent.pmweb_navigator import PMWebNavigator
-from app.agent.pmweb_registry import (
-    get_record_type,
-    get_required_fields,
-    list_record_types,
-)
+from app.agent.pmweb_registry import get_record_type, get_required_fields, list_record_types
 from app.config import settings
 
 logger = logging.getLogger(__name__)
@@ -40,43 +38,34 @@ a JSON object describing what they want to do.
 {record_types}
 
 ## Output Format
-Return ONLY a JSON object with these fields:
+Return ONLY a JSON object:
 {{
   "intent": "create" | "read" | "update" | "delete" | "list" | "ask_user",
-  "record_type": "<exact record type name from the list above>",
-  "fields": {{
-    "<field_name>": "<value>",
-    ...
-  }},
-  "detail_lines": [
-    {{"<column>": "<value>", ...}},
-    ...
-  ],
+  "record_type": "<exact name from list above>",
+  "fields": {{"<field_name>": "<value>", ...}},
+  "detail_lines": [{{"<column>": "<value>", ...}}, ...],
   "options": ["<option to check>", ...],
   "permissions": {{"<module>": "<View|Create|Edit|Delete|Full Control>", ...}},
-  "message": "<only for ask_user intent — the question to ask>"
+  "form_fields": [{{"label": "Name", "field_type": "text", "choices": []}}, ...],
+  "workflow": {{"bpm_id": "", "name": "", "statuses": [{{"name": ""}}], "roles": []}},
+  "message": "<only for ask_user — question to ask>"
 }}
 
 ## Rules
-1. ALWAYS ask for required fields if they are missing from the user's \
-message. Set intent="ask_user" and list what's needed in "message".
-2. Required fields per record type:
-{required_fields}
-3. If the user says "generic", "default", or "sample", generate \
-reasonable values and set intent="create".
-4. If a file is attached (text after "--- Attached file ---"), extract \
-field values from it and use them directly.
-5. If the user asks to "list", "show", "read", or "get", set \
-intent="read".
-6. For bulk operations (multiple records), return detail_lines array.
-7. Return ONLY the JSON object, no markdown, no explanation.
+1. Ask for required fields if missing. Set intent="ask_user".
+2. Required fields: {required_fields}
+3. "generic"/"default"/"sample" → generate reasonable values, intent="create".
+4. File attached ("--- Attached file ---") → extract values, use directly.
+5. "list"/"show"/"read"/"get" → intent="read".
+6. Bulk operations → detail_lines array.
+7. For adaptive forms → populate form_fields array.
+8. For workflows → populate workflow object.
+9. Return ONLY JSON, no markdown.
 """
 
 
 def _build_registry_context() -> tuple[str, str]:
-    """Build the record type list and required fields for the LLM prompt."""
-    rt_lines = []
-    req_lines = []
+    rt_lines, req_lines = [], []
     for name in list_record_types():
         rt = get_record_type(name)
         if rt:
@@ -89,7 +78,7 @@ def _build_registry_context() -> tuple[str, str]:
 
 
 class HybridAgent:
-    """GPT-4o parses intent, deterministic navigator executes."""
+    """Layer 4: LLM intent parser → delegates to deterministic flows."""
 
     def __init__(self) -> None:
         self._driver: webdriver.Chrome | None = None
@@ -97,6 +86,7 @@ class HybridAgent:
         self._client: OpenAI | None = None
         self._stop_requested = False
         self._nav: PMWebNavigator | None = None
+        self._flows: PMWebFlows | None = None
 
     def request_stop(self) -> None:
         self._stop_requested = True
@@ -131,6 +121,14 @@ class HybridAgent:
         if self._nav is None:
             self._nav = PMWebNavigator(self.driver, settings.pmweb_base_url)
         return self._nav
+
+    @property
+    def flows(self) -> PMWebFlows:
+        if self._flows is None:
+            self._flows = PMWebFlows(self.nav)
+        return self._flows
+
+    # ── Login ────────────────────────────────────────────────────────
 
     def login(self) -> dict[str, Any]:
         try:
@@ -174,6 +172,8 @@ class HybridAgent:
         except Exception as exc:
             return {"status": "error", "message": str(exc)}
 
+    # ── Public API ───────────────────────────────────────────────────
+
     def run_task_sync(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any]:
         return self._run_task_impl(task, history=history)
 
@@ -185,6 +185,8 @@ class HybridAgent:
             full = f"{task}\n\n--- Attached file ---\n{file_context[:5000]}"
         return self._run_task_impl(full, history=history)
 
+    # ── Core pipeline ────────────────────────────────────────────────
+
     def _run_task_impl(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any]:
         self._stop_requested = False
         if not self._logged_in:
@@ -192,6 +194,24 @@ class HybridAgent:
             if r["status"] != "success":
                 return {"reply": f"Cannot connect to PMWeb: {r.get('message')}", "actions": []}
 
+        parsed = self._parse_intent(task, history)
+        if parsed is None:
+            return {"reply": "I couldn't understand that request. Could you rephrase?", "actions": []}
+
+        intent = parsed.get("intent", "ask_user")
+        if intent == "ask_user":
+            return {"reply": parsed.get("message", "Could you provide more details?"), "actions": []}
+
+        flow_result = self._dispatch_to_flow(parsed)
+
+        self._store_learning(task, parsed, flow_result.steps)
+
+        summary = self._summarize(task, flow_result.steps)
+        return {"reply": summary, "actions": flow_result.steps}
+
+    # ── LLM intent parsing (Layer 4's only LLM use) ──────────────────
+
+    def _parse_intent(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any] | None:
         record_types_ctx, required_fields_ctx = _build_registry_context()
         system_prompt = INTENT_PROMPT.format(
             record_types=record_types_ctx,
@@ -215,219 +235,69 @@ class HybridAgent:
         try:
             start = raw.index("{")
             end = raw.rindex("}") + 1
-            parsed = json.loads(raw[start:end])
+            return json.loads(raw[start:end])
         except (ValueError, json.JSONDecodeError):
-            return {"reply": raw, "actions": []}
+            logger.warning("Failed to parse LLM output: %s", raw[:200])
+            return None
 
-        intent = parsed.get("intent", "ask_user")
+    # ── Flow dispatch ────────────────────────────────────────────────
 
-        if intent == "ask_user":
-            return {"reply": parsed.get("message", "Could you provide more details?"), "actions": []}
+    def _dispatch_to_flow(self, parsed: dict[str, Any]) -> Any:
+        """Route parsed intent to the correct deterministic flow."""
+        from app.agent.pmweb_flows import FlowResult
 
-        return self._execute_intent(parsed, task)
-
-    # ── Deterministic execution ──────────────────────────────────────
-
-    def _execute_intent(self, parsed: dict[str, Any], task: str) -> dict[str, Any]:
-        """Execute a parsed intent using the deterministic navigator."""
         intent = parsed.get("intent", "")
         record_type_name = parsed.get("record_type", "")
         fields = parsed.get("fields", {})
         options = parsed.get("options", [])
         permissions = parsed.get("permissions", {})
         detail_lines = parsed.get("detail_lines", [])
+        form_fields = parsed.get("form_fields", [])
+        workflow = parsed.get("workflow", {})
 
         rt = get_record_type(record_type_name)
-        results: list[dict[str, Any]] = []
 
-        if intent == "read" or intent == "list":
-            return self._execute_read(record_type_name, rt, results)
+        # Read / list
+        if intent in ("read", "list"):
+            return self.flows.read_records(rt, record_type_name)
 
-        if intent in ("create", "update"):
-            return self._execute_create(record_type_name, rt, fields, options, permissions, detail_lines, results, task)
+        # Specific record type flows
+        rt_lower = record_type_name.lower()
 
-        return {"reply": f"Unknown intent: {intent}", "actions": results}
+        if rt_lower == "security groups" and rt:
+            return self.flows.create_security_group(rt, fields, options, permissions)
 
-    def _execute_read(self, record_type_name: str, rt: Any, results: list) -> dict[str, Any]:
-        """Navigate to the record type and read data."""
-        step = 1
-        if rt:
-            if rt.url_fragment:
-                r = self.nav.navigate(rt.url_fragment)
-                results.append({"step": step, "action": "navigate", "result": r})
-                step += 1
-            if rt.uses_iframe:
-                r = self.nav.switch_to_iframe(rt.iframe_id)
-                results.append({"step": step, "action": "switch_to_iframe", "result": r})
-                step += 1
-        else:
-            r = self.nav.navigate("/Home.aspx")
-            results.append({"step": step, "action": "navigate", "result": r})
-            step += 1
+        if rt_lower == "users" and rt:
+            return self.flows.create_user(rt, fields)
 
-        data = self.nav.read_kendo_grid()
-        results.append({"step": step, "action": "read_grid", "result": {"rows": len(data), "data": data[:10]}})
+        if rt_lower in ("adaptive form builder", "adaptive forms") and form_fields:
+            title = fields.get("title", fields.get("Title", "New Form"))
+            return self.flows.create_adaptive_form(title, form_fields)
 
-        summary = self._summarize(f"Read data for {record_type_name}", results)
-        return {"reply": summary, "actions": results}
+        if workflow and workflow.get("bpm_id"):
+            return self.flows.create_bpm_workflow(
+                bpm_id=workflow["bpm_id"],
+                name=workflow.get("name", ""),
+                statuses=workflow.get("statuses"),
+                roles=workflow.get("roles"),
+            )
 
-    def _execute_create(
-        self, record_type_name: str, rt: Any,
-        fields: dict, options: list, permissions: dict,
-        detail_lines: list, results: list, task: str,
-    ) -> dict[str, Any]:
-        """Navigate, fill fields, set options/permissions, save."""
-        step = 1
+        # Bulk creation
+        if detail_lines and len(detail_lines) > 1 and rt:
+            return self.flows.create_bulk_records(rt, detail_lines)
 
-        # Navigate
-        if rt and rt.url_fragment:
-            r = self.nav.navigate(rt.url_fragment)
-            results.append({"step": step, "action": "navigate", "result": r})
-            step += 1
-        elif rt:
-            r = self.nav.navigate_to_record_type(rt.module, rt.menu_item)
-            results.append({"step": step, "action": "navigate", "result": r})
-            step += 1
+        # Generic record creation
+        if rt and intent in ("create", "update"):
+            return self.flows.create_record(rt, fields, detail_lines or None)
 
-        # Switch to iframe if needed
-        if rt and rt.uses_iframe:
-            r = self.nav.switch_to_iframe(rt.iframe_id)
-            results.append({"step": step, "action": "switch_to_iframe", "result": r})
-            step += 1
-
-        # Handle Security-specific flows
-        if record_type_name.lower() == "security groups":
-            return self._create_security_group(fields, options, permissions, results, step, task)
-        elif record_type_name.lower() == "users":
-            return self._create_user(fields, results, step, task)
-
-        # Generic record creation via breadcrumb/toolbar
-        r = self.nav.click_new_record()
-        results.append({"step": step, "action": "new_record", "result": r})
-        step += 1
-
-        # Fill header fields
-        for field_name, value in fields.items():
-            if value:
-                r = self.nav.fill_field_by_label(field_name, str(value))
-                results.append({"step": step, "action": f"fill_{field_name}", "result": r})
-                step += 1
-
-        # Add detail lines
-        for line in detail_lines:
-            r = self.nav.click_new_line()
-            results.append({"step": step, "action": "new_line", "result": r})
-            step += 1
-            for col, val in line.items():
-                if val:
-                    r = self.nav.fill_field_by_label(col, str(val))
-                    results.append({"step": step, "action": f"fill_{col}", "result": r})
-                    step += 1
-
-        # Save
-        r = self.nav.click_save()
-        results.append({"step": step, "action": "save", "result": r})
-
-        summary = self._summarize(task, results)
-        return {"reply": summary, "actions": results}
-
-    # ── Security Group creation (deterministic) ──────────────────────
-
-    def _create_security_group(
-        self, fields: dict, options: list, permissions: dict,
-        results: list, step: int, task: str,
-    ) -> dict[str, Any]:
-        # Click Groups tab
-        r = self.nav.click_tab("Groups")
-        results.append({"step": step, "action": "click_tab", "result": r})
-        step += 1
-
-        # Click New Group
-        r = self.nav.click_toolbar_button("New Group")
-        results.append({"step": step, "action": "click_new_group", "result": r})
-        step += 1
-
-        # Fill group name (textbox 0)
-        name = fields.get("Group Name", fields.get("group_name", fields.get("name", "")))
-        if name:
-            r = self.nav.fill_kendo_textbox(0, name)
-            results.append({"step": step, "action": "fill_group_name", "result": r})
-            step += 1
-
-        # Fill description (textbox 1)
-        desc = fields.get("Description", fields.get("description", ""))
-        if desc:
-            r = self.nav.fill_kendo_textbox(1, desc)
-            results.append({"step": step, "action": "fill_description", "result": r})
-            step += 1
-
-        # Set options
-        for opt in options:
-            r = self.nav.toggle_checkbox(opt, check=True)
-            results.append({"step": step, "action": f"check_{opt}", "result": r})
-            step += 1
-
-        # Set module permissions
-        for module, perm in permissions.items():
-            r = self.nav.set_module_permission(module, perm)
-            results.append({"step": step, "action": f"permission_{module}", "result": r})
-            step += 1
-
-        # Save
-        r = self.nav.click_save()
-        results.append({"step": step, "action": "save", "result": r})
-
-        summary = self._summarize(task, results)
-        return {"reply": summary, "actions": results}
-
-    # ── User creation (deterministic) ────────────────────────────────
-
-    def _create_user(
-        self, fields: dict, results: list, step: int, task: str,
-    ) -> dict[str, Any]:
-        r = self.nav.click_tab("Users")
-        results.append({"step": step, "action": "click_tab", "result": r})
-        step += 1
-
-        r = self.nav.click_new_line()
-        results.append({"step": step, "action": "new_line", "result": r})
-        step += 1
-
-        cell_map = {
-            "User ID": 3, "user_id": 3,
-            "First Name": 5, "first_name": 5,
-            "Last Name": 6, "last_name": 6,
-            "Password": 11, "password": 11,
-            "Email": 17, "email": 17,
-        }
-        dropdown_map = {
-            "License Type": 8, "license_type": 8,
-            "Named License": 9, "named_license": 9,
-            "Group": 10, "group": 10,
-        }
-
-        for field_name, value in fields.items():
-            if not value:
-                continue
-            if field_name in cell_map:
-                r = self.nav.fill_grid_cell(cell_map[field_name], str(value))
-                results.append({"step": step, "action": f"fill_{field_name}", "result": r})
-                step += 1
-            elif field_name in dropdown_map:
-                r = self.nav.select_grid_cell_dropdown(dropdown_map[field_name], str(value))
-                results.append({"step": step, "action": f"select_{field_name}", "result": r})
-                step += 1
-
-        r = self.nav.click_save()
-        results.append({"step": step, "action": "save", "result": r})
-
-        summary = self._summarize(task, results)
-        return {"reply": summary, "actions": results}
+        # Fallback
+        result = FlowResult()
+        result.add_error("dispatch", f"no flow for intent={intent}, record_type={record_type_name}")
+        return result
 
     # ── Summarizer ───────────────────────────────────────────────────
 
     def _summarize(self, task: str, results: list) -> str:
-        """Use LLM to summarize what was done."""
         try:
             resp = self.client.chat.completions.create(
                 model=settings.openai_model,
@@ -442,7 +312,7 @@ class HybridAgent:
             has_errors = any("error" in r for r in results)
             return "Completed with some errors." if has_errors else "Done."
 
-    # ── Learning hooks ───────────────────────────────────────────────
+    # ── Learning ─────────────────────────────────────────────────────
 
     def _store_learning(self, task: str, parsed: dict, results: list) -> None:
         try:
@@ -462,3 +332,4 @@ class HybridAgent:
             self._driver = None
             self._logged_in = False
             self._nav = None
+            self._flows = None
