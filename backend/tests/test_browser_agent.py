@@ -1,233 +1,143 @@
-"""Regression tests for the GPT/Selenium browser agent."""
+"""Regression tests for the LLM intent parser and deterministic flows."""
 
-import pytest
-
-from app.agent.browser_agent import PLANNER_PROMPT, HybridAgent, UnsafePlanError
-
-
-@pytest.mark.parametrize(
-    "task",
-    [
-        "create a security group",
-        "Can you create a security group?",
-        "please set up new security groups",
-        "create a security group for me",
-        "create a security group for my team",
-    ],
-)
-def test_bare_security_group_create_request_asks_for_details(monkeypatch, task):
-    agent = HybridAgent()
-
-    def fail_login():
-        raise AssertionError("bare requests should not open PMWeb")
-
-    monkeypatch.setattr(agent, "login", fail_login)
-
-    result = agent.run_task_sync(task)
-
-    assert result["actions"] == []
-    assert "what should the security group be called" in result["reply"].lower()
-    assert "description" in result["reply"].lower()
+from app.agent.browser_agent import INTENT_PROMPT, HybridAgent, _build_registry_context
+from app.agent.pmweb_flows import PMWebFlows
+from app.agent.pmweb_registry import get_record_type, get_required_fields
 
 
-@pytest.mark.parametrize(
-    "task",
-    [
-        "create a security group named Safety Team with description Safety access",
-        "create a security group called Safety Team with full control for Assets",
-        "Create a security group for contractors",
-        "create a security group for the procurement team",
-        "create a security group named Safety Team",
-        "create a security group\n\n--- Attached file ---\nName: Safety Team\nDescription: Safety access",
-    ],
-)
-def test_security_group_create_request_with_details_can_be_planned(monkeypatch, task):
-    agent = HybridAgent()
+class FakeSecurityNav:
+    def __init__(self) -> None:
+        self.textboxes: list[tuple[int, str]] = []
+        self.actions: list[tuple[str, str]] = []
 
-    def fake_login():
-        return {"status": "error", "message": "planner reached"}
+    def navigate(self, url_fragment: str) -> str:
+        self.actions.append(("navigate", url_fragment))
+        return f"navigated to {url_fragment}"
 
-    class FakeCompletions:
-        def create(self, **kwargs):
-            class Choice:
-                class Message:
-                    content = "[]"
+    def switch_to_iframe(self, iframe_id: str) -> str:
+        self.actions.append(("switch_to_iframe", iframe_id))
+        return f"switched to iframe {iframe_id}"
 
-                message = Message()
+    def click_tab(self, tab_text: str) -> str:
+        self.actions.append(("click_tab", tab_text))
+        return f"clicked tab: {tab_text}"
 
-            class Response:
-                choices = [Choice()]
+    def click_toolbar_button(self, button_text: str) -> str:
+        self.actions.append(("click_toolbar_button", button_text))
+        return f"clicked toolbar: {button_text}"
 
-            return Response()
+    def fill_kendo_textbox(self, index: int, value: str) -> str:
+        self.textboxes.append((index, value))
+        return f"filled textbox[{index}]: {value}"
 
-    class FakeChat:
-        completions = FakeCompletions()
+    def toggle_checkbox(self, label: str, check: bool = True) -> str:
+        self.actions.append(("toggle_checkbox", label))
+        return f"checked: {label}" if check else f"unchecked: {label}"
 
-    class FakeClient:
-        chat = FakeChat()
+    def set_module_permission(self, module: str, permission: str) -> str:
+        self.actions.append(("set_module_permission", f"{module}:{permission}"))
+        return f"set {module} -> {permission}"
 
-    monkeypatch.setattr(agent, "_client", FakeClient())
-    monkeypatch.setattr(agent, "login", fake_login)
-
-    result = agent.run_task_sync(task)
-
-    assert result["reply"] == "Cannot connect: planner reached"
+    def click_save(self) -> str:
+        self.actions.append(("click_save", ""))
+        return "saved"
 
 
-def test_security_group_for_role_uses_inferred_name_when_planner_asks(monkeypatch):
-    agent = HybridAgent()
-    agent._logged_in = True
-    executed_steps = []
+def test_security_group_registry_requires_group_id():
+    assert get_required_fields("Security Groups") == ["Group ID", "Description"]
 
-    class FakeCompletions:
-        calls = 0
 
-        def create(self, **kwargs):
-            self.calls += 1
+def test_intent_prompt_documents_security_group_group_id():
+    assert 'fields["Group ID"]' in INTENT_PROMPT
+    assert "Do not use \"Group Name\"" in INTENT_PROMPT
 
-            class Choice:
-                class Message:
-                    content = (
-                        '[{"action": "ask_user", "question": '
-                        '"What should the security group be called?"}]'
-                    )
 
-                message = Message()
+def test_registry_context_includes_group_id_requirement():
+    _, required_fields = _build_registry_context()
 
-            class Response:
-                choices = [Choice()]
+    assert "Security Groups: Group ID, Description" in required_fields
 
-            if self.calls == 2:
-                Response.choices[0].message.content = "Created the group."
-            return Response()
 
-    class FakeChat:
-        completions = FakeCompletions()
+def test_security_group_flow_fills_group_id_before_description():
+    nav = FakeSecurityNav()
+    flow = PMWebFlows(nav)  # type: ignore[arg-type]
+    rt = get_record_type("Security Groups")
 
-    class FakeClient:
-        chat = FakeChat()
+    result = flow.create_security_group(
+        rt,
+        {"Group ID": "CONTRACTORS", "Description": "Security group for contractors"},
+        [],
+        {},
+    )
 
-    def fake_execute(step):
-        executed_steps.append(step)
-        return "ok"
-
-    monkeypatch.setattr(agent, "_client", FakeClient())
-    monkeypatch.setattr(agent, "_execute_step", fake_execute)
-
-    result = agent.run_task_sync("Create a security group for contractors")
-
-    assert result["reply"] == "Created the group."
-    assert [step["action"] for step in executed_steps] == [
+    assert not result.has_errors
+    assert nav.textboxes == [
+        (0, "CONTRACTORS"),
+        (1, "Security group for contractors"),
+    ]
+    assert [step["action"] for step in result.steps] == [
         "navigate",
         "switch_to_iframe",
-        "click_tab",
-        "click_button",
-        "fill_textbox",
-        "fill_textbox",
-        "click_save",
+        "click_tab_groups",
+        "click_new_group",
+        "fill_group_id",
+        "fill_description",
+        "save",
     ]
-    assert executed_steps[4]["value"] == "Contractors"
-    assert executed_steps[5]["value"] == "Security group for contractors"
 
 
-def test_execute_ask_user_supports_question_and_message():
-    agent = HybridAgent()
+def test_security_group_flow_accepts_legacy_group_name_alias():
+    nav = FakeSecurityNav()
+    flow = PMWebFlows(nav)  # type: ignore[arg-type]
+    rt = get_record_type("Security Groups")
 
-    assert (
-        agent._execute_step({"action": "ask_user", "question": "What group name should I use?"})
-        == "What group name should I use?"
-    )
-    assert (
-        agent._execute_step({"action": "ask_user", "message": "Please provide group details."})
-        == "Please provide group details."
+    flow.create_security_group(
+        rt,
+        {"Group Name": "Contractors", "Description": "Security group for contractors"},
+        [],
+        {},
     )
 
+    assert nav.textboxes[0] == (0, "Contractors")
 
-@pytest.mark.parametrize(
-    "step",
-    [
-        {"action": "click_button", "text": "New Group"},
-        {"action": "click_by_text", "text": "New Group"},
-        {"action": "fill_textbox", "index": 0, "value": "Default Group"},
-        {"action": "check_option", "label": "Can Send Notifications"},
-        {"action": "uncheck_option", "label": "Can Copy Project"},
-        {"action": "click_module_permission", "module": "Assets", "permission": "Full Control"},
-    ],
-)
-def test_execute_blocks_security_group_writes_without_required_details(step):
+
+def test_agent_dispatch_routes_security_group_fields_to_flow():
+    captured = {}
+
+    class FakeFlows:
+        def create_security_group(self, rt, fields, options, permissions):
+            captured["record_type"] = rt.name
+            captured["fields"] = fields
+            captured["options"] = options
+            captured["permissions"] = permissions
+
+            class Result:
+                steps = []
+
+            return Result()
+
     agent = HybridAgent()
+    agent._flows = FakeFlows()  # type: ignore[assignment]
 
-    with pytest.raises(UnsafePlanError) as exc_info:
-        agent._execute_step(step)
+    agent._dispatch_to_flow(
+        {
+            "intent": "create",
+            "record_type": "Security Groups",
+            "fields": {
+                "Group ID": "CONTRACTORS",
+                "Description": "Security group for contractors",
+            },
+            "options": [],
+            "permissions": {},
+        }
+    )
 
-    assert "what should the security group be called" in str(exc_info.value).lower()
-
-
-def test_execute_blocks_security_group_save_without_required_details():
-    agent = HybridAgent()
-    agent._on_security_page = True
-    agent._active_security_tab = "groups"
-
-    with pytest.raises(UnsafePlanError) as exc_info:
-        agent._execute_step({"action": "click_save"})
-
-    assert "what should the security group be called" in str(exc_info.value).lower()
-
-
-def test_planned_security_group_creation_is_blocked_without_details():
-    agent = HybridAgent()
-    plan = [
-        {"action": "navigate", "url": "/Security.aspx"},
-        {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"},
-        {"action": "click_tab", "text": "Groups"},
-        {"action": "click_button", "text": "New Group"},
-        {"action": "fill_textbox", "index": 0, "value": "Default Group"},
-        {"action": "fill_textbox", "index": 1, "value": "Description"},
-        {"action": "click_save"},
-    ]
-
-    message = agent._clarification_from_plan(plan, "Can you create a security group?")
-
-    assert message is not None
-    assert "what should the security group be called" in message.lower()
-
-
-def test_planned_security_group_field_writes_are_blocked_without_details():
-    agent = HybridAgent()
-    plan = [
-        {"action": "navigate", "url": "/Security.aspx"},
-        {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"},
-        {"action": "click_tab", "text": "Groups"},
-        {"action": "fill_textbox", "index": 0, "value": "Default Group"},
-        {"action": "fill_textbox", "index": 1, "value": "Description"},
-        {"action": "check_option", "label": "Can Send Notifications"},
-        {"action": "click_module_permission", "module": "Assets", "permission": "Full Control"},
-        {"action": "click_save"},
-    ]
-
-    message = agent._clarification_from_plan(plan, "Can you create a security group?")
-
-    assert message is not None
-    assert "what should the security group be called" in message.lower()
-
-
-def test_planned_security_user_save_is_not_blocked_as_security_group():
-    agent = HybridAgent()
-    plan = [
-        {"action": "navigate", "url": "/Security.aspx"},
-        {"action": "switch_to_iframe", "id": "ctl00_CPH1_ngFrame"},
-        {"action": "click_tab", "text": "Users"},
-        {"action": "click_new_line"},
-        {"action": "fill_cell", "cell_index": 3, "value": "jsmith"},
-        {"action": "click_save"},
-    ]
-
-    message = agent._clarification_from_plan(plan, "create user John Smith")
-
-    assert message is None
-
-
-def test_planner_prompt_documents_security_group_clarification():
-    assert '"action": "ask_user"' in PLANNER_PROMPT
-    assert "Do not create or save a Security Group unless" in PLANNER_PROMPT
-    assert 'Never click "New Group"' in PLANNER_PROMPT
+    assert captured == {
+        "record_type": "Security Groups",
+        "fields": {
+            "Group ID": "CONTRACTORS",
+            "Description": "Security group for contractors",
+        },
+        "options": [],
+        "permissions": {},
+    }

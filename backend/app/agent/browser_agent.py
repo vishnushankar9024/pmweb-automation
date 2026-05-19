@@ -60,7 +60,12 @@ Return ONLY a JSON object:
 6. Bulk operations → detail_lines array.
 7. For adaptive forms → populate form_fields array.
 8. For workflows → populate workflow object.
-9. Return ONLY JSON, no markdown.
+9. For Security Groups, populate fields["Group ID"] and fields["Description"].
+   If the user says "security group for <role>", derive a concise Group ID
+   from the role (for example "contractors" → "CONTRACTORS") and set a
+   descriptive Description (for example "Security group for contractors").
+   Do not use "Group Name" for the primary identifier.
+10. Return ONLY JSON, no markdown.
 """
 
 

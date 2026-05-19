@@ -45,6 +45,19 @@ class PMWebFlows:
     def __init__(self, nav: PMWebNavigator) -> None:
         self.nav = nav
 
+    @staticmethod
+    def _field_value(fields: dict[str, str], *aliases: str) -> str:
+        """Return a field value using case/space/underscore-insensitive aliases."""
+        normalized = {
+            str(key).lower().replace(" ", "").replace("_", ""): value
+            for key, value in fields.items()
+        }
+        for alias in aliases:
+            value = normalized.get(alias.lower().replace(" ", "").replace("_", ""))
+            if value:
+                return str(value)
+        return ""
+
     # ── Navigation flows ─────────────────────────────────────────────
 
     def navigate_to_record(self, rt: RecordType, result: FlowResult) -> None:
@@ -90,11 +103,22 @@ class PMWebFlows:
         result.add("click_tab_groups", self.nav.click_tab("Groups"))
         result.add("click_new_group", self.nav.click_toolbar_button("New Group"))
 
-        name = fields.get("Group Name", fields.get("group_name", fields.get("name", "")))
-        if name:
-            result.add("fill_group_name", self.nav.fill_kendo_textbox(0, name))
+        group_id = self._field_value(
+            fields,
+            "Group ID",
+            "GroupID",
+            "group_id",
+            "groupid",
+            # Backwards compatibility with prompts/results produced before PMWeb
+            # Security Groups were modeled with the correct Group ID field.
+            "Group Name",
+            "group_name",
+            "name",
+        )
+        if group_id:
+            result.add("fill_group_id", self.nav.fill_kendo_textbox(0, group_id))
 
-        desc = fields.get("Description", fields.get("description", ""))
+        desc = self._field_value(fields, "Description", "description")
         if desc:
             result.add("fill_description", self.nav.fill_kendo_textbox(1, desc))
 

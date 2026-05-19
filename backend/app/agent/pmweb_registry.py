@@ -575,11 +575,12 @@ _register(RecordType(
     uses_iframe=True,
     iframe_id="ctl00_CPH1_ngFrame",
     header_fields=[
-        FieldDef("Group Name", required=True, selector_css="kendo-textbox input.k-input-inner:nth-of-type(1)"),
+        FieldDef("Group ID", required=True, selector_css="kendo-textbox input.k-input-inner:nth-of-type(1)"),
         FieldDef("Description", required=True, selector_css="kendo-textbox input.k-input-inner:nth-of-type(2)"),
     ],
     toolbar_actions=["new_group", "save", "cancel"],
     notes="Inside iframe. Tabs: Groups, Users, User Access, Conditional Security. "
+          "The first textbox is Group ID, followed by Description. "
           "Options grid (checkboxes), Module permissions grid (View/Create/Edit/Delete/Full Control).",
 ))
 

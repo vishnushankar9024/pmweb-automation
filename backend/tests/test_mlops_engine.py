@@ -110,8 +110,9 @@ def test_auto_fix_issue_body_mentions_current_hybrid_agent_entry_points():
     )
 
     assert "INTENT_PROMPT" in body
-    assert "_execute_intent()" in body
-    assert "_execute_create()" in body
+    assert "_parse_intent()" in body
+    assert "_dispatch_to_flow()" in body
+    assert "pmweb_flows.py" in body
     assert "PMWebNavigator" in body
     assert "PLANNER_PROMPT" not in body
     assert "_execute_step()" not in body
