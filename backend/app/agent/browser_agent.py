@@ -25,22 +25,35 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from app.agent.pmweb_flows import PMWebFlows
 from app.agent.pmweb_navigator import PMWebNavigator
-from app.agent.pmweb_registry import get_record_type, get_required_fields
+from app.agent.pmweb_registry import RECORD_TYPES, get_record_type, get_required_fields
 from app.config import settings
 
 logger = logging.getLogger(__name__)
+
+
+def _build_registry_context() -> tuple[str, str]:
+    """Return prompt snippets derived from the deterministic PMWeb registry."""
+    record_types = sorted({rt.name for rt in RECORD_TYPES.values()})
+    record_types_ctx = "\n".join(f"- {name}" for name in record_types)
+
+    required_lines = []
+    for name in record_types:
+        required = get_required_fields(name)
+        if required:
+            required_lines.append(f"- {name}: {', '.join(required)}")
+    return record_types_ctx, "\n".join(required_lines)
+
 
 INTENT_PROMPT = """\
 You are a PMWeb automation assistant. Parse the user's request into JSON.
 
 ALWAYS return a valid JSON object. Never refuse. Never say you can't understand.
 
-## Common PMWeb Record Types
-Security Groups, Users, Inspections, Safety Forms, RFIs, Punch Lists, \
-Daily Reports, Meeting Minutes, Action Items, Budgets, Commitments, \
-Work Orders, Schedules, Projects, Programs, Companies, Estimates, \
-Bid Packages, Drawing Lists, Transmittals, Correspondence, \
-Adaptive Forms, Change Events, Progress Invoices, Leases, Equipment
+## Available PMWeb Record Types
+{record_types}
+
+## Required Fields
+{required_fields}
 
 ## JSON Format
 {{
@@ -59,6 +72,7 @@ Adaptive Forms, Change Events, Progress Invoices, Leases, Equipment
 - For "safety inspection form" → record_type="Inspections", intent depends on context
 - For "build a form" → record_type="Adaptive Forms"
 - For forms with specific fields → add form_fields array: [{{"label":"Name","field_type":"text"}}]
+- For Security Groups, use fields["Group ID"] and fields["Description"]. Do not use "Group Name".
 - NEVER return empty JSON or refuse. Always pick the best matching record type.
 """
 
@@ -222,7 +236,13 @@ class HybridAgent:
     # ── LLM intent parsing (Layer 4's only LLM use) ──────────────────
 
     def _parse_intent(self, task: str, history: list[dict[str, str]] | None = None) -> dict[str, Any]:
-        messages: list[dict[str, str]] = [{"role": "system", "content": INTENT_PROMPT}]
+        record_types_ctx, required_fields_ctx = _build_registry_context()
+        system_prompt = INTENT_PROMPT.format(
+            record_types=record_types_ctx,
+            required_fields=required_fields_ctx,
+        )
+
+        messages: list[dict[str, str]] = [{"role": "system", "content": system_prompt}]
         if history:
             for msg in history[-10:]:
                 messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")[:500]})
