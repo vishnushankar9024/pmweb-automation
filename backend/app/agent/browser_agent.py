@@ -399,6 +399,12 @@ class HybridAgent:
                 roles=workflow.get("roles"),
             )
 
+        if rt_lower == "business processes" and fields:
+            bpm_id = fields.get("BPM ID", fields.get("bpm_id", fields.get("id", "")))
+            bpm_name = fields.get("Template Name", fields.get("name", fields.get("Name", "")))
+            if bpm_id:
+                return self.flows.create_bpm_workflow(bpm_id=bpm_id, name=bpm_name)
+
         # Bulk creation
         if detail_lines and len(detail_lines) > 1 and rt:
             return self.flows.create_bulk_records(rt, detail_lines)
