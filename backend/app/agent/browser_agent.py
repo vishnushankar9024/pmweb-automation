@@ -521,13 +521,21 @@ class HybridAgent:
             "iframe",
             "reading the",
             "found ",
+            "a total of",
+            "total of",
             "result was a list of",
             "including",
             "rows were identified",
             "sample of groups",
             "among others",
         )
-        has_signal = any(signal in lowered for signal in procedural_signals)
+        regex_signals = (
+            r"\btotal of\s+\d+\s+rows?\b",
+            r"\bsample of\s+(?:security\s+)?groups?\b",
+        )
+        has_signal = any(signal in lowered for signal in procedural_signals) or any(
+            re.search(pattern, lowered) for pattern in regex_signals
+        )
         has_numbered_rows = bool(re.search(r"^\s*\d+\.\s+", reply, re.MULTILINE))
         return has_signal and not has_numbered_rows
 
