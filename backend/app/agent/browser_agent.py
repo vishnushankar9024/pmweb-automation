@@ -948,6 +948,12 @@ class HybridAgent:
             return None
         try:
             rows = self._nav.read_security_groups(max_rows=max_rows)
+            if hasattr(self._nav, "read_kendo_grid"):
+                # Security-specific normalization can occasionally miss columns on
+                # custom grids; keep whichever deterministic reader returns more rows.
+                generic_rows = self._nav.read_kendo_grid(max_rows=max_rows)
+                if isinstance(generic_rows, list) and len(generic_rows) > len(rows):
+                    rows = generic_rows
         except Exception:
             logger.exception("Direct security-group read fallback failed")
             return None

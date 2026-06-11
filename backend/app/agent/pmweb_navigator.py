@@ -806,6 +806,10 @@ class PMWebNavigator:
             time.sleep(1.0)
             return True
 
+        current_page = self._active_kendo_page_number()
+        if current_page is not None and current_page > 1 and self._go_to_kendo_page(1):
+            return True
+
         return False
 
     @staticmethod

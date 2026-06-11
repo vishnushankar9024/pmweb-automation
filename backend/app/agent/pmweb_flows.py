@@ -63,6 +63,14 @@ class PMWebFlows:
     def _is_security_group_record_type_name(record_type_name: str) -> bool:
         return bool(re.search(r"\bsecurity[\s_-]*groups?\b", record_type_name.lower()))
 
+    @staticmethod
+    def _security_rows_need_generic_fallback(rows: list[dict[str, Any]]) -> bool:
+        """Return True when normalized rows look degraded/missing key columns."""
+        if not rows:
+            return True
+        missing_group_id = sum(1 for row in rows if not str(row.get("Group ID", "")).strip())
+        return missing_group_id >= max(1, len(rows) // 2)
+
     # ── Navigation flows ─────────────────────────────────────────────
 
     def navigate_to_record(self, rt: RecordType, result: FlowResult) -> None:
@@ -96,6 +104,10 @@ class PMWebFlows:
             # normalization can miss; retain a generic-grid fallback.
             if not data:
                 data = self.nav.read_kendo_grid(max_rows=row_cap)
+            elif hasattr(self.nav, "read_kendo_grid") and self._security_rows_need_generic_fallback(data):
+                generic_rows = self.nav.read_kendo_grid(max_rows=row_cap)
+                if len(generic_rows) > len(data):
+                    data = generic_rows
         else:
             data = self.nav.read_kendo_grid(max_rows=row_cap)
         result.add("read_grid", f"found {len(data)} rows")
@@ -123,6 +135,13 @@ class PMWebFlows:
             for _ in range(3):
                 retry_cap = min(max(total_rows, len(data)), 5000)
                 retry_rows = self.nav.read_security_groups(max_rows=retry_cap)
+                if (
+                    hasattr(self.nav, "read_kendo_grid")
+                    and self._security_rows_need_generic_fallback(retry_rows)
+                ):
+                    generic_retry_rows = self.nav.read_kendo_grid(max_rows=retry_cap)
+                    if len(generic_retry_rows) > len(retry_rows):
+                        retry_rows = generic_retry_rows
                 if len(retry_rows) > len(data):
                     data = retry_rows
                 total_rows = max(total_rows, len(data))
