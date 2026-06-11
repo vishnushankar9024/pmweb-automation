@@ -572,17 +572,25 @@ class HybridAgent:
         return self._resolve_security_group_reply(task, results, read_reply)
 
     @staticmethod
+    def _reply_contains_numbered_rows(reply: str | None) -> bool:
+        if not reply:
+            return False
+        return bool(re.search(r"^\s*\d+\.\s+\S", reply, flags=re.MULTILINE))
+
+    @staticmethod
     def _rendered_row_count(reply: str | None) -> int:
         if not reply:
             return 0
-        return sum(1 for line in reply.splitlines() if line.strip())
+        return sum(
+            1 for line in reply.splitlines() if re.match(r"^\s*\d+\.\s+\S", line)
+        )
 
     @staticmethod
     def _reply_is_partial_for_rows(reply: str | None, expected_rows: int | None) -> bool:
         if not reply or expected_rows is None or expected_rows <= 0:
             return False
         rendered_rows = HybridAgent._rendered_row_count(reply)
-        return 0 < rendered_rows < expected_rows
+        return rendered_rows != expected_rows
 
     def _resolve_security_group_reply(
         self,
@@ -596,7 +604,13 @@ class HybridAgent:
 
         best_reply = initial_reply
         best_rows = self._rendered_row_count(initial_reply)
-        if initial_reply and not self._reply_is_partial_for_rows(initial_reply, expected_rows):
+        if initial_reply and not self._reply_contains_numbered_rows(initial_reply):
+            best_rows = 0
+        if (
+            initial_reply
+            and self._reply_contains_numbered_rows(initial_reply)
+            and not self._reply_is_partial_for_rows(initial_reply, expected_rows)
+        ):
             return initial_reply
 
         retry_reply = self._retry_security_group_read_reply(task)
@@ -921,8 +935,10 @@ class HybridAgent:
         return None
 
     def _summarize(self, task: str, results: list[dict[str, Any]]) -> str:
-        # Never narrate procedural steps for security-group listing requests.
-        if self._is_security_group_list_task(task):
+        # Never narrate procedural steps for security-group list/read requests.
+        if self._is_security_group_list_task(task) or self._looks_like_security_group_list(
+            task, {}, results
+        ):
             deterministic_reply = self._deterministic_security_group_reply(task, results)
             if deterministic_reply:
                 return deterministic_reply
