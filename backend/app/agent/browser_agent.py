@@ -454,6 +454,10 @@ class HybridAgent:
         if intent in ("read", "list") or looks_like_security_groups:
             read_reply = self._format_read_reply(parsed, results, task=task)
             if read_reply:
+                if looks_like_security_groups and self._security_group_reply_is_partial(results, read_reply):
+                    retry_reply = self._retry_security_group_read_reply(task)
+                    if retry_reply:
+                        return retry_reply
                 return read_reply
             if looks_like_security_groups:
                 retry_reply = self._retry_security_group_read_reply(task)
@@ -662,6 +666,28 @@ class HybridAgent:
             if group_id or description:
                 return True
         return False
+
+    @staticmethod
+    def _reported_row_count(grid_result: dict[str, Any]) -> int | None:
+        for key in ("rows", "row_count", "total_rows", "total", "count"):
+            value = grid_result.get(key)
+            if isinstance(value, int) and value >= 0:
+                return value
+            if isinstance(value, str):
+                candidate = value.strip()
+                if candidate.isdigit():
+                    return int(candidate)
+        return None
+
+    def _security_group_reply_is_partial(self, results: list[dict[str, Any]], reply: str) -> bool:
+        grid_result = self._extract_grid_result(results)
+        if not grid_result:
+            return False
+        reported_rows = self._reported_row_count(grid_result)
+        if reported_rows is None or reported_rows <= 0:
+            return False
+        rendered_rows = sum(1 for line in reply.splitlines() if line.strip())
+        return 0 < rendered_rows < reported_rows
 
     def _format_read_reply(
         self, parsed: dict[str, Any], results: list[dict[str, Any]], task: str = "",

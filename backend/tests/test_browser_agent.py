@@ -516,6 +516,57 @@ def test_build_reply_retries_security_group_read_when_payload_has_no_rows():
     ]
 
 
+def test_build_reply_retries_when_security_group_payload_is_sampled():
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [
+                    {
+                        "step": 5,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "rows": 4,
+                            "data": [
+                                {"Group ID": "Default Group", "Description": "System defaults"},
+                                {"Group ID": "Guest Users", "Description": "Guest profile"},
+                                {"Group ID": "PMWEB Admin", "Description": "Admin users"},
+                                {"Group ID": "Power Users", "Description": "Power user access"},
+                            ],
+                        },
+                    }
+                ]
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    sampled_results = [
+        {
+            "step": 3,
+            "action": "read_grid",
+            "result": {
+                "record_type": "Security Groups",
+                "rows": 4,
+                "sample_rows": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                    {"Group ID": "Guest Users", "Description": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, sampled_results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+        "3. PMWEB Admin — Admin users",
+        "4. Power Users — Power user access",
+    ]
+
+
 def test_build_reply_handles_shifted_security_group_columns_without_wrapper():
     agent = HybridAgent()
     parsed = {"intent": "read", "record_type": "Security Groups"}
