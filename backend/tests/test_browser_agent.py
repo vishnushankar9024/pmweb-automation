@@ -221,6 +221,83 @@ def test_run_task_sync_security_group_list_uses_deterministic_fast_path():
     assert result["actions"] == []
 
 
+def test_run_task_sync_hides_actions_for_security_group_read_intent_without_list_phrase():
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [
+                    {"step": 1, "action": "navigate", "result": "navigated"},
+                    {"step": 2, "action": "switch_to_iframe", "result": "switched"},
+                    {
+                        "step": 3,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "rows": 2,
+                            "data": [
+                                {"Group ID": "Default Group", "Description": "System defaults"},
+                                {"Group ID": "Guest Users", "Description": "Guest profile"},
+                            ],
+                        },
+                    },
+                ]
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._parse_intent = lambda *_args, **_kwargs: {  # type: ignore[method-assign]
+        "intent": "read",
+        "record_type": "Security Groups",
+        "fields": {},
+    }
+
+    result = agent.run_task_sync("Show me all of them")
+
+    assert result["reply"].splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+    assert result["actions"] == []
+
+
+def test_run_task_sync_keeps_actions_for_security_group_create_intent():
+    class FakeFlows:
+        def create_security_group(self, _rt, _fields, _options, _permissions):
+            class Result:
+                steps = [
+                    {"step": 1, "action": "navigate", "result": "navigated"},
+                    {"step": 2, "action": "click_new_group", "result": "clicked"},
+                    {"step": 3, "action": "save", "result": "saved"},
+                ]
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._parse_intent = lambda *_args, **_kwargs: {  # type: ignore[method-assign]
+        "intent": "create",
+        "record_type": "Security Groups",
+        "fields": {"Group ID": "NEW_GROUP", "Description": "Created by test"},
+        "options": [],
+        "permissions": {},
+    }
+    agent._build_reply = lambda *_args, **_kwargs: "Created security group."  # type: ignore[method-assign]
+
+    result = agent.run_task_sync("Create security group NEW_GROUP")
+
+    assert result["reply"] == "Created security group."
+    assert result["actions"] == [
+        {"step": 1, "action": "navigate", "result": "navigated"},
+        {"step": 2, "action": "click_new_group", "result": "clicked"},
+        {"step": 3, "action": "save", "result": "saved"},
+    ]
+
+
 def test_run_task_with_context_security_group_list_ignores_attached_create_text():
     class FakeFlows:
         def read_records(self, _rt, _record_type_name):

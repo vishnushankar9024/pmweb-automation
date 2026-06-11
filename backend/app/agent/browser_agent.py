@@ -259,6 +259,12 @@ class HybridAgent:
             forced_reply = self._retry_security_group_read_reply(task) or self._direct_security_group_read_reply()
             if forced_reply:
                 reply = forced_reply
+        if self._is_security_group_read_intent(task, parsed, flow_result.steps):
+            deterministic_reply = self._deterministic_security_group_reply(task, flow_result.steps)
+            if deterministic_reply:
+                reply = deterministic_reply
+            elif not reply:
+                reply = "I couldn't extract the security group rows from PMWeb. Please try again."
         if self._should_hide_actions(task, parsed, flow_result.steps):
             return {"reply": reply, "actions": []}
         return {"reply": reply, "actions": flow_result.steps}
@@ -420,6 +426,22 @@ class HybridAgent:
         return HybridAgent._contains_phrase(lowered, read_signals) and not HybridAgent._contains_phrase(
             lowered, create_signals
         )
+
+    def _is_security_group_read_intent(
+        self,
+        task: str,
+        parsed: dict[str, Any],
+        results: list[dict[str, Any]],
+    ) -> bool:
+        intent = str(parsed.get("intent", "")).strip().lower()
+        if self._is_security_group_list_task(task):
+            return True
+        if intent not in ("read", "list"):
+            return False
+        parsed_record_type = str(parsed.get("record_type", "")).strip()
+        if self._mentions_security_groups(parsed_record_type):
+            return True
+        return self._looks_like_security_group_list(task, parsed, results)
 
     @staticmethod
     def _contains_phrase(text: str, phrases: tuple[str, ...]) -> bool:

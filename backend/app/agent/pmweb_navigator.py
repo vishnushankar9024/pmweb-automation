@@ -446,6 +446,8 @@ class PMWebNavigator:
         next_button_selectors = [
             "button[aria-label='Go to the next page']",
             "a[aria-label='Go to the next page']",
+            "button[aria-label*='next page' i]",
+            "a[aria-label*='next page' i]",
             "button[title='Go to the next page']",
             "a[title='Go to the next page']",
             ".k-pager-nav[aria-label*='next page']",
@@ -600,6 +602,8 @@ class PMWebNavigator:
         headers = self._kendo_grid_headers()
         rows: list[dict[str, str]] = []
         seen_page_signatures: set[tuple[tuple[str, str], ...]] = set()
+        stale_page_reads = 0
+        max_stale_page_reads = 2
 
         while len(rows) < max_rows:
             remaining = max_rows - len(rows)
@@ -609,7 +613,13 @@ class PMWebNavigator:
 
             page_signature = tuple(self._row_signature(row) for row in page_rows)
             if page_signature in seen_page_signatures:
-                break
+                stale_page_reads += 1
+                if stale_page_reads > max_stale_page_reads:
+                    break
+                if not self._go_to_next_kendo_page():
+                    break
+                continue
+            stale_page_reads = 0
             seen_page_signatures.add(page_signature)
 
             rows.extend(page_rows[:remaining])
