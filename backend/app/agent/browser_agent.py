@@ -534,6 +534,10 @@ class HybridAgent:
     def _looks_like_procedural_security_summary(reply: str) -> bool:
         """Detect narrative summaries that should be replaced with concrete group rows."""
         has_signal = HybridAgent._contains_procedural_security_narration(reply)
+        # Sample-style narration (e.g. "including ... among others") is never a
+        # complete answer even when it embeds numbered rows.
+        if HybridAgent._contains_sampled_security_narration(reply):
+            return True
         has_numbered_rows = bool(re.search(r"^\s*\d+\.\s+", reply, re.MULTILINE))
         return has_signal and not has_numbered_rows
 
@@ -569,12 +573,28 @@ class HybridAgent:
         )
 
     @staticmethod
+    def _contains_sampled_security_narration(reply: str) -> bool:
+        lowered = reply.lower()
+        sampled_signals = (
+            "sample of groups",
+            "sample groups",
+            "sample list",
+            "including",
+            "among others",
+        )
+        return any(signal in lowered for signal in sampled_signals)
+
+    @staticmethod
     def _strip_procedural_security_narration(reply: str | None) -> str | None:
         """When narration wraps numbered rows, keep only concrete row lines."""
         if not reply:
             return reply
         if not HybridAgent._contains_procedural_security_narration(reply):
             return reply
+        if HybridAgent._contains_sampled_security_narration(reply):
+            # Sampled summaries are explicitly incomplete; force deterministic
+            # extraction from navigator/flow payloads instead of trusting prose.
+            return None
         row_lines: list[str] = []
         for line in reply.splitlines():
             stripped = line.strip()
@@ -752,6 +772,8 @@ class HybridAgent:
         """Keep only numbered rows for security-group list/read responses."""
         if not reply:
             return reply
+        if HybridAgent._contains_sampled_security_narration(reply):
+            return None
         numbered_lines = [
             line.strip()
             for line in reply.splitlines()

@@ -528,6 +528,28 @@ def test_answer_only_security_group_reply_extracts_bulleted_rows_from_procedural
     )
 
 
+def test_answer_only_security_group_reply_rejects_sampled_procedural_rows():
+    reply = (
+        "On PMWeb, the task of listing all security groups was completed.\n"
+        "A total of 28 rows were identified, with a sample of groups including:\n"
+        "1. Default Group — System defaults\n"
+        "2. Guest Users — Guest profile\n"
+        "among others."
+    )
+    assert HybridAgent._answer_only_security_group_reply(reply) is None
+
+
+def test_looks_like_procedural_security_summary_flags_sampled_numbered_rows():
+    reply = (
+        "On PMWeb, the task of listing all security groups was completed.\n"
+        "The process involved reading the grid and including sample rows.\n"
+        "1. Default Group — System defaults\n"
+        "2. Guest Users — Guest profile\n"
+        "among others."
+    )
+    assert HybridAgent._looks_like_procedural_security_summary(reply)
+
+
 def test_reply_contains_plain_rows_ignores_security_group_heading_lines():
     reply = (
         "Security groups:\n"
