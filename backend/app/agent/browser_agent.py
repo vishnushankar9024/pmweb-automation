@@ -726,14 +726,14 @@ class HybridAgent:
         if not reply:
             return False
         lines = [line.strip() for line in reply.splitlines() if line.strip()]
-        if len(lines) < 2:
+        if not lines:
             return False
         if any(re.match(r"^\d+\.\s+\S", line) for line in lines):
             return False
         filtered_lines = [
             line for line in lines if not HybridAgent._is_security_group_heading_line(line)
         ]
-        if len(filtered_lines) < 2:
+        if not filtered_lines:
             return False
         return not HybridAgent._contains_procedural_security_narration("\n".join(filtered_lines))
 
@@ -754,7 +754,7 @@ class HybridAgent:
         filtered_lines = [
             line for line in lines if not HybridAgent._is_security_group_heading_line(line)
         ]
-        if len(filtered_lines) >= 2 and not HybridAgent._contains_procedural_security_narration(
+        if filtered_lines and not HybridAgent._contains_procedural_security_narration(
             "\n".join(filtered_lines)
         ):
             return len(filtered_lines)
@@ -785,7 +785,7 @@ class HybridAgent:
         filtered_plain_lines = [
             line for line in plain_lines if not HybridAgent._is_security_group_heading_line(line)
         ]
-        if len(filtered_plain_lines) >= 2 and not HybridAgent._contains_procedural_security_narration(
+        if filtered_plain_lines and not HybridAgent._contains_procedural_security_narration(
             "\n".join(filtered_plain_lines)
         ):
             return "\n".join(filtered_plain_lines)
@@ -889,7 +889,13 @@ class HybridAgent:
             stripped = line.strip()
             if not stripped:
                 continue
-            cleaned_lines.append(re.sub(r"^\d+\.\s+", "", stripped))
+            without_step_prefix = re.sub(
+                r"^(?:step\s*)?\d+\s*[\.\):-]\s*",
+                "",
+                stripped,
+                flags=re.IGNORECASE,
+            )
+            cleaned_lines.append(without_step_prefix)
 
         return "\n".join(cleaned_lines) if cleaned_lines else None
 
@@ -1022,14 +1028,14 @@ class HybridAgent:
             return None
 
         lines: list[str] = []
-        for index, row in enumerate(rows, start=1):
+        for row in rows:
             group_id, description = self._security_group_values(row)
             if group_id and description and group_id.lower() != description.lower():
-                lines.append(f"{index}. {group_id} — {description}")
+                lines.append(f"{group_id} — {description}")
             elif group_id:
-                lines.append(f"{index}. {group_id}")
+                lines.append(group_id)
             elif description:
-                lines.append(f"{index}. {description}")
+                lines.append(description)
         return "\n".join(lines) if lines else None
 
     @staticmethod
@@ -1335,14 +1341,14 @@ class HybridAgent:
 
         if self._mentions_security_groups(record_type) or self._mentions_security_groups(task_text):
             lines: list[str] = []
-            for index, row in enumerate(data, start=1):
+            for row in data:
                 group_id, description = self._security_group_values(row)
                 if group_id and description and group_id.lower() != description.lower():
-                    lines.append(f"{index}. {group_id} — {description}")
+                    lines.append(f"{group_id} — {description}")
                 elif group_id:
-                    lines.append(f"{index}. {group_id}")
+                    lines.append(group_id)
                 elif description:
-                    lines.append(f"{index}. {description}")
+                    lines.append(description)
 
             if lines:
                 # Return the direct answer content (group entries) without
