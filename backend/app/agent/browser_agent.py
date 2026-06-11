@@ -429,8 +429,26 @@ class HybridAgent:
             if read_reply:
                 return read_reply
             if looks_like_security_groups:
+                retry_reply = self._retry_security_group_read_reply(task)
+                if retry_reply:
+                    return retry_reply
                 return "I couldn't extract the security group rows from PMWeb. Please try again."
         return self._summarize(task, results)
+
+    def _retry_security_group_read_reply(self, task: str) -> str | None:
+        """Best-effort deterministic re-read when initial read payload is malformed."""
+        if self._flows is None:
+            return None
+        try:
+            security_rt = get_record_type("Security Groups")
+            if security_rt is None:
+                return None
+            retry_result = self._flows.read_records(security_rt, "Security Groups")
+            retry_parsed = {"intent": "read", "record_type": "Security Groups"}
+            return self._format_read_reply(retry_parsed, retry_result.steps, task=task)
+        except Exception:
+            logger.exception("Security-group read retry failed")
+            return None
 
     @staticmethod
     def _value_from_row(row: dict[str, Any], *aliases: str) -> str:

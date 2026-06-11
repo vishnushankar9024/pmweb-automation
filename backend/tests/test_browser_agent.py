@@ -436,6 +436,47 @@ def test_build_reply_prefers_security_group_rows_even_when_intent_is_create():
     ]
 
 
+def test_build_reply_retries_security_group_read_when_payload_has_no_rows():
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [
+                    {
+                        "step": 4,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "rows": 2,
+                            "data": [
+                                {"Group ID": "Default Group", "Description": "System defaults"},
+                                {"Group ID": "Guest Users", "Description": "Guest profile"},
+                            ],
+                        },
+                    }
+                ]
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    malformed_results = [
+        {
+            "step": 3,
+            "action": "read_grid",
+            "result": "found 28 rows",
+            "output": "rows: 28, sample: Default Group, Guest Users",
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, malformed_results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
 def test_read_security_groups_handles_shifted_columns_and_dedupes():
     nav = PMWebNavigator.__new__(PMWebNavigator)
     nav.read_kendo_grid = lambda max_rows=200: [  # type: ignore[method-assign]
