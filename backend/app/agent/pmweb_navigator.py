@@ -429,6 +429,9 @@ class PMWebNavigator:
         next_button_selectors = [
             "button[aria-label='Go to the next page']",
             "a[aria-label='Go to the next page']",
+            "button[title='Go to the next page']",
+            "a[title='Go to the next page']",
+            ".k-pager-nav[aria-label*='next page']",
             "button.k-pager-nav.k-pager-next",
             "a.k-pager-nav.k-pager-next",
             ".k-pager-nav.k-pager-next",

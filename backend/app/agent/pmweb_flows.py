@@ -87,11 +87,15 @@ class PMWebFlows:
         else:
             data = self.nav.read_kendo_grid(max_rows=500)
         result.add("read_grid", f"found {len(data)} rows")
-        result.steps[-1]["result"] = {
+        payload = {
             "record_type": record_type_name,
             "rows": len(data),
             "data": data,
         }
+        # Keep payload available under both keys for compatibility with
+        # older result-consumers that read `output` instead of `result`.
+        result.steps[-1]["result"] = payload
+        result.steps[-1]["output"] = payload
         return result
 
     # ── Security Group flow ──────────────────────────────────────────

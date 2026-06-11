@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import logging
 import time
+from ast import literal_eval
 from typing import Any
 
 from openai import OpenAI
@@ -445,15 +446,20 @@ class HybridAgent:
         return ""
 
     @staticmethod
-    def _coerce_json_dict(value: Any) -> dict[str, Any] | None:
+    def _coerce_json_value(value: Any) -> dict[str, Any] | list[Any] | None:
         if isinstance(value, dict):
+            return value
+        if isinstance(value, list):
             return value
         if isinstance(value, str):
             try:
                 decoded = json.loads(value)
             except Exception:
-                return None
-            if isinstance(decoded, dict):
+                try:
+                    decoded = literal_eval(value)
+                except Exception:
+                    return None
+            if isinstance(decoded, (dict, list)):
                 return decoded
         return None
 
@@ -461,17 +467,17 @@ class HybridAgent:
         if isinstance(payload, list):
             return payload
 
-        payload_dict = self._coerce_json_dict(payload)
-        if not payload_dict:
+        payload_value = self._coerce_json_value(payload)
+        if not isinstance(payload_value, dict):
             return None
 
         for key in ("data", "rows_data", "items", "groups", "records"):
-            value = payload_dict.get(key)
+            value = payload_value.get(key)
             if isinstance(value, list):
                 return value
 
         for key in ("result", "output", "payload"):
-            nested_rows = self._extract_rows(payload_dict.get(key))
+            nested_rows = self._extract_rows(payload_value.get(key))
             if nested_rows is not None:
                 return nested_rows
 
@@ -480,24 +486,28 @@ class HybridAgent:
     def _extract_grid_result(self, results: list[dict[str, Any]]) -> dict[str, Any] | None:
         grid_result: dict[str, Any] | None = None
         for step in results:
-            parsed_result = self._coerce_json_dict(step.get("result"))
+            parsed_result = self._coerce_json_value(step.get("result"))
             result_rows = self._extract_rows(parsed_result)
             if result_rows is not None:
-                enriched = dict(parsed_result or {})
+                enriched = dict(parsed_result) if isinstance(parsed_result, dict) else {}
                 enriched["data"] = result_rows
                 if step.get("action") == "read_grid":
                     return enriched
                 grid_result = enriched
                 continue
 
-            parsed_output = self._coerce_json_dict(step.get("output"))
+            parsed_output = self._coerce_json_value(step.get("output"))
             output_rows = self._extract_rows(parsed_output)
             if output_rows is not None:
-                enriched = dict(parsed_output or {})
+                enriched = dict(parsed_output) if isinstance(parsed_output, dict) else {}
                 enriched["data"] = output_rows
                 if step.get("action") == "read_grid":
                     return enriched
                 grid_result = enriched
+                continue
+
+            if isinstance(step.get("data"), list):
+                grid_result = {"data": step.get("data")}
         return grid_result
 
     def _format_read_reply(
@@ -522,23 +532,31 @@ class HybridAgent:
         if record_type.lower() == "security groups" or "security group" in task.lower():
             lines: list[str] = []
             for index, row in enumerate(data, start=1):
-                if not isinstance(row, dict):
-                    continue
-                group_id = self._value_from_row(
-                    row,
-                    "Group ID",
-                    "Group",
-                    "Group Name",
-                    "ID",
-                    "Name",
-                    "col_0",
-                )
-                description = self._value_from_row(
-                    row,
-                    "Description",
-                    "Group Description",
-                    "col_1",
-                )
+                group_id = ""
+                description = ""
+                if isinstance(row, dict):
+                    group_id = self._value_from_row(
+                        row,
+                        "Group ID",
+                        "Group",
+                        "Group Name",
+                        "ID",
+                        "Name",
+                        "col_0",
+                    )
+                    description = self._value_from_row(
+                        row,
+                        "Description",
+                        "Group Description",
+                        "col_1",
+                        "col_2",
+                    )
+                elif isinstance(row, (list, tuple)):
+                    values = [str(item).strip() for item in row if str(item).strip()]
+                    if values:
+                        group_id = values[0]
+                    if len(values) > 1:
+                        description = values[1]
                 if group_id and description and group_id.lower() != description.lower():
                     lines.append(f"{index}. {group_id} — {description}")
                 elif group_id:

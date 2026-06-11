@@ -250,6 +250,51 @@ def test_build_reply_lists_security_groups_even_when_step_action_varies():
     ]
 
 
+def test_build_reply_lists_security_groups_from_stringified_payload():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    results = [
+        {
+            "step": 7,
+            "action": "read_grid",
+            "result": (
+                "{'rows': 2, 'data': ["
+                "{'Group ID': 'Default Group', 'Description': 'System defaults'}, "
+                "{'Group ID': 'Guest Users', 'Description': 'Guest profile'}]}"
+            ),
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
+def test_build_reply_lists_security_groups_from_list_rows_payload():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    results = [
+        {
+            "step": 4,
+            "action": "inspect_grid",
+            "output": (
+                "[['Default Group', 'System defaults'], "
+                "['Guest Users', 'Guest profile']]"
+            ),
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
 def test_build_reply_reads_groups_from_alternate_result_key():
     agent = HybridAgent()
     parsed = {"intent": "read", "record_type": "Security Groups"}
