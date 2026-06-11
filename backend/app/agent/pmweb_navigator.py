@@ -496,6 +496,92 @@ class PMWebNavigator:
                 return True
         return False
 
+    def _find_scrollable_grid_container(self) -> Any:
+        selectors = [
+            "kendo-grid .k-grid-content",
+            ".k-grid-content",
+            "[class*='k-grid-content']",
+            "kendo-grid [role='presentation']",
+        ]
+        for selector in selectors:
+            for container in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                try:
+                    if not container.is_displayed():
+                        continue
+                    metrics = self.driver.execute_script(
+                        "return {h: arguments[0].scrollHeight || 0, c: arguments[0].clientHeight || 0};",
+                        container,
+                    )
+                    if metrics and float(metrics.get("h", 0)) > float(metrics.get("c", 0)) + 2:
+                        return container
+                except Exception:
+                    continue
+        return None
+
+    def _collect_rows_from_virtual_scroll(
+        self,
+        headers: list[str],
+        max_rows: int,
+        seed_rows: list[dict[str, str]] | None = None,
+    ) -> list[dict[str, str]]:
+        """Capture additional rows when Kendo grids virtualize instead of paging."""
+        rows = list(seed_rows or [])
+        seen_signatures = {self._row_signature(row) for row in rows}
+        container = self._find_scrollable_grid_container()
+        if container is None:
+            return rows
+
+        stagnant_iterations = 0
+        while len(rows) < max_rows and stagnant_iterations < 4:
+            remaining = max_rows - len(rows)
+            visible_rows = self._kendo_grid_rows(headers, remaining)
+            added_row = False
+            for row in visible_rows:
+                signature = self._row_signature(row)
+                if signature in seen_signatures:
+                    continue
+                seen_signatures.add(signature)
+                rows.append(row)
+                added_row = True
+                if len(rows) >= max_rows:
+                    break
+
+            try:
+                metrics = self.driver.execute_script(
+                    (
+                        "return {"
+                        "top: Number(arguments[0].scrollTop || 0),"
+                        "maxTop: Math.max(Number(arguments[0].scrollHeight || 0)"
+                        " - Number(arguments[0].clientHeight || 0), 0),"
+                        "step: Math.max(Number(arguments[0].clientHeight || 0) - 24, 120)"
+                        "};"
+                    ),
+                    container,
+                )
+            except Exception:
+                break
+
+            if not metrics:
+                break
+
+            scroll_top = float(metrics.get("top", 0))
+            max_scroll_top = float(metrics.get("maxTop", 0))
+            if scroll_top >= max_scroll_top - 1:
+                break
+
+            next_scroll_top = min(max_scroll_top, scroll_top + float(metrics.get("step", 120)))
+            if next_scroll_top <= scroll_top:
+                break
+
+            self.driver.execute_script("arguments[0].scrollTop = arguments[1];", container, next_scroll_top)
+            time.sleep(0.8)
+            if added_row:
+                stagnant_iterations = 0
+            else:
+                stagnant_iterations += 1
+
+        return rows
+
     def read_page_text(self, max_chars: int = 3000) -> str:
         return self.driver.find_element(By.TAG_NAME, "body").text[:max_chars]
 
@@ -532,6 +618,8 @@ class PMWebNavigator:
             if not self._go_to_next_kendo_page():
                 break
 
+        if len(rows) < max_rows:
+            rows = self._collect_rows_from_virtual_scroll(headers, max_rows, seed_rows=rows)
         return rows
 
     def read_security_groups(self, max_rows: int = 200) -> list[dict[str, str]]:

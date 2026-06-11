@@ -251,6 +251,8 @@ class HybridAgent:
         self._store_learning(task, parsed, flow_result.steps)
 
         reply = self._build_reply(task, parsed, flow_result.steps)
+        if self._should_hide_actions(task, parsed, flow_result.steps):
+            return {"reply": reply, "actions": []}
         return {"reply": reply, "actions": flow_result.steps}
 
     # ── LLM intent parsing (Layer 4's only LLM use) ──────────────────
@@ -790,6 +792,13 @@ class HybridAgent:
             if group_id or description:
                 return True
         return False
+
+    def _should_hide_actions(self, task: str, parsed: dict[str, Any], results: list[dict[str, Any]]) -> bool:
+        """Hide internal execution actions for security-group list/read responses."""
+        intent = str(parsed.get("intent", "")).strip().lower()
+        if intent not in ("read", "list"):
+            return False
+        return self._is_security_group_list_task(task) or self._looks_like_security_group_list(task, parsed, results)
 
     @staticmethod
     def _reported_row_count(grid_result: dict[str, Any]) -> int | None:

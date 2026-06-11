@@ -96,6 +96,8 @@ class PMWebFlows:
         payload = {
             "record_type": record_type_name,
             "rows": len(data),
+            "row_count": len(data),
+            "total_rows": len(data),
             "data": data,
         }
         if self._is_security_group_record_type_name(record_type_name):

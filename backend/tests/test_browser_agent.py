@@ -262,6 +262,47 @@ def test_run_task_with_context_security_group_list_ignores_attached_create_text(
     assert result["actions"] == []
 
 
+def test_run_task_sync_security_group_read_hides_actions_when_fast_path_is_skipped():
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [
+                    {
+                        "step": 3,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "rows": 2,
+                            "data": [
+                                {"Group ID": "Default Group", "Description": "System defaults"},
+                                {"Group ID": "Guest Users", "Description": "Guest profile"},
+                            ],
+                        },
+                    }
+                ]
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._is_security_group_list_task = lambda _task: False  # type: ignore[method-assign]
+    agent._parse_intent = lambda *_args, **_kwargs: {  # type: ignore[method-assign]
+        "intent": "read",
+        "record_type": "Security Groups",
+        "fields": {},
+    }
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert result["reply"].splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+    assert result["actions"] == []
+
+
 def test_security_group_list_detection_ignores_add_substring_inside_words():
     assert HybridAgent._is_security_group_list_task(
         "List all security groups with additional details"
