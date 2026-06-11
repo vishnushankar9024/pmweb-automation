@@ -217,6 +217,8 @@ class HybridAgent:
             reply = self._format_read_reply(parsed, flow_result.steps, task=task)
             if not reply:
                 reply = self._retry_security_group_read_reply(task)
+            if not reply:
+                reply = self._direct_security_group_read_reply()
             return {
                 "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
                 "actions": flow_result.steps,
@@ -376,14 +378,36 @@ class HybridAgent:
     @staticmethod
     def _is_security_group_list_task(task: str) -> bool:
         lowered = task.lower()
-        if "security group" not in lowered:
+        if not re.search(r"\bsecurity\s+groups?\b", lowered):
             return False
 
-        read_signals = ("list", "show", "read", "get", "find", "what are", "what's", "display")
-        create_signals = ("create", "build", "make", "add", "set up", "new security group")
-        return any(token in lowered for token in read_signals) and not any(
-            token in lowered for token in create_signals
+        read_signals = (
+            "list",
+            "show",
+            "read",
+            "get",
+            "find",
+            "display",
+            "all",
+            "what are",
+            "what's",
         )
+        create_signals = ("create", "build", "make", "add", "set up", "new security group")
+        return HybridAgent._contains_phrase(lowered, read_signals) and not HybridAgent._contains_phrase(
+            lowered, create_signals
+        )
+
+    @staticmethod
+    def _contains_phrase(text: str, phrases: tuple[str, ...]) -> bool:
+        """Return True when any phrase appears as a whole word/phrase."""
+        for phrase in phrases:
+            stripped = phrase.strip().lower()
+            if not stripped:
+                continue
+            pattern = r"\b" + re.escape(stripped).replace(r"\ ", r"\s+") + r"\b"
+            if re.search(pattern, text):
+                return True
+        return False
 
     # ── Flow dispatch ────────────────────────────────────────────────
 
@@ -459,10 +483,15 @@ class HybridAgent:
                     if retry_reply:
                         return retry_reply
                 return read_reply
-            if looks_like_security_groups:
+            record_type = str(parsed.get("record_type", "")).strip().lower()
+            security_group_read = looks_like_security_groups or record_type == "security groups"
+            if security_group_read:
                 retry_reply = self._retry_security_group_read_reply(task)
                 if retry_reply:
                     return retry_reply
+                direct_reply = self._direct_security_group_read_reply()
+                if direct_reply:
+                    return direct_reply
                 return "I couldn't extract the security group rows from PMWeb. Please try again."
         return self._summarize(task, results)
 
@@ -480,6 +509,30 @@ class HybridAgent:
         except Exception:
             logger.exception("Security-group read retry failed")
             return None
+
+    def _direct_security_group_read_reply(self) -> str | None:
+        """Final fallback: read rows directly from navigator and format."""
+        if self._nav is None:
+            return None
+        try:
+            rows = self._nav.read_security_groups(max_rows=1000)
+        except Exception:
+            logger.exception("Direct security-group read fallback failed")
+            return None
+
+        if not isinstance(rows, list) or not rows:
+            return None
+
+        lines: list[str] = []
+        for index, row in enumerate(rows, start=1):
+            group_id, description = self._security_group_values(row)
+            if group_id and description and group_id.lower() != description.lower():
+                lines.append(f"{index}. {group_id} — {description}")
+            elif group_id:
+                lines.append(f"{index}. {group_id}")
+            elif description:
+                lines.append(f"{index}. {description}")
+        return "\n".join(lines) if lines else None
 
     @staticmethod
     def _value_from_row(row: dict[str, Any], *aliases: str) -> str:

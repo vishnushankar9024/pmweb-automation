@@ -341,7 +341,6 @@ class PMWebNavigator:
                 time.sleep(0.3)
                 return f"typed {value} in cell[{cell_index}] (no popup match)"
         return f"no dropdown in cell[{cell_index}]"
-        return f"no dropdown in cell[{cell_index}]"
 
     def toggle_checkbox(self, label: str, check: bool = True) -> str:
         """Toggle a checkbox in a kendo grid options row."""
@@ -459,6 +458,29 @@ class PMWebNavigator:
         ]
         for selector in next_button_selectors:
             for button in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                if not button.is_displayed():
+                    continue
+                classes = (button.get_attribute("class") or "").lower()
+                aria_disabled = (button.get_attribute("aria-disabled") or "").lower()
+                disabled = button.get_attribute("disabled")
+                if any(flag in classes for flag in ("k-disabled", "k-state-disabled")) or aria_disabled == "true" or disabled is not None:
+                    continue
+                try:
+                    button.click()
+                except Exception:
+                    self.driver.execute_script("arguments[0].click()", button)
+                time.sleep(1.2)
+                return True
+        xpath_fallbacks = [
+            "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
+            "//a[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
+            "//button[contains(translate(@title,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
+            "//a[contains(translate(@title,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
+            "//button[normalize-space(text())='>']",
+            "//a[normalize-space(text())='>']",
+        ]
+        for xpath in xpath_fallbacks:
+            for button in self.driver.find_elements(By.XPATH, xpath):
                 if not button.is_displayed():
                     continue
                 classes = (button.get_attribute("class") or "").lower()

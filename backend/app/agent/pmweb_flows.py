@@ -93,6 +93,8 @@ class PMWebFlows:
             "rows": len(data),
             "data": data,
         }
+        if "security group" in record_type_name.lower():
+            payload["groups"] = data
         # Keep payload available under both keys for compatibility with
         # older result-consumers that read `output` instead of `result`.
         result.steps[-1]["result"] = payload

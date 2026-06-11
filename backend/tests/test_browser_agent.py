@@ -220,6 +220,12 @@ def test_run_task_sync_security_group_list_uses_deterministic_fast_path():
     ]
 
 
+def test_security_group_list_detection_ignores_add_substring_inside_words():
+    assert HybridAgent._is_security_group_list_task(
+        "List all security groups with additional details"
+    )
+
+
 def test_read_records_keeps_all_rows_for_listing():
     rows = [{"Group ID": f"Group {i}", "Description": f"Desc {i}"} for i in range(1, 13)]
     nav = FakeReadNav(rows)
@@ -564,6 +570,37 @@ def test_build_reply_retries_when_security_group_payload_is_sampled():
         "2. Guest Users — Guest profile",
         "3. PMWEB Admin — Admin users",
         "4. Power Users — Power user access",
+    ]
+
+
+def test_build_reply_uses_direct_security_group_fallback_when_flow_retry_unavailable():
+    class FakeNav:
+        def read_security_groups(self, max_rows=1000):
+            return [
+                {"Group ID": "Default Group", "Description": "System defaults"},
+                {"Group ID": "Guest Users", "Description": "Guest profile"},
+            ][:max_rows]
+
+    agent = HybridAgent()
+    agent._nav = FakeNav()  # type: ignore[assignment]
+    malformed_results = [
+        {
+            "step": 3,
+            "action": "read_grid",
+            "result": "found 28 rows",
+            "output": "rows: 28, sample: Default Group, Guest Users",
+        }
+    ]
+
+    reply = agent._build_reply(
+        "List all security groups",
+        {"intent": "read", "record_type": "Security Groups"},
+        malformed_results,
+    )
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
     ]
 
 
