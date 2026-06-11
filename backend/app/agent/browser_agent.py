@@ -260,15 +260,12 @@ class HybridAgent:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             if not reply:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
-            reply = self._answer_only_security_group_reply(reply)
-            if reply and not self._reply_contains_security_group_rows(reply):
-                resolved_reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
-                resolved_reply = self._answer_only_security_group_reply(resolved_reply)
-                if resolved_reply and self._reply_contains_security_group_rows(resolved_reply):
-                    reply = resolved_reply
-                else:
-                    reply = None
-            reply = self._strip_security_group_step_numbers(reply)
+            reply = self._enforce_security_group_answer(
+                task,
+                flow_result.steps,
+                reply,
+                direct_read_cap=direct_read_cap,
+            )
             return {
                 "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
                 # Hide internal execution steps for the list/read UX so the chat
@@ -322,20 +319,14 @@ class HybridAgent:
             else:
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
         if self._is_security_group_read_intent(task, parsed, flow_result.steps):
-            deterministic_reply = self._deterministic_security_group_reply(task, flow_result.steps)
-            if deterministic_reply and self._reply_contains_security_group_rows(deterministic_reply):
-                reply = deterministic_reply
-            elif (
-                not reply
-                or not self._reply_contains_security_group_rows(reply)
-                or self._looks_like_procedural_security_summary(reply)
-                or self._security_group_reply_is_partial(flow_result.steps, reply)
-            ):
+            reply = self._enforce_security_group_answer(
+                task,
+                flow_result.steps,
+                reply,
+                allow_retry=True,
+            )
+            if not reply:
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
-            reply = self._answer_only_security_group_reply(reply)
-            if not reply or not self._reply_contains_security_group_rows(reply):
-                reply = "I couldn't extract the security group rows from PMWeb. Please try again."
-            reply = self._strip_security_group_step_numbers(reply)
         if self._should_hide_actions(task, parsed, flow_result.steps):
             return {"reply": reply, "actions": []}
         return {"reply": reply, "actions": flow_result.steps}
@@ -805,6 +796,73 @@ class HybridAgent:
         reply = self._strip_procedural_security_narration(reply)
         reply = self._answer_only_security_group_reply(reply)
         return self._strip_security_group_step_numbers(reply)
+
+    def _enforce_security_group_answer(
+        self,
+        task: str,
+        results: list[dict[str, Any]],
+        reply: str | None,
+        direct_read_cap: int = 5000,
+        allow_retry: bool = False,
+    ) -> str | None:
+        """Keep only complete, non-procedural security-group rows in replies."""
+        grid_result = self._extract_grid_result(results)
+        expected_rows = self._reported_row_count(grid_result) if grid_result else None
+        sampled_payload = bool(grid_result and self._grid_payload_is_sampled(grid_result))
+        sampled_row_count = 0
+        if sampled_payload and grid_result and isinstance(grid_result.get("data"), list):
+            sampled_row_count = len(grid_result["data"])
+
+        if (
+            expected_rows is None
+            and self._nav is not None
+            and hasattr(self._nav, "get_kendo_total_rows")
+        ):
+            try:
+                nav_total = self._nav.get_kendo_total_rows()
+                if isinstance(nav_total, int) and nav_total > 0:
+                    expected_rows = nav_total
+            except Exception:
+                logger.debug("Could not read pager total rows from navigator", exc_info=True)
+
+        def _is_complete(candidate_reply: str, *, reject_sampled_unknown_total: bool = True) -> bool:
+            if not self._reply_contains_security_group_rows(candidate_reply):
+                return False
+            rendered_rows = self._rendered_row_count(candidate_reply)
+            if expected_rows is not None and expected_rows > 0 and rendered_rows != expected_rows:
+                return False
+            if expected_rows is None and sampled_payload and reject_sampled_unknown_total:
+                # When flow payloads are explicitly sampled but don't report a
+                # total, reject candidates that do not improve on the sampled size.
+                if rendered_rows <= sampled_row_count:
+                    return False
+            return True
+
+        finalized = self._finalize_security_group_reply(reply)
+        if finalized and _is_complete(finalized):
+            return finalized
+
+        if allow_retry:
+            finalized_retry = self._finalize_security_group_reply(
+                self._deterministic_security_group_reply(task, results)
+            )
+            if finalized_retry and _is_complete(
+                finalized_retry,
+                reject_sampled_unknown_total=False,
+            ):
+                return finalized_retry
+
+        safe_cap = min(max(direct_read_cap, 1), 5000)
+        direct_reply = self._direct_security_group_read_reply(max_rows=safe_cap)
+        direct_reply = self._finalize_security_group_reply(direct_reply)
+        if not direct_reply:
+            return None
+        if not self._reply_contains_security_group_rows(direct_reply):
+            return None
+        if expected_rows is not None and expected_rows > 0:
+            if self._rendered_row_count(direct_reply) != expected_rows:
+                return None
+        return direct_reply
 
     @staticmethod
     def _is_security_group_heading_line(line: str) -> bool:

@@ -913,6 +913,40 @@ def test_run_task_sync_security_group_fast_path_rejects_non_numbered_reply():
     assert result["actions"] == []
 
 
+def test_run_task_sync_security_group_fast_path_recovers_from_feedback_style_summary():
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = []
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    sampled_summary = (
+        "On PMWeb, the task of listing all security groups was completed. "
+        "The process involved navigating to the Security page, switching to an appropriate iframe, "
+        "and then reading the security groups grid. A total of 28 rows were identified, "
+        "with a sample of groups including Default Group and Guest Users, among others."
+    )
+    agent._format_read_reply = lambda *_args, **_kwargs: sampled_summary  # type: ignore[method-assign]
+    agent._resolve_security_group_reply = lambda *_args, **_kwargs: sampled_summary  # type: ignore[method-assign]
+    agent._deterministic_security_group_reply = lambda *_args, **_kwargs: sampled_summary  # type: ignore[method-assign]
+    agent._direct_security_group_read_reply = lambda *_args, **_kwargs: (  # type: ignore[method-assign]
+        "1. Default Group — System defaults\n2. Guest Users — Guest profile"
+    )
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert result["reply"].splitlines() == [
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+    ]
+    assert result["actions"] == []
+
+
 def test_read_records_keeps_all_rows_for_listing():
     rows = [{"Group ID": f"Group {i}", "Description": f"Desc {i}"} for i in range(1, 13)]
     nav = FakeReadNav(rows)
