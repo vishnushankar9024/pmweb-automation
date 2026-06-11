@@ -251,6 +251,14 @@ class HybridAgent:
         self._store_learning(task, parsed, flow_result.steps)
 
         reply = self._build_reply(task, parsed, flow_result.steps)
+        if (
+            "security group" in self._primary_task_text(task).lower()
+            and reply
+            and self._looks_like_procedural_security_summary(reply)
+        ):
+            forced_reply = self._retry_security_group_read_reply(task) or self._direct_security_group_read_reply()
+            if forced_reply:
+                reply = forced_reply
         if self._should_hide_actions(task, parsed, flow_result.steps):
             return {"reply": reply, "actions": []}
         return {"reply": reply, "actions": flow_result.steps}
@@ -424,6 +432,27 @@ class HybridAgent:
             if re.search(pattern, text):
                 return True
         return False
+
+    @staticmethod
+    def _looks_like_procedural_security_summary(reply: str) -> bool:
+        """Detect narrative summaries that should be replaced with concrete group rows."""
+        lowered = reply.lower()
+        procedural_signals = (
+            "task of listing",
+            "task was performed",
+            "was completed",
+            "process involved",
+            "navigating to",
+            "switching to",
+            "iframe",
+            "reading the",
+            "rows were identified",
+            "sample of groups",
+            "among others",
+        )
+        has_signal = any(signal in lowered for signal in procedural_signals)
+        has_numbered_rows = bool(re.search(r"^\s*\d+\.\s+", reply, re.MULTILINE))
+        return has_signal and not has_numbered_rows
 
     # ── Flow dispatch ────────────────────────────────────────────────
 
