@@ -261,6 +261,13 @@ class HybridAgent:
             if not reply:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             reply = self._answer_only_security_group_reply(reply)
+            if reply and not self._reply_contains_numbered_rows(reply):
+                resolved_reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
+                resolved_reply = self._answer_only_security_group_reply(resolved_reply)
+                if resolved_reply and self._reply_contains_numbered_rows(resolved_reply):
+                    reply = resolved_reply
+                else:
+                    reply = None
             return {
                 "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
                 # Hide internal execution steps for the list/read UX so the chat
@@ -1113,12 +1120,12 @@ class HybridAgent:
 
     def _summarize(self, task: str, results: list[dict[str, Any]]) -> str:
         # Never narrate procedural steps for security-group list/read requests.
-        if self._is_security_group_list_task(task) or self._looks_like_security_group_list(
-            task, {}, results
-        ):
+        if self._is_security_group_list_task(task) or self._looks_like_security_group_list(task, {}, results):
             deterministic_reply = self._deterministic_security_group_reply(task, results)
-            if deterministic_reply:
+            deterministic_reply = self._answer_only_security_group_reply(deterministic_reply)
+            if deterministic_reply and self._reply_contains_numbered_rows(deterministic_reply):
                 return deterministic_reply
+            return "I couldn't extract the security group rows from PMWeb. Please try again."
 
         try:
             resp = self.client.chat.completions.create(

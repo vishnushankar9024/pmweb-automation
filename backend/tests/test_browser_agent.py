@@ -821,6 +821,32 @@ def test_run_task_sync_security_group_read_rejects_non_numbered_prose_reply():
     assert result["actions"] == []
 
 
+def test_run_task_sync_security_group_fast_path_rejects_non_numbered_reply():
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = []
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._format_read_reply = lambda *_args, **_kwargs: (  # type: ignore[method-assign]
+        "Default Group, Guest Users"
+    )
+    agent._resolve_security_group_reply = lambda *_args, **_kwargs: (  # type: ignore[method-assign]
+        "Default Group, Guest Users"
+    )
+    agent._direct_security_group_read_reply = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert result["reply"] == "I couldn't extract the security group rows from PMWeb. Please try again."
+    assert result["actions"] == []
+
+
 def test_read_records_keeps_all_rows_for_listing():
     rows = [{"Group ID": f"Group {i}", "Description": f"Desc {i}"} for i in range(1, 13)]
     nav = FakeReadNav(rows)
@@ -1597,6 +1623,17 @@ def test_summarize_uses_deterministic_rows_when_results_indicate_security_groups
         "1. Default Group — System defaults",
         "2. Guest Users — Guest profile",
     ]
+
+
+def test_summarize_rejects_security_group_prose_fallback():
+    agent = HybridAgent()
+    agent._deterministic_security_group_reply = lambda *_args, **_kwargs: (  # type: ignore[method-assign]
+        "Security groups include Default Group and Guest Users."
+    )
+
+    reply = agent._summarize("List all security groups", [])
+
+    assert reply == "I couldn't extract the security group rows from PMWeb. Please try again."
 
 
 def test_read_security_groups_handles_shifted_columns_and_dedupes():
