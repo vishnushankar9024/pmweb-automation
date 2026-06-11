@@ -806,6 +806,115 @@ class PMWebNavigator:
 
         return False
 
+    @staticmethod
+    def _parse_page_size_value(text: str) -> int | None:
+        cleaned = text.strip().lower()
+        if not cleaned or cleaned == "all":
+            return None
+        match = re.search(r"\d+", cleaned)
+        if match:
+            return int(match.group(0))
+        return None
+
+    def _preferred_kendo_page_size(self, options: list[str]) -> str | None:
+        """Return the best available page-size option (All, else largest numeric)."""
+        normalized = [option.strip() for option in options if option and option.strip()]
+        if not normalized:
+            return None
+
+        for option in normalized:
+            if option.lower() == "all":
+                return option
+
+        numeric_options: list[tuple[int, str]] = []
+        for option in normalized:
+            numeric_value = self._parse_page_size_value(option)
+            if numeric_value is not None:
+                numeric_options.append((numeric_value, option))
+        if numeric_options:
+            numeric_options.sort(key=lambda item: item[0], reverse=True)
+            return numeric_options[0][1]
+        return None
+
+    def _set_kendo_page_size_to_max(self) -> bool:
+        """Best-effort: switch pager size to All/largest option for complete reads."""
+        # Native <select> controls
+        select_selectors = [
+            ".k-pager-sizes select",
+            "kendo-pager-page-sizes select",
+            ".k-grid-pager select",
+        ]
+        for selector in select_selectors:
+            for page_size_select in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                if not page_size_select.is_displayed():
+                    continue
+                options = page_size_select.find_elements(By.CSS_SELECTOR, "option")
+                option_texts = [option.text.strip() for option in options if option.text.strip()]
+                target_text = self._preferred_kendo_page_size(option_texts)
+                if not target_text:
+                    continue
+                try:
+                    from selenium.webdriver.support.ui import Select
+
+                    Select(page_size_select).select_by_visible_text(target_text)
+                    time.sleep(1.0)
+                    return True
+                except Exception:
+                    continue
+
+        # Kendo dropdown controls
+        dropdown_selectors = [
+            ".k-pager-sizes kendo-dropdownlist",
+            ".k-pager-sizes .k-dropdownlist",
+            "kendo-pager-page-sizes kendo-dropdownlist",
+            "kendo-pager-page-sizes .k-dropdownlist",
+            ".k-grid-pager kendo-dropdownlist",
+            ".k-grid-pager .k-dropdownlist",
+        ]
+        popup_item_selectors = [
+            "kendo-popup li",
+            ".k-animation-container li",
+            "ul.k-list li",
+            "li.k-item",
+        ]
+        for selector in dropdown_selectors:
+            for dropdown in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                if not dropdown.is_displayed():
+                    continue
+                try:
+                    dropdown.click()
+                except Exception:
+                    try:
+                        self.driver.execute_script("arguments[0].click()", dropdown)
+                    except Exception:
+                        continue
+                time.sleep(0.6)
+
+                popup_items: list[Any] = []
+                for item_selector in popup_item_selectors:
+                    popup_items.extend(self.driver.find_elements(By.CSS_SELECTOR, item_selector))
+                visible_items = [item for item in popup_items if item.is_displayed() and item.text.strip()]
+                if not visible_items:
+                    continue
+
+                option_texts = [item.text.strip() for item in visible_items]
+                target_text = self._preferred_kendo_page_size(option_texts)
+                if not target_text:
+                    self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+                    continue
+
+                clicked = False
+                for item in visible_items:
+                    if item.text.strip().lower() == target_text.lower():
+                        item.click()
+                        clicked = True
+                        break
+                if clicked:
+                    time.sleep(1.0)
+                    return True
+                self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        return False
+
     def _find_scrollable_grid_container(self) -> Any:
         selectors = [
             "kendo-grid .k-grid-content",
@@ -955,6 +1064,13 @@ class PMWebNavigator:
         # Best effort: start from page 1 so previous user navigation state
         # cannot truncate list/read responses.
         self._go_to_first_kendo_page()
+        if self._set_kendo_page_size_to_max():
+            # Page-size changes can reset paging state and total-row text.
+            self._go_to_first_kendo_page()
+            refreshed_total = self.get_kendo_total_rows()
+            if isinstance(refreshed_total, int) and refreshed_total > 0:
+                reported_total = refreshed_total
+                target_rows = min(max_rows, reported_total)
         rows: list[dict[str, str]] = []
         seen_row_signatures: set[tuple[tuple[str, str], ...]] = set()
         seen_page_signatures: set[tuple[tuple[str, str], ...]] = set()

@@ -251,7 +251,7 @@ class HybridAgent:
                         reply = direct_reply
             if (
                 not reply
-                or not self._reply_contains_numbered_rows(reply)
+                or not self._reply_contains_security_group_rows(reply)
                 or self._security_group_reply_is_partial(flow_result.steps, reply)
                 or self._looks_like_procedural_security_summary(reply)
             ):
@@ -261,10 +261,10 @@ class HybridAgent:
             if not reply:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             reply = self._answer_only_security_group_reply(reply)
-            if reply and not self._reply_contains_numbered_rows(reply):
+            if reply and not self._reply_contains_security_group_rows(reply):
                 resolved_reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
                 resolved_reply = self._answer_only_security_group_reply(resolved_reply)
-                if resolved_reply and self._reply_contains_numbered_rows(resolved_reply):
+                if resolved_reply and self._reply_contains_security_group_rows(resolved_reply):
                     reply = resolved_reply
                 else:
                     reply = None
@@ -314,17 +314,17 @@ class HybridAgent:
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
         if self._is_security_group_read_intent(task, parsed, flow_result.steps):
             deterministic_reply = self._deterministic_security_group_reply(task, flow_result.steps)
-            if deterministic_reply and self._reply_contains_numbered_rows(deterministic_reply):
+            if deterministic_reply and self._reply_contains_security_group_rows(deterministic_reply):
                 reply = deterministic_reply
             elif (
                 not reply
-                or not self._reply_contains_numbered_rows(reply)
+                or not self._reply_contains_security_group_rows(reply)
                 or self._looks_like_procedural_security_summary(reply)
                 or self._security_group_reply_is_partial(flow_result.steps, reply)
             ):
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
             reply = self._answer_only_security_group_reply(reply)
-            if not reply or not self._reply_contains_numbered_rows(reply):
+            if not reply or not self._reply_contains_security_group_rows(reply):
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
             reply = self._strip_security_group_step_numbers(reply)
         if self._should_hide_actions(task, parsed, flow_result.steps):
@@ -673,7 +673,7 @@ class HybridAgent:
         read_reply = self._format_read_reply(parsed, results, task=task)
         if (
             read_reply
-            and self._reply_contains_numbered_rows(read_reply)
+            and self._reply_contains_security_group_rows(read_reply)
             and not self._security_group_reply_is_partial(results, read_reply)
         ):
             return read_reply
@@ -686,12 +686,34 @@ class HybridAgent:
         return bool(re.search(r"^\s*\d+\.\s+\S", reply, flags=re.MULTILINE))
 
     @staticmethod
+    def _reply_contains_plain_rows(reply: str | None) -> bool:
+        """Detect non-numbered multi-line row answers (already stripped formatting)."""
+        if not reply:
+            return False
+        lines = [line.strip() for line in reply.splitlines() if line.strip()]
+        if len(lines) < 2:
+            return False
+        if any(re.match(r"^\d+\.\s+\S", line) for line in lines):
+            return False
+        return not HybridAgent._contains_procedural_security_narration("\n".join(lines))
+
+    @staticmethod
+    def _reply_contains_security_group_rows(reply: str | None) -> bool:
+        return HybridAgent._reply_contains_numbered_rows(reply) or HybridAgent._reply_contains_plain_rows(reply)
+
+    @staticmethod
     def _rendered_row_count(reply: str | None) -> int:
         if not reply:
             return 0
-        return sum(
+        numbered_count = sum(
             1 for line in reply.splitlines() if re.match(r"^\s*\d+\.\s+\S", line)
         )
+        if numbered_count:
+            return numbered_count
+        lines = [line.strip() for line in reply.splitlines() if line.strip()]
+        if len(lines) >= 2 and not HybridAgent._contains_procedural_security_narration("\n".join(lines)):
+            return len(lines)
+        return 0
 
     @staticmethod
     def _answer_only_security_group_reply(reply: str | None) -> str | None:
@@ -758,7 +780,7 @@ class HybridAgent:
 
         best_reply = initial_reply
         best_rows = self._rendered_row_count(initial_reply)
-        if initial_reply and not self._reply_contains_numbered_rows(initial_reply):
+        if initial_reply and not self._reply_contains_security_group_rows(initial_reply):
             best_rows = 0
 
         # Rebuild directly from deterministic flow rows before any retries so we
@@ -776,14 +798,14 @@ class HybridAgent:
             best_rows = rebuilt_rows
         if (
             rebuilt_reply
-            and self._reply_contains_numbered_rows(rebuilt_reply)
+            and self._reply_contains_security_group_rows(rebuilt_reply)
             and not self._reply_is_partial_for_rows(rebuilt_reply, expected_rows)
             and not sampled_payload
         ):
             return rebuilt_reply
         if (
             initial_reply
-            and self._reply_contains_numbered_rows(initial_reply)
+            and self._reply_contains_security_group_rows(initial_reply)
             and not self._reply_is_partial_for_rows(initial_reply, expected_rows)
             and not sampled_payload
         ):
@@ -811,10 +833,10 @@ class HybridAgent:
 
         if self._reply_is_partial_for_rows(best_reply, expected_rows):
             return None
-        if sampled_payload and best_reply and self._reply_contains_numbered_rows(best_reply):
+        if sampled_payload and best_reply and self._reply_contains_security_group_rows(best_reply):
             return None
         # Never allow prose-only security-group responses to pass through.
-        if best_reply and not self._reply_contains_numbered_rows(best_reply):
+        if best_reply and not self._reply_contains_security_group_rows(best_reply):
             return None
         return self._strip_procedural_security_narration(best_reply)
 
@@ -1173,7 +1195,7 @@ class HybridAgent:
         if self._is_security_group_list_task(task) or self._looks_like_security_group_list(task, {}, results):
             deterministic_reply = self._deterministic_security_group_reply(task, results)
             deterministic_reply = self._answer_only_security_group_reply(deterministic_reply)
-            if deterministic_reply and self._reply_contains_numbered_rows(deterministic_reply):
+            if deterministic_reply and self._reply_contains_security_group_rows(deterministic_reply):
                 return deterministic_reply
             return "I couldn't extract the security group rows from PMWeb. Please try again."
 

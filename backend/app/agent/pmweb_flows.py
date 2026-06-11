@@ -92,6 +92,10 @@ class PMWebFlows:
         row_cap = 5000 if is_security_groups else 1000
         if is_security_groups and hasattr(self.nav, "read_security_groups"):
             data = self.nav.read_security_groups(max_rows=row_cap)
+            # Some PMWeb layouts render columns in ways that security-specific
+            # normalization can miss; retain a generic-grid fallback.
+            if not data:
+                data = self.nav.read_kendo_grid(max_rows=row_cap)
         else:
             data = self.nav.read_kendo_grid(max_rows=row_cap)
         result.add("read_grid", f"found {len(data)} rows")
@@ -132,6 +136,14 @@ class PMWebFlows:
                 if len(data) >= total_rows:
                     break
 
+        # Final deterministic fallback: if pager totals still indicate more rows,
+        # re-read through the generic grid reader and keep the richer payload.
+        if is_security_groups and total_rows > len(data):
+            generic_rows = self.nav.read_kendo_grid(max_rows=min(max(total_rows, len(data)), 5000))
+            if len(generic_rows) > len(data):
+                data = generic_rows
+                total_rows = max(total_rows, len(data))
+
         payload = {
             "record_type": record_type_name,
             "rows": len(data),
@@ -141,6 +153,7 @@ class PMWebFlows:
             # Compatibility aliases used by older executor/summarizer paths.
             "rows_data": data,
             "records": data,
+            "items": data,
         }
         if is_security_groups:
             payload["groups"] = data

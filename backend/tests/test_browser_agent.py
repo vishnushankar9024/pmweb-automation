@@ -514,6 +514,21 @@ def test_answer_only_security_group_reply_strips_non_row_lines():
     )
 
 
+def test_reply_contains_security_group_rows_accepts_plain_multiline_rows():
+    reply = "Default Group — System defaults\nGuest Users — Guest profile"
+    assert HybridAgent._reply_contains_security_group_rows(reply)
+    assert HybridAgent._rendered_row_count(reply) == 2
+
+
+def test_reply_contains_security_group_rows_rejects_procedural_multiline_summary():
+    reply = (
+        "On PMWeb, the task of listing all security groups was completed.\n"
+        "The process involved navigating to Security and reading the grid."
+    )
+    assert not HybridAgent._reply_contains_security_group_rows(reply)
+    assert HybridAgent._rendered_row_count(reply) == 0
+
+
 def test_security_group_list_detection_ignores_add_substring_inside_words():
     assert HybridAgent._is_security_group_list_task(
         "List all security groups with additional details"
