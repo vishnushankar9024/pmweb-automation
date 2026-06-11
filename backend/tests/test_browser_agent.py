@@ -341,6 +341,54 @@ def test_run_task_sync_security_group_list_prefers_direct_read_when_flow_has_no_
     assert result["actions"] == []
 
 
+def test_run_task_sync_security_group_list_uses_flow_rows_even_if_formatter_falls_back_to_prose():
+    flow_rows = [
+        {"Group ID": "Default Group", "Description": "System defaults"},
+        {"Group ID": "Guest Users", "Description": "Guest profile"},
+        {"Group ID": "PMWEB Admin", "Description": "Admin users"},
+    ]
+
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [
+                    {
+                        "step": 3,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "rows": 3,
+                            "total_rows": 3,
+                            "data": flow_rows,
+                        },
+                    }
+                ]
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._parse_intent = (  # type: ignore[method-assign]
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("LLM parser should not run"))
+    )
+    agent._format_read_reply = (  # type: ignore[method-assign]
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(
+            AssertionError("Security-group fast path should not rely on formatter output")
+        )
+    )
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert result["reply"].splitlines() == [
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+        "PMWEB Admin — Admin users",
+    ]
+    assert result["actions"] == []
+
+
 def test_run_task_sync_hides_actions_for_security_group_read_intent_without_list_phrase():
     class FakeFlows:
         def read_records(self, _rt, _record_type_name):

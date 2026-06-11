@@ -231,7 +231,11 @@ class HybridAgent:
             direct_read_cap = min(max(expected_rows or 1000, 1000), 5000)
             # Prefer the flow payload first (it already reflects deterministic
             # retries), then use direct-read fallback when needed.
-            reply = self._format_read_reply(parsed, flow_result.steps, task=task)
+            reply = self._security_group_rows_reply_from_results(flow_result.steps)
+            if reply and self._reply_is_partial_for_rows(reply, expected_rows):
+                reply = None
+            if not reply:
+                reply = self._format_read_reply(parsed, flow_result.steps, task=task)
             reply = self._strip_procedural_security_narration(reply)
             # When flow payloads omit row-count metadata, we still compare
             # against a direct navigator read and keep the richer concrete list.
@@ -704,6 +708,14 @@ class HybridAgent:
 
     def _deterministic_security_group_reply(self, task: str, results: list[dict[str, Any]]) -> str | None:
         """Return a direct security-group listing when deterministic row data exists."""
+        row_reply = self._security_group_rows_reply_from_results(results)
+        if (
+            row_reply
+            and self._reply_contains_security_group_rows(row_reply)
+            and not self._security_group_reply_is_partial(results, row_reply)
+        ):
+            return row_reply
+
         parsed = {"intent": "read", "record_type": "Security Groups"}
         read_reply = self._format_read_reply(parsed, results, task=task)
         if (
@@ -975,11 +987,13 @@ class HybridAgent:
         # Rebuild directly from deterministic flow rows before any retries so we
         # can replace procedural prose with concrete group entries even when
         # retry/direct-read fallbacks are unavailable.
-        rebuilt_reply = self._format_read_reply(
-            {"intent": "read", "record_type": "Security Groups"},
-            results,
-            task=task,
-        )
+        rebuilt_reply = self._security_group_rows_reply_from_results(results)
+        if not rebuilt_reply:
+            rebuilt_reply = self._format_read_reply(
+                {"intent": "read", "record_type": "Security Groups"},
+                results,
+                task=task,
+            )
         rebuilt_reply = self._strip_procedural_security_narration(rebuilt_reply)
         rebuilt_rows = self._rendered_row_count(rebuilt_reply)
         if rebuilt_rows > best_rows:
@@ -1355,6 +1369,35 @@ class HybridAgent:
             return True
         reported_rows = self._reported_row_count(grid_result)
         return self._reply_is_partial_for_rows(reply, reported_rows)
+
+    def _security_group_rows_reply_from_results(self, results: list[dict[str, Any]]) -> str | None:
+        """Build a security-group answer directly from deterministic row payloads."""
+        grid_result = self._extract_grid_result(results)
+        if not grid_result:
+            return None
+        data = grid_result.get("data")
+        if not isinstance(data, list) or not data:
+            return None
+
+        lines: list[str] = []
+        seen_lines: set[str] = set()
+        for row in data:
+            group_id, description = self._security_group_values(row)
+            if group_id and description and group_id.lower() != description.lower():
+                line = f"{group_id} — {description}"
+            elif group_id:
+                line = group_id
+            elif description:
+                line = description
+            else:
+                continue
+
+            line_key = line.lower()
+            if line_key in seen_lines:
+                continue
+            seen_lines.add(line_key)
+            lines.append(line)
+        return "\n".join(lines) if lines else None
 
     def _format_read_reply(
         self, parsed: dict[str, Any], results: list[dict[str, Any]], task: str = "",
