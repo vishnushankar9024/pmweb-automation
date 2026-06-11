@@ -86,9 +86,10 @@ class PMWebFlows:
         else:
             result.add("navigate", self.nav.navigate("/Home.aspx"))
 
-        # Use a high cap so list/read answers can include complete datasets.
-        row_cap = 1000
         is_security_groups = self._is_security_group_record_type_name(record_type_name)
+        # Keep security-group reads especially high so list responses can include
+        # all rows even when projects contain many custom groups.
+        row_cap = 5000 if is_security_groups else 1000
         if is_security_groups and hasattr(self.nav, "read_security_groups"):
             data = self.nav.read_security_groups(max_rows=row_cap)
         else:
@@ -97,9 +98,11 @@ class PMWebFlows:
         total_rows = len(data)
         if hasattr(self.nav, "get_kendo_total_rows"):
             try:
-                reported_total = self.nav.get_kendo_total_rows()
-                if isinstance(reported_total, int) and reported_total > total_rows:
-                    total_rows = reported_total
+                for _ in range(2):
+                    reported_total = self.nav.get_kendo_total_rows()
+                    if isinstance(reported_total, int) and reported_total > total_rows:
+                        total_rows = reported_total
+                        break
             except Exception:
                 logger.debug("Could not read pager total rows", exc_info=True)
 
@@ -115,6 +118,14 @@ class PMWebFlows:
             retry_rows = self.nav.read_security_groups(max_rows=retry_cap)
             if len(retry_rows) > len(data):
                 data = retry_rows
+            total_rows = max(total_rows, len(data))
+            if hasattr(self.nav, "get_kendo_total_rows"):
+                try:
+                    reported_total = self.nav.get_kendo_total_rows()
+                    if isinstance(reported_total, int) and reported_total > total_rows:
+                        total_rows = reported_total
+                except Exception:
+                    logger.debug("Could not refresh pager total rows", exc_info=True)
 
         payload = {
             "record_type": record_type_name,

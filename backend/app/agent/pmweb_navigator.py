@@ -516,6 +516,56 @@ class PMWebNavigator:
                     return int(text)
         return None
 
+    def _first_visible_grid_row_signature(self) -> str:
+        row_selectors = [
+            "kendo-grid .k-grid-content tr.k-table-row",
+            ".k-grid-content tr.k-table-row",
+            "tr.k-table-row",
+            "table tbody tr",
+        ]
+        for selector in row_selectors:
+            for row in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                try:
+                    if not row.is_displayed():
+                        continue
+                except Exception:
+                    continue
+                cells = row.find_elements(By.CSS_SELECTOR, "td")
+                values = [cell.text.strip() for cell in cells if cell.text.strip()]
+                if values:
+                    return " | ".join(values[:3])
+        return ""
+
+    def _pager_state_signature(self) -> tuple[int | None, str, str]:
+        pager_info: list[str] = []
+        for selector in (
+            ".k-pager-info",
+            ".k-grid-pager .k-pager-info",
+            "kendo-pager-info",
+        ):
+            for element in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                text = element.text.strip()
+                if text:
+                    pager_info.append(text)
+        return (
+            self._active_kendo_page_number(),
+            " | ".join(pager_info),
+            self._first_visible_grid_row_signature(),
+        )
+
+    def _wait_for_pager_state_change(
+        self,
+        previous_signature: tuple[int | None, str, str],
+        timeout_s: float = 3.0,
+    ) -> bool:
+        deadline = time.time() + timeout_s
+        while time.time() < deadline:
+            current_signature = self._pager_state_signature()
+            if current_signature != previous_signature:
+                return True
+            time.sleep(0.2)
+        return False
+
     def _go_to_next_kendo_page_via_numeric_button(self, current_page: int | None) -> bool:
         if current_page is None:
             return False
@@ -543,6 +593,7 @@ class PMWebNavigator:
 
     def _go_to_next_kendo_page(self) -> bool:
         current_page = self._active_kendo_page_number()
+        initial_signature = self._pager_state_signature()
         next_button_selectors = [
             "button[aria-label='Go to the next page']",
             "a[aria-label='Go to the next page']",
@@ -572,9 +623,11 @@ class PMWebNavigator:
                 if self._pager_control_is_disabled(button):
                     continue
                 if self._click_pager_control(button):
-                    return True
+                    if self._wait_for_pager_state_change(initial_signature):
+                        return True
         if self._go_to_next_kendo_page_via_numeric_button(current_page):
-            return True
+            if self._wait_for_pager_state_change(initial_signature):
+                return True
         xpath_fallbacks = [
             "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
             "//a[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
@@ -598,7 +651,8 @@ class PMWebNavigator:
                 if self._pager_control_is_disabled(button):
                     continue
                 if self._click_pager_control(button):
-                    return True
+                    if self._wait_for_pager_state_change(initial_signature):
+                        return True
         return False
 
     def _go_to_first_kendo_page(self) -> bool:

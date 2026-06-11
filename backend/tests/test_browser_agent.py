@@ -225,6 +225,61 @@ def test_run_task_sync_security_group_list_uses_deterministic_fast_path():
     assert result["actions"] == []
 
 
+def test_run_task_sync_security_group_list_prefers_complete_flow_rows_over_partial_direct_read():
+    expected_rows = [
+        {"Group ID": f"Group {idx}", "Description": f"Description {idx}"}
+        for idx in range(1, 29)
+    ]
+
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [
+                    {
+                        "step": 3,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "rows": 28,
+                            "total_rows": 28,
+                            "data": expected_rows,
+                        },
+                    }
+                ]
+
+            return Result()
+
+    class FakeNav:
+        def __init__(self):
+            self.read_calls = 0
+
+        def read_security_groups(self, max_rows=1000):
+            self.read_calls += 1
+            return expected_rows[:20][:max_rows]
+
+        def get_kendo_total_rows(self):
+            return 28
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    fake_nav = FakeNav()
+    agent._nav = fake_nav  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._parse_intent = (  # type: ignore[method-assign]
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("LLM parser should not run"))
+    )
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert fake_nav.read_calls == 0
+    reply_lines = result["reply"].splitlines()
+    assert len(reply_lines) == 28
+    assert reply_lines[0] == "1. Group 1 — Description 1"
+    assert reply_lines[-1] == "28. Group 28 — Description 28"
+    assert result["actions"] == []
+
+
 def test_run_task_sync_hides_actions_for_security_group_read_intent_without_list_phrase():
     class FakeFlows:
         def read_records(self, _rt, _record_type_name):

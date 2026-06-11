@@ -216,14 +216,34 @@ class HybridAgent:
             self._store_learning(task, parsed, flow_result.steps)
             grid_result = self._extract_grid_result(flow_result.steps)
             expected_rows = self._reported_row_count(grid_result) if grid_result else None
+            if (
+                expected_rows is None
+                and self._nav is not None
+                and hasattr(self._nav, "get_kendo_total_rows")
+            ):
+                try:
+                    nav_total = self._nav.get_kendo_total_rows()
+                    if isinstance(nav_total, int) and nav_total > 0:
+                        expected_rows = nav_total
+                except Exception:
+                    logger.debug("Could not read pager total rows from navigator", exc_info=True)
+
             direct_read_cap = min(max(expected_rows or 1000, 1000), 5000)
-            # Prefer a deterministic direct read reply first so we always return
-            # concrete group rows instead of any intermediary/tool summaries.
-            reply = self._direct_security_group_read_reply(max_rows=direct_read_cap) or self._format_read_reply(
-                parsed,
-                flow_result.steps,
-                task=task,
-            )
+            # Prefer the flow payload first (it already reflects deterministic
+            # retries), then use direct-read fallback when needed.
+            reply = self._format_read_reply(parsed, flow_result.steps, task=task)
+            if (
+                not reply
+                or self._security_group_reply_is_partial(flow_result.steps, reply)
+                or self._looks_like_procedural_security_summary(reply)
+            ):
+                direct_reply = self._direct_security_group_read_reply(max_rows=direct_read_cap)
+                if direct_reply:
+                    if (
+                        not reply
+                        or self._rendered_row_count(direct_reply) >= self._rendered_row_count(reply)
+                    ):
+                        reply = direct_reply
             if (
                 not reply
                 or self._security_group_reply_is_partial(flow_result.steps, reply)
@@ -629,6 +649,17 @@ class HybridAgent:
             initial_reply = None
         grid_result = self._extract_grid_result(results)
         expected_rows = self._reported_row_count(grid_result) if grid_result else None
+        if (
+            expected_rows is None
+            and self._nav is not None
+            and hasattr(self._nav, "get_kendo_total_rows")
+        ):
+            try:
+                nav_total = self._nav.get_kendo_total_rows()
+                if isinstance(nav_total, int) and nav_total > 0:
+                    expected_rows = nav_total
+            except Exception:
+                logger.debug("Could not read pager total rows from navigator", exc_info=True)
         sampled_payload = bool(grid_result and self._grid_payload_is_sampled(grid_result))
 
         best_reply = initial_reply

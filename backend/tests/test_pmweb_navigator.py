@@ -68,6 +68,7 @@ def test_go_to_next_kendo_page_clicks_span_next_control():
         css_matches={"span.k-pager-nav.k-pager-next": [next_control]},
     )
     nav = _build_nav(driver)
+    nav._wait_for_pager_state_change = lambda _signature, timeout_s=3.0: True  # type: ignore[method-assign]
 
     moved = nav._go_to_next_kendo_page()
 
@@ -99,6 +100,7 @@ def test_go_to_next_kendo_page_uses_numeric_button_when_next_control_missing():
         },
     )
     nav = _build_nav(driver)
+    nav._wait_for_pager_state_change = lambda _signature, timeout_s=3.0: True  # type: ignore[method-assign]
 
     moved = nav._go_to_next_kendo_page()
 
