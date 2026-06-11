@@ -1070,8 +1070,33 @@ class HybridAgent:
                 # Security-specific normalization can occasionally miss columns on
                 # custom grids; keep whichever deterministic reader returns more rows.
                 generic_rows = self._nav.read_kendo_grid(max_rows=max_rows)
-                if isinstance(generic_rows, list) and len(generic_rows) > len(rows):
-                    rows = generic_rows
+                if isinstance(generic_rows, list):
+                    merged_rows: list[Any] = []
+                    seen_signatures: set[tuple[str, str]] = set()
+                    for source in (rows, generic_rows):
+                        if not isinstance(source, list):
+                            continue
+                        for row in source:
+                            group_id, description = self._security_group_values(row)
+                            signature = (
+                                group_id.strip().lower(),
+                                description.strip().lower(),
+                            )
+                            if signature == ("", "") and isinstance(row, dict):
+                                # Preserve rows that did not normalize cleanly by
+                                # keying on their raw non-empty values.
+                                raw_values = tuple(
+                                    str(value).strip().lower()
+                                    for value in row.values()
+                                    if str(value).strip()
+                                )
+                                signature = ("|".join(raw_values), "")
+                            if signature in seen_signatures:
+                                continue
+                            seen_signatures.add(signature)
+                            merged_rows.append(row)
+                    if len(merged_rows) > len(rows):
+                        rows = merged_rows
         except Exception:
             logger.exception("Direct security-group read fallback failed")
             return None

@@ -71,6 +71,36 @@ class PMWebFlows:
         missing_group_id = sum(1 for row in rows if not str(row.get("Group ID", "")).strip())
         return missing_group_id >= max(1, len(rows) // 2)
 
+    @staticmethod
+    def _security_row_signature(row: dict[str, Any]) -> tuple[str, ...]:
+        """Build a stable row signature for de-duplicating merged security rows."""
+        if not isinstance(row, dict):
+            return tuple()
+        ordered_values = []
+        for value in row.values():
+            text_value = str(value).strip() if value is not None else ""
+            if text_value:
+                ordered_values.append(text_value.lower())
+        return tuple(ordered_values)
+
+    def _merge_security_rows(
+        self,
+        primary_rows: list[dict[str, Any]],
+        secondary_rows: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
+        """Merge rows from multiple deterministic readers, preserving order."""
+        merged_rows: list[dict[str, Any]] = []
+        seen_signatures: set[tuple[str, ...]] = set()
+
+        for source in (primary_rows, secondary_rows):
+            for row in source:
+                signature = self._security_row_signature(row)
+                if signature in seen_signatures:
+                    continue
+                seen_signatures.add(signature)
+                merged_rows.append(row)
+        return merged_rows
+
     # ── Navigation flows ─────────────────────────────────────────────
 
     def navigate_to_record(self, rt: RecordType, result: FlowResult) -> None:
@@ -106,8 +136,9 @@ class PMWebFlows:
                 data = self.nav.read_kendo_grid(max_rows=row_cap)
             elif hasattr(self.nav, "read_kendo_grid") and self._security_rows_need_generic_fallback(data):
                 generic_rows = self.nav.read_kendo_grid(max_rows=row_cap)
-                if len(generic_rows) > len(data):
-                    data = generic_rows
+                merged_rows = self._merge_security_rows(data, generic_rows)
+                if len(merged_rows) > len(data):
+                    data = merged_rows
         else:
             data = self.nav.read_kendo_grid(max_rows=row_cap)
         result.add("read_grid", f"found {len(data)} rows")
@@ -140,8 +171,12 @@ class PMWebFlows:
                     and self._security_rows_need_generic_fallback(retry_rows)
                 ):
                     generic_retry_rows = self.nav.read_kendo_grid(max_rows=retry_cap)
-                    if len(generic_retry_rows) > len(retry_rows):
-                        retry_rows = generic_retry_rows
+                    merged_retry_rows = self._merge_security_rows(
+                        retry_rows,
+                        generic_retry_rows,
+                    )
+                    if len(merged_retry_rows) > len(retry_rows):
+                        retry_rows = merged_retry_rows
                 if len(retry_rows) > len(data):
                     data = retry_rows
                 total_rows = max(total_rows, len(data))
@@ -159,8 +194,9 @@ class PMWebFlows:
         # re-read through the generic grid reader and keep the richer payload.
         if is_security_groups and total_rows > len(data):
             generic_rows = self.nav.read_kendo_grid(max_rows=min(max(total_rows, len(data)), 5000))
-            if len(generic_rows) > len(data):
-                data = generic_rows
+            merged_rows = self._merge_security_rows(data, generic_rows)
+            if len(merged_rows) > len(data):
+                data = merged_rows
                 total_rows = max(total_rows, len(data))
 
         payload = {

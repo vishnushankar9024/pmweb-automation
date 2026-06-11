@@ -1026,6 +1026,51 @@ def test_read_records_captures_pager_total_rows_when_available():
     assert read_step["result"]["total_rows"] == 28
 
 
+def test_read_records_merges_security_and_generic_rows_when_totals_indicate_more_rows():
+    class FakeMergeNav:
+        def __init__(self) -> None:
+            self.called_read_security_groups = 0
+            self.called_read_kendo_grid = 0
+
+        def navigate(self, _url_fragment: str) -> str:
+            return "navigated"
+
+        def switch_to_iframe(self, _iframe_id: str) -> str:
+            return "switched"
+
+        def read_security_groups(self, max_rows: int = 200) -> list[dict[str, str]]:
+            self.called_read_security_groups += 1
+            return [
+                {"Group ID": "Default Group", "Description": "System defaults"},
+                {"Group ID": "Guest Users", "Description": "Guest profile"},
+            ][:max_rows]
+
+        def read_kendo_grid(self, max_rows: int = 30) -> list[dict[str, str]]:
+            self.called_read_kendo_grid += 1
+            return [
+                {"col_0": "Default Group", "col_1": "System defaults"},
+                {"col_0": "Guest Users", "col_1": "Guest profile"},
+                {"col_0": "PMWEB Admin", "col_1": "Admin users"},
+                {"col_0": "Power Users", "col_1": "Power access"},
+            ][:max_rows]
+
+        def get_kendo_total_rows(self) -> int:
+            return 4
+
+    nav = FakeMergeNav()
+    flow = PMWebFlows(nav)  # type: ignore[arg-type]
+    rt = get_record_type("Security Groups")
+
+    result = flow.read_records(rt, "Security Groups")
+
+    read_step = next(step for step in result.steps if step["action"] == "read_grid")
+    assert read_step["result"]["rows"] == 4
+    assert read_step["result"]["total_rows"] == 4
+    assert len(read_step["result"]["data"]) == 4
+    assert nav.called_read_security_groups >= 1
+    assert nav.called_read_kendo_grid >= 1
+
+
 def test_dispatch_read_normalizes_security_group_record_type_variants():
     captured: dict[str, object] = {}
 
@@ -1609,6 +1654,34 @@ def test_build_reply_uses_direct_security_group_fallback_when_flow_retry_unavail
     assert reply.splitlines() == [
         "Default Group — System defaults",
         "Guest Users — Guest profile",
+    ]
+
+
+def test_direct_security_group_read_reply_merges_equal_length_complementary_rows():
+    class FakeNav:
+        def read_security_groups(self, max_rows=1000):
+            return [
+                {"Group ID": "Default Group", "Description": "System defaults"},
+                {"Group ID": "Guest Users", "Description": "Guest profile"},
+            ][:max_rows]
+
+        def read_kendo_grid(self, max_rows=1000):
+            return [
+                {"col_0": "PMWEB Admin", "col_1": "Admin users"},
+                {"col_0": "Power Users", "col_1": "Power user access"},
+            ][:max_rows]
+
+    agent = HybridAgent()
+    agent._nav = FakeNav()  # type: ignore[assignment]
+
+    reply = agent._direct_security_group_read_reply(max_rows=20)
+
+    assert reply is not None
+    assert reply.splitlines() == [
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+        "PMWEB Admin — Admin users",
+        "Power Users — Power user access",
     ]
 
 

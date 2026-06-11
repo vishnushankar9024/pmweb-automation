@@ -1158,7 +1158,7 @@ class PMWebNavigator:
         """Read Security Groups as normalized Group ID/Description rows."""
         rows = self.read_kendo_grid(max_rows=max_rows)
         normalized_rows: list[dict[str, str]] = []
-        seen: set[tuple[str, str]] = set()
+        seen: set[tuple[str, ...]] = set()
         for row in rows:
             normalized = {
                 self._normalize_key(str(key)): str(value).strip()
@@ -1199,6 +1199,10 @@ class PMWebNavigator:
 
             if group_id or description:
                 signature = (group_id.lower(), description.lower())
+                if signature == ("", ""):
+                    signature = tuple(
+                        value.lower() for value in ordered_values if value
+                    )
                 if signature in seen:
                     continue
                 seen.add(signature)
