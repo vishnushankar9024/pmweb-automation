@@ -208,6 +208,20 @@ class HybridAgent:
             if r["status"] != "success":
                 return {"reply": f"Cannot connect to PMWeb: {r.get('message')}", "actions": []}
 
+        # Keep this high-frequency read path deterministic so users always get
+        # the full list content instead of a procedural summary.
+        if self._is_security_group_list_task(task):
+            parsed = {"intent": "read", "record_type": "Security Groups", "fields": {}}
+            flow_result = self._dispatch_to_flow(parsed)
+            self._store_learning(task, parsed, flow_result.steps)
+            reply = self._format_read_reply(parsed, flow_result.steps, task=task)
+            if not reply:
+                reply = self._retry_security_group_read_reply(task)
+            return {
+                "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
+                "actions": flow_result.steps,
+            }
+
         parsed = self._parse_intent(task, history)
 
         intent = parsed.get("intent", "ask_user")
@@ -358,6 +372,18 @@ class HybridAgent:
                 }
 
         return {"intent": intent, "record_type": record_type, "fields": {}}
+
+    @staticmethod
+    def _is_security_group_list_task(task: str) -> bool:
+        lowered = task.lower()
+        if "security group" not in lowered:
+            return False
+
+        read_signals = ("list", "show", "read", "get", "find", "what are", "what's", "display")
+        create_signals = ("create", "build", "make", "add", "set up", "new security group")
+        return any(token in lowered for token in read_signals) and not any(
+            token in lowered for token in create_signals
+        )
 
     # ── Flow dispatch ────────────────────────────────────────────────
 

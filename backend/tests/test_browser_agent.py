@@ -181,6 +181,45 @@ def test_blank_task_asks_for_details_without_login():
     }
 
 
+def test_run_task_sync_security_group_list_uses_deterministic_fast_path():
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [
+                    {
+                        "step": 3,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "rows": 3,
+                            "data": [
+                                {"Group ID": "Default Group", "Description": "System defaults"},
+                                {"Group ID": "Guest Users", "Description": "Guest profile"},
+                                {"Group ID": "PMWEB Admin", "Description": "Admin users"},
+                            ],
+                        },
+                    }
+                ]
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._parse_intent = (  # type: ignore[method-assign]
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("LLM parser should not run"))
+    )
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert result["reply"].splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+        "3. PMWEB Admin — Admin users",
+    ]
+
+
 def test_read_records_keeps_all_rows_for_listing():
     rows = [{"Group ID": f"Group {i}", "Description": f"Desc {i}"} for i in range(1, 13)]
     nav = FakeReadNav(rows)
