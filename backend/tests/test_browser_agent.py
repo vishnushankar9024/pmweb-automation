@@ -477,12 +477,39 @@ def test_build_reply_retries_security_group_read_when_payload_has_no_rows():
     ]
 
 
+def test_build_reply_handles_shifted_security_group_columns_without_wrapper():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    results = [
+        {
+            "step": 8,
+            "action": "read_grid",
+            "result": {
+                "record_type": "Security Groups",
+                "rows": 2,
+                "data": [
+                    {"col_0": "", "col_1": "", "col_2": "Default Group", "col_3": "System defaults"},
+                    {"col_0": "", "col_1": "", "col_2": "Guest Users", "col_3": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert not reply.lower().startswith("security groups (")
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
 def test_read_security_groups_handles_shifted_columns_and_dedupes():
     nav = PMWebNavigator.__new__(PMWebNavigator)
     nav.read_kendo_grid = lambda max_rows=200: [  # type: ignore[method-assign]
-        {"col_0": "", "col_1": "Default Group", "col_2": "System defaults"},
-        {"col_0": "", "col_1": "Guest Users", "col_2": "Guest profile"},
-        {"col_0": "", "col_1": "Guest Users", "col_2": "Guest profile"},
+        {"col_0": "", "col_1": "", "col_2": "Default Group", "col_3": "System defaults"},
+        {"col_0": "", "col_1": "", "col_2": "Guest Users", "col_3": "Guest profile"},
+        {"col_0": "", "col_1": "", "col_2": "Guest Users", "col_3": "Guest profile"},
     ]
 
     rows = nav.read_security_groups()

@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from ast import literal_eval
 from typing import Any
@@ -464,6 +465,74 @@ class HybridAgent:
         return ""
 
     @staticmethod
+    def _ordered_row_values(row: dict[str, Any]) -> list[str]:
+        """Return non-empty row values in deterministic left-to-right order."""
+        indexed_columns: list[tuple[int, str]] = []
+        fallback_columns: list[str] = []
+
+        for key, value in row.items():
+            text_value = str(value).strip() if value is not None else ""
+            if not text_value:
+                continue
+            key_text = str(key).strip().lower()
+            match = re.fullmatch(r"col[_\s-]?(\d+)", key_text)
+            if match:
+                indexed_columns.append((int(match.group(1)), text_value))
+            else:
+                fallback_columns.append(text_value)
+
+        ordered_values = [value for _, value in sorted(indexed_columns, key=lambda item: item[0])]
+        ordered_values.extend(fallback_columns)
+        return ordered_values
+
+    def _security_group_values(self, row: Any) -> tuple[str, str]:
+        """Extract security group id/description across varied payload shapes."""
+        if isinstance(row, dict):
+            group_id = self._value_from_row(
+                row,
+                "Group ID",
+                "Group",
+                "Group Name",
+                "ID",
+                "Name",
+                "col_0",
+                "col_1",
+                "col_2",
+                "col_3",
+            )
+            description = self._value_from_row(
+                row,
+                "Description",
+                "Group Description",
+                "col_4",
+                "col_3",
+                "col_2",
+                "col_1",
+            )
+            ordered_values = self._ordered_row_values(row)
+            if not group_id and ordered_values:
+                group_id = ordered_values[0]
+            if not description:
+                for candidate in ordered_values[1:]:
+                    if candidate.lower() != group_id.lower():
+                        description = candidate
+                        break
+            return group_id, description
+
+        if isinstance(row, (list, tuple)):
+            values = [str(item).strip() for item in row if str(item).strip()]
+            if not values:
+                return "", ""
+            if len(values) == 1:
+                return values[0], ""
+            return values[0], values[1]
+
+        if isinstance(row, str):
+            return row.strip(), ""
+
+        return "", ""
+
+    @staticmethod
     def _coerce_json_value(value: Any) -> dict[str, Any] | list[Any] | None:
         if isinstance(value, dict):
             return value
@@ -563,25 +632,7 @@ class HybridAgent:
         if not isinstance(data, list):
             return False
         for row in data:
-            if not isinstance(row, dict):
-                continue
-            group_id = self._value_from_row(
-                row,
-                "Group ID",
-                "Group",
-                "Group Name",
-                "ID",
-                "Name",
-                "col_0",
-                "col_1",
-            )
-            description = self._value_from_row(
-                row,
-                "Description",
-                "Group Description",
-                "col_2",
-                "col_1",
-            )
+            group_id, description = self._security_group_values(row)
             if group_id or description:
                 return True
         return False
@@ -609,34 +660,7 @@ class HybridAgent:
         if record_type.lower() == "security groups" or "security group" in task.lower():
             lines: list[str] = []
             for index, row in enumerate(data, start=1):
-                group_id = ""
-                description = ""
-                if isinstance(row, dict):
-                    group_id = self._value_from_row(
-                        row,
-                        "Group ID",
-                        "Group",
-                        "Group Name",
-                        "ID",
-                        "Name",
-                        "col_0",
-                        "col_1",
-                    )
-                    description = self._value_from_row(
-                        row,
-                        "Description",
-                        "Group Description",
-                        "col_2",
-                        "col_1",
-                    )
-                elif isinstance(row, (list, tuple)):
-                    values = [str(item).strip() for item in row if str(item).strip()]
-                    if values:
-                        group_id = values[0]
-                    if len(values) > 1:
-                        description = values[1]
-                elif isinstance(row, str):
-                    group_id = row.strip()
+                group_id, description = self._security_group_values(row)
                 if group_id and description and group_id.lower() != description.lower():
                     lines.append(f"{index}. {group_id} — {description}")
                 elif group_id:

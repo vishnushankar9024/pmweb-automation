@@ -380,6 +380,28 @@ class PMWebNavigator:
     def _row_signature(row: dict[str, str]) -> tuple[tuple[str, str], ...]:
         return tuple(sorted((str(key), str(value)) for key, value in row.items()))
 
+    @staticmethod
+    def _ordered_row_values(row: dict[str, str]) -> list[str]:
+        indexed_columns: list[tuple[int, str]] = []
+        fallback_columns: list[str] = []
+
+        for key, value in row.items():
+            text_value = str(value).strip() if value is not None else ""
+            if not text_value:
+                continue
+            normalized_key = str(key).strip().lower().replace("-", "_").replace(" ", "")
+            if normalized_key.startswith("col_"):
+                try:
+                    indexed_columns.append((int(normalized_key.split("_", 1)[1]), text_value))
+                    continue
+                except Exception:
+                    pass
+            fallback_columns.append(text_value)
+
+        ordered_values = [value for _, value in sorted(indexed_columns, key=lambda item: item[0])]
+        ordered_values.extend(fallback_columns)
+        return ordered_values
+
     def _kendo_grid_headers(self) -> list[str]:
         selectors = [
             "kendo-grid thead th",
@@ -405,11 +427,7 @@ class PMWebNavigator:
         ]
         row_elements = []
         for selector in row_selectors:
-            row_elements = [
-                row
-                for row in self.driver.find_elements(By.CSS_SELECTOR, selector)
-                if row.is_displayed()
-            ]
+            row_elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
             if row_elements:
                 break
 
@@ -435,6 +453,9 @@ class PMWebNavigator:
             "button.k-pager-nav.k-pager-next",
             "a.k-pager-nav.k-pager-next",
             ".k-pager-nav.k-pager-next",
+            "[aria-label='Next page']",
+            "[title='Next page']",
+            "[title='Next']",
         ]
         for selector in next_button_selectors:
             for button in self.driver.find_elements(By.CSS_SELECTOR, selector):
@@ -443,7 +464,7 @@ class PMWebNavigator:
                 classes = (button.get_attribute("class") or "").lower()
                 aria_disabled = (button.get_attribute("aria-disabled") or "").lower()
                 disabled = button.get_attribute("disabled")
-                if "k-disabled" in classes or aria_disabled == "true" or disabled is not None:
+                if any(flag in classes for flag in ("k-disabled", "k-state-disabled")) or aria_disabled == "true" or disabled is not None:
                     continue
                 try:
                     button.click()
@@ -511,15 +532,28 @@ class PMWebNavigator:
                 or normalized.get("name")
                 or normalized.get("col0")
                 or normalized.get("col1")
+                or normalized.get("col2")
+                or normalized.get("col3")
                 or ""
             )
             description = (
                 normalized.get("description")
                 or normalized.get("groupdescription")
+                or normalized.get("col4")
+                or normalized.get("col3")
                 or normalized.get("col2")
                 or normalized.get("col1")
                 or ""
             )
+
+            ordered_values = self._ordered_row_values(row)
+            if not group_id and ordered_values:
+                group_id = ordered_values[0]
+            if not description:
+                for candidate in ordered_values[1:]:
+                    if candidate.lower() != group_id.lower():
+                        description = candidate
+                        break
 
             if group_id or description:
                 signature = (group_id.lower(), description.lower())
