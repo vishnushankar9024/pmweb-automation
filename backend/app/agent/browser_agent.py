@@ -760,6 +760,27 @@ class HybridAgent:
         best_rows = self._rendered_row_count(initial_reply)
         if initial_reply and not self._reply_contains_numbered_rows(initial_reply):
             best_rows = 0
+
+        # Rebuild directly from deterministic flow rows before any retries so we
+        # can replace procedural prose with concrete group entries even when
+        # retry/direct-read fallbacks are unavailable.
+        rebuilt_reply = self._format_read_reply(
+            {"intent": "read", "record_type": "Security Groups"},
+            results,
+            task=task,
+        )
+        rebuilt_reply = self._strip_procedural_security_narration(rebuilt_reply)
+        rebuilt_rows = self._rendered_row_count(rebuilt_reply)
+        if rebuilt_rows > best_rows:
+            best_reply = rebuilt_reply
+            best_rows = rebuilt_rows
+        if (
+            rebuilt_reply
+            and self._reply_contains_numbered_rows(rebuilt_reply)
+            and not self._reply_is_partial_for_rows(rebuilt_reply, expected_rows)
+            and not sampled_payload
+        ):
+            return rebuilt_reply
         if (
             initial_reply
             and self._reply_contains_numbered_rows(initial_reply)

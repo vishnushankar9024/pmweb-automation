@@ -1567,6 +1567,36 @@ def test_resolve_security_group_reply_rejects_prose_without_numbered_rows():
     assert reply is None
 
 
+def test_resolve_security_group_reply_rebuilds_rows_from_existing_results():
+    agent = HybridAgent()
+    results = [
+        {
+            "step": 3,
+            "action": "read_grid",
+            "result": {
+                "record_type": "Security Groups",
+                "rows": 2,
+                "total_rows": 2,
+                "data": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                    {"Group ID": "Guest Users", "Description": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._resolve_security_group_reply(
+        "List all security groups",
+        results,
+        (
+            "On PMWeb, the task of listing all security groups was completed. "
+            "The process involved navigating to the Security page and reading the grid."
+        ),
+    )
+
+    assert reply == "1. Default Group — System defaults\n2. Guest Users — Guest profile"
+
+
 def test_resolve_security_group_reply_strips_procedural_wrapper_when_rows_present():
     agent = HybridAgent()
     results = [
