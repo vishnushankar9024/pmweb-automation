@@ -215,14 +215,10 @@ class HybridAgent:
             flow_result = self._dispatch_to_flow(parsed)
             self._store_learning(task, parsed, flow_result.steps)
             reply = self._format_read_reply(parsed, flow_result.steps, task=task)
-            if reply and self._security_group_reply_is_partial(flow_result.steps, reply):
-                retry_reply = self._retry_security_group_read_reply(task)
-                if retry_reply:
-                    reply = retry_reply
+            if self._security_group_reply_is_partial(flow_result.steps, reply):
+                reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             if not reply:
-                reply = self._retry_security_group_read_reply(task)
-            if not reply:
-                reply = self._direct_security_group_read_reply()
+                reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             return {
                 "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
                 "actions": flow_result.steps,
@@ -491,21 +487,65 @@ class HybridAgent:
             read_reply = self._format_read_reply(parsed, results, task=task)
             if read_reply:
                 if looks_like_security_groups and self._security_group_reply_is_partial(results, read_reply):
-                    retry_reply = self._retry_security_group_read_reply(task)
-                    if retry_reply:
-                        return retry_reply
+                    complete_reply = self._resolve_security_group_reply(task, results, read_reply)
+                    if complete_reply:
+                        return complete_reply
                 return read_reply
             record_type = str(parsed.get("record_type", "")).strip().lower()
             security_group_read = looks_like_security_groups or record_type == "security groups"
             if security_group_read:
-                retry_reply = self._retry_security_group_read_reply(task)
-                if retry_reply:
-                    return retry_reply
-                direct_reply = self._direct_security_group_read_reply()
-                if direct_reply:
-                    return direct_reply
+                complete_reply = self._resolve_security_group_reply(task, results, None)
+                if complete_reply:
+                    return complete_reply
                 return "I couldn't extract the security group rows from PMWeb. Please try again."
         return self._summarize(task, results)
+
+    @staticmethod
+    def _rendered_row_count(reply: str | None) -> int:
+        if not reply:
+            return 0
+        return sum(1 for line in reply.splitlines() if line.strip())
+
+    @staticmethod
+    def _reply_is_partial_for_rows(reply: str | None, expected_rows: int | None) -> bool:
+        if not reply or expected_rows is None or expected_rows <= 0:
+            return False
+        rendered_rows = HybridAgent._rendered_row_count(reply)
+        return 0 < rendered_rows < expected_rows
+
+    def _resolve_security_group_reply(
+        self,
+        task: str,
+        results: list[dict[str, Any]],
+        initial_reply: str | None,
+    ) -> str | None:
+        """Prefer a complete security-group reply over sampled rows."""
+        grid_result = self._extract_grid_result(results)
+        expected_rows = self._reported_row_count(grid_result) if grid_result else None
+
+        best_reply = initial_reply
+        best_rows = self._rendered_row_count(initial_reply)
+        if initial_reply and not self._reply_is_partial_for_rows(initial_reply, expected_rows):
+            return initial_reply
+
+        retry_reply = self._retry_security_group_read_reply(task)
+        if retry_reply:
+            retry_rows = self._rendered_row_count(retry_reply)
+            if retry_rows > best_rows:
+                best_reply = retry_reply
+                best_rows = retry_rows
+            if not self._reply_is_partial_for_rows(retry_reply, expected_rows):
+                return retry_reply
+
+        direct_reply = self._direct_security_group_read_reply()
+        if direct_reply:
+            direct_rows = self._rendered_row_count(direct_reply)
+            if direct_rows > best_rows:
+                best_reply = direct_reply
+            if not self._reply_is_partial_for_rows(direct_reply, expected_rows):
+                return direct_reply
+
+        return best_reply
 
     def _retry_security_group_read_reply(self, task: str) -> str | None:
         """Best-effort deterministic re-read when initial read payload is malformed."""
@@ -750,10 +790,7 @@ class HybridAgent:
         if not grid_result:
             return False
         reported_rows = self._reported_row_count(grid_result)
-        if reported_rows is None or reported_rows <= 0:
-            return False
-        rendered_rows = sum(1 for line in reply.splitlines() if line.strip())
-        return 0 < rendered_rows < reported_rows
+        return self._reply_is_partial_for_rows(reply, reported_rows)
 
     def _format_read_reply(
         self, parsed: dict[str, Any], results: list[dict[str, Any]], task: str = "",
