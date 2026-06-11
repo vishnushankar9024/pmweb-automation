@@ -856,6 +856,31 @@ def test_build_reply_handles_shifted_security_group_columns_without_wrapper():
     ]
 
 
+def test_summarize_returns_deterministic_security_group_rows_instead_of_narration():
+    agent = HybridAgent()
+    results = [
+        {
+            "step": 3,
+            "action": "read_grid",
+            "result": {
+                "record_type": "Security Groups",
+                "rows": 2,
+                "data": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                    {"Group ID": "Guest Users", "Description": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._summarize("List all security groups", results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
 def test_read_security_groups_handles_shifted_columns_and_dedupes():
     nav = PMWebNavigator.__new__(PMWebNavigator)
     nav.read_kendo_grid = lambda max_rows=200: [  # type: ignore[method-assign]

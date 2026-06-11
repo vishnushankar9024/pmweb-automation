@@ -510,6 +510,14 @@ class HybridAgent:
                 return "I couldn't extract the security group rows from PMWeb. Please try again."
         return self._summarize(task, results)
 
+    def _deterministic_security_group_reply(self, task: str, results: list[dict[str, Any]]) -> str | None:
+        """Return a direct security-group listing when deterministic row data exists."""
+        parsed = {"intent": "read", "record_type": "Security Groups"}
+        read_reply = self._format_read_reply(parsed, results, task=task)
+        if read_reply and not self._security_group_reply_is_partial(results, read_reply):
+            return read_reply
+        return self._resolve_security_group_reply(task, results, read_reply)
+
     @staticmethod
     def _rendered_row_count(reply: str | None) -> int:
         if not reply:
@@ -853,6 +861,12 @@ class HybridAgent:
         return None
 
     def _summarize(self, task: str, results: list[dict[str, Any]]) -> str:
+        # Never narrate procedural steps for security-group listing requests.
+        if self._is_security_group_list_task(task):
+            deterministic_reply = self._deterministic_security_group_reply(task, results)
+            if deterministic_reply:
+                return deterministic_reply
+
         try:
             resp = self.client.chat.completions.create(
                 model=settings.openai_model,
