@@ -443,18 +443,80 @@ class PMWebNavigator:
                 rows.append(row_dict)
         return rows
 
+    def _pager_control_is_disabled(self, control: Any) -> bool:
+        classes = (control.get_attribute("class") or "").lower()
+        aria_disabled = (control.get_attribute("aria-disabled") or "").lower()
+        disabled = control.get_attribute("disabled")
+        if any(flag in classes for flag in ("k-disabled", "k-state-disabled")):
+            return True
+        if aria_disabled == "true" or disabled is not None:
+            return True
+        try:
+            parent_disabled = self.driver.execute_script(
+                (
+                    "const el = arguments[0];"
+                    "if (!el || !el.closest) return false;"
+                    "const disabledParent = el.closest('[aria-disabled=\"true\"], .k-disabled, .k-state-disabled');"
+                    "return Boolean(disabledParent);"
+                ),
+                control,
+            )
+            return bool(parent_disabled)
+        except Exception:
+            return False
+
+    def _click_pager_control(self, control: Any) -> bool:
+        candidates: list[Any] = [control]
+        try:
+            clickable_ancestor = self.driver.execute_script(
+                (
+                    "const el = arguments[0];"
+                    "if (!el || !el.closest) return null;"
+                    "return el.closest('button, a, span[role=\"button\"], span.k-pager-nav');"
+                ),
+                control,
+            )
+            if clickable_ancestor is not None:
+                candidates.insert(0, clickable_ancestor)
+        except Exception:
+            pass
+
+        seen_ids: set[int] = set()
+        for candidate in candidates:
+            if candidate is None:
+                continue
+            marker = id(candidate)
+            if marker in seen_ids:
+                continue
+            seen_ids.add(marker)
+            try:
+                candidate.click()
+            except Exception:
+                try:
+                    self.driver.execute_script("arguments[0].click()", candidate)
+                except Exception:
+                    continue
+            time.sleep(1.2)
+            return True
+        return False
+
     def _go_to_next_kendo_page(self) -> bool:
         next_button_selectors = [
             "button[aria-label='Go to the next page']",
             "a[aria-label='Go to the next page']",
+            "span[aria-label='Go to the next page']",
             "button[aria-label*='next page' i]",
             "a[aria-label*='next page' i]",
+            "span[aria-label*='next page' i]",
             "button[title='Go to the next page']",
             "a[title='Go to the next page']",
+            "span[title='Go to the next page']",
             ".k-pager-nav[aria-label*='next page']",
             "button.k-pager-nav.k-pager-next",
             "a.k-pager-nav.k-pager-next",
+            "span.k-pager-nav.k-pager-next",
             ".k-pager-nav.k-pager-next",
+            ".k-pager-next",
             "[aria-label='Next page']",
             "[title='Next page']",
             "[title='Next']",
@@ -463,40 +525,33 @@ class PMWebNavigator:
             for button in self.driver.find_elements(By.CSS_SELECTOR, selector):
                 if not button.is_displayed():
                     continue
-                classes = (button.get_attribute("class") or "").lower()
-                aria_disabled = (button.get_attribute("aria-disabled") or "").lower()
-                disabled = button.get_attribute("disabled")
-                if any(flag in classes for flag in ("k-disabled", "k-state-disabled")) or aria_disabled == "true" or disabled is not None:
+                if self._pager_control_is_disabled(button):
                     continue
-                try:
-                    button.click()
-                except Exception:
-                    self.driver.execute_script("arguments[0].click()", button)
-                time.sleep(1.2)
-                return True
+                if self._click_pager_control(button):
+                    return True
         xpath_fallbacks = [
             "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
             "//a[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
+            "//span[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
             "//button[contains(translate(@title,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
             "//a[contains(translate(@title,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
+            "//span[contains(translate(@title,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
+            "//*[contains(concat(' ', normalize-space(@class), ' '), ' k-pager-next ')]",
+            "//button[.//*[contains(@class,'arrow-end-right') or contains(@class,'caret-alt-right') or contains(@class,'chevron-right')]]",
+            "//a[.//*[contains(@class,'arrow-end-right') or contains(@class,'caret-alt-right') or contains(@class,'chevron-right')]]",
+            "//span[.//*[contains(@class,'arrow-end-right') or contains(@class,'caret-alt-right') or contains(@class,'chevron-right')]]",
             "//button[normalize-space(text())='>']",
             "//a[normalize-space(text())='>']",
+            "//span[normalize-space(text())='>']",
         ]
         for xpath in xpath_fallbacks:
             for button in self.driver.find_elements(By.XPATH, xpath):
                 if not button.is_displayed():
                     continue
-                classes = (button.get_attribute("class") or "").lower()
-                aria_disabled = (button.get_attribute("aria-disabled") or "").lower()
-                disabled = button.get_attribute("disabled")
-                if any(flag in classes for flag in ("k-disabled", "k-state-disabled")) or aria_disabled == "true" or disabled is not None:
+                if self._pager_control_is_disabled(button):
                     continue
-                try:
-                    button.click()
-                except Exception:
-                    self.driver.execute_script("arguments[0].click()", button)
-                time.sleep(1.2)
-                return True
+                if self._click_pager_control(button):
+                    return True
         return False
 
     def _find_scrollable_grid_container(self) -> Any:
