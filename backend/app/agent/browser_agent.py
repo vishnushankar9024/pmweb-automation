@@ -308,6 +308,9 @@ class HybridAgent:
             normalized_reply = self._finalize_security_group_reply(reply)
             if normalized_reply:
                 reply = normalized_reply
+            elif self._is_security_group_read_intent(task, parsed, flow_result.steps):
+                # Never preserve unfinalized prose for security-group reads/lists.
+                reply = None
         if (
             "security group" in self._primary_task_text(task).lower()
             and reply
@@ -660,21 +663,29 @@ class HybridAgent:
                 if looks_like_security_groups and self._security_group_reply_is_partial(results, read_reply):
                     complete_reply = self._resolve_security_group_reply(task, results, read_reply)
                     if complete_reply:
-                        return self._finalize_security_group_reply(complete_reply) or complete_reply
+                        finalized_reply = self._finalize_security_group_reply(complete_reply)
+                        if finalized_reply and self._reply_contains_security_group_rows(finalized_reply):
+                            return finalized_reply
                     # Enforce complete security-group answers: when we cannot
                     # recover from a sampled/partial payload, do not return a
                     # truncated list.
                     read_reply = None
                 else:
                     if looks_like_security_groups:
-                        return self._finalize_security_group_reply(read_reply) or read_reply
-                    return read_reply
+                        finalized_reply = self._finalize_security_group_reply(read_reply)
+                        if finalized_reply and self._reply_contains_security_group_rows(finalized_reply):
+                            return finalized_reply
+                        read_reply = None
+                    elif read_reply:
+                        return read_reply
             record_type = str(parsed.get("record_type", "")).strip().lower()
             security_group_read = looks_like_security_groups or record_type == "security groups"
             if security_group_read:
                 complete_reply = self._resolve_security_group_reply(task, results, None)
                 if complete_reply:
-                    return self._finalize_security_group_reply(complete_reply) or complete_reply
+                    finalized_reply = self._finalize_security_group_reply(complete_reply)
+                    if finalized_reply and self._reply_contains_security_group_rows(finalized_reply):
+                        return finalized_reply
                 return "I couldn't extract the security group rows from PMWeb. Please try again."
         return self._summarize(task, results)
 

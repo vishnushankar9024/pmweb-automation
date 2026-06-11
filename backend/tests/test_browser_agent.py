@@ -1587,6 +1587,21 @@ def test_build_reply_handles_shifted_security_group_columns_without_wrapper():
     ]
 
 
+def test_build_reply_rejects_unfinalized_security_group_procedural_fallback():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    results: list[dict[str, object]] = []
+    agent._format_read_reply = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._resolve_security_group_reply = lambda *_args, **_kwargs: (  # type: ignore[method-assign]
+        "On PMWeb, the task of listing all security groups was completed. "
+        "The process involved navigating to the Security page and reading the grid."
+    )
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply == "I couldn't extract the security group rows from PMWeb. Please try again."
+
+
 def test_summarize_returns_deterministic_security_group_rows_instead_of_narration():
     agent = HybridAgent()
     results = [
