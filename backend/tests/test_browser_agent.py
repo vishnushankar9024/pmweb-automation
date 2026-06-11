@@ -43,6 +43,20 @@ class FakeSecurityNav:
         return "saved"
 
 
+class FakeReadNav:
+    def __init__(self, rows: list[dict[str, str]]) -> None:
+        self._rows = rows
+
+    def navigate(self, _url_fragment: str) -> str:
+        return "navigated"
+
+    def switch_to_iframe(self, _iframe_id: str) -> str:
+        return "switched"
+
+    def read_kendo_grid(self, max_rows: int = 30) -> list[dict[str, str]]:
+        return self._rows[:max_rows]
+
+
 def test_security_group_registry_requires_group_id():
     assert get_required_fields("Security Groups") == ["Group ID", "Description"]
 
@@ -157,3 +171,44 @@ def test_blank_task_asks_for_details_without_login():
         "reply": "Please describe what you want me to do in PMWeb.",
         "actions": [],
     }
+
+
+def test_read_records_keeps_all_rows_for_listing():
+    rows = [{"Group ID": f"Group {i}", "Description": f"Desc {i}"} for i in range(1, 13)]
+    nav = FakeReadNav(rows)
+    flow = PMWebFlows(nav)  # type: ignore[arg-type]
+    rt = get_record_type("Security Groups")
+
+    result = flow.read_records(rt, "Security Groups")
+
+    read_step = next(step for step in result.steps if step["action"] == "read_grid")
+    assert read_step["result"]["rows"] == 12
+    assert len(read_step["result"]["data"]) == 12
+    assert read_step["result"]["data"][-1]["Group ID"] == "Group 12"
+
+
+def test_build_reply_lists_all_security_groups():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    results = [
+        {
+            "step": 3,
+            "action": "read_grid",
+            "result": {
+                "record_type": "Security Groups",
+                "rows": 3,
+                "data": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                    {"Group ID": "Guest Users", "Description": "Guest profile"},
+                    {"Group ID": "PMWEB Admin", "Description": "Admin users"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert "Security groups (3):" in reply
+    assert "1. Default Group — System defaults" in reply
+    assert "2. Guest Users — Guest profile" in reply
+    assert "3. PMWEB Admin — Admin users" in reply

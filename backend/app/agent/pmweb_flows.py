@@ -81,9 +81,13 @@ class PMWebFlows:
         else:
             result.add("navigate", self.nav.navigate("/Home.aspx"))
 
-        data = self.nav.read_kendo_grid()
+        data = self.nav.read_kendo_grid(max_rows=200)
         result.add("read_grid", f"found {len(data)} rows")
-        result.steps[-1]["result"] = {"rows": len(data), "data": data[:10]}
+        result.steps[-1]["result"] = {
+            "record_type": record_type_name,
+            "rows": len(data),
+            "data": data,
+        }
         return result
 
     # ── Security Group flow ──────────────────────────────────────────

@@ -230,8 +230,8 @@ class HybridAgent:
 
         self._store_learning(task, parsed, flow_result.steps)
 
-        summary = self._summarize(task, flow_result.steps)
-        return {"reply": summary, "actions": flow_result.steps}
+        reply = self._build_reply(task, parsed, flow_result.steps)
+        return {"reply": reply, "actions": flow_result.steps}
 
     # ── LLM intent parsing (Layer 4's only LLM use) ──────────────────
 
@@ -420,7 +420,89 @@ class HybridAgent:
 
     # ── Summarizer ───────────────────────────────────────────────────
 
-    def _summarize(self, task: str, results: list) -> str:
+    def _build_reply(self, task: str, parsed: dict[str, Any], results: list[dict[str, Any]]) -> str:
+        intent = parsed.get("intent", "")
+        if intent in ("read", "list"):
+            read_reply = self._format_read_reply(parsed, results)
+            if read_reply:
+                return read_reply
+        return self._summarize(task, results)
+
+    @staticmethod
+    def _value_from_row(row: dict[str, Any], *aliases: str) -> str:
+        normalized = {
+            str(key).lower().replace(" ", "").replace("_", ""): str(value).strip()
+            for key, value in row.items()
+            if value is not None
+        }
+        for alias in aliases:
+            value = normalized.get(alias.lower().replace(" ", "").replace("_", ""))
+            if value:
+                return value
+        return ""
+
+    def _format_read_reply(self, parsed: dict[str, Any], results: list[dict[str, Any]]) -> str | None:
+        grid_result: dict[str, Any] | None = None
+        for step in results:
+            if step.get("action") == "read_grid" and isinstance(step.get("result"), dict):
+                grid_result = step["result"]
+                break
+
+        if grid_result is None:
+            return None
+
+        data = grid_result.get("data")
+        if not isinstance(data, list):
+            return None
+
+        record_type = str(parsed.get("record_type", grid_result.get("record_type", "records"))).strip()
+        if not data:
+            return f"No {record_type.lower()} were found."
+
+        if record_type.lower() == "security groups":
+            lines: list[str] = []
+            for index, row in enumerate(data, start=1):
+                if not isinstance(row, dict):
+                    continue
+                group_id = self._value_from_row(
+                    row,
+                    "Group ID",
+                    "Group",
+                    "Group Name",
+                    "ID",
+                    "Name",
+                    "col_0",
+                )
+                description = self._value_from_row(
+                    row,
+                    "Description",
+                    "Group Description",
+                    "col_1",
+                )
+                if group_id and description and group_id.lower() != description.lower():
+                    lines.append(f"{index}. {group_id} — {description}")
+                elif group_id:
+                    lines.append(f"{index}. {group_id}")
+                elif description:
+                    lines.append(f"{index}. {description}")
+
+            if lines:
+                return f"Security groups ({len(lines)}):\n" + "\n".join(lines)
+
+        rows: list[str] = []
+        for index, row in enumerate(data, start=1):
+            if isinstance(row, dict):
+                columns = [f"{key}: {value}" for key, value in row.items() if str(value).strip()]
+                if columns:
+                    rows.append(f"{index}. " + " | ".join(columns))
+            elif row:
+                rows.append(f"{index}. {row}")
+
+        if rows:
+            return f"{record_type} ({len(rows)} rows):\n" + "\n".join(rows)
+        return None
+
+    def _summarize(self, task: str, results: list[dict[str, Any]]) -> str:
         try:
             resp = self.client.chat.completions.create(
                 model=settings.openai_model,
