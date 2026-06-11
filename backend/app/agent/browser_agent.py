@@ -232,6 +232,7 @@ class HybridAgent:
             # Prefer the flow payload first (it already reflects deterministic
             # retries), then use direct-read fallback when needed.
             reply = self._format_read_reply(parsed, flow_result.steps, task=task)
+            reply = self._strip_procedural_security_narration(reply)
             # When flow payloads omit row-count metadata, we still compare
             # against a direct navigator read and keep the richer concrete list.
             if (
@@ -242,6 +243,7 @@ class HybridAgent:
             ):
                 direct_reply = self._direct_security_group_read_reply(max_rows=direct_read_cap)
                 if direct_reply:
+                    direct_reply = self._strip_procedural_security_narration(direct_reply)
                     if (
                         not reply
                         or self._rendered_row_count(direct_reply) >= self._rendered_row_count(reply)
@@ -291,6 +293,7 @@ class HybridAgent:
         self._store_learning(task, parsed, flow_result.steps)
 
         reply = self._build_reply(task, parsed, flow_result.steps)
+        reply = self._strip_procedural_security_narration(reply)
         if (
             "security group" in self._primary_task_text(task).lower()
             and reply
@@ -510,6 +513,12 @@ class HybridAgent:
     @staticmethod
     def _looks_like_procedural_security_summary(reply: str) -> bool:
         """Detect narrative summaries that should be replaced with concrete group rows."""
+        has_signal = HybridAgent._contains_procedural_security_narration(reply)
+        has_numbered_rows = bool(re.search(r"^\s*\d+\.\s+", reply, re.MULTILINE))
+        return has_signal and not has_numbered_rows
+
+    @staticmethod
+    def _contains_procedural_security_narration(reply: str) -> bool:
         lowered = reply.lower()
         procedural_signals = (
             "task of listing",
@@ -535,11 +544,25 @@ class HybridAgent:
             r"\btotal of\s+\d+\s+rows?\b",
             r"\bsample of\s+(?:security\s+)?groups?\b",
         )
-        has_signal = any(signal in lowered for signal in procedural_signals) or any(
+        return any(signal in lowered for signal in procedural_signals) or any(
             re.search(pattern, lowered) for pattern in regex_signals
         )
-        has_numbered_rows = bool(re.search(r"^\s*\d+\.\s+", reply, re.MULTILINE))
-        return has_signal and not has_numbered_rows
+
+    @staticmethod
+    def _strip_procedural_security_narration(reply: str | None) -> str | None:
+        """When narration wraps numbered rows, keep only concrete row lines."""
+        if not reply:
+            return reply
+        if not HybridAgent._contains_procedural_security_narration(reply):
+            return reply
+        numbered_rows = [
+            line.strip()
+            for line in reply.splitlines()
+            if re.match(r"^\s*\d+\.\s+\S", line)
+        ]
+        if not numbered_rows:
+            return reply
+        return "\n".join(numbered_rows)
 
     # ── Flow dispatch ────────────────────────────────────────────────
 
@@ -687,6 +710,7 @@ class HybridAgent:
         """Prefer a complete security-group reply over sampled rows."""
         if initial_reply and self._looks_like_procedural_security_summary(initial_reply):
             initial_reply = None
+        initial_reply = self._strip_procedural_security_narration(initial_reply)
         grid_result = self._extract_grid_result(results)
         expected_rows = self._reported_row_count(grid_result) if grid_result else None
         if (
@@ -716,6 +740,7 @@ class HybridAgent:
 
         retry_reply = self._retry_security_group_read_reply(task)
         if retry_reply:
+            retry_reply = self._strip_procedural_security_narration(retry_reply)
             retry_rows = self._rendered_row_count(retry_reply)
             if retry_rows > best_rows:
                 best_reply = retry_reply
@@ -726,6 +751,7 @@ class HybridAgent:
         direct_cap = min(max(expected_rows or 1000, 1000), 5000)
         direct_reply = self._direct_security_group_read_reply(max_rows=direct_cap)
         if direct_reply:
+            direct_reply = self._strip_procedural_security_narration(direct_reply)
             direct_rows = self._rendered_row_count(direct_reply)
             if direct_rows > best_rows:
                 best_reply = direct_reply
@@ -739,7 +765,7 @@ class HybridAgent:
         # Never allow prose-only security-group responses to pass through.
         if best_reply and not self._reply_contains_numbered_rows(best_reply):
             return None
-        return best_reply
+        return self._strip_procedural_security_narration(best_reply)
 
     def _retry_security_group_read_reply(self, task: str) -> str | None:
         """Best-effort deterministic re-read when initial read payload is malformed."""
