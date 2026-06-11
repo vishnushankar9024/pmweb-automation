@@ -514,6 +514,35 @@ def test_answer_only_security_group_reply_strips_non_row_lines():
     )
 
 
+def test_answer_only_security_group_reply_extracts_bulleted_rows_from_procedural_wrapper():
+    reply = (
+        "On PMWeb, the task of listing all security groups was completed.\n"
+        "The process involved navigating to Security and reading the grid.\n"
+        "- Default Group — System defaults\n"
+        "- Guest Users — Guest profile"
+    )
+
+    assert HybridAgent._answer_only_security_group_reply(reply) == (
+        "Default Group — System defaults\n"
+        "Guest Users — Guest profile"
+    )
+
+
+def test_reply_contains_plain_rows_ignores_security_group_heading_lines():
+    reply = (
+        "Security groups:\n"
+        "Default Group — System defaults\n"
+        "Guest Users — Guest profile"
+    )
+
+    assert HybridAgent._reply_contains_security_group_rows(reply)
+    assert HybridAgent._rendered_row_count(reply) == 2
+    assert HybridAgent._answer_only_security_group_reply(reply) == (
+        "Default Group — System defaults\n"
+        "Guest Users — Guest profile"
+    )
+
+
 def test_reply_contains_security_group_rows_accepts_plain_multiline_rows():
     reply = "Default Group — System defaults\nGuest Users — Guest profile"
     assert HybridAgent._reply_contains_security_group_rows(reply)

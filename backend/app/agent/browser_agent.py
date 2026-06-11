@@ -566,14 +566,17 @@ class HybridAgent:
             return reply
         if not HybridAgent._contains_procedural_security_narration(reply):
             return reply
-        numbered_rows = [
-            line.strip()
-            for line in reply.splitlines()
-            if re.match(r"^\s*\d+\.\s+\S", line)
-        ]
-        if not numbered_rows:
+        row_lines: list[str] = []
+        for line in reply.splitlines():
+            stripped = line.strip()
+            if re.match(r"^\d+\.\s+\S", stripped):
+                row_lines.append(stripped)
+                continue
+            if re.match(r"^[-*•]\s+\S", stripped):
+                row_lines.append(re.sub(r"^[-*•]\s+", "", stripped))
+        if not row_lines:
             return reply
-        return "\n".join(numbered_rows)
+        return "\n".join(row_lines)
 
     # ── Flow dispatch ────────────────────────────────────────────────
 
@@ -695,7 +698,12 @@ class HybridAgent:
             return False
         if any(re.match(r"^\d+\.\s+\S", line) for line in lines):
             return False
-        return not HybridAgent._contains_procedural_security_narration("\n".join(lines))
+        filtered_lines = [
+            line for line in lines if not HybridAgent._is_security_group_heading_line(line)
+        ]
+        if len(filtered_lines) < 2:
+            return False
+        return not HybridAgent._contains_procedural_security_narration("\n".join(filtered_lines))
 
     @staticmethod
     def _reply_contains_security_group_rows(reply: str | None) -> bool:
@@ -711,8 +719,13 @@ class HybridAgent:
         if numbered_count:
             return numbered_count
         lines = [line.strip() for line in reply.splitlines() if line.strip()]
-        if len(lines) >= 2 and not HybridAgent._contains_procedural_security_narration("\n".join(lines)):
-            return len(lines)
+        filtered_lines = [
+            line for line in lines if not HybridAgent._is_security_group_heading_line(line)
+        ]
+        if len(filtered_lines) >= 2 and not HybridAgent._contains_procedural_security_narration(
+            "\n".join(filtered_lines)
+        ):
+            return len(filtered_lines)
         return 0
 
     @staticmethod
@@ -727,9 +740,36 @@ class HybridAgent:
         ]
         if numbered_lines:
             return "\n".join(numbered_lines)
+        bulleted_lines = [
+            re.sub(r"^[-*•]\s+", "", line.strip())
+            for line in reply.splitlines()
+            if re.match(r"^\s*[-*•]\s+\S", line)
+        ]
+        if bulleted_lines:
+            return "\n".join(bulleted_lines)
+        plain_lines = [line.strip() for line in reply.splitlines() if line.strip()]
+        filtered_plain_lines = [
+            line for line in plain_lines if not HybridAgent._is_security_group_heading_line(line)
+        ]
+        if len(filtered_plain_lines) >= 2 and not HybridAgent._contains_procedural_security_narration(
+            "\n".join(filtered_plain_lines)
+        ):
+            return "\n".join(filtered_plain_lines)
         if HybridAgent._contains_procedural_security_narration(reply):
             return None
         return reply
+
+    @staticmethod
+    def _is_security_group_heading_line(line: str) -> bool:
+        lowered = line.strip().lower()
+        if not lowered or not HybridAgent._mentions_security_groups(lowered):
+            return False
+        return (
+            lowered.endswith(":")
+            or "rows" in lowered
+            or lowered.startswith("security groups")
+            or lowered.startswith("groups")
+        )
 
     @staticmethod
     def _strip_security_group_step_numbers(reply: str | None) -> str | None:
