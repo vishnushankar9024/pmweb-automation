@@ -571,7 +571,12 @@ class HybridAgent:
                     complete_reply = self._resolve_security_group_reply(task, results, read_reply)
                     if complete_reply:
                         return complete_reply
-                return read_reply
+                    # Enforce complete security-group answers: when we cannot
+                    # recover from a sampled/partial payload, do not return a
+                    # truncated list.
+                    read_reply = None
+                else:
+                    return read_reply
             record_type = str(parsed.get("record_type", "")).strip().lower()
             security_group_read = looks_like_security_groups or record_type == "security groups"
             if security_group_read:
@@ -652,6 +657,10 @@ class HybridAgent:
             if not self._reply_is_partial_for_rows(direct_reply, expected_rows):
                 return direct_reply
 
+        if self._reply_is_partial_for_rows(best_reply, expected_rows):
+            return None
+        if sampled_payload and best_reply and self._reply_contains_numbered_rows(best_reply):
+            return None
         return best_reply
 
     def _retry_security_group_read_reply(self, task: str) -> str | None:

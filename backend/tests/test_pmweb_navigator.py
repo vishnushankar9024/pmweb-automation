@@ -4,9 +4,15 @@ from app.agent.pmweb_navigator import PMWebNavigator
 
 
 class _FakeElement:
-    def __init__(self, attrs: dict[str, str | None] | None = None, displayed: bool = True) -> None:
+    def __init__(
+        self,
+        attrs: dict[str, str | None] | None = None,
+        displayed: bool = True,
+        text: str = "",
+    ) -> None:
         self._attrs = attrs or {}
         self._displayed = displayed
+        self.text = text
         self.clicks = 0
 
     def is_displayed(self) -> bool:
@@ -81,3 +87,20 @@ def test_go_to_next_kendo_page_skips_controls_disabled_by_parent():
 
     assert moved is False
     assert next_control.clicks == 0
+
+
+def test_go_to_next_kendo_page_uses_numeric_button_when_next_control_missing():
+    active_page = _FakeElement(text="1")
+    next_page = _FakeElement(text="2")
+    driver = _FakeDriver(
+        css_matches={
+            ".k-pager-numbers .k-selected": [active_page],
+            ".k-pager-numbers button": [next_page],
+        },
+    )
+    nav = _build_nav(driver)
+
+    moved = nav._go_to_next_kendo_page()
+
+    assert moved is True
+    assert next_page.clicks == 1

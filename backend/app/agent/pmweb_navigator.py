@@ -500,7 +500,49 @@ class PMWebNavigator:
             return True
         return False
 
+    def _active_kendo_page_number(self) -> int | None:
+        selectors = [
+            ".k-pager-numbers .k-selected",
+            ".k-pager-numbers .k-state-selected",
+            ".k-pager-numbers .k-current-page",
+            ".k-pager-numbers li.k-selected",
+            ".k-pager-numbers button.k-selected",
+            ".k-pager-numbers a.k-selected",
+        ]
+        for selector in selectors:
+            for element in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                text = element.text.strip()
+                if text.isdigit():
+                    return int(text)
+        return None
+
+    def _go_to_next_kendo_page_via_numeric_button(self, current_page: int | None) -> bool:
+        if current_page is None:
+            return False
+
+        next_page = current_page + 1
+        next_page_text = str(next_page)
+        numeric_selectors = [
+            ".k-pager-numbers button",
+            ".k-pager-numbers a",
+            ".k-pager-numbers li",
+            "kendo-pager-numeric-buttons button",
+            "kendo-pager-numeric-buttons a",
+        ]
+        for selector in numeric_selectors:
+            for button in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                if not button.is_displayed():
+                    continue
+                if button.text.strip() != next_page_text:
+                    continue
+                if self._pager_control_is_disabled(button):
+                    continue
+                if self._click_pager_control(button):
+                    return True
+        return False
+
     def _go_to_next_kendo_page(self) -> bool:
+        current_page = self._active_kendo_page_number()
         next_button_selectors = [
             "button[aria-label='Go to the next page']",
             "a[aria-label='Go to the next page']",
@@ -531,6 +573,8 @@ class PMWebNavigator:
                     continue
                 if self._click_pager_control(button):
                     return True
+        if self._go_to_next_kendo_page_via_numeric_button(current_page):
+            return True
         xpath_fallbacks = [
             "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
             "//a[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
