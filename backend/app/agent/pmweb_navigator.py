@@ -594,6 +594,63 @@ class PMWebNavigator:
                     return True
         return False
 
+    def _go_to_kendo_page(self, target_page: int) -> bool:
+        """Best-effort page jump via numeric buttons or pager input."""
+        if target_page < 1:
+            return False
+
+        initial_signature = self._pager_state_signature()
+        target_text = str(target_page)
+        numeric_selectors = [
+            ".k-pager-numbers button",
+            ".k-pager-numbers a",
+            ".k-pager-numbers li",
+            "kendo-pager-numeric-buttons button",
+            "kendo-pager-numeric-buttons a",
+            "kendo-pager-numeric-buttons li",
+        ]
+        for selector in numeric_selectors:
+            for button in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                if not button.is_displayed():
+                    continue
+                if button.text.strip() != target_text:
+                    continue
+                if self._pager_control_is_disabled(button):
+                    continue
+                if self._click_pager_control(button):
+                    if self._wait_for_pager_state_change(initial_signature, timeout_s=6.0):
+                        return True
+                    if self._active_kendo_page_number() == target_page:
+                        return True
+
+        input_selectors = [
+            ".k-pager-input input",
+            "input.k-pager-input",
+            "kendo-pager input[type='text']",
+            ".k-grid-pager input[type='text']",
+            "[class*='pager'] input[type='text']",
+        ]
+        for selector in input_selectors:
+            for page_input in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                if not page_input.is_displayed():
+                    continue
+                try:
+                    page_input.click()
+                    page_input.send_keys(Keys.CONTROL, "a")
+                    page_input.send_keys(Keys.BACKSPACE)
+                    page_input.send_keys(target_text)
+                    page_input.send_keys(Keys.ENTER)
+                except Exception:
+                    continue
+
+                time.sleep(1.2)
+                if self._wait_for_pager_state_change(initial_signature, timeout_s=6.0):
+                    return True
+                if self._active_kendo_page_number() == target_page:
+                    return True
+
+        return False
+
     def _go_to_next_kendo_page(self) -> bool:
         current_page = self._active_kendo_page_number()
         initial_signature = self._pager_state_signature()
@@ -613,8 +670,14 @@ class PMWebNavigator:
             "span.k-pager-nav.k-pager-next",
             ".k-pager-nav.k-pager-next .k-icon",
             ".k-pager-nav.k-pager-next .k-svg-icon",
+            ".k-pager-nav.k-pager-next .k-i-arrow-60-right",
+            ".k-pager-nav.k-pager-next .k-i-arrow-end-right",
+            ".k-pager-nav.k-pager-next .k-i-arrow-e",
+            ".k-pager-nav.k-pager-next .k-i-seek-e",
             ".k-pager-nav.k-pager-next",
             ".k-pager-next",
+            "a.k-link.k-pager-nav.k-pager-next",
+            "button.k-link.k-pager-nav.k-pager-next",
             "[data-page='next']",
             "[data-kendo-page='next']",
             "[data-kendo-pager-action='next']",
@@ -636,6 +699,8 @@ class PMWebNavigator:
         if self._go_to_next_kendo_page_via_numeric_button(current_page):
             if self._wait_for_pager_state_change(initial_signature):
                 return True
+        if current_page is not None and self._go_to_kendo_page(current_page + 1):
+            return True
         xpath_fallbacks = [
             "//button[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
             "//a[contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'next')]",
@@ -648,6 +713,11 @@ class PMWebNavigator:
             "//a[.//*[contains(@class,'arrow-end-right') or contains(@class,'caret-alt-right') or contains(@class,'chevron-right')]]",
             "//span[.//*[contains(@class,'arrow-end-right') or contains(@class,'caret-alt-right') or contains(@class,'chevron-right')]]",
             "//*[contains(@class,'k-pager-next')]//*[contains(@class,'k-icon') or contains(@class,'k-svg-icon')]",
+            (
+                "//*[contains(@class,'k-pager-next')]//*[contains(@class,'k-i-seek-e') "
+                "or contains(@class,'k-i-arrow-60-right') or contains(@class,'k-i-arrow-end-right') "
+                "or contains(@class,'k-i-arrow-e')]"
+            ),
             "//button[normalize-space(text())='>']",
             "//a[normalize-space(text())='>']",
             "//span[normalize-space(text())='>']",
@@ -859,9 +929,11 @@ class PMWebNavigator:
         # cannot truncate list/read responses.
         self._go_to_first_kendo_page()
         rows: list[dict[str, str]] = []
+        seen_row_signatures: set[tuple[tuple[str, str], ...]] = set()
         seen_page_signatures: set[tuple[tuple[str, str], ...]] = set()
         stale_page_reads = 0
         max_stale_page_reads = 2
+        last_page_size = 0
 
         while len(rows) < target_rows:
             remaining = target_rows - len(rows)
@@ -879,12 +951,49 @@ class PMWebNavigator:
                 continue
             stale_page_reads = 0
             seen_page_signatures.add(page_signature)
-
-            rows.extend(page_rows[:remaining])
+            last_page_size = len(page_rows)
+            for row in page_rows[:remaining]:
+                signature = self._row_signature(row)
+                if signature in seen_row_signatures:
+                    continue
+                seen_row_signatures.add(signature)
+                rows.append(row)
+                if len(rows) >= target_rows:
+                    break
             if len(rows) >= target_rows:
                 break
             if not self._go_to_next_kendo_page():
                 break
+
+        if (
+            isinstance(reported_total, int)
+            and reported_total > 0
+            and len(rows) < min(target_rows, reported_total)
+        ):
+            current_page = self._active_kendo_page_number() or 1
+            page_size = max(last_page_size, len(rows), 1)
+            total_pages = max((reported_total + page_size - 1) // page_size, current_page)
+            for page in range(current_page + 1, total_pages + 1):
+                if len(rows) >= target_rows:
+                    break
+                if not self._go_to_kendo_page(page):
+                    break
+                remaining = target_rows - len(rows)
+                page_rows = self._kendo_grid_rows(headers, remaining)
+                if not page_rows:
+                    continue
+                page_signature = tuple(self._row_signature(row) for row in page_rows)
+                if page_signature in seen_page_signatures:
+                    continue
+                seen_page_signatures.add(page_signature)
+                for row in page_rows[:remaining]:
+                    signature = self._row_signature(row)
+                    if signature in seen_row_signatures:
+                        continue
+                    seen_row_signatures.add(signature)
+                    rows.append(row)
+                    if len(rows) >= target_rows:
+                        break
 
         if len(rows) < target_rows:
             rows = self._collect_rows_from_virtual_scroll(headers, target_rows, seed_rows=rows)
