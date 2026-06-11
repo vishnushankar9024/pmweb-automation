@@ -721,21 +721,43 @@ class HybridAgent:
         return bool(re.search(r"^\s*\d+\.\s+\S", reply, flags=re.MULTILINE))
 
     @staticmethod
-    def _reply_contains_plain_rows(reply: str | None) -> bool:
-        """Detect non-numbered multi-line row answers (already stripped formatting)."""
+    def _looks_like_inline_security_group_summary(line: str) -> bool:
+        """Reject one-line prose summaries masquerading as row output."""
+        normalized = re.sub(r"\s+", " ", line.strip().lower())
+        if not normalized:
+            return True
+        has_row_separator = " — " in line or " - " in line or "|" in line
+        has_inline_list_signal = "," in normalized or " and " in normalized
+        return has_inline_list_signal and not has_row_separator
+
+    @staticmethod
+    def _plain_security_group_row_lines(reply: str | None) -> list[str]:
+        """Extract valid non-numbered security-group row lines."""
         if not reply:
-            return False
+            return []
         lines = [line.strip() for line in reply.splitlines() if line.strip()]
         if not lines:
-            return False
+            return []
         if any(re.match(r"^\d+\.\s+\S", line) for line in lines):
-            return False
+            return []
         filtered_lines = [
             line for line in lines if not HybridAgent._is_security_group_heading_line(line)
         ]
         if not filtered_lines:
-            return False
-        return not HybridAgent._contains_procedural_security_narration("\n".join(filtered_lines))
+            return []
+        if HybridAgent._contains_procedural_security_narration("\n".join(filtered_lines)):
+            return []
+        if (
+            len(filtered_lines) == 1
+            and HybridAgent._looks_like_inline_security_group_summary(filtered_lines[0])
+        ):
+            return []
+        return filtered_lines
+
+    @staticmethod
+    def _reply_contains_plain_rows(reply: str | None) -> bool:
+        """Detect non-numbered multi-line row answers (already stripped formatting)."""
+        return bool(HybridAgent._plain_security_group_row_lines(reply))
 
     @staticmethod
     def _reply_contains_security_group_rows(reply: str | None) -> bool:
@@ -750,15 +772,7 @@ class HybridAgent:
         )
         if numbered_count:
             return numbered_count
-        lines = [line.strip() for line in reply.splitlines() if line.strip()]
-        filtered_lines = [
-            line for line in lines if not HybridAgent._is_security_group_heading_line(line)
-        ]
-        if filtered_lines and not HybridAgent._contains_procedural_security_narration(
-            "\n".join(filtered_lines)
-        ):
-            return len(filtered_lines)
-        return 0
+        return len(HybridAgent._plain_security_group_row_lines(reply))
 
     @staticmethod
     def _answer_only_security_group_reply(reply: str | None) -> str | None:
@@ -781,17 +795,39 @@ class HybridAgent:
         ]
         if bulleted_lines:
             return "\n".join(bulleted_lines)
-        plain_lines = [line.strip() for line in reply.splitlines() if line.strip()]
-        filtered_plain_lines = [
-            line for line in plain_lines if not HybridAgent._is_security_group_heading_line(line)
-        ]
-        if filtered_plain_lines and not HybridAgent._contains_procedural_security_narration(
-            "\n".join(filtered_plain_lines)
-        ):
-            return "\n".join(filtered_plain_lines)
+        plain_lines = HybridAgent._plain_security_group_row_lines(reply)
+        if plain_lines:
+            return "\n".join(plain_lines)
         if HybridAgent._contains_procedural_security_narration(reply):
             return None
         return reply
+
+    @staticmethod
+    def _number_security_group_rows(reply: str | None) -> str | None:
+        """Normalize row lines to deterministic numbering for resolver internals."""
+        if not reply:
+            return None
+        cleaned_rows: list[str] = []
+        for line in reply.splitlines():
+            stripped = line.strip()
+            if not stripped:
+                continue
+            stripped = re.sub(
+                r"^(?:step\s*)?\d+\s*[\.\):-]\s*",
+                "",
+                stripped,
+                flags=re.IGNORECASE,
+            )
+            stripped = re.sub(r"^[-*•]\s+", "", stripped)
+            if not stripped or HybridAgent._is_security_group_heading_line(stripped):
+                continue
+            cleaned_rows.append(stripped)
+        if not cleaned_rows:
+            return None
+        return "\n".join(
+            f"{index}. {row}"
+            for index, row in enumerate(cleaned_rows, start=1)
+        )
 
     def _finalize_security_group_reply(self, reply: str | None) -> str | None:
         """Normalize security-group replies to answer-only non-step content."""
@@ -955,14 +991,14 @@ class HybridAgent:
             and not self._reply_is_partial_for_rows(rebuilt_reply, expected_rows)
             and not sampled_payload
         ):
-            return rebuilt_reply
+            return self._number_security_group_rows(rebuilt_reply)
         if (
             initial_reply
             and self._reply_contains_security_group_rows(initial_reply)
             and not self._reply_is_partial_for_rows(initial_reply, expected_rows)
             and not sampled_payload
         ):
-            return initial_reply
+            return self._number_security_group_rows(initial_reply)
 
         retry_reply = self._retry_security_group_read_reply(task)
         if retry_reply:
@@ -972,7 +1008,7 @@ class HybridAgent:
                 best_reply = retry_reply
                 best_rows = retry_rows
             if not self._reply_is_partial_for_rows(retry_reply, expected_rows):
-                return retry_reply
+                return self._number_security_group_rows(retry_reply)
 
         direct_cap = min(max(expected_rows or 1000, 1000), 5000)
         direct_reply = self._direct_security_group_read_reply(max_rows=direct_cap)
@@ -982,7 +1018,7 @@ class HybridAgent:
             if direct_rows > best_rows:
                 best_reply = direct_reply
             if not self._reply_is_partial_for_rows(direct_reply, expected_rows):
-                return direct_reply
+                return self._number_security_group_rows(direct_reply)
 
         if self._reply_is_partial_for_rows(best_reply, expected_rows):
             return None
@@ -991,7 +1027,9 @@ class HybridAgent:
         # Never allow prose-only security-group responses to pass through.
         if best_reply and not self._reply_contains_security_group_rows(best_reply):
             return None
-        return self._strip_procedural_security_narration(best_reply)
+        return self._number_security_group_rows(
+            self._strip_procedural_security_narration(best_reply)
+        )
 
     def _retry_security_group_read_reply(self, task: str) -> str | None:
         """Best-effort deterministic re-read when initial read payload is malformed."""
