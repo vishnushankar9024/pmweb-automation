@@ -1331,6 +1331,17 @@ def test_resolve_security_group_reply_replaces_narrative_reply_with_rows():
     ]
 
 
+def test_resolve_security_group_reply_rejects_prose_without_numbered_rows():
+    agent = HybridAgent()
+    reply = agent._resolve_security_group_reply(
+        "List all security groups",
+        [],
+        "Security groups include Default Group, Guest Users, and PMWEB Admin.",
+    )
+
+    assert reply is None
+
+
 def test_summarize_uses_deterministic_rows_when_results_indicate_security_groups():
     agent = HybridAgent()
     results = [

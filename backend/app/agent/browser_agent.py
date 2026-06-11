@@ -246,6 +246,7 @@ class HybridAgent:
                         reply = direct_reply
             if (
                 not reply
+                or not self._reply_contains_numbered_rows(reply)
                 or self._security_group_reply_is_partial(flow_result.steps, reply)
                 or self._looks_like_procedural_security_summary(reply)
             ):
@@ -298,9 +299,14 @@ class HybridAgent:
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
         if self._is_security_group_read_intent(task, parsed, flow_result.steps):
             deterministic_reply = self._deterministic_security_group_reply(task, flow_result.steps)
-            if deterministic_reply:
+            if deterministic_reply and self._reply_contains_numbered_rows(deterministic_reply):
                 reply = deterministic_reply
-            elif not reply or self._looks_like_procedural_security_summary(reply):
+            elif (
+                not reply
+                or not self._reply_contains_numbered_rows(reply)
+                or self._looks_like_procedural_security_summary(reply)
+                or self._security_group_reply_is_partial(flow_result.steps, reply)
+            ):
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
         if self._should_hide_actions(task, parsed, flow_result.steps):
             return {"reply": reply, "actions": []}
@@ -613,7 +619,11 @@ class HybridAgent:
         """Return a direct security-group listing when deterministic row data exists."""
         parsed = {"intent": "read", "record_type": "Security Groups"}
         read_reply = self._format_read_reply(parsed, results, task=task)
-        if read_reply and not self._security_group_reply_is_partial(results, read_reply):
+        if (
+            read_reply
+            and self._reply_contains_numbered_rows(read_reply)
+            and not self._security_group_reply_is_partial(results, read_reply)
+        ):
             return read_reply
         return self._resolve_security_group_reply(task, results, read_reply)
 
@@ -695,6 +705,9 @@ class HybridAgent:
         if self._reply_is_partial_for_rows(best_reply, expected_rows):
             return None
         if sampled_payload and best_reply and self._reply_contains_numbered_rows(best_reply):
+            return None
+        # Never allow prose-only security-group responses to pass through.
+        if best_reply and not self._reply_contains_numbered_rows(best_reply):
             return None
         return best_reply
 
