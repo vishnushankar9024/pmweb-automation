@@ -218,9 +218,9 @@ def test_run_task_sync_security_group_list_uses_deterministic_fast_path():
     result = agent.run_task_sync("List all security groups")
 
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
-        "3. PMWEB Admin — Admin users",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+        "PMWEB Admin — Admin users",
     ]
     assert result["actions"] == []
 
@@ -275,8 +275,8 @@ def test_run_task_sync_security_group_list_prefers_complete_flow_rows_over_parti
     assert fake_nav.read_calls == 0
     reply_lines = result["reply"].splitlines()
     assert len(reply_lines) == 28
-    assert reply_lines[0] == "1. Group 1 — Description 1"
-    assert reply_lines[-1] == "28. Group 28 — Description 28"
+    assert reply_lines[0] == "Group 1 — Description 1"
+    assert reply_lines[-1] == "Group 28 — Description 28"
     assert result["actions"] == []
 
 
@@ -333,10 +333,10 @@ def test_run_task_sync_security_group_list_prefers_direct_read_when_flow_has_no_
 
     assert fake_nav.read_calls >= 1
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
-        "3. PMWEB Admin — Admin users",
-        "4. Power Users — Power user access",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+        "PMWEB Admin — Admin users",
+        "Power Users — Power user access",
     ]
     assert result["actions"] == []
 
@@ -377,8 +377,8 @@ def test_run_task_sync_hides_actions_for_security_group_read_intent_without_list
     result = agent.run_task_sync("Show me all of them")
 
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
     assert result["actions"] == []
 
@@ -453,8 +453,8 @@ def test_run_task_with_context_security_group_list_ignores_attached_create_text(
     )
 
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
     assert result["actions"] == []
 
@@ -494,8 +494,8 @@ def test_run_task_sync_security_group_read_hides_actions_when_fast_path_is_skipp
     result = agent.run_task_sync("List all security groups")
 
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
     assert result["actions"] == []
 
@@ -583,10 +583,10 @@ def test_run_task_sync_security_group_list_retries_when_payload_is_sampled():
 
     assert fake_flows.calls == 2
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
-        "3. PMWEB Admin — Admin users",
-        "4. Power Users — Power user access",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+        "PMWEB Admin — Admin users",
+        "Power Users — Power user access",
     ]
 
 
@@ -647,10 +647,10 @@ def test_run_task_sync_security_group_list_retries_when_only_sample_rows_are_pre
 
     assert fake_flows.calls == 2
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
-        "3. PMWEB Admin — Admin users",
-        "4. Power Users — Power user access",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+        "PMWEB Admin — Admin users",
+        "Power Users — Power user access",
     ]
 
 
@@ -692,8 +692,8 @@ def test_run_task_sync_replaces_procedural_security_summary_with_group_rows():
     result = agent.run_task_sync("Please provide security groups report")
 
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -736,8 +736,8 @@ def test_run_task_sync_replaces_procedural_security_summary_variant_with_group_r
     result = agent.run_task_sync("Please list all security groups")
 
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -784,8 +784,8 @@ def test_run_task_sync_replaces_feedback_style_procedural_summary_with_group_row
     result = agent.run_task_sync("List all security groups")
 
     assert result["reply"].splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
     assert result["actions"] == []
 
@@ -1461,8 +1461,8 @@ def test_run_task_sync_security_group_list_uses_reported_total_for_direct_read_c
 
     assert fake_nav.caps
     assert all(cap == reported_total for cap in fake_nav.caps)
-    assert result["reply"].splitlines()[0] == "1. Group 1 — Description 1"
-    assert result["reply"].splitlines()[-1] == "1001. Group 1001 — Description 1001"
+    assert result["reply"].splitlines()[0] == "Group 1 — Description 1"
+    assert result["reply"].splitlines()[-1] == "Group 1001 — Description 1001"
     assert result["actions"] == []
 
 
