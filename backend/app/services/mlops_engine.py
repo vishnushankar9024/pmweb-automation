@@ -369,12 +369,55 @@ class MLOpsEngine:
                 timeout=30,
             )
             if resp.status_code in (200, 201):
-                return resp.json().get("html_url", "")
+                issue_url = resp.json().get("html_url", "")
+                # Push a trigger commit so Cursor Automation fires
+                self._push_trigger_commit(feedback_id, prompt)
+                return issue_url
             logger.warning("GitHub API returned %d: %s", resp.status_code, resp.text[:200])
             return f"https://github.com/{GITHUB_REPO}/issues (creation returned {resp.status_code})"
         except Exception as exc:
             logger.exception("GitHub issue creation failed")
             return f"Issue creation error: {exc}"
+
+    def _push_trigger_commit(self, feedback_id: str, prompt: str) -> None:
+        """Push a small commit to trigger Cursor Automation on the deploy branch."""
+        try:
+            import base64
+            import json
+
+            import httpx
+
+            headers = {
+                "Authorization": f"token {GITHUB_TOKEN}",
+                "Accept": "application/vnd.github.v3+json",
+            }
+            api = f"https://api.github.com/repos/{GITHUB_REPO}"
+
+            # Get latest commit SHA on deploy branch
+            ref = httpx.get(f"{api}/git/ref/heads/{DEPLOY_BRANCH}", headers=headers, timeout=10)
+            if ref.status_code != 200:
+                logger.warning("Could not get branch ref: %s", ref.text[:100])
+                return
+            # Create diagnosis file
+            content = json.dumps({
+                "feedback_id": feedback_id,
+                "prompt": prompt[:200],
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+            }, indent=2)
+
+            httpx.put(
+                f"{api}/contents/.auto-fix/{feedback_id}.json",
+                headers=headers,
+                json={
+                    "message": f"auto-fix: {prompt[:60]}",
+                    "content": base64.b64encode(content.encode()).decode(),
+                    "branch": DEPLOY_BRANCH,
+                },
+                timeout=15,
+            )
+            logger.info("Trigger commit pushed for feedback %s", feedback_id)
+        except Exception as exc:
+            logger.warning("Trigger commit failed: %s", exc)
 
     def generate_report(self) -> PerformanceReport:
         """Build a full performance report with recommendations."""
