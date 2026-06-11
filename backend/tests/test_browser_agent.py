@@ -2,6 +2,7 @@
 
 from app.agent.browser_agent import INTENT_PROMPT, HybridAgent, _build_registry_context
 from app.agent.pmweb_flows import PMWebFlows
+from app.agent.pmweb_navigator import PMWebNavigator
 from app.agent.pmweb_registry import get_record_type, get_required_fields
 
 
@@ -366,6 +367,28 @@ def test_build_reply_reads_groups_from_rows_key_payload():
     ]
 
 
+def test_build_reply_reads_groups_from_python_literal_result_payload():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": ""}
+    results = [
+        {
+            "step": 7,
+            "action": "read_grid",
+            "result": (
+                "{'data':[{'col_1':'Default Group','col_2':'System defaults'},"
+                "{'col_1':'Guest Users','col_2':'Guest profile'}]}"
+            ),
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
 def test_build_reply_reads_groups_from_sample_strings_payload():
     agent = HybridAgent()
     parsed = {"intent": "read", "record_type": ""}
@@ -385,4 +408,45 @@ def test_build_reply_reads_groups_from_sample_strings_payload():
     assert reply.splitlines() == [
         "1. Default Group",
         "2. Guest Users",
+    ]
+
+
+def test_build_reply_prefers_security_group_rows_even_when_intent_is_create():
+    agent = HybridAgent()
+    parsed = {"intent": "create", "record_type": ""}
+    results = [
+        {
+            "step": 8,
+            "action": "inspect_grid",
+            "record_type": "Security Groups",
+            "result": {
+                "data": [
+                    {"col_1": "Default Group", "col_2": "System defaults"},
+                    {"col_1": "Guest Users", "col_2": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("Please continue", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
+def test_read_security_groups_handles_shifted_columns_and_dedupes():
+    nav = PMWebNavigator.__new__(PMWebNavigator)
+    nav.read_kendo_grid = lambda max_rows=200: [  # type: ignore[method-assign]
+        {"col_0": "", "col_1": "Default Group", "col_2": "System defaults"},
+        {"col_0": "", "col_1": "Guest Users", "col_2": "Guest profile"},
+        {"col_0": "", "col_1": "Guest Users", "col_2": "Guest profile"},
+    ]
+
+    rows = nav.read_security_groups()
+
+    assert rows == [
+        {"Group ID": "Default Group", "Description": "System defaults"},
+        {"Group ID": "Guest Users", "Description": "Guest profile"},
     ]

@@ -423,12 +423,12 @@ class HybridAgent:
 
     def _build_reply(self, task: str, parsed: dict[str, Any], results: list[dict[str, Any]]) -> str:
         intent = str(parsed.get("intent", "")).strip().lower()
-        normalized_task = task.lower()
-        if intent in ("read", "list") or "security group" in normalized_task:
+        looks_like_security_groups = self._looks_like_security_group_list(task, parsed, results)
+        if intent in ("read", "list") or looks_like_security_groups:
             read_reply = self._format_read_reply(parsed, results, task=task)
             if read_reply:
                 return read_reply
-            if "security group" in normalized_task:
+            if looks_like_security_groups:
                 return "I couldn't extract the security group rows from PMWeb. Please try again."
         return self._summarize(task, results)
 
@@ -506,6 +506,8 @@ class HybridAgent:
             if result_rows is not None:
                 enriched = dict(parsed_result) if isinstance(parsed_result, dict) else {}
                 enriched["data"] = result_rows
+                if step.get("record_type") and not enriched.get("record_type"):
+                    enriched["record_type"] = step["record_type"]
                 if step.get("action") == "read_grid":
                     return enriched
                 grid_result = enriched
@@ -516,6 +518,8 @@ class HybridAgent:
             if output_rows is not None:
                 enriched = dict(parsed_output) if isinstance(parsed_output, dict) else {}
                 enriched["data"] = output_rows
+                if step.get("record_type") and not enriched.get("record_type"):
+                    enriched["record_type"] = step["record_type"]
                 if step.get("action") == "read_grid":
                     return enriched
                 grid_result = enriched
@@ -524,6 +528,45 @@ class HybridAgent:
             if isinstance(step.get("data"), list):
                 grid_result = {"data": step.get("data")}
         return grid_result
+
+    def _looks_like_security_group_list(self, task: str, parsed: dict[str, Any], results: list[dict[str, Any]]) -> bool:
+        if "security group" in task.lower():
+            return True
+        record_type = str(parsed.get("record_type", "")).strip().lower()
+        if record_type == "security groups":
+            return True
+        grid_result = self._extract_grid_result(results)
+        if not grid_result:
+            return False
+        grid_record_type = str(grid_result.get("record_type", "")).strip().lower()
+        if grid_record_type == "security groups":
+            return True
+        data = grid_result.get("data")
+        if not isinstance(data, list):
+            return False
+        for row in data:
+            if not isinstance(row, dict):
+                continue
+            group_id = self._value_from_row(
+                row,
+                "Group ID",
+                "Group",
+                "Group Name",
+                "ID",
+                "Name",
+                "col_0",
+                "col_1",
+            )
+            description = self._value_from_row(
+                row,
+                "Description",
+                "Group Description",
+                "col_2",
+                "col_1",
+            )
+            if group_id or description:
+                return True
+        return False
 
     def _format_read_reply(
         self, parsed: dict[str, Any], results: list[dict[str, Any]], task: str = "",
@@ -537,7 +580,8 @@ class HybridAgent:
         if not isinstance(data, list):
             return None
 
-        record_type = str(parsed.get("record_type", grid_result.get("record_type", "records"))).strip()
+        parsed_record_type = str(parsed.get("record_type", "")).strip()
+        record_type = parsed_record_type or str(grid_result.get("record_type", "records")).strip()
         if not record_type or record_type.lower() == "records":
             if "security group" in task.lower():
                 record_type = "Security Groups"
@@ -563,8 +607,8 @@ class HybridAgent:
                         row,
                         "Description",
                         "Group Description",
-                        "col_1",
                         "col_2",
+                        "col_1",
                     )
                 elif isinstance(row, (list, tuple)):
                     values = [str(item).strip() for item in row if str(item).strip()]
