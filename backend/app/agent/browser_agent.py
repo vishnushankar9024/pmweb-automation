@@ -266,6 +266,7 @@ class HybridAgent:
                 reply,
                 direct_read_cap=direct_read_cap,
             )
+            reply = self._strip_security_group_step_numbers(reply)
             return {
                 "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
                 # Hide internal execution steps for the list/read UX so the chat
@@ -325,6 +326,7 @@ class HybridAgent:
                 reply,
                 allow_retry=True,
             )
+            reply = self._strip_security_group_step_numbers(reply)
             if not reply:
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
         if self._should_hide_actions(task, parsed, flow_result.steps):
