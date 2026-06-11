@@ -602,6 +602,7 @@ class HybridAgent:
                         "ID",
                         "Name",
                         "col_0",
+                        "col_1",
                     )
                     description = self._value_from_row(
                         row,
