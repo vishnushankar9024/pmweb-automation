@@ -1,0 +1,9 @@
+{
+  "feedback_id": "c79fd922-a81f-4b27-bfc9-df42bd9c5cc2",
+  "prompt": "List all security groups",
+  "actual_result": "On PMWeb, a task was performed to list all security groups. The process involved navigating to the Security page, switching to a specified iframe, and reading the grid data. The result was a list of 28 security groups, including \"Default Group,\" \"Guest Users,\" \"Adaptive Form Administrator,\" and others like \"Can Change Due Date In Procurement\" and \"Can Lock/Unlock Schedules.\"",
+  "expected_result": "i cannot see the list of security groups in the answer. i require the anser accurately rather than the steps. just the answer.",
+  "session_id": "6a2a7cccf6e3d628f752d1c6",
+  "timestamp": "2026-06-11T09:17:34.403556+00:00",
+  "instructions": "FIX THIS: When the user says 'List all security groups', the agent currently does: 'On PMWeb, a task was performed to list all security groups. The process involved navigating to the Security page, switching to a specified iframe, and reading the grid data. The result was a list of 2'. The user expects: 'i cannot see the list of security groups in the answer. i require the anser accurately rather than the steps. just the answer.'. Fix the code in backend/app/agent/browser_agent.py (PLANNER_PROMPT or _execute_step) and/or backend/app/agent/pmweb_flows.py so the agent produces the expected result."
+}
