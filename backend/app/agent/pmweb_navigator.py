@@ -824,7 +824,7 @@ class PMWebNavigator:
             rows = self._collect_rows_from_virtual_scroll(headers, max_rows, seed_rows=rows)
         return rows
 
-    def read_security_groups(self, max_rows: int = 200) -> list[dict[str, str]]:
+    def read_security_groups(self, max_rows: int = 1000) -> list[dict[str, str]]:
         """Read Security Groups as normalized Group ID/Description rows."""
         rows = self.read_kendo_grid(max_rows=max_rows)
         normalized_rows: list[dict[str, str]] = []

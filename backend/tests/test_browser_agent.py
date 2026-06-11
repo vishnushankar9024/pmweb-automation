@@ -1101,6 +1101,58 @@ def test_build_reply_uses_direct_security_group_fallback_when_flow_retry_unavail
     ]
 
 
+def test_run_task_sync_security_group_list_uses_reported_total_for_direct_read_cap():
+    reported_total = 1001
+
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [
+                    {
+                        "step": 3,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "rows": reported_total,
+                            "sample_rows": [
+                                {"Group ID": "Default Group", "Description": "System defaults"},
+                            ],
+                        },
+                    }
+                ]
+
+            return Result()
+
+    class FakeNav:
+        def __init__(self):
+            self.caps: list[int] = []
+
+        def read_security_groups(self, max_rows=1000):
+            self.caps.append(max_rows)
+            return [
+                {"Group ID": f"Group {idx}", "Description": f"Description {idx}"}
+                for idx in range(1, max_rows + 1)
+            ]
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    fake_nav = FakeNav()
+    agent._nav = fake_nav  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._parse_intent = (  # type: ignore[method-assign]
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("LLM parser should not run"))
+    )
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert fake_nav.caps
+    assert all(cap == reported_total for cap in fake_nav.caps)
+    assert result["reply"].splitlines()[0] == "1. Group 1 — Description 1"
+    assert result["reply"].splitlines()[-1] == "1001. Group 1001 — Description 1001"
+    assert result["actions"] == []
+
+
 def test_build_reply_handles_shifted_security_group_columns_without_wrapper():
     agent = HybridAgent()
     parsed = {"intent": "read", "record_type": "Security Groups"}

@@ -214,9 +214,12 @@ class HybridAgent:
             parsed = {"intent": "read", "record_type": "Security Groups", "fields": {}}
             flow_result = self._dispatch_to_flow(parsed)
             self._store_learning(task, parsed, flow_result.steps)
+            grid_result = self._extract_grid_result(flow_result.steps)
+            expected_rows = self._reported_row_count(grid_result) if grid_result else None
+            direct_read_cap = min(max(expected_rows or 1000, 1000), 5000)
             # Prefer a deterministic direct read reply first so we always return
             # concrete group rows instead of any intermediary/tool summaries.
-            reply = self._direct_security_group_read_reply() or self._format_read_reply(
+            reply = self._direct_security_group_read_reply(max_rows=direct_read_cap) or self._format_read_reply(
                 parsed,
                 flow_result.steps,
                 task=task,
@@ -649,7 +652,8 @@ class HybridAgent:
             if not self._reply_is_partial_for_rows(retry_reply, expected_rows):
                 return retry_reply
 
-        direct_reply = self._direct_security_group_read_reply()
+        direct_cap = min(max(expected_rows or 1000, 1000), 5000)
+        direct_reply = self._direct_security_group_read_reply(max_rows=direct_cap)
         if direct_reply:
             direct_rows = self._rendered_row_count(direct_reply)
             if direct_rows > best_rows:
@@ -678,12 +682,12 @@ class HybridAgent:
             logger.exception("Security-group read retry failed")
             return None
 
-    def _direct_security_group_read_reply(self) -> str | None:
+    def _direct_security_group_read_reply(self, max_rows: int = 1000) -> str | None:
         """Final fallback: read rows directly from navigator and format."""
         if self._nav is None:
             return None
         try:
-            rows = self._nav.read_security_groups(max_rows=1000)
+            rows = self._nav.read_security_groups(max_rows=max_rows)
         except Exception:
             logger.exception("Direct security-group read fallback failed")
             return None
