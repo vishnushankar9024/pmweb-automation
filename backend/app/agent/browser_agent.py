@@ -268,6 +268,7 @@ class HybridAgent:
                     reply = resolved_reply
                 else:
                     reply = None
+            reply = self._strip_security_group_step_numbers(reply)
             return {
                 "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
                 # Hide internal execution steps for the list/read UX so the chat
@@ -325,6 +326,7 @@ class HybridAgent:
             reply = self._answer_only_security_group_reply(reply)
             if not reply or not self._reply_contains_numbered_rows(reply):
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
+            reply = self._strip_security_group_step_numbers(reply)
         if self._should_hide_actions(task, parsed, flow_result.steps):
             return {"reply": reply, "actions": []}
         return {"reply": reply, "actions": flow_result.steps}
@@ -706,6 +708,21 @@ class HybridAgent:
         if HybridAgent._contains_procedural_security_narration(reply):
             return None
         return reply
+
+    @staticmethod
+    def _strip_security_group_step_numbers(reply: str | None) -> str | None:
+        """Strip numeric list prefixes so UI shows answer text, not steps."""
+        if not reply:
+            return reply
+
+        cleaned_lines: list[str] = []
+        for line in reply.splitlines():
+            stripped = line.strip()
+            if not stripped:
+                continue
+            cleaned_lines.append(re.sub(r"^\d+\.\s+", "", stripped))
+
+        return "\n".join(cleaned_lines) if cleaned_lines else None
 
     @staticmethod
     def _reply_is_partial_for_rows(reply: str | None, expected_rows: int | None) -> bool:
