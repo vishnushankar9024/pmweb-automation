@@ -339,3 +339,50 @@ def test_build_reply_reads_groups_from_stringified_output_payload():
         "1. Default Group — System defaults",
         "2. Guest Users — Guest profile",
     ]
+
+
+def test_build_reply_reads_groups_from_rows_key_payload():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    results = [
+        {
+            "step": 9,
+            "action": "read_grid",
+            "result": {
+                "count": 2,
+                "rows": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                    {"Group ID": "Guest Users", "Description": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
+def test_build_reply_reads_groups_from_sample_strings_payload():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": ""}
+    results = [
+        {
+            "step": 10,
+            "action": "inspect_grid",
+            "result": {
+                "rows": 2,
+                "sample": ["Default Group", "Guest Users"],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group",
+        "2. Guest Users",
+    ]

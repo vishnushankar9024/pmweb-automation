@@ -471,13 +471,28 @@ class HybridAgent:
         if not isinstance(payload_value, dict):
             return None
 
-        for key in ("data", "rows_data", "items", "groups", "records"):
+        for key in (
+            "data",
+            "rows_data",
+            "items",
+            "groups",
+            "records",
+            "rows",
+            "group_rows",
+            "sample_rows",
+            "sample",
+        ):
             value = payload_value.get(key)
             if isinstance(value, list):
                 return value
 
-        for key in ("result", "output", "payload"):
+        for key in ("result", "output", "payload", "response", "details"):
             nested_rows = self._extract_rows(payload_value.get(key))
+            if nested_rows is not None:
+                return nested_rows
+
+        for value in payload_value.values():
+            nested_rows = self._extract_rows(value)
             if nested_rows is not None:
                 return nested_rows
 
@@ -557,6 +572,8 @@ class HybridAgent:
                         group_id = values[0]
                     if len(values) > 1:
                         description = values[1]
+                elif isinstance(row, str):
+                    group_id = row.strip()
                 if group_id and description and group_id.lower() != description.lower():
                     lines.append(f"{index}. {group_id} — {description}")
                 elif group_id:
