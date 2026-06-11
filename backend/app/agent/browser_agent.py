@@ -380,8 +380,16 @@ class HybridAgent:
         return {"intent": intent, "record_type": record_type, "fields": {}}
 
     @staticmethod
+    def _primary_task_text(task: str) -> str:
+        """Return the user-facing task text without appended attachment context."""
+        marker = "\n\n--- Attached file ---"
+        if marker in task:
+            return task.split(marker, 1)[0].strip()
+        return task.strip()
+
+    @staticmethod
     def _is_security_group_list_task(task: str) -> bool:
-        lowered = task.lower()
+        lowered = HybridAgent._primary_task_text(task).lower()
         if not re.search(r"\bsecurity\s+groups?\b", lowered):
             return False
 
@@ -704,7 +712,8 @@ class HybridAgent:
         return grid_result
 
     def _looks_like_security_group_list(self, task: str, parsed: dict[str, Any], results: list[dict[str, Any]]) -> bool:
-        if "security group" in task.lower():
+        task_text = self._primary_task_text(task).lower()
+        if "security group" in task_text:
             return True
         record_type = str(parsed.get("record_type", "")).strip().lower()
         if record_type == "security groups":
@@ -760,13 +769,14 @@ class HybridAgent:
 
         parsed_record_type = str(parsed.get("record_type", "")).strip()
         record_type = parsed_record_type or str(grid_result.get("record_type", "records")).strip()
+        task_text = self._primary_task_text(task).lower()
         if not record_type or record_type.lower() == "records":
-            if "security group" in task.lower():
+            if "security group" in task_text:
                 record_type = "Security Groups"
         if not data:
             return f"No {record_type.lower()} were found."
 
-        if record_type.lower() == "security groups" or "security group" in task.lower():
+        if record_type.lower() == "security groups" or "security group" in task_text:
             lines: list[str] = []
             for index, row in enumerate(data, start=1):
                 group_id, description = self._security_group_values(row)
