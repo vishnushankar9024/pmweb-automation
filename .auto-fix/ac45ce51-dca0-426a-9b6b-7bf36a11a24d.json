@@ -1,0 +1,9 @@
+{
+  "feedback_id": "ac45ce51-dca0-426a-9b6b-7bf36a11a24d",
+  "prompt": "List all security groups",
+  "actual_result": "On PMWeb, the task of listing all security groups was completed. The process involved navigating to the \"Security\" page, switching to an appropriate iframe, and then reading the security groups grid. A total of 28 rows were identified, with a sample of groups including \"Default Group,\" \"Guest Users,\" \"Adaptive Form Administrator,\" \"Can Change Due Date In Procurement,\" and \"Can Make Companies Active/Inactive,\" among others.",
+  "expected_result": "i need to see the answer completely here rather than the steps taken. the 28 groups are not listed.so the agrnt needs to answer the result accurately as per the prompt",
+  "session_id": "6a2a78dff5b78264ecdf5342",
+  "timestamp": "2026-06-11T09:03:32.742483+00:00",
+  "instructions": "FIX THIS: When the user says 'List all security groups', the agent currently does: 'On PMWeb, the task of listing all security groups was completed. The process involved navigating to the \"Security\" page, switching to an appropriate iframe, and then reading the security groups grid. '. The user expects: 'i need to see the answer completely here rather than the steps taken. the 28 groups are not listed.so the agrnt needs to answer the result accurately as per the prompt'. Fix the code in backend/app/agent/browser_agent.py (PLANNER_PROMPT or _execute_step) and/or backend/app/agent/pmweb_flows.py so the agent produces the expected result."
+}
