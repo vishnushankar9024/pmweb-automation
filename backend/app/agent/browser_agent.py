@@ -989,7 +989,12 @@ class HybridAgent:
         candidates: list[tuple[int, int, list[Any]]] = []
         list_keys = (
             "groups",
+            "security_groups",
+            "securitygroups",
             "group_rows",
+            "group_rows_data",
+            "group_list",
+            "group_data",
             "data",
             "rows_data",
             "items",
@@ -1003,6 +1008,20 @@ class HybridAgent:
             if not isinstance(value, list):
                 continue
             normalized_key = key.lower()
+            is_sample = "sample" in normalized_key
+            quality = 0 if is_sample else 1
+            candidates.append((quality, len(value), value))
+
+        # Handle integrations that return differently-named list keys such as
+        # `securityGroups` or `groupList` without requiring every alias above.
+        for key, value in payload_value.items():
+            if not isinstance(value, list):
+                continue
+            normalized_key = re.sub(r"[^a-z0-9]", "", str(key).lower())
+            if not normalized_key:
+                continue
+            if not any(token in normalized_key for token in ("group", "row", "item", "record", "data")):
+                continue
             is_sample = "sample" in normalized_key
             quality = 0 if is_sample else 1
             candidates.append((quality, len(value), value))

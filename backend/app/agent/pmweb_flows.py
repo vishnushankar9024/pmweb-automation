@@ -158,6 +158,8 @@ class PMWebFlows:
         if is_security_groups:
             payload["groups"] = data
             payload["group_rows"] = data
+            payload["security_groups"] = data
+            payload["group_list"] = data
         # Keep payload available under both keys for compatibility with
         # older result-consumers that read `output` instead of `result`.
         result.steps[-1]["result"] = payload

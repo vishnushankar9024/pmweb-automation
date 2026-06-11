@@ -874,6 +874,7 @@ def test_read_records_keeps_all_rows_for_listing():
     assert read_step["result"]["rows"] == 12
     assert len(read_step["result"]["data"]) == 12
     assert read_step["result"]["data"][-1]["Group ID"] == "Group 12"
+    assert len(read_step["result"]["security_groups"]) == 12
     assert nav.called_read_security_groups == 1
     assert nav.called_read_kendo_grid == 0
 
@@ -1055,6 +1056,30 @@ def test_build_reply_reads_groups_from_alternate_result_key():
             "action": "inspect_grid",
             "result": {
                 "groups": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                    {"Group ID": "Guest Users", "Description": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
+def test_build_reply_reads_groups_from_security_groups_alias_key():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    results = [
+        {
+            "step": 4,
+            "action": "inspect_grid",
+            "result": {
+                "security_groups": [
                     {"Group ID": "Default Group", "Description": "System defaults"},
                     {"Group ID": "Guest Users", "Description": "Guest profile"},
                 ],

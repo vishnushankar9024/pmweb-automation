@@ -445,8 +445,10 @@ class PMWebNavigator:
             "kendo-grid .k-grid-content tr.k-table-row",
             "kendo-grid .k-grid-content tr.k-master-row",
             "kendo-grid table.k-table tbody tr",
+            "kendo-grid-list .k-table-tbody tr",
             ".k-grid-content tr.k-table-row",
             ".k-grid-content tr.k-master-row",
+            ".k-grid-content tbody tr",
             ".k-table-tbody tr",
             ".k-grid-content-locked tr.k-table-row",
             ".k-grid-content tr[role='row']",
@@ -866,16 +868,22 @@ class PMWebNavigator:
         dropdown_selectors = [
             ".k-pager-sizes kendo-dropdownlist",
             ".k-pager-sizes .k-dropdownlist",
+            ".k-pager-sizes .k-picker",
+            ".k-pager-sizes [aria-haspopup='listbox']",
             "kendo-pager-page-sizes kendo-dropdownlist",
             "kendo-pager-page-sizes .k-dropdownlist",
+            "kendo-pager-page-sizes .k-picker",
+            "kendo-pager-page-sizes [aria-haspopup='listbox']",
             ".k-grid-pager kendo-dropdownlist",
             ".k-grid-pager .k-dropdownlist",
+            ".k-grid-pager .k-picker",
         ]
         popup_item_selectors = [
             "kendo-popup li",
             ".k-animation-container li",
             "ul.k-list li",
             "li.k-item",
+            "[role='listbox'] [role='option']",
         ]
         for selector in dropdown_selectors:
             for dropdown in self.driver.find_elements(By.CSS_SELECTOR, selector):
