@@ -215,6 +215,10 @@ class HybridAgent:
             flow_result = self._dispatch_to_flow(parsed)
             self._store_learning(task, parsed, flow_result.steps)
             reply = self._format_read_reply(parsed, flow_result.steps, task=task)
+            if reply and self._security_group_reply_is_partial(flow_result.steps, reply):
+                retry_reply = self._retry_security_group_read_reply(task)
+                if retry_reply:
+                    reply = retry_reply
             if not reply:
                 reply = self._retry_security_group_read_reply(task)
             if not reply:

@@ -225,6 +225,70 @@ def test_security_group_list_detection_ignores_add_substring_inside_words():
         "List all security groups with additional details"
     )
 
+def test_run_task_sync_security_group_list_retries_when_payload_is_sampled():
+    class FakeFlows:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def read_records(self, _rt, _record_type_name):
+            self.calls += 1
+            if self.calls == 1:
+                class Result:
+                    steps = [
+                        {
+                            "step": 3,
+                            "action": "read_grid",
+                            "result": {
+                                "record_type": "Security Groups",
+                                "rows": 4,
+                                "sample_rows": [
+                                    {"Group ID": "Default Group", "Description": "System defaults"},
+                                    {"Group ID": "Guest Users", "Description": "Guest profile"},
+                                ],
+                            },
+                        }
+                    ]
+
+                return Result()
+
+            class Result:
+                steps = [
+                    {
+                        "step": 4,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "rows": 4,
+                            "data": [
+                                {"Group ID": "Default Group", "Description": "System defaults"},
+                                {"Group ID": "Guest Users", "Description": "Guest profile"},
+                                {"Group ID": "PMWEB Admin", "Description": "Admin users"},
+                                {"Group ID": "Power Users", "Description": "Power user access"},
+                            ],
+                        },
+                    }
+                ]
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    fake_flows = FakeFlows()
+    agent._flows = fake_flows  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._parse_intent = (  # type: ignore[method-assign]
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("LLM parser should not run"))
+    )
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert fake_flows.calls == 2
+    assert result["reply"].splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+        "3. PMWEB Admin — Admin users",
+        "4. Power Users — Power user access",
+    ]
 
 def test_read_records_keeps_all_rows_for_listing():
     rows = [{"Group ID": f"Group {i}", "Description": f"Desc {i}"} for i in range(1, 13)]
