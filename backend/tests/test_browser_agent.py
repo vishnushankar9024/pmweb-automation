@@ -218,6 +218,7 @@ def test_run_task_sync_security_group_list_uses_deterministic_fast_path():
         "2. Guest Users — Guest profile",
         "3. PMWEB Admin — Admin users",
     ]
+    assert result["actions"] == []
 
 
 def test_run_task_with_context_security_group_list_ignores_attached_create_text():
@@ -258,6 +259,7 @@ def test_run_task_with_context_security_group_list_ignores_attached_create_text(
         "1. Default Group — System defaults",
         "2. Guest Users — Guest profile",
     ]
+    assert result["actions"] == []
 
 
 def test_security_group_list_detection_ignores_add_substring_inside_words():

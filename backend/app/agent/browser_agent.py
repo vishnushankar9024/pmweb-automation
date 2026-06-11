@@ -221,7 +221,9 @@ class HybridAgent:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             return {
                 "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
-                "actions": flow_result.steps,
+                # Hide internal execution steps for the list/read UX so the chat
+                # only shows the answer content, not procedural action cards.
+                "actions": [],
             }
 
         parsed = self._parse_intent(task, history)
