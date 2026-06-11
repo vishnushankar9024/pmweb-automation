@@ -29,6 +29,10 @@ class PMWebNavigator:
         self.base = base_url.rstrip("/")
         self._in_iframe = False
 
+    @staticmethod
+    def _normalize_key(text: str) -> str:
+        return text.lower().replace(" ", "").replace("_", "")
+
     # ── Navigation ───────────────────────────────────────────────────
 
     def navigate(self, url_fragment: str) -> str:
@@ -483,6 +487,40 @@ class PMWebNavigator:
                 break
 
         return rows
+
+    def read_security_groups(self, max_rows: int = 200) -> list[dict[str, str]]:
+        """Read Security Groups as normalized Group ID/Description rows."""
+        rows = self.read_kendo_grid(max_rows=max_rows)
+        normalized_rows: list[dict[str, str]] = []
+        for row in rows:
+            normalized = {
+                self._normalize_key(str(key)): str(value).strip()
+                for key, value in row.items()
+                if value is not None
+            }
+
+            group_id = (
+                normalized.get("groupid")
+                or normalized.get("group")
+                or normalized.get("groupname")
+                or normalized.get("id")
+                or normalized.get("name")
+                or normalized.get("col0")
+                or ""
+            )
+            description = (
+                normalized.get("description")
+                or normalized.get("groupdescription")
+                or normalized.get("col1")
+                or ""
+            )
+
+            if group_id or description:
+                normalized_rows.append({
+                    "Group ID": group_id,
+                    "Description": description,
+                })
+        return normalized_rows
 
     # ── SurveyJS Adaptive Forms ──────────────────────────────────────
 

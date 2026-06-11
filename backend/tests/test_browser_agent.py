@@ -46,6 +46,8 @@ class FakeSecurityNav:
 class FakeReadNav:
     def __init__(self, rows: list[dict[str, str]]) -> None:
         self._rows = rows
+        self.called_read_kendo_grid = 0
+        self.called_read_security_groups = 0
 
     def navigate(self, _url_fragment: str) -> str:
         return "navigated"
@@ -54,6 +56,11 @@ class FakeReadNav:
         return "switched"
 
     def read_kendo_grid(self, max_rows: int = 30) -> list[dict[str, str]]:
+        self.called_read_kendo_grid += 1
+        return self._rows[:max_rows]
+
+    def read_security_groups(self, max_rows: int = 200) -> list[dict[str, str]]:
+        self.called_read_security_groups += 1
         return self._rows[:max_rows]
 
 
@@ -185,6 +192,8 @@ def test_read_records_keeps_all_rows_for_listing():
     assert read_step["result"]["rows"] == 12
     assert len(read_step["result"]["data"]) == 12
     assert read_step["result"]["data"][-1]["Group ID"] == "Group 12"
+    assert nav.called_read_security_groups == 1
+    assert nav.called_read_kendo_grid == 0
 
 
 def test_build_reply_lists_all_security_groups():
@@ -230,6 +239,52 @@ def test_build_reply_lists_security_groups_even_when_step_action_varies():
                     {"col_0": "Guest Users", "col_1": "Guest profile"},
                 ],
             },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
+def test_build_reply_reads_groups_from_alternate_result_key():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    results = [
+        {
+            "step": 4,
+            "action": "inspect_grid",
+            "result": {
+                "groups": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                    {"Group ID": "Guest Users", "Description": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
+def test_build_reply_reads_groups_from_stringified_output_payload():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": ""}
+    results = [
+        {
+            "step": 6,
+            "action": "read_grid",
+            "output": (
+                '{"payload":{"items":[{"col_0":"Default Group","col_1":"System defaults"},'
+                '{"col_0":"Guest Users","col_1":"Guest profile"}]}}'
+            ),
         }
     ]
 

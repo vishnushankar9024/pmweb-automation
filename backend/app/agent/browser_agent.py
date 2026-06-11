@@ -427,6 +427,8 @@ class HybridAgent:
             read_reply = self._format_read_reply(parsed, results, task=task)
             if read_reply:
                 return read_reply
+            if "security group" in normalized_task:
+                return "I couldn't extract the security group rows from PMWeb. Please try again."
         return self._summarize(task, results)
 
     @staticmethod
@@ -455,23 +457,47 @@ class HybridAgent:
                 return decoded
         return None
 
+    def _extract_rows(self, payload: Any) -> list[Any] | None:
+        if isinstance(payload, list):
+            return payload
+
+        payload_dict = self._coerce_json_dict(payload)
+        if not payload_dict:
+            return None
+
+        for key in ("data", "rows_data", "items", "groups", "records"):
+            value = payload_dict.get(key)
+            if isinstance(value, list):
+                return value
+
+        for key in ("result", "output", "payload"):
+            nested_rows = self._extract_rows(payload_dict.get(key))
+            if nested_rows is not None:
+                return nested_rows
+
+        return None
+
     def _extract_grid_result(self, results: list[dict[str, Any]]) -> dict[str, Any] | None:
         grid_result: dict[str, Any] | None = None
         for step in results:
             parsed_result = self._coerce_json_dict(step.get("result"))
-            if (
-                step.get("action") == "read_grid"
-                and parsed_result
-                and isinstance(parsed_result.get("data"), list)
-            ):
-                return parsed_result
-            if parsed_result and isinstance(parsed_result.get("data"), list):
-                grid_result = parsed_result
+            result_rows = self._extract_rows(parsed_result)
+            if result_rows is not None:
+                enriched = dict(parsed_result or {})
+                enriched["data"] = result_rows
+                if step.get("action") == "read_grid":
+                    return enriched
+                grid_result = enriched
                 continue
 
             parsed_output = self._coerce_json_dict(step.get("output"))
-            if parsed_output and isinstance(parsed_output.get("data"), list):
-                grid_result = parsed_output
+            output_rows = self._extract_rows(parsed_output)
+            if output_rows is not None:
+                enriched = dict(parsed_output or {})
+                enriched["data"] = output_rows
+                if step.get("action") == "read_grid":
+                    return enriched
+                grid_result = enriched
         return grid_result
 
     def _format_read_reply(

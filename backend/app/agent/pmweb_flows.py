@@ -82,7 +82,10 @@ class PMWebFlows:
             result.add("navigate", self.nav.navigate("/Home.aspx"))
 
         # Use a high cap so list/read answers can include complete datasets.
-        data = self.nav.read_kendo_grid(max_rows=500)
+        if "security group" in record_type_name.lower() and hasattr(self.nav, "read_security_groups"):
+            data = self.nav.read_security_groups(max_rows=500)
+        else:
+            data = self.nav.read_kendo_grid(max_rows=500)
         result.add("read_grid", f"found {len(data)} rows")
         result.steps[-1]["result"] = {
             "record_type": record_type_name,
