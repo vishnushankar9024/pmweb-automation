@@ -500,6 +500,20 @@ def test_run_task_sync_security_group_read_hides_actions_when_fast_path_is_skipp
     assert result["actions"] == []
 
 
+def test_answer_only_security_group_reply_strips_non_row_lines():
+    reply = (
+        "Security groups (28):\n"
+        "1. Default Group — System defaults\n"
+        "2. Guest Users — Guest profile\n"
+        "Done."
+    )
+
+    assert HybridAgent._answer_only_security_group_reply(reply) == (
+        "1. Default Group — System defaults\n"
+        "2. Guest Users — Guest profile"
+    )
+
+
 def test_security_group_list_detection_ignores_add_substring_inside_words():
     assert HybridAgent._is_security_group_list_task(
         "List all security groups with additional details"

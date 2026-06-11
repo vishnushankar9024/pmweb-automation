@@ -258,6 +258,7 @@ class HybridAgent:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             if not reply:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
+            reply = self._answer_only_security_group_reply(reply)
             return {
                 "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
                 # Hide internal execution steps for the list/read UX so the chat
@@ -311,6 +312,7 @@ class HybridAgent:
                 or self._security_group_reply_is_partial(flow_result.steps, reply)
             ):
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
+            reply = self._answer_only_security_group_reply(reply)
         if self._should_hide_actions(task, parsed, flow_result.steps):
             return {"reply": reply, "actions": []}
         return {"reply": reply, "actions": flow_result.steps}
@@ -656,6 +658,18 @@ class HybridAgent:
         return sum(
             1 for line in reply.splitlines() if re.match(r"^\s*\d+\.\s+\S", line)
         )
+
+    @staticmethod
+    def _answer_only_security_group_reply(reply: str | None) -> str | None:
+        """Keep only numbered rows for security-group list/read responses."""
+        if not reply:
+            return reply
+        numbered_lines = [
+            line.strip()
+            for line in reply.splitlines()
+            if re.match(r"^\s*\d+\.\s+\S", line)
+        ]
+        return "\n".join(numbered_lines) if numbered_lines else reply
 
     @staticmethod
     def _reply_is_partial_for_rows(reply: str | None, expected_rows: int | None) -> bool:

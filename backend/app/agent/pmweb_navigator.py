@@ -422,7 +422,10 @@ class PMWebNavigator:
         row_selectors = [
             "kendo-grid .k-grid-content tr.k-table-row",
             ".k-grid-content tr.k-table-row",
+            ".k-grid-content tr[role='row']",
             "tr.k-table-row",
+            "tr[role='row']",
+            "tr.k-master-row",
             "table tbody tr",
         ]
         row_elements = []
@@ -556,7 +559,7 @@ class PMWebNavigator:
     def _wait_for_pager_state_change(
         self,
         previous_signature: tuple[int | None, str, str],
-        timeout_s: float = 3.0,
+        timeout_s: float = 5.0,
     ) -> bool:
         deadline = time.time() + timeout_s
         while time.time() < deadline:
@@ -612,6 +615,11 @@ class PMWebNavigator:
             ".k-pager-nav.k-pager-next .k-svg-icon",
             ".k-pager-nav.k-pager-next",
             ".k-pager-next",
+            "[data-page='next']",
+            "[data-kendo-page='next']",
+            "[data-kendo-pager-action='next']",
+            "[aria-label='Go to next page']",
+            "[aria-label='Next']",
             "[aria-label='Next page']",
             "[title='Next page']",
             "[title='Next']",
@@ -843,6 +851,10 @@ class PMWebNavigator:
     def read_kendo_grid(self, max_rows: int = 30) -> list[dict[str, str]]:
         """Read a kendo grid with headers, traversing pager pages when present."""
         headers = self._kendo_grid_headers()
+        reported_total = self.get_kendo_total_rows()
+        target_rows = max_rows
+        if isinstance(reported_total, int) and reported_total > 0:
+            target_rows = min(max_rows, reported_total)
         # Best effort: start from page 1 so previous user navigation state
         # cannot truncate list/read responses.
         self._go_to_first_kendo_page()
@@ -851,8 +863,8 @@ class PMWebNavigator:
         stale_page_reads = 0
         max_stale_page_reads = 2
 
-        while len(rows) < max_rows:
-            remaining = max_rows - len(rows)
+        while len(rows) < target_rows:
+            remaining = target_rows - len(rows)
             page_rows = self._kendo_grid_rows(headers, remaining)
             if not page_rows:
                 break
@@ -869,13 +881,13 @@ class PMWebNavigator:
             seen_page_signatures.add(page_signature)
 
             rows.extend(page_rows[:remaining])
-            if len(rows) >= max_rows:
+            if len(rows) >= target_rows:
                 break
             if not self._go_to_next_kendo_page():
                 break
 
-        if len(rows) < max_rows:
-            rows = self._collect_rows_from_virtual_scroll(headers, max_rows, seed_rows=rows)
+        if len(rows) < target_rows:
+            rows = self._collect_rows_from_virtual_scroll(headers, target_rows, seed_rows=rows)
         return rows
 
     def read_security_groups(self, max_rows: int = 1000) -> list[dict[str, str]]:

@@ -114,18 +114,23 @@ class PMWebFlows:
             and hasattr(self.nav, "read_security_groups")
             and total_rows > len(data)
         ):
-            retry_cap = min(max(total_rows, len(data)), 5000)
-            retry_rows = self.nav.read_security_groups(max_rows=retry_cap)
-            if len(retry_rows) > len(data):
-                data = retry_rows
-            total_rows = max(total_rows, len(data))
-            if hasattr(self.nav, "get_kendo_total_rows"):
-                try:
-                    reported_total = self.nav.get_kendo_total_rows()
-                    if isinstance(reported_total, int) and reported_total > total_rows:
-                        total_rows = reported_total
-                except Exception:
-                    logger.debug("Could not refresh pager total rows", exc_info=True)
+            # Retry a few times because pager totals may settle after initial
+            # load; keep the fullest row set we can deterministically extract.
+            for _ in range(3):
+                retry_cap = min(max(total_rows, len(data)), 5000)
+                retry_rows = self.nav.read_security_groups(max_rows=retry_cap)
+                if len(retry_rows) > len(data):
+                    data = retry_rows
+                total_rows = max(total_rows, len(data))
+                if hasattr(self.nav, "get_kendo_total_rows"):
+                    try:
+                        reported_total = self.nav.get_kendo_total_rows()
+                        if isinstance(reported_total, int) and reported_total > total_rows:
+                            total_rows = reported_total
+                    except Exception:
+                        logger.debug("Could not refresh pager total rows", exc_info=True)
+                if len(data) >= total_rows:
+                    break
 
         payload = {
             "record_type": record_type_name,

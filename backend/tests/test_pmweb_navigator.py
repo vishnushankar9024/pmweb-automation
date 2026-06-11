@@ -106,3 +106,17 @@ def test_go_to_next_kendo_page_uses_numeric_button_when_next_control_missing():
 
     assert moved is True
     assert next_page.clicks == 1
+
+
+def test_go_to_next_kendo_page_clicks_data_page_next_selector():
+    next_control = _FakeElement({"data-page": "next"})
+    driver = _FakeDriver(
+        css_matches={"[data-page='next']": [next_control]},
+    )
+    nav = _build_nav(driver)
+    nav._wait_for_pager_state_change = lambda _signature, timeout_s=5.0: True  # type: ignore[method-assign]
+
+    moved = nav._go_to_next_kendo_page()
+
+    assert moved is True
+    assert next_control.clicks == 1
