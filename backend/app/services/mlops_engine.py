@@ -371,7 +371,7 @@ class MLOpsEngine:
             if resp.status_code in (200, 201):
                 issue_url = resp.json().get("html_url", "")
                 # Push a trigger commit so Cursor Automation fires
-                self._push_trigger_commit(feedback_id, prompt)
+                self._push_trigger_commit(feedback_id, prompt, expected, actual, session_id)
                 return issue_url
             logger.warning("GitHub API returned %d: %s", resp.status_code, resp.text[:200])
             return f"https://github.com/{GITHUB_REPO}/issues (creation returned {resp.status_code})"
@@ -379,8 +379,8 @@ class MLOpsEngine:
             logger.exception("GitHub issue creation failed")
             return f"Issue creation error: {exc}"
 
-    def _push_trigger_commit(self, feedback_id: str, prompt: str) -> None:
-        """Push a small commit to trigger Cursor Automation on the deploy branch."""
+    def _push_trigger_commit(self, feedback_id: str, prompt: str, expected: str = "", actual: str = "", session_id: str = "") -> None:
+        """Push a commit with full fix context to trigger Cursor Automation."""
         try:
             import base64
             import json
@@ -393,16 +393,27 @@ class MLOpsEngine:
             }
             api = f"https://api.github.com/repos/{GITHUB_REPO}"
 
-            # Get latest commit SHA on deploy branch
             ref = httpx.get(f"{api}/git/ref/heads/{DEPLOY_BRANCH}", headers=headers, timeout=10)
             if ref.status_code != 200:
                 logger.warning("Could not get branch ref: %s", ref.text[:100])
                 return
-            # Create diagnosis file
+
             content = json.dumps({
                 "feedback_id": feedback_id,
-                "prompt": prompt[:200],
+                "prompt": prompt[:500],
+                "actual_result": actual[:1000],
+                "expected_result": expected[:1000],
+                "session_id": session_id,
                 "timestamp": datetime.now(timezone.utc).isoformat(),
+                "instructions": (
+                    f"FIX THIS: When the user says '{prompt[:100]}', "
+                    f"the agent currently does: '{actual[:200]}'. "
+                    f"The user expects: '{expected[:200]}'. "
+                    f"Fix the code in backend/app/agent/browser_agent.py "
+                    f"(PLANNER_PROMPT or _execute_step) and/or "
+                    f"backend/app/agent/pmweb_flows.py so the agent "
+                    f"produces the expected result."
+                ),
             }, indent=2)
 
             httpx.put(
