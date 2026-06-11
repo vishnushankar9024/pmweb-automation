@@ -384,9 +384,13 @@ class HybridAgent:
         return task.strip()
 
     @staticmethod
+    def _mentions_security_groups(text: str) -> bool:
+        return bool(re.search(r"\bsecurity[\s_-]*groups?\b", text.lower()))
+
+    @staticmethod
     def _is_security_group_list_task(task: str) -> bool:
         lowered = HybridAgent._primary_task_text(task).lower()
-        if not re.search(r"\bsecurity\s+groups?\b", lowered):
+        if not HybridAgent._mentions_security_groups(lowered):
             return False
 
         read_signals = (
@@ -436,7 +440,11 @@ class HybridAgent:
 
         # Read / list
         if intent in ("read", "list"):
-            return self.flows.read_records(rt, record_type_name)
+            normalized_record_type_name = record_type_name
+            if self._mentions_security_groups(record_type_name):
+                normalized_record_type_name = "Security Groups"
+                rt = get_record_type(normalized_record_type_name)
+            return self.flows.read_records(rt, normalized_record_type_name)
 
         # Specific record type flows
         rt_lower = record_type_name.lower()
@@ -753,10 +761,10 @@ class HybridAgent:
 
     def _looks_like_security_group_list(self, task: str, parsed: dict[str, Any], results: list[dict[str, Any]]) -> bool:
         task_text = self._primary_task_text(task).lower()
-        if "security group" in task_text:
+        if self._mentions_security_groups(task_text):
             return True
         record_type = str(parsed.get("record_type", "")).strip().lower()
-        if record_type == "security groups":
+        if self._mentions_security_groups(record_type):
             return True
         grid_result = self._extract_grid_result(results)
         if not grid_result:
@@ -808,12 +816,12 @@ class HybridAgent:
         record_type = parsed_record_type or str(grid_result.get("record_type", "records")).strip()
         task_text = self._primary_task_text(task).lower()
         if not record_type or record_type.lower() == "records":
-            if "security group" in task_text:
+            if self._mentions_security_groups(task_text):
                 record_type = "Security Groups"
         if not data:
             return f"No {record_type.lower()} were found."
 
-        if record_type.lower() == "security groups" or "security group" in task_text:
+        if self._mentions_security_groups(record_type) or self._mentions_security_groups(task_text):
             lines: list[str] = []
             for index, row in enumerate(data, start=1):
                 group_id, description = self._security_group_values(row)

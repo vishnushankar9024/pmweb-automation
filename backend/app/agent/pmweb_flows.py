@@ -11,6 +11,7 @@ Architecture layer 3 of 4:
 from __future__ import annotations
 
 import logging
+import re
 from typing import Any
 
 from app.agent.pmweb_navigator import PMWebNavigator
@@ -58,6 +59,10 @@ class PMWebFlows:
                 return str(value)
         return ""
 
+    @staticmethod
+    def _is_security_group_record_type_name(record_type_name: str) -> bool:
+        return bool(re.search(r"\bsecurity[\s_-]*groups?\b", record_type_name.lower()))
+
     # ── Navigation flows ─────────────────────────────────────────────
 
     def navigate_to_record(self, rt: RecordType, result: FlowResult) -> None:
@@ -83,7 +88,7 @@ class PMWebFlows:
 
         # Use a high cap so list/read answers can include complete datasets.
         row_cap = 1000
-        if "security group" in record_type_name.lower() and hasattr(self.nav, "read_security_groups"):
+        if self._is_security_group_record_type_name(record_type_name) and hasattr(self.nav, "read_security_groups"):
             data = self.nav.read_security_groups(max_rows=row_cap)
         else:
             data = self.nav.read_kendo_grid(max_rows=row_cap)
@@ -93,7 +98,7 @@ class PMWebFlows:
             "rows": len(data),
             "data": data,
         }
-        if "security group" in record_type_name.lower():
+        if self._is_security_group_record_type_name(record_type_name):
             payload["groups"] = data
         # Keep payload available under both keys for compatibility with
         # older result-consumers that read `output` instead of `result`.

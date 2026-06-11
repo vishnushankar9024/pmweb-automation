@@ -31,7 +31,7 @@ class PMWebNavigator:
 
     @staticmethod
     def _normalize_key(text: str) -> str:
-        return text.lower().replace(" ", "").replace("_", "")
+        return text.lower().replace(" ", "").replace("_", "").replace("-", "")
 
     # ── Navigation ───────────────────────────────────────────────────
 
