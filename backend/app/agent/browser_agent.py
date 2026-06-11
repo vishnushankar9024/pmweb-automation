@@ -654,19 +654,21 @@ class HybridAgent:
                 if looks_like_security_groups and self._security_group_reply_is_partial(results, read_reply):
                     complete_reply = self._resolve_security_group_reply(task, results, read_reply)
                     if complete_reply:
-                        return complete_reply
+                        return self._finalize_security_group_reply(complete_reply) or complete_reply
                     # Enforce complete security-group answers: when we cannot
                     # recover from a sampled/partial payload, do not return a
                     # truncated list.
                     read_reply = None
                 else:
+                    if looks_like_security_groups:
+                        return self._finalize_security_group_reply(read_reply) or read_reply
                     return read_reply
             record_type = str(parsed.get("record_type", "")).strip().lower()
             security_group_read = looks_like_security_groups or record_type == "security groups"
             if security_group_read:
                 complete_reply = self._resolve_security_group_reply(task, results, None)
                 if complete_reply:
-                    return complete_reply
+                    return self._finalize_security_group_reply(complete_reply) or complete_reply
                 return "I couldn't extract the security group rows from PMWeb. Please try again."
         return self._summarize(task, results)
 
@@ -758,6 +760,12 @@ class HybridAgent:
         if HybridAgent._contains_procedural_security_narration(reply):
             return None
         return reply
+
+    def _finalize_security_group_reply(self, reply: str | None) -> str | None:
+        """Normalize security-group replies to answer-only non-step content."""
+        reply = self._strip_procedural_security_narration(reply)
+        reply = self._answer_only_security_group_reply(reply)
+        return self._strip_security_group_step_numbers(reply)
 
     @staticmethod
     def _is_security_group_heading_line(line: str) -> bool:
@@ -1253,7 +1261,7 @@ class HybridAgent:
         # Never narrate procedural steps for security-group list/read requests.
         if self._is_security_group_list_task(task) or self._looks_like_security_group_list(task, {}, results):
             deterministic_reply = self._deterministic_security_group_reply(task, results)
-            deterministic_reply = self._answer_only_security_group_reply(deterministic_reply)
+            deterministic_reply = self._finalize_security_group_reply(deterministic_reply)
             if deterministic_reply and self._reply_contains_security_group_rows(deterministic_reply):
                 return deterministic_reply
             return "I couldn't extract the security group rows from PMWeb. Please try again."

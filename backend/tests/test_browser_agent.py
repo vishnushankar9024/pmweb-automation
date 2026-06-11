@@ -975,9 +975,9 @@ def test_build_reply_lists_all_security_groups():
 
     lines = reply.splitlines()
     assert lines == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
-        "3. PMWEB Admin — Admin users",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+        "PMWEB Admin — Admin users",
     ]
 
 
@@ -1001,8 +1001,8 @@ def test_build_reply_lists_security_groups_even_when_step_action_varies():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1026,8 +1026,8 @@ def test_build_reply_lists_security_groups_for_hyphenated_task_phrase():
     reply = agent._build_reply("List all security-groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1049,8 +1049,8 @@ def test_build_reply_lists_security_groups_from_stringified_payload():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1071,8 +1071,8 @@ def test_build_reply_lists_security_groups_from_list_rows_payload():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1095,8 +1095,8 @@ def test_build_reply_reads_groups_from_alternate_result_key():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1119,8 +1119,8 @@ def test_build_reply_reads_groups_from_security_groups_alias_key():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1141,8 +1141,8 @@ def test_build_reply_reads_groups_from_stringified_output_payload():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1166,8 +1166,8 @@ def test_build_reply_reads_groups_from_rows_key_payload():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1191,8 +1191,8 @@ def test_build_reply_reads_groups_from_step_level_rows_data_payload():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1213,8 +1213,8 @@ def test_build_reply_reads_groups_from_python_literal_result_payload():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1235,8 +1235,8 @@ def test_build_reply_reads_groups_from_sample_strings_payload():
     reply = agent._build_reply("List all security groups", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group",
-        "2. Guest Users",
+        "Default Group",
+        "Guest Users",
     ]
 
 
@@ -1260,8 +1260,8 @@ def test_build_reply_prefers_security_group_rows_even_when_intent_is_create():
     reply = agent._build_reply("Please continue", parsed, results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1301,8 +1301,8 @@ def test_build_reply_retries_security_group_read_when_payload_has_no_rows():
     reply = agent._build_reply("List all security groups", parsed, malformed_results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1350,10 +1350,10 @@ def test_build_reply_retries_when_security_group_payload_is_sampled():
     reply = agent._build_reply("List all security groups", parsed, sampled_results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
-        "3. PMWEB Admin — Admin users",
-        "4. Power Users — Power user access",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+        "PMWEB Admin — Admin users",
+        "Power Users — Power user access",
     ]
 
 
@@ -1409,10 +1409,10 @@ def test_build_reply_uses_direct_read_when_retry_payload_remains_sampled():
     reply = agent._build_reply("List all security groups", parsed, sampled_results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
-        "3. PMWEB Admin — Admin users",
-        "4. Power Users — Power user access",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
+        "PMWEB Admin — Admin users",
+        "Power Users — Power user access",
     ]
 
 
@@ -1468,8 +1468,8 @@ def test_build_reply_prefers_full_non_sample_rows_when_payload_has_sample_data()
     reply = agent._build_reply("List all security groups", parsed, mixed_results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1503,8 +1503,8 @@ def test_build_reply_uses_direct_security_group_fallback_when_flow_retry_unavail
     )
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1582,8 +1582,8 @@ def test_build_reply_handles_shifted_security_group_columns_without_wrapper():
 
     assert not reply.lower().startswith("security groups (")
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1607,8 +1607,8 @@ def test_summarize_returns_deterministic_security_group_rows_instead_of_narratio
     reply = agent._summarize("List all security groups", results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
@@ -1744,8 +1744,8 @@ def test_summarize_uses_deterministic_rows_when_results_indicate_security_groups
     reply = agent._summarize("What did you do?", results)
 
     assert reply.splitlines() == [
-        "1. Default Group — System defaults",
-        "2. Guest Users — Guest profile",
+        "Default Group — System defaults",
+        "Guest Users — Guest profile",
     ]
 
 
