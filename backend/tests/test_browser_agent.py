@@ -790,6 +790,37 @@ def test_run_task_sync_replaces_feedback_style_procedural_summary_with_group_row
     assert result["actions"] == []
 
 
+def test_run_task_sync_security_group_read_rejects_non_numbered_prose_reply():
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [{"step": 4, "action": "read_grid", "result": {}}]
+
+            return Result()
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._is_security_group_list_task = lambda _task: False  # type: ignore[method-assign]
+    agent._parse_intent = lambda *_args, **_kwargs: {  # type: ignore[method-assign]
+        "intent": "read",
+        "record_type": "Security Groups",
+        "fields": {},
+    }
+    agent._build_reply = lambda *_args, **_kwargs: (  # type: ignore[method-assign]
+        "Security groups include Default Group and Guest Users."
+    )
+    agent._deterministic_security_group_reply = lambda *_args, **_kwargs: (  # type: ignore[method-assign]
+        "Security groups include Default Group and Guest Users."
+    )
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert result["reply"] == "I couldn't extract the security group rows from PMWeb. Please try again."
+    assert result["actions"] == []
+
+
 def test_read_records_keeps_all_rows_for_listing():
     rows = [{"Group ID": f"Group {i}", "Description": f"Desc {i}"} for i in range(1, 13)]
     nav = FakeReadNav(rows)

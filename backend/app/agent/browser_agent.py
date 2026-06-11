@@ -316,6 +316,8 @@ class HybridAgent:
             ):
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
             reply = self._answer_only_security_group_reply(reply)
+            if not reply or not self._reply_contains_numbered_rows(reply):
+                reply = "I couldn't extract the security group rows from PMWeb. Please try again."
         if self._should_hide_actions(task, parsed, flow_result.steps):
             return {"reply": reply, "actions": []}
         return {"reply": reply, "actions": flow_result.steps}
@@ -692,7 +694,11 @@ class HybridAgent:
             for line in reply.splitlines()
             if re.match(r"^\s*\d+\.\s+\S", line)
         ]
-        return "\n".join(numbered_lines) if numbered_lines else reply
+        if numbered_lines:
+            return "\n".join(numbered_lines)
+        if HybridAgent._contains_procedural_security_narration(reply):
+            return None
+        return reply
 
     @staticmethod
     def _reply_is_partial_for_rows(reply: str | None, expected_rows: int | None) -> bool:
