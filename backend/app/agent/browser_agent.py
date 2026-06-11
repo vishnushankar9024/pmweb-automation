@@ -232,8 +232,11 @@ class HybridAgent:
             # Prefer the flow payload first (it already reflects deterministic
             # retries), then use direct-read fallback when needed.
             reply = self._format_read_reply(parsed, flow_result.steps, task=task)
+            # When flow payloads omit row-count metadata, we still compare
+            # against a direct navigator read and keep the richer concrete list.
             if (
-                not reply
+                expected_rows is None
+                or not reply
                 or self._security_group_reply_is_partial(flow_result.steps, reply)
                 or self._looks_like_procedural_security_summary(reply)
             ):

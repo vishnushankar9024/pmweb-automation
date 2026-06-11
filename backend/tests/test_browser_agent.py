@@ -280,6 +280,67 @@ def test_run_task_sync_security_group_list_prefers_complete_flow_rows_over_parti
     assert result["actions"] == []
 
 
+def test_run_task_sync_security_group_list_prefers_direct_read_when_flow_has_no_totals():
+    flow_rows = [
+        {"Group ID": "Default Group", "Description": "System defaults"},
+        {"Group ID": "Guest Users", "Description": "Guest profile"},
+    ]
+    direct_rows = [
+        {"Group ID": "Default Group", "Description": "System defaults"},
+        {"Group ID": "Guest Users", "Description": "Guest profile"},
+        {"Group ID": "PMWEB Admin", "Description": "Admin users"},
+        {"Group ID": "Power Users", "Description": "Power user access"},
+    ]
+
+    class FakeFlows:
+        def read_records(self, _rt, _record_type_name):
+            class Result:
+                steps = [
+                    {
+                        "step": 3,
+                        "action": "read_grid",
+                        "result": {
+                            "record_type": "Security Groups",
+                            "data": flow_rows,
+                        },
+                    }
+                ]
+
+            return Result()
+
+    class FakeNav:
+        def __init__(self):
+            self.read_calls = 0
+
+        def read_security_groups(self, max_rows=1000):
+            self.read_calls += 1
+            return direct_rows[:max_rows]
+
+        def get_kendo_total_rows(self):
+            return None
+
+    agent = HybridAgent()
+    agent._logged_in = True
+    agent._flows = FakeFlows()  # type: ignore[assignment]
+    fake_nav = FakeNav()
+    agent._nav = fake_nav  # type: ignore[assignment]
+    agent._store_learning = lambda *_args, **_kwargs: None  # type: ignore[method-assign]
+    agent._parse_intent = (  # type: ignore[method-assign]
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("LLM parser should not run"))
+    )
+
+    result = agent.run_task_sync("List all security groups")
+
+    assert fake_nav.read_calls >= 1
+    assert result["reply"].splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+        "3. PMWEB Admin — Admin users",
+        "4. Power Users — Power user access",
+    ]
+    assert result["actions"] == []
+
+
 def test_run_task_sync_hides_actions_for_security_group_read_intent_without_list_phrase():
     class FakeFlows:
         def read_records(self, _rt, _record_type_name):
