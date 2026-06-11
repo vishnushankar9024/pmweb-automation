@@ -813,32 +813,44 @@ class HybridAgent:
         if not isinstance(payload_value, dict):
             return None
 
-        for key in (
+        candidates: list[tuple[int, int, list[Any]]] = []
+        list_keys = (
+            "groups",
+            "group_rows",
             "data",
             "rows_data",
             "items",
-            "groups",
             "records",
             "rows",
-            "group_rows",
             "sample_rows",
             "sample",
-        ):
+        )
+        for key in list_keys:
             value = payload_value.get(key)
-            if isinstance(value, list):
-                return value
+            if not isinstance(value, list):
+                continue
+            normalized_key = key.lower()
+            is_sample = "sample" in normalized_key
+            quality = 0 if is_sample else 1
+            candidates.append((quality, len(value), value))
 
+        # Evaluate nested payload objects as candidates too so we can choose the
+        # most complete non-sampled rows set instead of the first key hit.
         for key in ("result", "output", "payload", "response", "details"):
             nested_rows = self._extract_rows(payload_value.get(key))
             if nested_rows is not None:
-                return nested_rows
+                candidates.append((1, len(nested_rows), nested_rows))
 
         for value in payload_value.values():
             nested_rows = self._extract_rows(value)
             if nested_rows is not None:
-                return nested_rows
+                candidates.append((1, len(nested_rows), nested_rows))
 
-        return None
+        if not candidates:
+            return None
+
+        candidates.sort(key=lambda candidate: (candidate[0], candidate[1]), reverse=True)
+        return candidates[0][2]
 
     def _extract_grid_result(self, results: list[dict[str, Any]]) -> dict[str, Any] | None:
         grid_result: dict[str, Any] | None = None

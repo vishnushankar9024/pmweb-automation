@@ -1066,6 +1066,39 @@ def test_build_reply_returns_error_when_only_partial_security_group_rows_exist()
     assert reply == "I couldn't extract the security group rows from PMWeb. Please try again."
 
 
+def test_build_reply_prefers_full_non_sample_rows_when_payload_has_sample_data():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    mixed_results = [
+        {
+            "step": 4,
+            "action": "read_grid",
+            "result": {
+                "record_type": "Security Groups",
+                "rows": 2,
+                "total_rows": 2,
+                "data": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                ],
+                "sample_rows": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                ],
+                "groups": [
+                    {"Group ID": "Default Group", "Description": "System defaults"},
+                    {"Group ID": "Guest Users", "Description": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, mixed_results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
 def test_reported_row_count_uses_largest_available_counter():
     assert HybridAgent._reported_row_count({"rows": 5, "total_rows": 28, "row_count": "5"}) == 28
 
