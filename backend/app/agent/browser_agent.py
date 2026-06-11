@@ -214,8 +214,18 @@ class HybridAgent:
             parsed = {"intent": "read", "record_type": "Security Groups", "fields": {}}
             flow_result = self._dispatch_to_flow(parsed)
             self._store_learning(task, parsed, flow_result.steps)
-            reply = self._format_read_reply(parsed, flow_result.steps, task=task)
-            if self._security_group_reply_is_partial(flow_result.steps, reply):
+            # Prefer a deterministic direct read reply first so we always return
+            # concrete group rows instead of any intermediary/tool summaries.
+            reply = self._direct_security_group_read_reply() or self._format_read_reply(
+                parsed,
+                flow_result.steps,
+                task=task,
+            )
+            if (
+                not reply
+                or self._security_group_reply_is_partial(flow_result.steps, reply)
+                or self._looks_like_procedural_security_summary(reply)
+            ):
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             if reply and self._looks_like_procedural_security_summary(reply):
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
@@ -607,6 +617,7 @@ class HybridAgent:
             initial_reply = None
         grid_result = self._extract_grid_result(results)
         expected_rows = self._reported_row_count(grid_result) if grid_result else None
+        sampled_payload = bool(grid_result and self._grid_payload_is_sampled(grid_result))
 
         best_reply = initial_reply
         best_rows = self._rendered_row_count(initial_reply)
@@ -616,6 +627,7 @@ class HybridAgent:
             initial_reply
             and self._reply_contains_numbered_rows(initial_reply)
             and not self._reply_is_partial_for_rows(initial_reply, expected_rows)
+            and not sampled_payload
         ):
             return initial_reply
 
@@ -884,10 +896,33 @@ class HybridAgent:
                     candidates.append(int(candidate))
         return max(candidates) if candidates else None
 
+    @staticmethod
+    def _grid_payload_is_sampled(grid_result: dict[str, Any]) -> bool:
+        """Detect payloads that only include sampled rows (not full dataset)."""
+        data = grid_result.get("data")
+        if not isinstance(data, list):
+            return False
+
+        reported_rows = HybridAgent._reported_row_count(grid_result)
+
+        sample_rows = grid_result.get("sample_rows")
+        if isinstance(sample_rows, list) and sample_rows and len(data) == len(sample_rows):
+            if reported_rows is None or reported_rows > len(data):
+                return True
+
+        sample = grid_result.get("sample")
+        if isinstance(sample, list) and sample and len(data) == len(sample):
+            if reported_rows is None or reported_rows > len(data):
+                return True
+
+        return False
+
     def _security_group_reply_is_partial(self, results: list[dict[str, Any]], reply: str) -> bool:
         grid_result = self._extract_grid_result(results)
         if not grid_result:
             return False
+        if self._grid_payload_is_sampled(grid_result):
+            return True
         reported_rows = self._reported_row_count(grid_result)
         return self._reply_is_partial_for_rows(reply, reported_rows)
 
