@@ -231,6 +231,14 @@ class HybridAgent:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             if not reply:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
+            if reply and self._security_group_reply_is_partial(flow_result.steps, reply):
+                # Do not return sampled/truncated list content when PMWeb
+                # reports there are more rows than what we rendered.
+                retried_reply = self._resolve_security_group_reply(task, flow_result.steps, None)
+                if retried_reply and not self._security_group_reply_is_partial(flow_result.steps, retried_reply):
+                    reply = retried_reply
+                else:
+                    reply = None
             return {
                 "reply": reply or "I couldn't extract the security group rows from PMWeb. Please try again.",
                 # Hide internal execution steps for the list/read UX so the chat
@@ -432,6 +440,10 @@ class HybridAgent:
             "get",
             "find",
             "display",
+            "provide",
+            "report",
+            "show me",
+            "give me",
             "all",
             "what are",
             "what's",

@@ -88,7 +88,8 @@ class PMWebFlows:
 
         # Use a high cap so list/read answers can include complete datasets.
         row_cap = 1000
-        if self._is_security_group_record_type_name(record_type_name) and hasattr(self.nav, "read_security_groups"):
+        is_security_groups = self._is_security_group_record_type_name(record_type_name)
+        if is_security_groups and hasattr(self.nav, "read_security_groups"):
             data = self.nav.read_security_groups(max_rows=row_cap)
         else:
             data = self.nav.read_kendo_grid(max_rows=row_cap)
@@ -101,6 +102,20 @@ class PMWebFlows:
                     total_rows = reported_total
             except Exception:
                 logger.debug("Could not read pager total rows", exc_info=True)
+
+        # If the pager reports more rows than we extracted, re-read with the
+        # reported total as cap. This helps when the initial grid read starts
+        # from a stale pager state.
+        if (
+            is_security_groups
+            and hasattr(self.nav, "read_security_groups")
+            and total_rows > len(data)
+        ):
+            retry_cap = min(max(total_rows, len(data)), 5000)
+            retry_rows = self.nav.read_security_groups(max_rows=retry_cap)
+            if len(retry_rows) > len(data):
+                data = retry_rows
+
         payload = {
             "record_type": record_type_name,
             "rows": len(data),
@@ -108,7 +123,7 @@ class PMWebFlows:
             "total_rows": total_rows,
             "data": data,
         }
-        if self._is_security_group_record_type_name(record_type_name):
+        if is_security_groups:
             payload["groups"] = data
         # Keep payload available under both keys for compatibility with
         # older result-consumers that read `output` instead of `result`.

@@ -515,6 +515,8 @@ class PMWebNavigator:
             "button.k-pager-nav.k-pager-next",
             "a.k-pager-nav.k-pager-next",
             "span.k-pager-nav.k-pager-next",
+            ".k-pager-nav.k-pager-next .k-icon",
+            ".k-pager-nav.k-pager-next .k-svg-icon",
             ".k-pager-nav.k-pager-next",
             ".k-pager-next",
             "[aria-label='Next page']",
@@ -540,6 +542,7 @@ class PMWebNavigator:
             "//button[.//*[contains(@class,'arrow-end-right') or contains(@class,'caret-alt-right') or contains(@class,'chevron-right')]]",
             "//a[.//*[contains(@class,'arrow-end-right') or contains(@class,'caret-alt-right') or contains(@class,'chevron-right')]]",
             "//span[.//*[contains(@class,'arrow-end-right') or contains(@class,'caret-alt-right') or contains(@class,'chevron-right')]]",
+            "//*[contains(@class,'k-pager-next')]//*[contains(@class,'k-icon') or contains(@class,'k-svg-icon')]",
             "//button[normalize-space(text())='>']",
             "//a[normalize-space(text())='>']",
             "//span[normalize-space(text())='>']",
@@ -552,6 +555,52 @@ class PMWebNavigator:
                     continue
                 if self._click_pager_control(button):
                     return True
+        return False
+
+    def _go_to_first_kendo_page(self) -> bool:
+        """Try to reset pager state to the first page before reading rows."""
+        selectors = [
+            "button[aria-label='Go to the first page']",
+            "a[aria-label='Go to the first page']",
+            "span[aria-label='Go to the first page']",
+            "button[title='Go to the first page']",
+            "a[title='Go to the first page']",
+            ".k-pager-first",
+            ".k-pager-nav.k-pager-first",
+            "[aria-label='First page']",
+            "[title='First page']",
+        ]
+        for selector in selectors:
+            for button in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                if not button.is_displayed():
+                    continue
+                classes = (button.get_attribute("class") or "").lower()
+                aria_disabled = (button.get_attribute("aria-disabled") or "").lower()
+                disabled = button.get_attribute("disabled")
+                if any(flag in classes for flag in ("k-disabled", "k-state-disabled")) or aria_disabled == "true" or disabled is not None:
+                    continue
+                try:
+                    button.click()
+                except Exception:
+                    self.driver.execute_script("arguments[0].click()", button)
+                time.sleep(1.0)
+                return True
+
+        for button in self.driver.find_elements(By.CSS_SELECTOR, ".k-pager-numbers .k-link"):
+            if not button.is_displayed():
+                continue
+            if button.text.strip() != "1":
+                continue
+            classes = (button.get_attribute("class") or "").lower()
+            if "k-selected" in classes or "k-state-selected" in classes:
+                return False
+            try:
+                button.click()
+            except Exception:
+                self.driver.execute_script("arguments[0].click()", button)
+            time.sleep(1.0)
+            return True
+
         return False
 
     def _find_scrollable_grid_container(self) -> Any:
@@ -696,6 +745,9 @@ class PMWebNavigator:
     def read_kendo_grid(self, max_rows: int = 30) -> list[dict[str, str]]:
         """Read a kendo grid with headers, traversing pager pages when present."""
         headers = self._kendo_grid_headers()
+        # Best effort: start from page 1 so previous user navigation state
+        # cannot truncate list/read responses.
+        self._go_to_first_kendo_page()
         rows: list[dict[str, str]] = []
         seen_page_signatures: set[tuple[tuple[str, str], ...]] = set()
         stale_page_reads = 0
