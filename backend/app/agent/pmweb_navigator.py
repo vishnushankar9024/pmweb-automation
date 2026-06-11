@@ -418,10 +418,37 @@ class PMWebNavigator:
                 return headers
         return []
 
+    def _grid_cell_text(self, cell: Any) -> str:
+        """Read visible grid cell text with fallbacks for rendered inputs/spans."""
+        text = (cell.text or "").strip()
+        if not text:
+            text = (cell.get_attribute("innerText") or "").strip()
+        if not text:
+            text = (cell.get_attribute("textContent") or "").strip()
+        if not text:
+            for selector, attr in (
+                ("input, textarea, select", "value"),
+                ("[title]", "title"),
+                ("[aria-label]", "aria-label"),
+            ):
+                for nested in cell.find_elements(By.CSS_SELECTOR, selector):
+                    candidate = (nested.get_attribute(attr) or "").strip()
+                    if candidate:
+                        text = candidate
+                        break
+                if text:
+                    break
+        return re.sub(r"\s+", " ", text).strip()
+
     def _kendo_grid_rows(self, headers: list[str], max_rows: int) -> list[dict[str, str]]:
         row_selectors = [
             "kendo-grid .k-grid-content tr.k-table-row",
+            "kendo-grid .k-grid-content tr.k-master-row",
+            "kendo-grid table.k-table tbody tr",
             ".k-grid-content tr.k-table-row",
+            ".k-grid-content tr.k-master-row",
+            ".k-table-tbody tr",
+            ".k-grid-content-locked tr.k-table-row",
             ".k-grid-content tr[role='row']",
             "tr.k-table-row",
             "tr[role='row']",
@@ -437,7 +464,7 @@ class PMWebNavigator:
         rows: list[dict[str, str]] = []
         for row in row_elements[:max_rows]:
             cells = row.find_elements(By.CSS_SELECTOR, "td")
-            values = [cell.text.strip() for cell in cells]
+            values = [self._grid_cell_text(cell) for cell in cells]
             if values and any(values):
                 row_dict = {}
                 for i, val in enumerate(values):

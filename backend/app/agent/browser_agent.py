@@ -1030,6 +1030,18 @@ class HybridAgent:
                 grid_result = enriched
                 continue
 
+            # Some deterministic executors store grid payload keys directly on the
+            # step (e.g. rows_data/groups) while keeping result/output as plain
+            # status strings. Preserve that payload shape for robust read replies.
+            if str(step.get("action", "")).strip().lower() == "read_grid":
+                step_rows = self._extract_rows(step)
+                if step_rows is not None:
+                    enriched = dict(step)
+                    enriched["data"] = step_rows
+                    if step.get("record_type") and not enriched.get("record_type"):
+                        enriched["record_type"] = step["record_type"]
+                    return enriched
+
             if isinstance(step.get("data"), list):
                 grid_result = {"data": step.get("data")}
         return grid_result

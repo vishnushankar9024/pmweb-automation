@@ -138,9 +138,13 @@ class PMWebFlows:
             "row_count": len(data),
             "total_rows": total_rows,
             "data": data,
+            # Compatibility aliases used by older executor/summarizer paths.
+            "rows_data": data,
+            "records": data,
         }
         if is_security_groups:
             payload["groups"] = data
+            payload["group_rows"] = data
         # Keep payload available under both keys for compatibility with
         # older result-consumers that read `output` instead of `result`.
         result.steps[-1]["result"] = payload

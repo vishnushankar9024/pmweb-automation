@@ -1102,6 +1102,31 @@ def test_build_reply_reads_groups_from_rows_key_payload():
     ]
 
 
+def test_build_reply_reads_groups_from_step_level_rows_data_payload():
+    agent = HybridAgent()
+    parsed = {"intent": "read", "record_type": "Security Groups"}
+    results = [
+        {
+            "step": 11,
+            "action": "read_grid",
+            "record_type": "Security Groups",
+            "result": "found 28 rows",
+            "output": "rows: 28",
+            "rows_data": [
+                {"Group ID": "Default Group", "Description": "System defaults"},
+                {"Group ID": "Guest Users", "Description": "Guest profile"},
+            ],
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]
+
+
 def test_build_reply_reads_groups_from_python_literal_result_payload():
     agent = HybridAgent()
     parsed = {"intent": "read", "record_type": ""}
