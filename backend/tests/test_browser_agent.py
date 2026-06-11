@@ -212,3 +212,27 @@ def test_build_reply_lists_all_security_groups():
     assert "1. Default Group — System defaults" in reply
     assert "2. Guest Users — Guest profile" in reply
     assert "3. PMWEB Admin — Admin users" in reply
+
+
+def test_build_reply_lists_security_groups_even_when_step_action_varies():
+    agent = HybridAgent()
+    parsed = {"intent": "create", "record_type": ""}
+    results = [
+        {
+            "step": 5,
+            "action": "inspect_grid",
+            "result": {
+                "rows": 2,
+                "data": [
+                    {"col_0": "Default Group", "col_1": "System defaults"},
+                    {"col_0": "Guest Users", "col_1": "Guest profile"},
+                ],
+            },
+        }
+    ]
+
+    reply = agent._build_reply("List all security groups", parsed, results)
+
+    assert "Security groups (2):" in reply
+    assert "1. Default Group — System defaults" in reply
+    assert "2. Guest Users — Guest profile" in reply

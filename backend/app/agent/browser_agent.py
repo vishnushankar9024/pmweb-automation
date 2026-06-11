@@ -421,9 +421,10 @@ class HybridAgent:
     # ── Summarizer ───────────────────────────────────────────────────
 
     def _build_reply(self, task: str, parsed: dict[str, Any], results: list[dict[str, Any]]) -> str:
-        intent = parsed.get("intent", "")
-        if intent in ("read", "list"):
-            read_reply = self._format_read_reply(parsed, results)
+        intent = str(parsed.get("intent", "")).strip().lower()
+        normalized_task = task.lower()
+        if intent in ("read", "list") or "security group" in normalized_task:
+            read_reply = self._format_read_reply(parsed, results, task=task)
             if read_reply:
                 return read_reply
         return self._summarize(task, results)
@@ -441,12 +442,42 @@ class HybridAgent:
                 return value
         return ""
 
-    def _format_read_reply(self, parsed: dict[str, Any], results: list[dict[str, Any]]) -> str | None:
+    @staticmethod
+    def _coerce_json_dict(value: Any) -> dict[str, Any] | None:
+        if isinstance(value, dict):
+            return value
+        if isinstance(value, str):
+            try:
+                decoded = json.loads(value)
+            except Exception:
+                return None
+            if isinstance(decoded, dict):
+                return decoded
+        return None
+
+    def _extract_grid_result(self, results: list[dict[str, Any]]) -> dict[str, Any] | None:
         grid_result: dict[str, Any] | None = None
         for step in results:
-            if step.get("action") == "read_grid" and isinstance(step.get("result"), dict):
-                grid_result = step["result"]
-                break
+            parsed_result = self._coerce_json_dict(step.get("result"))
+            if (
+                step.get("action") == "read_grid"
+                and parsed_result
+                and isinstance(parsed_result.get("data"), list)
+            ):
+                return parsed_result
+            if parsed_result and isinstance(parsed_result.get("data"), list):
+                grid_result = parsed_result
+                continue
+
+            parsed_output = self._coerce_json_dict(step.get("output"))
+            if parsed_output and isinstance(parsed_output.get("data"), list):
+                grid_result = parsed_output
+        return grid_result
+
+    def _format_read_reply(
+        self, parsed: dict[str, Any], results: list[dict[str, Any]], task: str = "",
+    ) -> str | None:
+        grid_result = self._extract_grid_result(results)
 
         if grid_result is None:
             return None
@@ -456,10 +487,13 @@ class HybridAgent:
             return None
 
         record_type = str(parsed.get("record_type", grid_result.get("record_type", "records"))).strip()
+        if not record_type or record_type.lower() == "records":
+            if "security group" in task.lower():
+                record_type = "Security Groups"
         if not data:
             return f"No {record_type.lower()} were found."
 
-        if record_type.lower() == "security groups":
+        if record_type.lower() == "security groups" or "security group" in task.lower():
             lines: list[str] = []
             for index, row in enumerate(data, start=1):
                 if not isinstance(row, dict):
