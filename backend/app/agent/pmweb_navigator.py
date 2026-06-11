@@ -8,6 +8,7 @@ function: given a WebDriver and parameters, perform exactly one thing.
 from __future__ import annotations
 
 import logging
+import re
 import time
 from typing import Any
 
@@ -518,6 +519,46 @@ class PMWebNavigator:
                         return container
                 except Exception:
                     continue
+        return None
+
+    def get_kendo_total_rows(self) -> int | None:
+        """Return total rows reported by the Kendo pager, when present."""
+        info_selectors = [
+            ".k-pager-info",
+            ".k-grid-pager .k-pager-info",
+            "kendo-pager-info",
+            "[class*='pager'] [class*='info']",
+        ]
+        texts: list[str] = []
+        for selector in info_selectors:
+            for element in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                text = element.text.strip()
+                if text:
+                    texts.append(text)
+
+        # Some PMWeb pages put the count in aria-label/title text.
+        aria_selectors = [
+            ".k-grid-pager",
+            "kendo-pager",
+            "[class*='pager']",
+        ]
+        for selector in aria_selectors:
+            for element in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                for attr in ("aria-label", "title"):
+                    value = (element.get_attribute(attr) or "").strip()
+                    if value:
+                        texts.append(value)
+
+        for text in texts:
+            match = re.search(r"\bof\s+(\d+)\b", text, re.IGNORECASE)
+            if match:
+                return int(match.group(1))
+            all_digits = re.findall(r"\d+", text)
+            if len(all_digits) == 1:
+                return int(all_digits[0])
+            if len(all_digits) >= 2:
+                # Common formats: "1 - 20 of 28 items", "Page 1 / 3 (56)".
+                return int(all_digits[-1])
         return None
 
     def _collect_rows_from_virtual_scroll(

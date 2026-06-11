@@ -45,8 +45,9 @@ class FakeSecurityNav:
 
 
 class FakeReadNav:
-    def __init__(self, rows: list[dict[str, str]]) -> None:
+    def __init__(self, rows: list[dict[str, str]], total_rows: int | None = None) -> None:
         self._rows = rows
+        self._total_rows = total_rows
         self.called_read_kendo_grid = 0
         self.called_read_security_groups = 0
 
@@ -63,6 +64,9 @@ class FakeReadNav:
     def read_security_groups(self, max_rows: int = 200) -> list[dict[str, str]]:
         self.called_read_security_groups += 1
         return self._rows[:max_rows]
+
+    def get_kendo_total_rows(self) -> int | None:
+        return self._total_rows
 
 
 def test_security_group_registry_requires_group_id():
@@ -515,6 +519,20 @@ def test_read_records_keeps_all_rows_for_listing():
     assert nav.called_read_kendo_grid == 0
 
 
+def test_read_records_captures_pager_total_rows_when_available():
+    rows = [{"Group ID": f"Group {i}", "Description": f"Desc {i}"} for i in range(1, 6)]
+    nav = FakeReadNav(rows, total_rows=28)
+    flow = PMWebFlows(nav)  # type: ignore[arg-type]
+    rt = get_record_type("Security Groups")
+
+    result = flow.read_records(rt, "Security Groups")
+
+    read_step = next(step for step in result.steps if step["action"] == "read_grid")
+    assert read_step["result"]["rows"] == 5
+    assert read_step["result"]["row_count"] == 5
+    assert read_step["result"]["total_rows"] == 28
+
+
 def test_dispatch_read_normalizes_security_group_record_type_variants():
     captured: dict[str, object] = {}
 
@@ -958,6 +976,10 @@ def test_build_reply_uses_direct_read_when_retry_payload_remains_sampled():
         "3. PMWEB Admin — Admin users",
         "4. Power Users — Power user access",
     ]
+
+
+def test_reported_row_count_uses_largest_available_counter():
+    assert HybridAgent._reported_row_count({"rows": 5, "total_rows": 28, "row_count": "5"}) == 28
 
 
 def test_build_reply_uses_direct_security_group_fallback_when_flow_retry_unavailable():

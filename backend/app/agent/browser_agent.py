@@ -217,6 +217,8 @@ class HybridAgent:
             reply = self._format_read_reply(parsed, flow_result.steps, task=task)
             if self._security_group_reply_is_partial(flow_result.steps, reply):
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
+            if reply and self._looks_like_procedural_security_summary(reply):
+                reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             if not reply:
                 reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             return {
@@ -256,14 +258,16 @@ class HybridAgent:
             and reply
             and self._looks_like_procedural_security_summary(reply)
         ):
-            forced_reply = self._retry_security_group_read_reply(task) or self._direct_security_group_read_reply()
+            forced_reply = self._resolve_security_group_reply(task, flow_result.steps, reply)
             if forced_reply:
                 reply = forced_reply
+            else:
+                reply = "I couldn't extract the security group rows from PMWeb. Please try again."
         if self._is_security_group_read_intent(task, parsed, flow_result.steps):
             deterministic_reply = self._deterministic_security_group_reply(task, flow_result.steps)
             if deterministic_reply:
                 reply = deterministic_reply
-            elif not reply:
+            elif not reply or self._looks_like_procedural_security_summary(reply):
                 reply = "I couldn't extract the security group rows from PMWeb. Please try again."
         if self._should_hide_actions(task, parsed, flow_result.steps):
             return {"reply": reply, "actions": []}
@@ -599,6 +603,8 @@ class HybridAgent:
         initial_reply: str | None,
     ) -> str | None:
         """Prefer a complete security-group reply over sampled rows."""
+        if initial_reply and self._looks_like_procedural_security_summary(initial_reply):
+            initial_reply = None
         grid_result = self._extract_grid_result(results)
         expected_rows = self._reported_row_count(grid_result) if grid_result else None
 
@@ -867,15 +873,16 @@ class HybridAgent:
 
     @staticmethod
     def _reported_row_count(grid_result: dict[str, Any]) -> int | None:
+        candidates: list[int] = []
         for key in ("rows", "row_count", "total_rows", "total", "count"):
             value = grid_result.get(key)
             if isinstance(value, int) and value >= 0:
-                return value
+                candidates.append(value)
             if isinstance(value, str):
                 candidate = value.strip()
                 if candidate.isdigit():
-                    return int(candidate)
-        return None
+                    candidates.append(int(candidate))
+        return max(candidates) if candidates else None
 
     def _security_group_reply_is_partial(self, results: list[dict[str, Any]], reply: str) -> bool:
         grid_result = self._extract_grid_result(results)

@@ -93,11 +93,19 @@ class PMWebFlows:
         else:
             data = self.nav.read_kendo_grid(max_rows=row_cap)
         result.add("read_grid", f"found {len(data)} rows")
+        total_rows = len(data)
+        if hasattr(self.nav, "get_kendo_total_rows"):
+            try:
+                reported_total = self.nav.get_kendo_total_rows()
+                if isinstance(reported_total, int) and reported_total > total_rows:
+                    total_rows = reported_total
+            except Exception:
+                logger.debug("Could not read pager total rows", exc_info=True)
         payload = {
             "record_type": record_type_name,
             "rows": len(data),
             "row_count": len(data),
-            "total_rows": len(data),
+            "total_rows": total_rows,
             "data": data,
         }
         if self._is_security_group_record_type_name(record_type_name):
