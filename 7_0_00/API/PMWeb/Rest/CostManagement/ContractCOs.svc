@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="VB" Debug="true" Service="API.RestContractCOs" CodeBehind="ContractCOs.svc.vb" %>

@@ -1,9 +1,0 @@
-@charset "utf-8";
-.login-box {width:100%; margin-top:75px !important;}
-.login-header{height:114px; background:url(../images/login-header-bg.png) repeat-x; text-align:center; border-bottom:5px solid #fff;padding:41px 0 0 0}
-.logo{}
-.login-contant-area{background:rgba(244,242,243,.84); height:auto; padding:1px 30px 40px; }
-h3{font:24px Open Sans; color:#474747}
-p{font:13px/20px Open Sans; color:#474747; text-align:justify; font-family:Tahoma;}
-.login-btn{text-align:center;margin-left: -17px;
-margin-top: 10px;}

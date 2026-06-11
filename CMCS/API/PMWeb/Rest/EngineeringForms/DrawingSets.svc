@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="VB" Debug="true" Service="API.RestDrawingSets" CodeBehind="DrawingSets.svc.vb" %>

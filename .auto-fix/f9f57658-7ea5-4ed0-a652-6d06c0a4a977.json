@@ -1,0 +1,9 @@
+{
+  "feedback_id": "f9f57658-7ea5-4ed0-a652-6d06c0a4a977",
+  "prompt": "List all security groups",
+  "actual_result": "1. Default Group\r\n2. Guest Users\r\n3. Adaptive Form Administrator\r\n4. Can Change Due Date In Procurement\r\n5. Can Copy Project\r\n6. Can Edit WBS In Program\r\n7. Can Edit WBS In Project\r\n8. Can Execute Move\r\n9. Can Lock/Unlock Schedules\r\n10. Can Make Companies Active/Inactive\r\n11. Can Make Locations Active/Inactive\r\n12. Can Make Projects Active/Inactive\r\n13. Can Send Notifications\r\n14. Custom Form Administrator\r\n15. Events Administrator\r\n16. Document Manager Administrator\r\n17. Lease Administrator\r\n18. PMWEB Report Administrator\r\n19. Procurement Administrator\r\n20. Report Manager Administrator",
+  "expected_result": "i dont want to see the steps output in the UI.",
+  "session_id": "6a2a86b6afb237bcabba1936",
+  "timestamp": "2026-06-11T09:59:35.713715+00:00",
+  "instructions": "FIX THIS: When the user says 'List all security groups', the agent currently does: '1. Default Group\r\n2. Guest Users\r\n3. Adaptive Form Administrator\r\n4. Can Change Due Date In Procurement\r\n5. Can Copy Project\r\n6. Can Edit WBS In Program\r\n7. Can Edit WBS In Project\r\n8. Can Execute Mov'. The user expects: 'i dont want to see the steps output in the UI.'. Fix the code in backend/app/agent/browser_agent.py (PLANNER_PROMPT or _execute_step) and/or backend/app/agent/pmweb_flows.py so the agent produces the expected result."
+}

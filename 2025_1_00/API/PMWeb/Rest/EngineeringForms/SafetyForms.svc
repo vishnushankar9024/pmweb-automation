@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="VB" Debug="true" Service="API.RestSafetyForms" CodeBehind="SafetyForms.svc.vb" %>
