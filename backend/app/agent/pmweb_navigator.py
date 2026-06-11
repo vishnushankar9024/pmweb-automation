@@ -372,6 +372,80 @@ class PMWebNavigator:
 
     # ── Data reading (deterministic) ─────────────────────────────────
 
+    @staticmethod
+    def _row_signature(row: dict[str, str]) -> tuple[tuple[str, str], ...]:
+        return tuple(sorted((str(key), str(value)) for key, value in row.items()))
+
+    def _kendo_grid_headers(self) -> list[str]:
+        selectors = [
+            "kendo-grid thead th",
+            ".k-grid-header th",
+            "table thead th",
+        ]
+        for selector in selectors:
+            headers = [
+                th.text.strip()
+                for th in self.driver.find_elements(By.CSS_SELECTOR, selector)
+                if th.text.strip()
+            ]
+            if headers:
+                return headers
+        return []
+
+    def _kendo_grid_rows(self, headers: list[str], max_rows: int) -> list[dict[str, str]]:
+        row_selectors = [
+            "kendo-grid .k-grid-content tr.k-table-row",
+            ".k-grid-content tr.k-table-row",
+            "tr.k-table-row",
+            "table tbody tr",
+        ]
+        row_elements = []
+        for selector in row_selectors:
+            row_elements = [
+                row
+                for row in self.driver.find_elements(By.CSS_SELECTOR, selector)
+                if row.is_displayed()
+            ]
+            if row_elements:
+                break
+
+        rows: list[dict[str, str]] = []
+        for row in row_elements[:max_rows]:
+            cells = row.find_elements(By.CSS_SELECTOR, "td")
+            values = [cell.text.strip() for cell in cells]
+            if values and any(values):
+                row_dict = {}
+                for i, val in enumerate(values):
+                    key = headers[i] if i < len(headers) else f"col_{i}"
+                    row_dict[key] = val
+                rows.append(row_dict)
+        return rows
+
+    def _go_to_next_kendo_page(self) -> bool:
+        next_button_selectors = [
+            "button[aria-label='Go to the next page']",
+            "a[aria-label='Go to the next page']",
+            "button.k-pager-nav.k-pager-next",
+            "a.k-pager-nav.k-pager-next",
+            ".k-pager-nav.k-pager-next",
+        ]
+        for selector in next_button_selectors:
+            for button in self.driver.find_elements(By.CSS_SELECTOR, selector):
+                if not button.is_displayed():
+                    continue
+                classes = (button.get_attribute("class") or "").lower()
+                aria_disabled = (button.get_attribute("aria-disabled") or "").lower()
+                disabled = button.get_attribute("disabled")
+                if "k-disabled" in classes or aria_disabled == "true" or disabled is not None:
+                    continue
+                try:
+                    button.click()
+                except Exception:
+                    self.driver.execute_script("arguments[0].click()", button)
+                time.sleep(1.2)
+                return True
+        return False
+
     def read_page_text(self, max_chars: int = 3000) -> str:
         return self.driver.find_element(By.TAG_NAME, "body").text[:max_chars]
 
@@ -386,22 +460,28 @@ class PMWebNavigator:
         return data
 
     def read_kendo_grid(self, max_rows: int = 30) -> list[dict[str, str]]:
-        """Read a kendo grid with headers."""
-        headers = []
-        for th in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid th, th"):
-            t = th.text.strip()
-            if t:
-                headers.append(t)
-        rows = []
-        for row in self.driver.find_elements(By.CSS_SELECTOR, "kendo-grid tr.k-table-row, tr")[:max_rows]:
-            cells = row.find_elements(By.CSS_SELECTOR, "td")
-            values = [c.text.strip() for c in cells]
-            if values and any(v for v in values):
-                row_dict = {}
-                for i, val in enumerate(values):
-                    key = headers[i] if i < len(headers) else f"col_{i}"
-                    row_dict[key] = val
-                rows.append(row_dict)
+        """Read a kendo grid with headers, traversing pager pages when present."""
+        headers = self._kendo_grid_headers()
+        rows: list[dict[str, str]] = []
+        seen_page_signatures: set[tuple[tuple[str, str], ...]] = set()
+
+        while len(rows) < max_rows:
+            remaining = max_rows - len(rows)
+            page_rows = self._kendo_grid_rows(headers, remaining)
+            if not page_rows:
+                break
+
+            page_signature = tuple(self._row_signature(row) for row in page_rows)
+            if page_signature in seen_page_signatures:
+                break
+            seen_page_signatures.add(page_signature)
+
+            rows.extend(page_rows[:remaining])
+            if len(rows) >= max_rows:
+                break
+            if not self._go_to_next_kendo_page():
+                break
+
         return rows
 
     # ── SurveyJS Adaptive Forms ──────────────────────────────────────

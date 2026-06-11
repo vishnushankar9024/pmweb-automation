@@ -81,7 +81,8 @@ class PMWebFlows:
         else:
             result.add("navigate", self.nav.navigate("/Home.aspx"))
 
-        data = self.nav.read_kendo_grid(max_rows=200)
+        # Use a high cap so list/read answers can include complete datasets.
+        data = self.nav.read_kendo_grid(max_rows=500)
         result.add("read_grid", f"found {len(data)} rows")
         result.steps[-1]["result"] = {
             "record_type": record_type_name,

@@ -208,10 +208,12 @@ def test_build_reply_lists_all_security_groups():
 
     reply = agent._build_reply("List all security groups", parsed, results)
 
-    assert "Security groups (3):" in reply
-    assert "1. Default Group — System defaults" in reply
-    assert "2. Guest Users — Guest profile" in reply
-    assert "3. PMWEB Admin — Admin users" in reply
+    lines = reply.splitlines()
+    assert lines == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+        "3. PMWEB Admin — Admin users",
+    ]
 
 
 def test_build_reply_lists_security_groups_even_when_step_action_varies():
@@ -233,6 +235,7 @@ def test_build_reply_lists_security_groups_even_when_step_action_varies():
 
     reply = agent._build_reply("List all security groups", parsed, results)
 
-    assert "Security groups (2):" in reply
-    assert "1. Default Group — System defaults" in reply
-    assert "2. Guest Users — Guest profile" in reply
+    assert reply.splitlines() == [
+        "1. Default Group — System defaults",
+        "2. Guest Users — Guest profile",
+    ]

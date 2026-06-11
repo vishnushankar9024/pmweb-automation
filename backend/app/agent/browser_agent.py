@@ -521,7 +521,9 @@ class HybridAgent:
                     lines.append(f"{index}. {description}")
 
             if lines:
-                return f"Security groups ({len(lines)}):\n" + "\n".join(lines)
+                # Return the direct answer content (group entries) without
+                # procedural narration/wrappers for "list all security groups".
+                return "\n".join(lines)
 
         rows: list[str] = []
         for index, row in enumerate(data, start=1):
