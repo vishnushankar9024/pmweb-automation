@@ -302,6 +302,12 @@ class HybridAgent:
 
         reply = self._build_reply(task, parsed, flow_result.steps)
         reply = self._strip_procedural_security_narration(reply)
+        # Defensive normalization: keep security-group replies answer-only even
+        # if they came from an unexpected fallback path.
+        if "security group" in self._primary_task_text(task).lower() and reply:
+            normalized_reply = self._finalize_security_group_reply(reply)
+            if normalized_reply:
+                reply = normalized_reply
         if (
             "security group" in self._primary_task_text(task).lower()
             and reply
